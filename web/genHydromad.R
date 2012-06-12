@@ -1,8 +1,7 @@
 ## generate the web site
 
-## setwd("X:/Packages/hydromad/web")
+## setwd("~/devel/hydromad/web")
 ## Sys.setenv(R_GSCMD = "C:/Program Files/gs/gs8.63/bin/gswin32c.exe")
-## Sys.setenv(R_GSCMD = "D:/Program Files/GPLGS/gswin32c.exe")
 ## source("genHydromad.R", echo = TRUE)
 
 library(hydromad)
@@ -25,6 +24,7 @@ spec[["assessment"]] <-
          list("summary", helpname = "summary.hydromad"),
          list("hydromad.stats"),
          list("nseStat"),
+         list("nseVarTd"),
          list("xyplot", helpname = "xyplot.hydromad", do.example = TRUE),
          list("xyplot.runlist", do.example = TRUE),
          list("qqmath", -2, helpname = "xyplot.hydromad", do.example = TRUE)
@@ -39,6 +39,9 @@ spec[["calibration"]] <-
          list("fitBySCE"),
          list("fitByDE"),
          list("fitByDream"),
+         list("fitByCMAES"),
+         list("fitByDDS"),
+         list("fitByNsga2"),
          list("optimtrace", -1, do.example = TRUE, examplename = "fitByOptim"),
          list("defineFeasibleSet", do.example = TRUE)
          )
@@ -71,7 +74,8 @@ spec[["routing"]] <-
          list("armax", codefile = "armax.sim.R"),
          list("expuh", codefile = "expuh.sim.R"),
          list("lambda", codefile = "lambda.sim.R"),
-         list("powuh", codefile = "powuh.sim.R")
+         list("powuh", codefile = "powuh.sim.R"),
+         list("maexpuh", codefile = "maexpuh.R")
          )
 
 spec[["routing fitting"]] <-
@@ -82,7 +86,9 @@ spec[["routing fitting"]] <-
          #"lambda.inverse.fit"
          list("armax.inverse.sim", do.example = TRUE),
          list("tryModelOrders"),
-         list("estimateDelay")
+         list("estimateDelay"),
+         list("estimateDelayFrac"),
+         list("deconvolution.uh")
          )
 
 spec[["utilities"]] <-
@@ -90,6 +96,8 @@ spec[["utilities"]] <-
          list("convertFlow"),
          list("rollccf", do.example = TRUE),
          list("parameterSets"),
+         list("rotatedSampling"),
+         list("gr4j.transformpar"),
          list("observed"),
          list("SCEoptim", codefile = "sce.R")
          )
@@ -119,8 +127,8 @@ spec[["datasets"]] <- lapply(spec[["datasets"]], function(x) {
 #         list("poweroid")
 #         )
 
-source("http://latticeextra.r-forge.r-project.org/generate.R")
-#source("../../latticeextra/www/generate.R")
+#source("http://latticeextra.r-forge.r-project.org/generate.R")
+source("../../latticeExtra/www/generate.R")
 
 ## stop on errors
 lattice.options(panel.error = NULL)
@@ -135,5 +143,5 @@ generateWebsite("hydromad", spec = spec, do.example = FALSE, ## default
                 man.src.dir = "../man/",
                 image.src.base = imageSrcBase,
                 topleveljs = paste('var imageSrcBase = "', imageSrcBase, '";', sep = ""),
-                code.url = "http://github.com/floybix/hydromad/tree/master/R/%s",
+                code.url = "http://github.com/josephguillaume/hydromad/tree/master/R/%s",
                 themes = list(custom_theme_2 = list(theme = ltheme)))

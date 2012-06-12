@@ -61,6 +61,7 @@ code {
   margin-top: 0.4em;
   background-color: #dddd30;
   border: 2px solid black;
+  border-radius: 16px;
   -moz-border-radius: 16px;
   -webkit-border-radius: 16px;
 }
@@ -76,6 +77,8 @@ code {
 #nav li.navhead.active {
   background-color: #ffff30;
   border-bottom: 1px solid black;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   -moz-border-radius-bottomleft: 0px;
   -moz-border-radius-bottomright: 0px;
   -webkit-border-bottom-left-radius: 0px;
@@ -86,6 +89,8 @@ code {
   border: 2px solid black;
   border-top: 0px;
   background-color: #dddddd;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
   -moz-border-radius-bottomleft: 16px;
   -moz-border-radius-bottomright: 16px;
   -webkit-border-bottom-left-radius: 16px;
@@ -186,6 +191,8 @@ code {
     float: right;
     color: black;
     background: #fff url(img/blur.jpg) top right repeat-y;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   -moz-border-radius-bottomleft: 8px;
   -moz-border-radius-bottomright: 8px;
   -webkit-border-bottom-left-radius: 8px;

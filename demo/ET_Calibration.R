@@ -7,7 +7,7 @@ fitt <- hydromad(DATA = x, sma = "cmd",f=0.6,e=0.166,d=220,return_state=T,
                  routing="expuh",tau_q=2,tau_s=25,v_s=0.1
                  )
 ## Calculate observed actual ET
-x$aET <- fitted(fitt,U=TRUE,all=TRUE)$ET*observed(fitt,all=TRUE,select="E")
+x$aET <- fitt$U$ET*fitt$data$E
 ## Calculate exact Q resulting from calculated ET
 x$Q <- fitted(fitt,all=TRUE)
 
@@ -41,3 +41,6 @@ modr <- hydromad(DATA=x,sma="cmd",return_state=T,
                  routing = "expuh", rfit = list("inverse", order = c(2,1)))
 fitr<-fitByOptim(modr,objective=~hmadstat("r.squared")(DATA$aET,DATA$E*U$ET))
 fitr
+
+## results
+summary(runlist(fit, fito, fitr))

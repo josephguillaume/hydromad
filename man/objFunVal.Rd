@@ -2,6 +2,7 @@
 \alias{objFunVal}
 \alias{objFunVal.hydromad}
 \alias{objFunVal.default}
+\alias{objFunVal.runlist}
 \title{ Calculate objective function value for a fitted model. }
 \description{
   Calculate objective function value for a fitted model.
@@ -14,6 +15,9 @@ objFunVal(x, objective, ...)
 
 \method{objFunVal}{default}(x, objective = hydromad.getOption("objective"),
           ..., nan.ok = FALSE)
+
+\method{objFunVal}{runlist}(x, objective = list(hydromad.getOption("objective"),mean),
+          ...)
 }
 \arguments{
   \item{x}{
@@ -24,10 +28,17 @@ objFunVal(x, objective, ...)
     \code{X} and optionally \code{U} and \code{P}.
   }
   \item{objective}{
-    the objective function, or a list of objective functions. See Details.
+    the objective function, or a list of objective functions. See
+Details.
+
+    For a \code{runlist}, either: 1) a function taking a runlist as
+          first argument or 2) a list with two elements, the first as for
+          \code{hydromad} and \code{default}, the second a function that
+          aggregates the objectives to a single value.
   }
   \item{...}{
-    ignored.
+    ignored for \code{hydromad} and \code{default}, passed to
+          \code{objFunVal.hydromad} for \code{runlist}
   }
   \item{all}{
     passed to \code{fitted} and \code{observed}.

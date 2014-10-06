@@ -239,7 +239,7 @@ eventapply <-
 
     } else {
         ## only one series
-        ans <- sapply(split(X, events, drop = TRUE),
+        ans <- sapply(split(coredata(X), events, drop = TRUE),
                       FUN, ..., simplify = simplify)
         if (is.matrix(ans))
             ans <- t(ans)

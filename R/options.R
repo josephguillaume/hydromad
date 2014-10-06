@@ -56,7 +56,8 @@
          trace = FALSE,
          catch.errors = TRUE,
          catch.errors.optim = TRUE,
-         pure.R.code = FALSE
+         pure.R.code = FALSE,
+	   parallel=list(update.runlist="none",objFunVal.runlist="none",evalPars="none",paretoObjectivesVaryWeights="none")
          )
 
 ## code below copied from lattice

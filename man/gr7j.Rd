@@ -57,9 +57,7 @@ gr7jrouting.sim(U, x2, x3, x4, R_0 = 0, split = 0.9,
 Grigg AH, Hughes JD. "Nonstationarity driven by multidecadal change 
 in catchment groundwater storage: A test of modifications to a common
  rainfall–runoff model." \emph{Hydrological Process.} 2018;1–14.
-https://doi.org/10.1002/hyp.13282
-
-\url{http://www.cemagref.fr/webgr/Modelesgb/gr4j/fonctionnement_gr4jgb.htm}
+\url{https://doi.org/10.1002/hyp.13282}
 }
 \author{ Justin Hughes \email{justin.hughes@csiro.au} and Lynn Seo \email{lynn.seo@gmail.com} 
 }
@@ -73,9 +71,9 @@ dat <-
         E = c(0,0,0,0,0,0.24,0.24,0.24,0.24,0.24,0.25,0.25,0.26,
               0.27,0.28,0.32,0.33,0.34,0.35,0.36,0.36,0.37,0.37,0.38,0.38))
 datz <- zoo(dat, as.Date("2000-01-01") + 1:nrow(dat))
-modz <- hydromad(datz, sma = "gr8j", routing = "gr8jrouting",
+modz <- hydromad(datz, sma = "gr7j", routing = "gr7jrouting",
                  x1 = 665, x2 = 1.18, x3 = 90, x4 = 3.8, 
-                 x5=1, x6=1, x7= 1, x8= 1, S_0 = 0.6, R_0 = 0.7)
+                 x5=1, x6=1, x7= 1, S_0 = 0.6, R_0 = 0.7)
 xyplot(predict(modz, return_state = TRUE, return_components = TRUE),
        strip = FALSE, strip.left = TRUE)
 }

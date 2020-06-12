@@ -1,5 +1,6 @@
-<!-- this document has been modified from the rOpenSci CONTRIBUTING file --->
+<!-- this document has been modified from the rOpenSci and dplyr CONTRIBUTING files --->
 <!-- https://github.com/ropensci/dotgithubfiles/blob/master/dotgithub/CONTRIBUTING.md -->
+<!-- https://github.com/tidyverse/dplyr/blob/master/.github/CONTRIBUTING.md -->
 
 # Contributing to hydromad
 

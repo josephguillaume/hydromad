@@ -24,7 +24,7 @@ The pull request process for contributing to hydromad is as follows:
 
 1. Create a branch in your Git fork and label it appropriately.
 2. Open a pull request to hydromad's `master` branch.
-3. Fill in the pull request template as required. The PR template will automatically appear once the request has been made.
+3. Fill in the pull request template as required. The pull request template will automatically appear once the request has been made.
 4. Discuss any amendments your pull request requires with owners of the repository that need to be made before your pull request can be approved.
 
 #### Other notes

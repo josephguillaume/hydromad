@@ -14,37 +14,33 @@ Please note we have a code of conduct that we request you adhere to in all your 
 
 Before you make a substantial pull request, you should always file an issue and
 make sure someone from the team agrees that it’s a problem. If you’ve found a
-bug, create an associated issue using our `ISSUE_TEMPLATE.md` and illustrate the bug with a minimal 
-[reprex](https://www.tidyverse.org/help/#reprex).
+bug, create an associated issue using our `ISSUE_TEMPLATE.md` and provide steps on how to reproduce the bug.
+
+Prior to making a pull request, we highly recommend you refer to `PULL_REQUEST_TEMPLATE.md` for a full checklist of tasks that needs to be completed.
 
 ### Pull request process
 
-The pull request (PR) process for contributing to hydromad is as follows:
+The pull request process for contributing to hydromad is as follows:
 
 1. Create a branch in your Git fork and label it appropriately.
-2. Open a PR to hydromad's `master` branch.
-3. Fill in the PR template as required. The PR template will automatically appear once the request has been made. We highly recommend you refer to `PULL_REQUEST_TEMPLATE.md` for a full checklist of tasks that needs to be completed before making your PR.
-4. Discuss any amendments your PR requires with owners of the repository before your PR can be approved.
-
-### Fixing typos
-
-Small typos or grammatical errors in the documentation may be edited directly using
-the GitHub web interface, so long as the changes are made in the _source_ file.
+2. Open a pull request to hydromad's `master` branch.
+3. Fill in the pull request template as required. The PR template will automatically appear once the request has been made.
+4. Discuss any amendments your pull request requires with owners of the repository that need to be made before your pull request can be approved.
 
 #### Other notes
 
 *  We recommend that R code is in the tidyverse [style guide](http://style.tidyverse.org).
 You can use the [styler](https://CRAN.R-project.org/package=styler) package to
-apply these styles to your code. C/C++ should be formatted using [clang-format](https://github.com/llvm-mirror/clang/tree/master/tools/clang-format). **Please don't restyle code that has nothing to do with your PR**.  
+apply these styles to your code. C/C++ should be formatted using [clang-format](https://github.com/llvm-mirror/clang/tree/master/tools/clang-format). **Please don't restyle code that has nothing to do with your pull request**.  
 *  We recomend code linting using [lintr](https://github.com/jimhester/lintr) or [clang-tidy](https://github.com/llvm-mirror/clang-tools-extra/tree/master/clang-tidy).
-*  We use [roxygen2](https://cran.r-project.org/package=roxygen2) for documentation.  
-*  We use [testthat](https://cran.r-project.org/package=testthat) for unit testing. Contributions
+*  We use [roxygen2](https://cran.r-project.org/package=roxygen2) for R documentation.  
+*  We use [testthat](https://cran.r-project.org/package=testthat) for R unit testing. Contributions
 with test cases included are easier to accept.  
-*  For user-facing changes where the PR has been approved, add a bullet to the top of `NEWS.md` below the
+*  For user-facing changes where the pull request has been approved, add a bullet to the top of `NEWS.md` below the
 current development version header describing the changes made followed by your
-GitHub username, and links to relevant issue(s)/PR(s).
+GitHub username, and links to relevant issue(s)/pull request(s).
 
-#### See rOpenSci [contributing guide](https://devguide.ropensci.org/contributingguide.html) for further details.
+#### See rOpenSci [development guide](https://devguide.ropensci.org/) and [CRAN policies](https://cran.r-project.org/web/packages/policies.html) for further details.
 
 ## Code of Conduct
 

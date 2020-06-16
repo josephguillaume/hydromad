@@ -45,4 +45,4 @@ GitHub username, and links to relevant issue(s)/pull request(s).
 
 ## Code of Conduct
 
-Please note that this package is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/). By contributing to this project, you agree to abide by its terms.
+Please note that this package is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/). By contributing to this project, you agree to abide by its terms. Note that `hydromad` is not yet part of ROpenSci, such that not all reporting procedures are yet available.

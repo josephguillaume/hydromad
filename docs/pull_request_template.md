@@ -20,7 +20,7 @@
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
 1. [ ] Have you ensured there are no conflicts with major packages (e.g. tidyverse, MASS) or base R packages?
-2. [ ] Does your new feature require documentation, and if so, have you udpated the documentation?
+2. [ ] Does your new feature require documentation, and if so, have you updated the documentation?
 3. [ ] Have you added tests for your features, and do your features pass all tests?
 4. [ ] Have you linted your code with lintr locally prior to submission?
 5. [ ] Have you styled your code with styler locally prior to submission?

@@ -28,6 +28,7 @@
 7. [ ] Does your code comply with rOpenSci guidelines?
 8. [ ] Does your code comply with CRAN policies?
 
+
 ### Changes to Core Features:
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
@@ -35,4 +36,5 @@
 * [ ] Have you added tests for your core features and do your core features pass all tests?
 * [ ] Have you successfully run tests with your changes locally?
 * [ ] Does your code run on all major platforms (Windows, macOS, Linux)?
+* [ ] Have you demonstrated backwards compatibility and compatibility with the current development version, or discussed a potential break in backwards compatibility?
 * [ ] Have you updated the package vignettes? 

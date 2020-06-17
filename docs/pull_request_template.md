@@ -27,6 +27,7 @@
 6. [ ] Have you checked the performance of your code?
 7. [ ] Does your code comply with rOpenSci guidelines?
 8. [ ] Does your code comply with CRAN policies?
+9. [ ] Does you new feature comply with existing model APIs (e.g. for models, optimisation algorithms, objective functions)?
 
 
 ### Changes to Core Features:

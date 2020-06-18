@@ -24,10 +24,8 @@
 3. [ ] Have you added tests for your features, and do your features pass all tests?
 4. [ ] Have you linted your code with lintr locally prior to submission?
 5. [ ] Have you styled your code with styler locally prior to submission?
-6. [ ] Have you checked the performance of your code?
-7. [ ] Does your code comply with rOpenSci guidelines?
-8. [ ] Does your code comply with CRAN policies?
-9. [ ] Does you new feature comply with existing model APIs (e.g. for models, optimisation algorithms, objective functions)?
+6. [ ] Have you [benchmarked](https://www.alexejgossmann.com/benchmarking_r/) the performance of your code if applicable (e.g. with microbenchmark)?
+7. [ ] Does you new feature comply with existing model APIs (e.g. for models, optimisation algorithms, objective functions)?
 
 
 ### Changes to Core Features:

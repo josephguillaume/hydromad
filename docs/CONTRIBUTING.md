@@ -30,7 +30,7 @@ The pull request process for contributing to hydromad is as follows:
 
 #### Other notes
 
-*  We recommend that R code is in the tidyverse [style guide](http://style.tidyverse.org).
+*  We recommend that R code is in the tidyverse [style guide](http://style.tidyverse.org), with the exception of naming using snake_case. Naming conventions are being formalised - in the mean time, please use existing code as an example.
 You can use the [styler](https://CRAN.R-project.org/package=styler) package to
 apply these styles to your code. C/C++ should be formatted using [clang-format](https://github.com/llvm-mirror/clang/tree/master/tools/clang-format). **Please don't restyle code that has nothing to do with your pull request**.  
 *  We recomend code linting using [lintr](https://github.com/jimhester/lintr) or [clang-tidy](https://github.com/llvm-mirror/clang-tools-extra/tree/master/clang-tidy).

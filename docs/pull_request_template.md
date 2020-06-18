@@ -25,7 +25,7 @@
 4. [ ] Have you linted your code with lintr locally prior to submission?
 5. [ ] Have you styled your code with styler locally prior to submission?
 6. [ ] Have you [benchmarked](https://www.alexejgossmann.com/benchmarking_r/) the performance of your code if applicable (e.g. with microbenchmark)?
-7. [ ] Does you new feature comply with existing model APIs (e.g. for models, optimisation algorithms, objective functions)?
+7. [ ] Does your new feature comply with existing model APIs (e.g. for models, optimisation algorithms, objective functions)?
 
 
 ### Changes to Core Features:

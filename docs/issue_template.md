@@ -30,8 +30,5 @@
 
 ## Your Environment
 <!--- Include as many relevant details about the environment you experienced the bug in -->
-* Version used (e.g. R 3.6.2): 
-* Environment name and version (e.g. RStudio 1.2.5033):
-* Server type and version (if applicable):
-* Operating System and version:
-* Link to your project (if applicable):
+<!--- e.g. version of environment, server type and operating system -->
+<!--- We suggest you provide outputs of R.Version(), (.packages()), and loadedNamespaces() -->

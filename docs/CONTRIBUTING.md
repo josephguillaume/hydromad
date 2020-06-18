@@ -34,7 +34,7 @@ The pull request process for contributing to hydromad is as follows:
 You can use the [styler](https://CRAN.R-project.org/package=styler) package to
 apply these styles to your code. C/C++ should be formatted using [clang-format](https://github.com/llvm-mirror/clang/tree/master/tools/clang-format). **Please don't restyle code that has nothing to do with your pull request**.  
 *  We recomend code linting using [lintr](https://github.com/jimhester/lintr) or [clang-tidy](https://github.com/llvm-mirror/clang-tools-extra/tree/master/clang-tidy).
-*  We use [roxygen2](https://cran.r-project.org/package=roxygen2) for R documentation.  
+*  We use [roxygen2](https://cran.r-project.org/package=roxygen2) for R documentation - this applies to all new contributions. Legacy code is being updated to conform.
 *  We use [testthat](https://cran.r-project.org/package=testthat) for R unit testing. Contributions
 with test cases included are easier to accept.  
 *  For user-facing changes where the pull request has been approved, add a bullet to the top of `NEWS.md` below the

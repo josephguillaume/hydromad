@@ -1,6 +1,12 @@
 on:
-  issue_comment:
-    types: [created]
+  push:
+    branches:
+      - master
+      - continuous_integration
+  pull_request:
+    branches:
+      - master
+      - continuous_integration
     
 name: R_styler
 

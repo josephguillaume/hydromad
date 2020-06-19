@@ -12,7 +12,6 @@ name: R_styler
 
 jobs:
   style:
-    if: startsWith(github.event.comment.body, '/style')
     name: style
     runs-on: macOS-latest
     env:

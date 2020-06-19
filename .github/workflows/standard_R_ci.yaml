@@ -2,14 +2,16 @@ on:
   push:
     branches:
       - master
+      - continuous_integration
   pull_request:
     branches:
       - master
+      - continuous_integration
 
-name: R-CMD-check
+name: standard_ci
 
 jobs:
-  R-CMD-check:
+  standard_ci:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
@@ -22,6 +24,7 @@ jobs:
           - {os: macOS-latest, r: 'release'}
           - {os: macOS-latest, r: 'devel'}
           - {os: ubuntu-16.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04, r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
 
     env:

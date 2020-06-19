@@ -1,0 +1,21 @@
+on:
+  push:
+    branches:
+      - master
+      - continuous_integration
+  pull_request:
+    branches:
+      - master
+      - continuous_integration
+      
+name: c_linter
+
+jobs:
+  c-linter:
+    name: c-linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: c-linter
+        uses: ArtificialAmateur/clang-tidy-action@master
+    env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

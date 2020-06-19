@@ -20,6 +20,11 @@ jobs:
 
       - uses: r-lib/actions/setup-r@master
 
+      - name: Install GTK for Mac OSX
+        if: runner.os == "macOS"
+        run: |
+          brew install gtk+
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
@@ -36,8 +41,14 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages(c("remotes"))
-          remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("lintr")
+          remotes::install_cran("rcmdcheck")
+          remotes::install_cran("coda")
+          remotes::install_github("TillF/ppso")
+          remotes::install_url("http://download.r-forge.r-project.org/src/contrib/dream_0.4-2.tar.gz")
+          remotes::install_url("https://cran.r-project.org/src/contrib/Archive/gWidgets/gWidgets_0.0-54.tar.gz")
+          remotes::install_url("https://cran.r-project.org/src/contrib/Archive/playwith/playwith_0.9-54.tar.gz")
+          remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
       - name: Lint

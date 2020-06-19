@@ -21,4 +21,3 @@ jobs:
         source: '.'
         extensions: 'c,h,cpp'
         clangFormatVersion: 9
-        style: Microsoft

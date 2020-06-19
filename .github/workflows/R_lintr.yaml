@@ -21,7 +21,7 @@ jobs:
       - uses: r-lib/actions/setup-r@master
 
       - name: Install GTK for Mac OSX
-        if: runner.os == "macOS"
+        if: runner.os == 'macOS'
         run: |
           brew install gtk+
 

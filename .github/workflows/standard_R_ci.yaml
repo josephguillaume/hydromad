@@ -39,7 +39,7 @@ jobs:
           sudo apt-get install gtk2.0
       
       - name: Install GTK for Mac OSX
-        if: runner.os == "macos"
+        if: runner.os == "macOS"
         run: |
           brew install gtk+
         

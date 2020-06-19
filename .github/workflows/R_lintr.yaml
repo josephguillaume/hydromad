@@ -8,7 +8,7 @@ on:
       - master
       - continuous_integration
 
-name: lint
+name: R_linter
 
 jobs:
   lint:

@@ -18,12 +18,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'release'}
-          - {os: macOS-latest, r: 'release'}
-          - {os: macOS-latest, r: 'devel'}
-          - {os: ubuntu-16.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04, r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-
+          - {os: macOS-latest,   r: 'devel'}
+          - {os: macOS-latest,   r: '4.0'}
+          - {os: windows-latest, r: '4.0'}
+          - {os: ubuntu-16.04,   r: '4.0', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+        
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
@@ -31,10 +31,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install GTK Linux
+      - name: Install GTK for Linux
         if: runner.os == 'Linux'
         run: |
           sudo apt-get install gtk2.0
+      
+      - name: Install GTK for Mac OSX
+        if: runner.os == "macos"
+        run: |
+          brew install gtk+
         
       - name: GTK for Windows
         if: runner.os == 'Windows'
@@ -94,7 +99,3 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-
-      - name: Lint
-        run: lintr::lint_package()
-        shell: Rscript {0}

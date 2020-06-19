@@ -8,14 +8,17 @@ on:
       - master
       - continuous_integration
       
-name: c_linter
+name: C_linter
 
 jobs:
-  c-linter:
-    name: c-linter
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: c-linter
-        uses: ArtificialAmateur/clang-tidy-action@master
-    env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v2
+    - uses: DoozyX/clang-format-lint-action@v0.5
+      with:
+        source: '.'
+        extensions: 'c,h,cpp'
+        clangFormatVersion: 9
+        style: chromium

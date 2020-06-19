@@ -11,8 +11,7 @@ on:
 name: R_styler
 
 jobs:
-  style:
-    name: style
+  R_styler:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

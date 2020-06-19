@@ -21,4 +21,4 @@ jobs:
         source: '.'
         extensions: 'c,h,cpp'
         clangFormatVersion: 9
-        style: chromium
+        style: Microsoft

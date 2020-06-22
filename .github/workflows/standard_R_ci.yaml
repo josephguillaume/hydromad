@@ -79,7 +79,6 @@ jobs:
         
       - name: Install dependencies
         run: |
-          remotes::install_cran("lintr")
           remotes::install_cran("rcmdcheck")
           remotes::install_cran("coda")
           remotes::install_github("TillF/ppso")

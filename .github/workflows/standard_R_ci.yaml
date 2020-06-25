@@ -21,8 +21,8 @@ jobs:
       matrix:
         config:
           - {os: macOS-latest,   r: 'devel'}
-          - {os: macOS-latest,   r: '4.0'}
-          - {os: windows-latest, r: '4.0'}
+          - {os: macOS-latest,   r: 'release'}
+          - {os: windows-latest, r: 'release'}
           - {os: ubuntu-16.04,   r: '4.0', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
         
@@ -43,7 +43,7 @@ jobs:
         run: |
           brew install gtk+
         
-      - name: GTK for Windows
+      - name: Install GTK for Windows
         if: runner.os == 'Windows'
         run: |
           choco install gtk-runtime
@@ -88,9 +88,17 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
-      - name: Check
+      - name: Full check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+  
+      - name: Check without optional packages
+        if: failure()
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+          _R_CHECK_FORCE_SUGGESTS_: false
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 

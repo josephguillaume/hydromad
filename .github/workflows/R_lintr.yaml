@@ -29,5 +29,5 @@ jobs:
         shell: Rscript {0}
 
       - name: Lint
-        run: if ( length(lintr::lint_package(linters = lintr::with_defaults(object_name_linter = NULL)) -> results)) { print(results); quit(status=1) }
+        run: if ( length(lintr::lint_package(linters = lintr::with_defaults(object_name_linter = NULL)) -> results)) { print.listof(results); quit(status=1) }
         shell: Rscript {0}

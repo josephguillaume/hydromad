@@ -19,18 +19,12 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
-
+     
       - uses: r-lib/actions/setup-r@master
 
       - name: Install dependencies
         run: |
           install.packages('remotes')
-          remotes::install_cran("rcmdcheck")
-          remotes::install_cran("coda")
-          remotes::install_github("TillF/ppso")
-          remotes::install_url("http://download.r-forge.r-project.org/src/contrib/dream_0.4-2.tar.gz")
-          remotes::install_url("https://cran.r-project.org/src/contrib/Archive/gWidgets/gWidgets_0.0-54.tar.gz")
-          remotes::install_url("https://cran.r-project.org/src/contrib/Archive/playwith/playwith_0.9-54.tar.gz")
           remotes::install_cran("lintr")
         shell: Rscript {0}
 

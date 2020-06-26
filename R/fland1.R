@@ -35,7 +35,7 @@ fland1<-function(sma,fsum1)
   }
   
   #L225
-  e3 = red * sma->lztwc/(sma->uztwm + sma->lztwm)
+  e3 = red * sma$lztwc/(sma$uztwm + sma$lztwm)
   sma$lztwc = sma$lztwc-e3
   if (abs(sma$lztwc) < EPS) sma$lztwc = 0				
   if (sma$lztwc < 0) {

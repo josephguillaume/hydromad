@@ -2,3 +2,6 @@ R/ltv.R
 inst/doc/hydromad.Rnw
 inst/doc/runlists.Rnw
 inst/doc/dataChecking.Rnw
+^.*\.Rproj$
+^\.Rproj\.user$
+^data-raw$

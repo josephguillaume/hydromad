@@ -267,8 +267,6 @@ export(findThresh,
        eventapply,
        eventinfo)
 
-export(eventsExplorer)
-
 export(event.xyplot)
 S3method(event.xyplot, formula)
 S3method(event.xyplot, hydromad)

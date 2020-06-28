@@ -69,8 +69,7 @@ spec[["discrete events"]] <-
     list(
          list("eventseq", do.example = TRUE),
          list("event.xyplot", do.example = TRUE),
-         list("event.xyplot.hydromad", do.example = TRUE),
-         list("eventsExplorer")
+         list("event.xyplot.hydromad", do.example = TRUE)
          )
 
 spec[["soil moisture accounting"]] <-

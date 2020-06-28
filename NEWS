@@ -1,5 +1,9 @@
+Changes in Version 0.9-27 (in development)
+  o Removed eventsExplorer(), due to dependency on archived playwith
 
-Changes in Version 0.9-20 (in development)
+...
+
+Changes in Version 0.9-20
 
 Bug fixes:
   o fixed several problems caused by the change in behaviour of filter() 

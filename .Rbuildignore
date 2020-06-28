@@ -5,3 +5,7 @@ inst/doc/dataChecking.Rnw
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
+^.github$
+src/README
+^docs$
+^web$

@@ -1,5 +1,5 @@
 paretoTimeAnalysis.data.frame <- function(stat,show.models=NA,objectives="r.squared",
-                                          pars){
+                                          pars,...){
   
   cat("\nCross-validation Pareto analysis\nWhich models cannot be rejected, due to dataset uncertainty/non-stationarity?\n")
   cat("\n== Eliminating Pareto-dominated models ==\n (worse than another model in all periods)\n")

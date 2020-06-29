@@ -22,3 +22,9 @@ jobs:
         source: '.'
         extensions: 'c,h,cpp'
         clangFormatVersion: 9
+
+    - name: Upload C linter artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: c_linter
+        path: check

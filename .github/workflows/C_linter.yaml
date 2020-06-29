@@ -24,6 +24,7 @@ jobs:
         clangFormatVersion: 9
 
     - name: Upload C linter artifact
+      if: failure()
       uses: actions/upload-artifact@v1
       with:
         name: c_linter

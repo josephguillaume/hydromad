@@ -16,7 +16,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      
+    
+    - name: Make directory for artifact
+      run: mkdir ${{ github.workspace }}/src/c_lint_artifact
+    
     - uses: DoozyX/clang-format-lint-action@v0.5
       with:
         source: '.'
@@ -28,4 +31,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: c_linter
-        path: src
+        path: ${{ github.workspace }}/src/c_lint_artifact

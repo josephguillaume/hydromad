@@ -3,4 +3,5 @@ inst/doc/hydromad.Rnw
 inst/doc/runlists.Rnw
 inst/doc/dataChecking.Rnw
 ^README\.Rmd$
+^README\.md$
 ^\.github$

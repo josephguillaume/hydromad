@@ -1,8 +1,6 @@
-# Translation of sacramento inner loop
-# from fland1.c
+EPS<- 1e-5 
 fland1<-function(sma,fsum1)				
 {
-  EPS<- 1e-5 
   zp<-sma$zperc
   
   edmnd<-sma$ep
@@ -127,7 +125,7 @@ fland1<-function(sma,fsum1)
       if (sma$adimc > (sma$uztwm + sma$lztwm)) 
       {
         addro = addro+(sma$adimc - (sma$uztwm + sma$lztwm))
-        sma$adimc = sma->uztwm + sma->lztwm
+        sma$adimc = sma$uztwm + sma$lztwm
       }
       next
     }
@@ -147,7 +145,7 @@ fland1<-function(sma,fsum1)
       stop("1")										#doubt
     }
     
-    perc = perc*(1.0 + zp * pow(defr,sma$rexp))
+    perc = perc*(1.0 + zp * (defr^sma$rexp))
     
     if (perc >= sma$uzfwc) { 
       perc = sma$uzfwc
@@ -218,16 +216,16 @@ fland1<-function(sma,fsum1)
     if (sma$adimc > (sma$uztwm + sma$lztwm)) 
     {
       addro = addro+(sma$adimc - (sma$uztwm + sma$lztwm))
-      sma$adimc = sma->uztwm + sma->lztwm
+      sma$adimc = sma$uztwm + sma$lztwm
     }
   }
   eused = e1 + e2 + e3
   sif = sif*parea
   tbf = sbf * parea
-  bfcc = tbf * (1.0 / (1.0 + sma->side))
-  bfp = (spbf * parea) / (1.0 + sma->side)
+  bfcc = tbf * (1.0 / (1.0 + sma$side))
+  bfp = (spbf * parea) / (1.0 + sma$side)
   bfs = bfcc - bfp
-  if (bfs < 0.) bfs = 0
+  if (bfs < 0) bfs = 0
   bfncc = tbf - bfcc
   fsum1$sintft = fsum1$sintft+sif
   fsum1$sgwfp = fsum1$sgwfp+bfp

@@ -193,7 +193,7 @@ sacramento.sim <-
                 sma$ep =  E[t] * sma$epdist
                 sma$pxv = P[t] * sma$pxmlt
                 fland1(sma,fsum1)
-                U[t] = sma$tlci
+                U[t] = out$sma$tlci
                 t<-t+1
             }
             # TODO: Construct sma and fsum1 as in test_fland1.R

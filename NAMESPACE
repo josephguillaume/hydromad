@@ -16,7 +16,7 @@ import(reshape)
 ## Exports from imported packages
 export(simulate,fitted,residuals,predict,update,coef)
 export(xyplot)
-export(summary,print)
+# export(summary,print)
 export(plot)
 
 ## CORE FUNCTIONS
@@ -33,6 +33,8 @@ S3method(str, hydromad.runlist)
 export(isValidModel)
 S3method(isValidModel, default)
 S3method(isValidModel, hydromad)
+S3method(isValidModel, runlist)
+S3method(isValidModel, tf)
 
 S3method(predict, hydromad)
 
@@ -241,8 +243,9 @@ export(paretoObjectivesVaryWeights)
 
 ## paretoTimeAnalysis
 export(paretoTimeAnalysis)
-export(paretoTimeAnalysis.crossvalidation)
-export(paretoTimeAnalysis.data.frame)
+S3method(paretoTimeAnalysis,crossvalidation)
+S3method(paretoTimeAnalysis,data.frame)
+S3method(paretoTimeAnalysis,matrix)
 export(paretoTimeAnalysis_areModelsDominated)
 export(paretoFilter)
 export(plotPCNSE)
@@ -256,18 +259,16 @@ export(getFreeParsRanges)
 export(evalParsTS)
 export(evalParsRollapply)
 export(tellTS)
-export(tellTS.default)
-export(tellTS.sobol2002)
-export(tellTS.sobol2007)
-export(tellTS.morris)
+S3method(tellTS,default)
+S3method(tellTS,sobol2002)
+S3method(tellTS,sobol2007)
+S3method(tellTS,morris)
 
 ## events.R
 export(findThresh,
        eventseq,
        eventapply,
        eventinfo)
-
-export(eventsExplorer)
 
 export(event.xyplot)
 S3method(event.xyplot, formula)
@@ -281,13 +282,13 @@ S3method(panel.ribbon, zoo)
 
 ## utilities.R
 export(observed,
-       observed.default,
        numericSummary)
+S3method(observed,default)
 
 ## rollccf.R
 export(rollccf,
-       xyplot.rollccf,
        ccfForLags)
+S3method(xyplot,rollccf)
 
 export(hydromad.stats,
        hmadstat)

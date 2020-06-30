@@ -68,7 +68,7 @@ http://www.bom.gov.au/climate/averages
 }
 \seealso{
   \code{\link{BinghamTrib}},
-  \code{\link{DonnybrookTemp}}
+  \code{\link{YeAl97}}
 }
 \references{
   Ye, W., B. C. Bates, N. R. Viney, M. Sivapalan and A. J. Jakeman (1997).

@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - master
+      - continuous_integration
+  pull_request:
+    branches:
+      - master
+      - continuous_integration
+
+name: R linter
+
+jobs:
+  lint:
+    runs-on: macOS-latest
+    
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    
+    steps:
+      - uses: actions/checkout@v2
+     
+      - uses: r-lib/actions/setup-r@master
+
+      - name: Install dependencies
+        run: |
+          install.packages('remotes')
+          remotes::install_cran("lintr")
+        shell: Rscript {0}
+
+      - name: Lint
+        run: if ( length(lintr::lint_package(linters = lintr::with_defaults(object_name_linter = NULL)) -> results)) { print(results); quit(status=1) }
+        shell: Rscript {0}

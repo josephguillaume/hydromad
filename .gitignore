@@ -12,3 +12,5 @@ docs/.DS_Store
 .Rproj.user
 .Rhistory
 .RData
+src/RcppExports.cpp
+R/RcppExports.R

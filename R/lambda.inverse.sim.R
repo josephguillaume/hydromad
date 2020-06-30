@@ -134,7 +134,7 @@ lambda.inverse.sim <-
                 as.double(pars["lambda"]),
                 as.double(P),
                 U = double(length(Q)),
-                DUP=FALSE, PACKAGE="hydromad")$U
+                 PACKAGE="hydromad")$U
         ## make it a time series object again
         attributes(U) <- attributes(Q)
     }

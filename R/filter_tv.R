@@ -30,7 +30,7 @@ filter_tv <-
                   as.integer(length(x)),
                   as.double(init),
                   out = double(length(x)),
-                  DUP=FALSE, PACKAGE="hydromad")$out
+                   PACKAGE="hydromad")$out
     }
     ## re-insert missing values
     y[bad] <- NA

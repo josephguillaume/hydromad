@@ -134,7 +134,7 @@ armax.inverse.sim <-
                 as.integer(use.Qm),
                 as.double(P),
                 U = double(length(Q)),
-                DUP=FALSE, PACKAGE="hydromad")$U
+                 PACKAGE="hydromad")$U
         ## make it a time series object again
         attributes(U) <- attributes(Q)
     }

@@ -9,3 +9,6 @@ inst/doc/dataChecking.Rnw
 src/README
 ^docs$
 ^web$
+^README\.Rmd$
+^README\.md$
+LICENSE

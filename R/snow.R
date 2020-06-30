@@ -43,7 +43,7 @@ snow.sim <-
                   as.double(ISWE_0),
                   U = double(NROW(DATA)),
                   SWE = double(NROW(DATA)),
-                  NAOK=FALSE, DUP=FALSE, PACKAGE="hydromad")
+                  NAOK=FALSE, PACKAGE="hydromad")
         Sdischarge <- ans$U
         SWE <- ans$SWE
     } else {

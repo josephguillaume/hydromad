@@ -142,7 +142,7 @@ do_srivfit <-
                       xz = double( (n+m+1)^2 ),
                       xy = double( (n+m+1) ),
                       xx = double( (n+m+1)^2 ),
-                      NAOK = TRUE, DUP = FALSE, PACKAGE="hydromad")
+                      NAOK = TRUE, PACKAGE="hydromad")
             xz <- matrix(ans$xz, ncol=(n+m+1))
             xx <- matrix(ans$xx, ncol=(n+m+1))
             xQ <- ans$xy

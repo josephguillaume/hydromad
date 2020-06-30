@@ -194,7 +194,6 @@ sacramento.sim <-
                 sma$pxv = P[t] * sma$pxmlt
                 fland1(sma,fsum1)
                 U[t] = out$sma$tlci
-                t<-t+1
             }
             # TODO: Construct sma and fsum1 as in test_fland1.R
             # TODO: for loop as in sacramento.c

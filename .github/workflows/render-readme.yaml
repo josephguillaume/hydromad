@@ -15,6 +15,28 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install rmarkdown
         run: Rscript -e 'install.packages("rmarkdown")'
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-1-
+
+      - name: Install dependencies
+        run: |
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+
+      - name: Install hydromad
+        run: Rscript -e 'install.packages("hydromad", repos = "http://hydromad.catchment.org")'
+
       - name: Render README
         run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
       - name: Commit results

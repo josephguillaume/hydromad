@@ -8,4 +8,5 @@ inst/doc/*.aux
 inst/doc/*.log
 web/index.html
 .DS_Store
+.Rhistory
 

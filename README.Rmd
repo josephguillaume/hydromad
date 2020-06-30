@@ -24,7 +24,7 @@ The goal of hydromad is to provide a modelling framework for environmental hydro
 Hydromad supports simulation, estimation, assessment and visualisation of flow response to time series of rainfall and other drivers. A minimal unit hydrograph framework is used, where areal rainfall is passed through a soil moisture accounting (SMA) model to estimate effective rainfall; this is then passed through a routing model to estimate streamflow. Included are several implementations of common hydrological models consistent with this framework.
 
 The main resource for hydromad is the website: [http://hydromad.catchment.org](http://hydromad.catchment.org)
-The website describes the different functions and gives examples of the code applications
+The website describes the different functions and gives examples of the code applications.
 
 ## Installation
 
@@ -75,7 +75,7 @@ The maintainers of hydromad are always keen to receive contributions. However to
 
 ## Usage
 
-This is a basic example of defining a model in hydromad
+This is a basic example of defining a model in hydromad:
 
 ```{r example, message = F}
 library(hydromad)

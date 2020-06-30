@@ -8,6 +8,7 @@ inst/doc/*.aux
 inst/doc/*.log
 web/index.html
 .DS_Store
+docs/.DS_Store
 .Rproj.user
 .Rhistory
 .RData

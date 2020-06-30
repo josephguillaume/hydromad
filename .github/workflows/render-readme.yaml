@@ -15,7 +15,6 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install rmarkdown
         run: Rscript -e 'install.packages("rmarkdown")'
-
       - name: Query dependencies
         run: |
           install.packages('remotes')
@@ -38,7 +37,13 @@ jobs:
         
       - name: Install hydromad
         run: Rscript -e 'install.packages("hydromad", repos = "http://hydromad.catchment.org")'
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+        
+      - name: Install hydromad
+        run: Rscript -e 'install.packages("hydromad", repos = "http://hydromad.catchment.org")'
 
+>>>>>>> c536536... update readme yaml and update from master
       - name: Render README
         run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
       - name: Commit results

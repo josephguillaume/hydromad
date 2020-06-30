@@ -126,10 +126,10 @@ S3method(vcov, tf)
 ## SOIL MOISTURE ACCOUNTING MODELS
 
 export(scalar.sim)
-export(absorbScale.hydromad.scalar)
+S3method(absorbScale,hydromad.scalar)
 
 export(cwi.sim)
-export(absorbScale.hydromad.cwi)
+S3method(absorbScale,hydromad.cwi)
 export(filter_tv)
 useDynLib(hydromad, ar1_tv)
 
@@ -157,13 +157,13 @@ export(snow.sim)
 useDynLib(hydromad, sma_snow)
 
 export(runoffratio.sim)
-export(absorbScale.hydromad.runoffratio)
+S3method(absorbScale,hydromad.runoffratio)
 
 export(dbm.sim)
-export(absorbScale.hydromad.dbm)
+S3method(absorbScale,hydromad.dbm)
 
 export(intensity.sim)
-export(absorbScale.hydromad.intensity)
+S3method(absorbScale,hydromad.intensity)
 
 ## CALIBRATION METHODS
 

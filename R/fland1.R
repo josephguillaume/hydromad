@@ -18,19 +18,24 @@ fland1 <- function(sma, fsum1)
       e2 = sma$uzfwc
       sma$uzfwc = 0
       red <- red - e2
+      # goto L225
     }
     else
     {
       e2 = red
       sma$uzfwc = sma$uzfwc - e2
       red = 0
+    }
+  }
+
+  # Run in all cases except the goto statement above
+  if(sma$uzfwc >= red){
       if ((sma$uztwc / sma$uztwm) < (sma$uzfwc / sma$uzfwm))
       {
         uzrat = (sma$uztwc + sma$uzfwc) / (sma$uztwm + sma$uzfwm)
         sma$uztwc = sma$uztwm * uzrat
         sma$uzfwc = sma$uzfwm * uzrat
       }
-    }
   }
   
   #L225

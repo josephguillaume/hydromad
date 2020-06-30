@@ -75,7 +75,7 @@ The maintainers of hydromad are always keen to receive contributions. However to
 
 ## Usage
 
-This is a basic example of defining a model in hydromad
+This is a basic example of defining a model in hydromad:
 
 ```{r example, message = F}
 library(hydromad)

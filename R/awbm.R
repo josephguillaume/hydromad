@@ -60,7 +60,7 @@ awbm.sim <-
                   S1 = double(NROW(DATA)),
                   S2 = double(NROW(DATA)),
                   S3 = double(NROW(DATA)),
-                  NAOK=FALSE, DUP=FALSE, PACKAGE="hydromad")
+                  NAOK=FALSE, PACKAGE="hydromad")
         U <- ans$U
         S1 <- ans$S1
         S2 <- ans$S2

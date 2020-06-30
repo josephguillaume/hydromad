@@ -42,7 +42,7 @@ filter_loss <-
                     as.integer(length(a)),
                     as.double(loss),
                     out = as.double(yi),
-                    DUP=FALSE, PACKAGE="hydromad")$out
+                     PACKAGE="hydromad")$out
             y <- y[-(1:nn)]
         }
         y

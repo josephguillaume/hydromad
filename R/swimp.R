@@ -94,7 +94,7 @@ swimp <-
                   H = H,
                   M = M,
                   Iw = Iw,
-                  DUP = FALSE, PACKAGE = "hydromad")
+                   PACKAGE = "hydromad")
         V <- ans$V
         A <- ans$A
         H <- ans$H

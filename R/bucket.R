@@ -51,7 +51,7 @@ bucket.sim <-
                 U = double(NROW(DATA)),
                 S = double(NROW(DATA)),
                 ET = double(NROW(DATA)),
-                NAOK=FALSE, DUP=FALSE, PACKAGE="hydromad")
+                NAOK=FALSE, PACKAGE="hydromad")
         U <- ans$U
         S <- ans$S
         ET <- ans$ET

@@ -74,7 +74,7 @@ sacramento.sim <-
                      as.double(lztwc_0),as.double(lzfsc_0),as.double(lzfpc_0),
                      as.double(adimc_0),
                      as.integer(min_ninc),
-                     NAOK = FALSE, DUP = FALSE, PACKAGE="hydromad")
+                     NAOK = FALSE, PACKAGE="hydromad")
         for(i in 7:25) attributes(states[[i]]) <- attributes(P)
         ans <- do.call(cbind,states[7:25])
         return(ans)
@@ -91,7 +91,7 @@ sacramento.sim <-
                 as.double(lztwc_0),as.double(lzfsc_0),as.double(lzfpc_0),
                 as.double(adimc_0),
                 as.integer(min_ninc),
-                NAOK = FALSE, DUP = FALSE, PACKAGE="hydromad")$U
+                NAOK = FALSE, PACKAGE="hydromad")$U
         ## make it a time series object again
         attributes(U) <- attributes(P)
         ## re-insert missing values

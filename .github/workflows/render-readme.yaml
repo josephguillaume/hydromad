@@ -19,7 +19,7 @@ jobs:
       - name: Query dependencies
         run: |
           install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          saveRDS(remotes::dev_package_deps(), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
 
       - name: Cache R packages
@@ -31,9 +31,11 @@ jobs:
 
       - name: Install dependencies
         run: |
+          remotes::install_github("TillF/ppso")
+          remotes::install_url("http://download.r-forge.r-project.org/src/contrib/dream_0.4-2.tar.gz")
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-
+        
       - name: Install hydromad
         run: Rscript -e 'install.packages("hydromad", repos = "http://hydromad.catchment.org")'
 

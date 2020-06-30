@@ -52,10 +52,6 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
 
-      # disable rcmdcheck matcher since it misses filenames and line numbers
-      - run: |
-          echo ::remove-matcher owner=rcmdcheck::
-
       - uses: r-lib/actions/setup-pandoc@master
 
       - name: Query dependencies
@@ -91,6 +87,10 @@ jobs:
           remotes::install_url("https://cran.r-project.org/src/contrib/Archive/playwith/playwith_0.9-54.tar.gz")
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
+
+      # disable rcmdcheck matcher since it misses filenames and line numbers
+      - run: |
+          echo '::remove-matcher owner=rcmdcheck::'
 
       - name: Full check
         env:

@@ -144,7 +144,58 @@ sacramento.sim <-
             }
         } else {
             U <- rep(0, length(P))
+            sma = list(
+                uztwm = uztwm,
+                uzfwm = uzfwm,
+                uzk = uzk,
+                pctim = pctim,
+                adimp = adimp,
+                riva  = 0.0,
+                zperc = zperc,
+                rexp  = rexp,
+                lztwm = lztwm,
+                lzfsm = lzfsm,
+                lzfpm = lzfpm,
+                lzsk  = lzsk,
+                lzpk  = lzpk,
+                pfree = pfree,
+                rserv = 0.3,
+                side  = 0.0,
+                pxmlt = 1.0,
+                uztwc = uztwc_0 * uztwm,
+                uzfwc = uzfwc_0 * uzfwm,
+                lztwc = lztwc_0 * lztwm,
+                lzfsc = lzfsc_0 * lzfsm,
+                lzfpc = lzfpc_0 * lzfpm,
+                adimc = adimc_0 * (uztwm + lztwm),
+                min_ninc = min_ninc
+            )
             
+            # SET SOME INITIAL VALUES TO ZERO
+            fsum1 = list(
+                srot = 0,
+                simpvt = 0,
+                srodt = 0,
+                srost = 0,
+                sintft = 0,
+                sgwfp = 0,
+                sgwfs = 0,
+                srecht = 0,
+                sett = 0,
+                se1 = 0,
+                se3 = 0,
+                se4 = 0,
+                se5 = 0
+            )
+            sma$epdist = etmult
+            sma$dt = dt
+            for (t in 1:NROW(DATA)) {
+                sma$ep =  E[t] * sma$epdist
+                sma$pxv = P[t] * sma$pxmlt
+                fland1(sma,fsum1)
+                U[t] = sma$tlci
+                t<-t+1
+            }
             # TODO: Construct sma and fsum1 as in test_fland1.R
             # TODO: for loop as in sacramento.c
             #    TODO: inside for loop, call fland1

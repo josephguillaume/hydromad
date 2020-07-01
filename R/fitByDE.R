@@ -9,7 +9,6 @@ fitByDE <-
              objective = hydromad.getOption("objective"),
              control = hydromad.getOption("de.control"))
 {
-    if(!requireNamespace("DEoptim")) stop("package DEoptim is required for fitByDE")
     control <- do.call(DEoptim::DEoptim.control, control)
     start_time <- proc.time()
     objective <- buildCachedObjectiveFun(objective, MODEL)

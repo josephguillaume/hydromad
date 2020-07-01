@@ -1,4 +1,4 @@
-fitByCMAES<-function (MODEL, objective = hydromad.getOption("objective"), 
+fitByCMAES <- function (MODEL, objective = hydromad.getOption("objective"), 
     control = hydromad.getOption("cmaes.control"), vcov = FALSE) 
 {
   if(!requireNamespace("cmaes")) stop("package cmaes is required for fitByCMAES")

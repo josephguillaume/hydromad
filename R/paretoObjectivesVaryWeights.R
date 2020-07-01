@@ -2,18 +2,27 @@ paretoObjectivesVaryWeights<-function (MODEL, objective = hydromad.getOption("ob
 {
   objective <- buildCachedObjectiveFun(objective, MODEL)
   switch(hydromad.getOption("parallel")[["paretoObjectivesVaryWeights"]],
-         "clusterApply"={
-           if(!require("parallel")) stop('package parallel is required for paretoObjectivesVaryWeights if hydromad.getOption("parallel")[["paretoObjectivesVaryWeights"]]=="clusterApply"')
-           clusterExport(cl,c("objective","fitBy","MODEL"),envir=environment())
-           front <- parApply(cl,weights,1,
+         "clusterApply" = {
+           #if(!require("parallel")) stop('package parallel is required for paretoObjectivesVaryWeights if hydromad.getOption("parallel")[["paretoObjectivesVaryWeights"]]=="clusterApply"')
+           parallel::clusterExport(cl,c("objective", "fitBy", "MODEL"),
+                                   envir = environment())
+           front <- parallel::parApply(cl, weights , 1,
                              ## fit model using weighted sum of objectives
-                             function(w) fitBy(MODEL,objective=function(...) sum(w*sapply(objective,function(obj) obj(...))),
+                             function(w) fitBy(MODEL, 
+                                               objective = function(...) 
+                                                 sum(w*sapply(objective, 
+                                                              function(obj) obj(...)))
+                                                 ,
                                                ...))
          },
-         front <- apply(weights,1,function(w) fitBy(MODEL,objective=function(...) sum(w*sapply(objective,function(obj) obj(...))),
+         front <- apply(weights, 1, 
+                        function(w) fitBy(MODEL,
+                                          objective=function(...) 
+                                            sum(w*sapply(objective, 
+                                                         function(obj) obj(...))),
                                                     ...))
          ) ##switch parallel
-  names(front) <- apply(weights,1,paste,collapse="_")
+  names(front) <- apply(weights, 1, paste, collapse="_")
   front <- as.runlist(front)
   return(front)
 }

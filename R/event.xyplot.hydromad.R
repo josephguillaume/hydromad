@@ -8,10 +8,10 @@ event.xyplot.hydromad.runlist <-
 event.xyplot.hydromad <-
     function(x, events,
              formula =
-             ~ log2(e(Q,mean)+.01) +
-               log2(e(lag(Q,-2),first)+.01) +
-               log2(e(U,max)+.01) +
-               e(E,mean),
+             ~ log2(e(Q, mean) + .01) +
+               log2(e(lag(Q, -2), first) + .01) +
+               log2(e(U, max) + .01) +
+               e(E, mean),
              extract = residuals,
              with.U = TRUE,
              ...,

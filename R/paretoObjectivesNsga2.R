@@ -1,7 +1,7 @@
-paretoObjectivesNsga2<-function (MODEL, objective = hydromad.getOption("objective"), 
+paretoObjectivesNsga2<-function (MODEL, 
+                                 objective = hydromad.getOption("objective"), 
     control = hydromad.getOption("nsga2.control")) 
 {
-    if(!requireNamespace("mco")) stop("package mco is required for paretoObjectivesNsga2")
     start_time <- proc.time()
     objective <- buildCachedObjectiveFun(objective, MODEL)
     parlist <- as.list(coef(MODEL, warn = FALSE))
@@ -23,13 +23,13 @@ paretoObjectivesNsga2<-function (MODEL, objective = hydromad.getOption("objectiv
         thisVal <- objFunVal(thisMod, objective = objective)
         return(-unlist(thisVal))
     }
-    args<-modifyList(control,list(
-                                  fn=do_nsga2,
-                                  idim=length(parlist),
-                                  odim=length(objective),
+    args<-modifyList(control, list(
+                                  fn = do_nsga2,
+                                  idim = length(parlist),
+                                  odim = length(objective),
                                   lower.bounds = lower, upper.bounds = upper
                                   ))
-    ans <- do.call(mco::nsga2,args)
+    ans <- do.call(mco::nsga2, args)
     colnames(ans$par) <- names(parlist)
     MODEL$funevals <- NA ## TODO
     MODEL$timing <- signif(proc.time() - start_time, 4)[1:3]
@@ -38,6 +38,7 @@ paretoObjectivesNsga2<-function (MODEL, objective = hydromad.getOption("objectiv
     MODEL$fit.result <- ans
     if(isTRUE(hydromad.getOption("trace"))) cat("Creating runlist (running models on pareto front)\n")
     ## TODO: potential for parallelisation
-    front <- as.runlist(apply(ans$par,1,function(p) update(MODEL,newpars=p)))
+    front <- as.runlist(apply(ans$par, 1, 
+                              function(p) update(MODEL, newpars = p)))
     return(front)
 }

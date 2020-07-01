@@ -1,6 +1,8 @@
-estimateDelayFrac<-function(DATA,rises=TRUE,lag.max=hydromad.getOption("max.delay")){
+estimateDelayFrac <- function(DATA, rises = TRUE, 
+                              lag.max = hydromad.getOption("max.delay"))
+    {
     DATA <- as.ts(DATA)
-    if (NROW(DATA) <= 1)
+    if (dim(DATA)[1] <= 1)
         return(NA_integer_)
     iQ <- 1
     if ("Q" %in% colnames(DATA)) {
@@ -20,7 +22,8 @@ estimateDelayFrac<-function(DATA,rises=TRUE,lag.max=hydromad.getOption("max.dela
         }
         Q <- rises(Q)
     }
-    return(optimise(function(L) cor(lagFrac(U,L),Q,use="complete.obs"),interval=c(0,lag.max),maximum=T)$maximum)
+    return(optimise(function(L) cor(lagFrac(U,L), Q, use = "complete.obs"),
+                    interval = c(0,lag.max), maximum = T)$maximum)
 }
 
 #################################################################################

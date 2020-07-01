@@ -1,0 +1,53 @@
+---
+title: "Model Calibration"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Model Calibration}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- An example of how to include articles in pkgdown -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(hydromad)
+```
+
+## Import data
+
+```{r}
+data("Cotter")
+```
+
+## Set up model and parameter ranges
+
+```{r}
+mod <- hydromad(window(Cotter, start=as.Date('1990-01-01'), end=as.Date('1996-12-31')),
+                sma = "gr4j",
+                routing = "gr4jrouting",
+                x1 = c(1, 1500),
+                x2 = c(-10, 5),
+                x3 = c(1, 500),
+                x4 = c(0.5, 4))
+```
+
+## Fit the model
+
+```{r}
+fit <- fitByOptim(mod,
+                  objective = hmadstat('r.squared'))
+```
+
+# Results
+
+```{r}
+objFunVal(fit)
+xyplot(fit)
+```

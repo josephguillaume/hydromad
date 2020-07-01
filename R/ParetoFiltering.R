@@ -21,7 +21,6 @@ paretoFilter <- function(x, ...) {
 }
 
 plotPCNSE <- function(res, objectives = "r.squared", return.data = FALSE) {
-  if (!require("ggplot2")) stop("package ggplot2 is required for plotPCNSE")
   res <- as.data.frame(res)
   stopifnot(!"Catchment" %in% names(res) | length(unique(res$Catchment)) == 1)
   resm <- melt(res,
@@ -69,4 +68,22 @@ plotPCNSE <- function(res, objectives = "r.squared", return.data = FALSE) {
     scale_colour_discrete(name = "Dominated?") +
     scale_linetype_discrete(name = "Model structure") +
     coord_cartesian(ylim = c(0.4, 1)) ## FIXME
+    ggplot(resm2) +
+        geom_line(aes(x = sim.period, y = value, group = model,
+                      col = dominated, linetype = Model.str)) +
+        ##geom_line(aes(x=sim.period,y=value,group=model),col="grey")+
+        geom_point(aes(x = sim.period, y = value, group = model,
+                       col = dominated)) +
+        geom_text(aes(x = sim.period, y = value, label = model),
+                  size = 3, hjust = -0.2,
+                 data = subset(resm2, sim.period == max(resm2$sim.period))) +
+        geom_text(aes(x = sim.period, y = value, label = model),
+                  size = 3, hjust = 1.2,
+                  data= subset(resm2, sim.period == min(resm2$sim.period))) +
+        scale_y_continuous(name = "Performance - NSE",
+                           breaks = seq(0.4, 1, by = 0.1)) +
+        scale_x_discrete(name = "Simulation period") +
+        scale_colour_discrete(name = "Dominated?") +
+        scale_linetype_discrete(name = "Model structure") +
+        coord_cartesian(ylim = c(0.4, 1)) ##FIXME
 }

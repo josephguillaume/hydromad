@@ -1,6 +1,7 @@
-fitByCMAES <- function(MODEL, objective = hydromad.getOption("objective"),
-                       control = hydromad.getOption("cmaes.control"), vcov = FALSE) {
-  if (!requireNamespace("cmaes")) stop("package cmaes is required for fitByCMAES")
+fitByCMAES <- function (MODEL, objective = hydromad.getOption("objective"), 
+    control = hydromad.getOption("cmaes.control"), vcov = FALSE) 
+{
+  if(!requireNamespace("cmaes")) stop("package cmaes is required for fitByCMAES")
   start_time <- proc.time()
   objective <- buildCachedObjectiveFun(objective, MODEL)
   parlist <- as.list(coef(MODEL, warn = FALSE))

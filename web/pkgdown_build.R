@@ -8,7 +8,7 @@ library(pkgdown)
 # Destination can be changed in _pkgdown.yml
 
 # Build website
-# pkgdown::build_site()
+pkgdown::build_site()
 
 # Update pages
 # pkgdown::build_home()

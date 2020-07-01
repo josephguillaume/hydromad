@@ -12,3 +12,6 @@ src/README
 ^README\.Rmd$
 ^README\.md$
 LICENSE
+^_pkgdown\.yml$
+^web/docs$
+^pkgdown$

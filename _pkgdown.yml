@@ -1,4 +1,4 @@
-destination: web/pkgdown
+destination: web/docs
 home:
   title: hydromad R package
   links:

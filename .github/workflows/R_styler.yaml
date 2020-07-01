@@ -1,8 +1,4 @@
 on:
-  push:
-    branches:
-      - master
-      - continuous_integration
   pull_request:
     branches:
       - master
@@ -31,13 +27,3 @@ jobs:
         
       - name: Style
         run: Rscript -e 'styler::style_pkg()'
-
-#    The following code is for the automatic commit
-#      - name: commit
-#        run: |
-#          git add \*.R
-#          git commit -m 'Style'
-#          
-#      - uses: r-lib/actions/pr-push@master
-#        with:
-#          repo-token: ${{ secrets.GITHUB_TOKEN }}

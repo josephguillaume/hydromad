@@ -189,11 +189,14 @@ sacramento.sim <-
             )
             sma$epdist = etmult
             sma$dt = dt
+            
             for (t in 1:length(P)) {
-                sma$ep =  E[t] * sma$epdist
-                sma$pxv = P[t] * sma$pxmlt
+                sma$ep =  coredata(E[t]) * sma$epdist
+                sma$pxv = coredata(P[t]) * sma$pxmlt
+                
                 out <- fland1(sma,fsum1)
                 sma<-out$sma
+                
                 fsum1<-out$fsum1
                 U[t] <- out$sma$tlci
             }

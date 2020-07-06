@@ -15,8 +15,8 @@ test_that("cwi+expuh(2,1) simulation looks reasonable", {
     ),
     all = TRUE
     )
-  expect_that(NROW(simQ) == NROW(obsdat), is_true())
-  expect_that(all(is.finite(simQ)), is_true())
+  expect_that(NROW(simQ) == NROW(obsdat), expect_true())
+  expect_that(all(is.finite(simQ)), expect_true())
 })
 
 test_that("TF parameter conversions are consistent", {

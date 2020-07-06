@@ -17,7 +17,7 @@ test_that("cmd simulation is the same in R and C", {
   mod0 <- hydromad(DATA, sma = "cmd")
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
-    expect_that(all(Csim >= 0), is_true())
+    expect_that(all(Csim >= 0), expect_true())
     hydromad.options(pure.R.code = TRUE)
     pureRsim <- predict(mod)
     hydromad.options(pure.R.code = FALSE)
@@ -30,7 +30,7 @@ test_that("cmd power-form simulation is the same in R and C", {
   mod0 <- hydromad(DATA, sma = "cmd", shape = 2)
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
-    expect_that(all(Csim >= 0), is_true())
+    expect_that(all(Csim >= 0), expect_true())
     hydromad.options(pure.R.code = TRUE)
     pureRsim <- predict(mod)
     hydromad.options(pure.R.code = FALSE)
@@ -43,7 +43,7 @@ test_that("cwi simulation is the same in R and C", {
   mod0 <- hydromad(DATA, sma = "cwi")
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
-    expect_that(all(Csim >= 0), is_true())
+    expect_that(all(Csim >= 0), expect_true())
     hydromad.options(pure.R.code = TRUE)
     pureRsim <- predict(mod)
     hydromad.options(pure.R.code = FALSE)
@@ -56,7 +56,7 @@ test_that("bucket simulation is the same in R and C", {
   mod0 <- hydromad(DATA, sma = "bucket")
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
-    expect_that(all(Csim >= 0), is_true())
+    expect_that(all(Csim >= 0), expect_true())
     hydromad.options(pure.R.code = TRUE)
     pureRsim <- predict(mod)
     hydromad.options(pure.R.code = FALSE)
@@ -72,7 +72,7 @@ test_that("gr4j simulation is the same in R and C", {
   )
   for (mod in simulate(mod0, 5)) {
     Csim <- na.trim(predict(mod))
-    expect_that(all(Csim >= 0), is_true())
+    expect_that(all(Csim >= 0), expect_true())
     hydromad.options(pure.R.code = TRUE)
     pureRsim <- na.trim(predict(mod))
     hydromad.options(pure.R.code = FALSE)
@@ -85,7 +85,7 @@ test_that("AWBM simulation is the same in R and C", {
   mod0 <- hydromad(DATA, sma = "awbm")
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
-    expect_that(all(Csim >= 0), is_true())
+    expect_that(all(Csim >= 0), expect_true())
     hydromad.options(pure.R.code = TRUE)
     pureRsim <- predict(mod)
     hydromad.options(pure.R.code = FALSE)
@@ -99,7 +99,7 @@ test_that("snow simulation is the same in R and C", {
   mod0 <- hydromad(DATA, sma = "snow")
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
-    expect_that(all(Csim >= 0), is_true())
+    expect_that(all(Csim >= 0), expect_true())
     hydromad.options(pure.R.code = TRUE)
     pureRsim <- predict(mod)
     hydromad.options(pure.R.code = FALSE)
@@ -112,7 +112,7 @@ test_that("simhyd simulation is the same in R and C", {
   mod0 <- hydromad(DATA, sma = "simhyd")
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
-    expect_that(all(Csim >= 0), is_true())
+    expect_that(all(Csim >= 0), expect_true())
     hydromad.options(pure.R.code = TRUE)
     pureRsim <- predict(mod)
     hydromad.options(pure.R.code = FALSE)
@@ -125,7 +125,7 @@ test_that("sacramento simulation is the same in R and C", {
   mod0 <- hydromad(DATA, sma = "sacramento")
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
-    expect_that(all(Csim >= 0), is_true())
+    expect_that(all(Csim >= 0), expect_true())
     hydromad.options(pure.R.code = TRUE)
     pureRsim <- predict(mod)
     hydromad.options(pure.R.code = FALSE)
@@ -137,7 +137,7 @@ test_that("scalar simulation runs", {
   set.seed(0)
   mod0 <- hydromad(DATA, sma = "scalar")
   for (mod in simulate(mod0, 5)) {
-    expect_that(all(predict(mod) >= 0), is_true())
+    expect_that(all(predict(mod) >= 0), expect_true())
   }
 })
 
@@ -145,7 +145,7 @@ test_that("runoffratio simulation runs", {
   set.seed(0)
   mod0 <- hydromad(DATAQ, sma = "runoffratio")
   for (mod in simulate(mod0, 5)) {
-    expect_that(all(predict(mod) >= 0), is_true())
+    expect_that(all(predict(mod) >= 0), expect_true())
   }
 })
 
@@ -153,6 +153,6 @@ test_that("dbm simulation runs", {
   set.seed(0)
   mod0 <- hydromad(DATAQ, sma = "dbm")
   for (mod in simulate(mod0, 5)) {
-    expect_that(all(na.trim(predict(mod)) >= 0), is_true())
+    expect_that(all(na.trim(predict(mod)) >= 0), expect_true())
   }
 })

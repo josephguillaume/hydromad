@@ -34,7 +34,7 @@ test_that("findThresh seems to work", {
   x <- rnorm(100)
   t1 <- findThresh(x, n = 20)
   t2 <- findThresh(x, n = 5, mingap = 2)
-  expect_that(abs(nlevels(eventseq(x, t1)) - 20) <= 2, is_true())
+  expect_that(abs(nlevels(eventseq(x, t1)) - 20) <= 2, expect_true())
   expect_that(nlevels(eventseq(x, t2, mingap = 2)) - 5, equals(0))
 })
 

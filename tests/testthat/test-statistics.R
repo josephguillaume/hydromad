@@ -15,7 +15,7 @@ mod <- hydromad(obsdat,
 test_that("basic summary() works", {
   s <- summary(mod, with.hydrostats = TRUE)
   expect_that(s, is_a("summary.hydromad"))
-  expect_that(is.finite(s$rel.bias), is_true())
+  expect_that(is.finite(s$rel.bias), expect_true())
   expect_that(print(s), prints_text("Time steps:"))
   s.breaks <- summary(mod, breaks = "12 months")
   expect_that(s.breaks, is_a("zoo"))
@@ -34,7 +34,7 @@ test_that("all statistics can be evaluated", {
       toString(names(ss)[!ok])
     )
   }
-  expect_that(all(is.finite(unlist(ss))), is_true())
+  expect_that(all(is.finite(unlist(ss))), expect_true())
 })
 
 test_that("custom objective functions work", {
@@ -51,7 +51,7 @@ test_that("custom objective functions work", {
     hmadstat("r.sq.log")(Q, X) - 0.5 * hmadstat("rel.bias")(Q, X)
   })
   expect_that(fit3, is_a("hydromad"))
-  expect_that(coef(fit1)[["v_s"]] != coef(fit3)[["v_s"]], is_true())
+  expect_that(coef(fit1)[["v_s"]] != coef(fit3)[["v_s"]], expect_true())
 })
 
 test_that("formula works within functions", {

@@ -13,3 +13,18 @@ ts_equals <- function(expected, ..., start = NULL, end = NULL, trim = FALSE) {
     equals(windowts[, 1], ...)(windowts[, 2])
   }
 }
+
+
+
+ts_equals <- function(expected, ..., start = NULL, end = NULL, trim = FALSE) {
+ testfunc <- function(actual, expected) {
+    windowts <-
+      window(ts.intersect(as.ts(expected), as.ts(actual)),
+             start = start, end = end
+      )
+    if (trim) {
+      windowts <- na.trim(windowts)
+    }
+    expect_equal(windowts[, 1], ...)(windowts[, 2])
+  }
+}

@@ -15,24 +15,24 @@ test_that("cwi+expuh(2,1) simulation looks reasonable", {
     ),
     all = TRUE
     )
-  expect_that(NROW(simQ) == NROW(obsdat), expect_true())
-  expect_that(all(is.finite(simQ)), expect_true())
+  expect_true(NROW(simQ) == NROW(obsdat))
+  expect_true(all(is.finite(simQ)))
 })
 
 test_that("TF parameter conversions are consistent", {
   toAbAndBack <- function(expars) {
     tfParsConvert(tfParsConvert(expars, "a,b"), "tau,v")[names(expars)]
   }
-  expect_that(toAbAndBack(n0m0), equals(n0m0))
-  expect_that(toAbAndBack(n1m0), equals(n1m0))
-  expect_that(toAbAndBack(n1m1), equals(n1m1))
-  expect_that(toAbAndBack(n2m0), equals(n2m0))
-  expect_that(toAbAndBack(n2m1), equals(n2m1))
-  expect_that(toAbAndBack(n2m2), equals(n2m2))
-  expect_that(toAbAndBack(n3s0), equals(n3s0))
+  expect_equal(toAbAndBack(n0m0), n0m0)
+  expect_equal(toAbAndBack(n1m0), n1m0)
+  expect_equal(toAbAndBack(n1m1), n1m1)
+  expect_equal(toAbAndBack(n2m0), n2m0)
+  expect_equal(toAbAndBack(n2m1), n2m1)
+  expect_equal(toAbAndBack(n2m2), n2m2)
+  expect_equal(toAbAndBack(n3s0), n3s0)
   # expect_that(toAbAndBack(n3s1), equals(n3s1)) ## can't deduce series=1|0
-  expect_that(toAbAndBack(n3s2), equals(n3s2))
-  expect_that(toAbAndBack(n3s3), equals(n3s3))
+  expect_equal(toAbAndBack(n3s2), n3s2)
+  expect_equal(toAbAndBack(n3s3), n3s3)
 
   set.seed(0)
   warmup <- 100
@@ -79,11 +79,11 @@ test_that("TF simulation and inverse simulation are consistent", {
   for (pure.R.code in c(TRUE, FALSE)) {
     message(paste("testing with pure.R.code =", pure.R.code))
     hydromad.options(pure.R.code = pure.R.code)
-    expect_that(armax.inverse.sim(cbind(Q = expuhSim(n0m0), P = Pw), pars = tfParsConvert(n0m0), use.Qm = FALSE)[-1], equals(Uw[-1]))
-    expect_that(armax.inverse.sim(cbind(Q = expuhSim(n1m0), P = Pw), pars = tfParsConvert(n1m0), use.Qm = FALSE)[-1], equals(Uw[-1]))
-    expect_that(armax.inverse.sim(cbind(Q = expuhSim(n1m1), P = Pw), pars = tfParsConvert(n1m1), use.Qm = FALSE)[-(1:3)], equals(Uw[-(1:3)]))
-    expect_that(armax.inverse.sim(cbind(Q = expuhSim(n2m0), P = Pw), pars = tfParsConvert(n2m0), use.Qm = FALSE)[-(1:3)], equals(Uw[-(1:3)]))
-    expect_that(armax.inverse.sim(cbind(Q = expuhSim(n2m1), P = Pw), pars = tfParsConvert(n2m1), use.Qm = FALSE)[-(1:3)], equals(Uw[-(1:3)]))
+    expect_equals(armax.inverse.sim(cbind(Q = expuhSim(n0m0), P = Pw), pars = tfParsConvert(n0m0), use.Qm = FALSE)[-1], equals(Uw[-1]))
+    expect_equals(armax.inverse.sim(cbind(Q = expuhSim(n1m0), P = Pw), pars = tfParsConvert(n1m0), use.Qm = FALSE)[-1], equals(Uw[-1]))
+    expect_equals(armax.inverse.sim(cbind(Q = expuhSim(n1m1), P = Pw), pars = tfParsConvert(n1m1), use.Qm = FALSE)[-(1:3)], equals(Uw[-(1:3)]))
+    expect_equals(armax.inverse.sim(cbind(Q = expuhSim(n2m0), P = Pw), pars = tfParsConvert(n2m0), use.Qm = FALSE)[-(1:3)], equals(Uw[-(1:3)]))
+    expect_equals(armax.inverse.sim(cbind(Q = expuhSim(n2m1), P = Pw), pars = tfParsConvert(n2m1), use.Qm = FALSE)[-(1:3)], equals(Uw[-(1:3)]))
   }
   ## third order models, and all simulations with use.Qm = TRUE, seem to need a longer warmup
   set.seed(0)

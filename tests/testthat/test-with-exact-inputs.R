@@ -29,9 +29,9 @@ test_that("rfit methods work on (2,1) model with exact inputs", {
       sriv = update(xspec, rfit = list("sriv", order = c(2, 1))),
       inv = update(xspec, rfit = list("inverse", order = c(2, 1)))
     )
-  expect_that(summary(fits$ls)$r.squared > 0.9999, expect_true())
-  expect_that(summary(fits$sriv)$r.squared > 0.9999, expect_true())
-  expect_that(summary(fits$inv)$r.squared > 0.9999, expect_true())
+  expect_gt(summary(fits$ls)$r.squared, 0.9999)
+  expect_gt(summary(fits$sriv)$r.squared, 0.9999)
+  expect_gt(summary(fits$inv)$r.squared, 0.9999)
 })
 
 U <- fitted(xspec, U = TRUE, all = TRUE)
@@ -48,7 +48,9 @@ Q_n3s2 <- expuh.sim(U, pars = n3s2)
 Q_n3s3 <- expuh.sim(U, pars = n3s3)
 
 test_that("Least squares (armax) fitting works for all orders with exact inputs", {
-  ## note hydromad.getOption("warmup") == 100
+  ## note 
+  hydromad.getOption("warmup") == 100
+  expect_that(fitted(armax.ls.fit(cbind(U = U, Q = Q_n0m0), order = c(0, 0))), ts_equals(Q_n0m0, tol = 1e-5))
   expect_that(fitted(armax.ls.fit(cbind(U = U, Q = Q_n0m0), order = c(0, 0))), ts_equals(Q_n0m0, tol = 1e-5))
   expect_that(fitted(armax.ls.fit(cbind(U = U, Q = Q_n1m0), order = c(1, 0))), ts_equals(Q_n1m0, tol = 1e-5))
   expect_that(fitted(armax.ls.fit(cbind(U = U, Q = Q_n1m1), order = c(1, 1))), ts_equals(Q_n1m1, tol = 1e-5))
@@ -62,8 +64,8 @@ test_that("Least squares (armax) fitting works for all orders with exact inputs"
 })
 
 test_that("SRIV (armax) fitting works for all orders with exact inputs", {
-  ## note hydromad.getOption("warmup") == 100
-
+  ## note 
+  hydromad.getOption("warmup") == 100
   expect_that(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n0m0), order = c(0, 0))), ts_equals(Q_n0m0, tol = 1e-5))
   expect_that(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n1m0), order = c(1, 0))), ts_equals(Q_n1m0, tol = 1e-5))
   expect_that(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n1m1), order = c(1, 1))), ts_equals(Q_n1m1, tol = 1e-5))
@@ -74,7 +76,6 @@ test_that("SRIV (armax) fitting works for all orders with exact inputs", {
   expect_that(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s1), order = c(3, 2))), ts_equals(Q_n3s1, tol = 1e-5))
   expect_that(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s2), order = c(3, 1))), ts_equals(Q_n3s2, tol = 1e-5))
   expect_that(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s3), order = c(3, 0), delay = 0)), ts_equals(Q_n3s3, tol = 1e-5))
-
   ## tmp <- ts.intersect(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s3), order = c(3,0), delay = 0)), Q_n3s3)
   ## summary(tmp[,1] - tmp[,2])
   ## xyplot(ts(tmp), superpose = TRUE)
@@ -105,18 +106,18 @@ test_that("SMA joint fitting methods work with exact inputs", {
   )
   ## TODO: suppress optim() output
   set.seed(0)
-  expect_that(summary(fitByOptim(jspec, control = list(maxit = 150)))$r.squared > 0.98, expect_true())
+  expect_gt(summary(fitByOptim(jspec, control = list(maxit = 150)))$r.squared, 0.98)
   set.seed(0)
-  expect_that(summary(fitBySCE(jspec, control = list(maxeval = 150)))$r.squared > 0.98, expect_true())
+  expect_gt(summary(fitBySCE(jspec, control = list(maxeval = 150)))$r.squared, 0.98)
   set.seed(0)
-  expect_that(summary(fitByDE(jspec, control = list(itermax = 4)))$r.squared > 0.98, expect_true())
+  expect_gt(summary(fitByDE(jspec, control = list(itermax = 4)))$r.squared, 0.98)
   set.seed(0)
-  expect_that(summary(fitByDream(jspec, control = list(ndraw = 150)))$r.squared > 0.98, expect_true())
+  expect_gt(summary(fitByDream(jspec, control = list(ndraw = 150)))$r.squared, 0.98)
   set.seed(0)
   # TODO: why is CMAES performing less well?
-  expect_that(summary(fitByCMAES(jspec, control = list(maxit = 20)))$r.squared > 0.96, expect_true())
+  expect_gt(summary(fitByCMAES(jspec, control = list(maxit = 20)))$r.squared, 0.96)
   set.seed(0)
-  expect_that(summary(fitByDDS(jspec, control = modifyList(hydromad.getOption("dds.control"), list(max_number_function_calls = 150))))$r.squared > 0.98, expect_true())
+  expect_gt(summary(fitByDDS(jspec, control = modifyList(hydromad.getOption("dds.control"), list(max_number_function_calls = 150))))$r.squared, 0.98)
   set.seed(0)
-  expect_that(summary(fitByNsga2(jspec, control = list(generations = 2)))$r.squared > 0.98, expect_true())
+  expect_gt(summary(fitByNsga2(jspec, control = list(generations = 2)))$r.squared, 0.98)
 })

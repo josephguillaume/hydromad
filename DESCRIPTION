@@ -10,9 +10,15 @@ Description: A modelling framework for environmental hydrology: water
   flow response to time series of rainfall and other drivers. Includes 
   models (such as IHACRES CMD, Sacramento), transfer function estimators
   (including SRIV - Simplified Refined Instrumental Variable), etc.
-Depends: R (>= 2.5.0), zoo (>= 1.6-3), lattice (>= 0.19-11), latticeExtra (>= 0.6-14), polynom, reshape
+Depends: 
+    R (>= 2.10),
+    zoo (>= 1.6-3),
+    lattice (>= 0.19-11),
+    latticeExtra (>= 0.6-14),
+    polynom,
+    reshape
 Imports: car (>= 2.0-2), Hmisc, stats, utils, Rcpp (>= 0.12.17)
-Suggests: DEoptim, mgcv, chron, testthat, mco, cmaes, ppso, sensitivity,ggplot2,rsm,parallel,foreach,doRedis,ff,dream,playwith
+Suggests: DEoptim, mgcv, chron, testthat, mco, cmaes, ppso, sensitivity,ggplot2,rsm,parallel,foreach,doRedis,ff,dream
 LinkingTo: Rcpp
 License: GPL (>= 2)
 URL: http://hydromad.catchment.org/

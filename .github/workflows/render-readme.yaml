@@ -1,0 +1,47 @@
+on:
+  push:
+    paths:
+      - README.Rmd
+
+name: Render README
+
+jobs:
+  render:
+    name: Render README
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-pandoc@v1
+      - name: Install rmarkdown
+        run: Rscript -e 'install.packages("rmarkdown")'
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(), ".github/depends.Rds", version = 2)
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-1-
+
+      - name: Install dependencies
+        run: |
+          remotes::install_github("TillF/ppso")
+          remotes::install_url("http://download.r-forge.r-project.org/src/contrib/dream_0.4-2.tar.gz")
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+        
+      - name: Install hydromad
+        run: Rscript -e 'install.packages("hydromad", repos = "http://hydromad.catchment.org")'
+
+      - name: Render README
+        run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
+      - name: Commit results
+        run: |
+          git commit README.md -m 'Re-build README.Rmd' || echo "No changes to commit"
+          git push origin || echo "No changes to commit"

@@ -18,11 +18,19 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'release'}
-          - {os: macOS-latest, r: 'release'}
-          - {os: macOS-latest, r: 'devel'}
-          - {os: ubuntu-16.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04, r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - { os: macOS-latest, r: "devel" }
+          - { os: macOS-latest, r: "release" }
+          - { os: windows-latest, r: "release" }
+          - {
+              os: ubuntu-16.04,
+              r: "4.0",
+              rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest",
+            }
+          - {
+              os: ubuntu-16.04,
+              r: "3.6",
+              rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest",
+            }
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -30,16 +38,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Install GTK Linux
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install gtk2.0
-        
-      - name: GTK for Windows
-        if: runner.os == 'Windows'
-        run: |
-          choco install gtk-runtime
 
       - uses: r-lib/actions/setup-r@master
         with:
@@ -69,22 +67,29 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
-        
+
       - name: Install dependencies
         run: |
-          remotes::install_cran("lintr")
           remotes::install_cran("rcmdcheck")
+          remotes::install_cran("Rcpp")
           remotes::install_cran("coda")
           remotes::install_github("TillF/ppso")
           remotes::install_url("http://download.r-forge.r-project.org/src/contrib/dream_0.4-2.tar.gz")
-          remotes::install_url("https://cran.r-project.org/src/contrib/Archive/gWidgets/gWidgets_0.0-54.tar.gz")
-          remotes::install_url("https://cran.r-project.org/src/contrib/Archive/playwith/playwith_0.9-54.tar.gz")
           remotes::install_deps(dependencies = TRUE)
+          Rcpp::compileAttributes()
         shell: Rscript {0}
 
-      - name: Check
+      - name: Full check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Check without optional packages
+        if: failure()
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+          _R_CHECK_FORCE_SUGGESTS_: false
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
@@ -94,7 +99,3 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-
-      - name: Lint
-        run: lintr::lint_package()
-        shell: Rscript {0}

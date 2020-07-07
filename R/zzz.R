@@ -8,8 +8,7 @@
 .HydromadEnv$options <- list()
 .HydromadEnv$stats <- list()
 
-.onLoad <- function(libname, pkgname)
-{
-    hydromad.options(.defaultHydromadOptions())
-    hydromad.stats(.defaultHydromadStats())
+.onLoad <- function(libname, pkgname) {
+  hydromad.options(.defaultHydromadOptions())
+  hydromad.stats(.defaultHydromadStats())
 }

@@ -7,3 +7,11 @@ inst/doc/*.tex
 inst/doc/*.aux
 inst/doc/*.log
 web/index.html
+.DS_Store
+.Rhistory
+hydromad.Rproject
+docs/.DS_Store
+.Rproj.user
+.RData
+src/RcppExports.cpp
+R/RcppExports.R

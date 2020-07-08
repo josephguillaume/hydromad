@@ -26,7 +26,7 @@ test_that("all statistics can be evaluated", {
   # Ignore r.sq.vartd because it requires event to be specified
   hydromad_stats$r.sq.vartd <- NULL
   ss <- objFunVal(mod, hydromad_stats)
-  expect_that(str(class(ss)), "list")
+  expect_output(str(class(ss)), "list")
   ok <- sapply(ss, is.finite)
   if (!all(ok)) {
     warning(

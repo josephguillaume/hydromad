@@ -18,7 +18,7 @@ evalParsTS <- function(par.matrix, object,
   }
 
   # Sets default settings for parallelisation if missing
-  parallel <- hydromad.parallel(parallel)
+  parallel <- hydromad:::hydromad.parallel(parallel)
 
   if (parallel$method == "foreach" && !is.null(filehash.name)) {
     filehash.name <- NULL
@@ -34,8 +34,8 @@ evalParsTS <- function(par.matrix, object,
     }
   } else {
     ## Use disk
-    if (!require("parallel")) stop("package parallel is required for evalParsTS if filehash.name is not NULL and parallel$method is not 'foreach'")
-    if (!require("ff")) stop("package ff is required for evalParsTS if filehash.name is not NULL and parallel$method is not 'foreach'")
+    # if (!require("parallel")) stop("package parallel is required for evalParsTS if filehash.name is not NULL and parallel$method is not 'foreach'")
+    # if (!require("ff")) stop("package ff is required for evalParsTS if filehash.name is not NULL and parallel$method is not 'foreach'")
     results <- ff::ff(vmode = "double", dim = c(nrow(par.matrix), length.out), filename = filehash.name)
   }
 

@@ -21,8 +21,8 @@ tellTS.default <- function(x, ts.matrix, fun,
   ))
   switch(parallel,
     "clusterApply" = {
-      clusterEvalQ(cl, library(sensitivity))
-      clusterEvalQ(cl, library(ff))
+      clusterEvalQ(cl, requireNamespace(sensitivity))
+      clusterEvalQ(cl, requireNamespace(ff))
       clusterExport(cl, c("ts.matrix", "x", "fun"), envir = environment())
       results <- parLapply(cl, indices, function(i) {
         y <- ts.matrix[, i]

@@ -15,12 +15,12 @@ evpq <- eventseq(dat$P,
 )
 
 test_that("eventseq seems to work", {
-  expect_output(str(class(evp)), "zoo")
-  expect_output(str(class(evq)), "zoo")
-  expect_output(str(class(evq.ts)), "zoo")
-  expect_output(str(class(evpq)), "zoo")
-  expect_output(str(class(coredata(evp))), "factor")
-  expect_output(str(class(coredata(evpq))), "factor")
+  expect_is(evp, "zoo")
+  expect_is(evq, "zoo")
+  expect_is(evq.ts, "zoo")
+  expect_is(evpq, "zoo")
+  expect_is(coredata(evp), "factor")
+  expect_is(coredata(evpq), "factor")
   expect_equal(index(evp), index(dat))
   expect_equal(index(evq.ts), index(as.ts(dat)))
   expect_equal(c(unclass(evq)), c(unclass(evq.ts)))
@@ -42,8 +42,8 @@ test_that("eventapply seems to work with single series", {
   ## NOTE need to handle functions returning vectors as well as scalars.
   ## (1) scalar result:
   psums <- eventapply(dat$P, evp)
-  expect_output(str(class(psums)), "zoo")
-  expect_output(str(class(index(psums))), "Date")
+  expect_is(psums, "zoo")
+  expect_is(index(psums), "Date")
   expect_equal(NCOL(psums), 1)
   expect_equal(NROW(psums), nlevels(evp))
   ## factor events are not sync'd (cbinded) with the data series
@@ -68,12 +68,12 @@ test_that("eventapply seems to work with single series", {
 test_that("eventapply seems to work with multiple series", {
   ## (1) scalar result with by.column = FALSE
   durs <- eventapply(dat, evp, FUN = nrow, by.column = FALSE)
-  expect_output(str(class(durs)), "zoo")
+  expect_is(durs, "zoo")
   expect_equal(NCOL(durs), 1)
   expect_equal(NROW(durs), nlevels(evp))
   ## (2) scalar result with by.column = TRUE (the default)
   sums <- eventapply(dat, evp, FUN = sum)
-  expect_output(str(class(sums)), "zoo")
+  expect_is(sums, "zoo")
   expect_equal(NCOL(sums), NCOL(dat))
   expect_equal(colnames(sums), colnames(dat))
   ## (3) vector result with by.column = FALSE

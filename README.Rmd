@@ -77,7 +77,7 @@ The maintainers of hydromad are always keen to receive contributions. However to
 
 This is a basic example of defining a model in hydromad:
 
-```{r example, message = F, warning = F}
+```{r example, message = F}
 library(hydromad)
 ## basic example code
 data(Cotter)

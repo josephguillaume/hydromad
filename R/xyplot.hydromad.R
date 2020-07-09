@@ -12,6 +12,62 @@ plot.hydromad <-
     )
   }
 
+
+
+#' Plot methods for Hydromad model objects
+#' 
+#' Plot methods...
+#' 
+#' 
+#' @aliases xyplot.hydromad xyplot.hydromad.runlist qqmath.hydromad
+#' tsdiag.hydromad
+#' @param x an object of class \code{hydromad}.
+#' @param data ignored.
+#' @param \dots further arguments passed on to \code{\link{xyplot.zoo}} or
+#' \code{\link{qqmath}}.
+#' @param feasible.bounds if \code{TRUE}, then ensemble simulation bounds are
+#' extracted and plotted. This only works if a \emph{feasible set} has been
+#' specified using \code{\link{defineFeasibleSet}} or the \code{update} method.
+#' Note that the meaning depends on what value of \code{glue.quantiles} was
+#' specified to those methods: it might be the overall simulation bounds, or
+#' some GLUE-like quantile values.
+#' @param col.bounds,border,alpha.bounds graphical parameters of the ensemble
+#' simulation bounds if \code{feasible.bounds = TRUE}.
+#' @param all passed to \code{fitted()} and \code{observed()}.
+#' @param with.P to include the input rainfall series in the plot.
+#' @param type.P plot type for rainfall, passed to \code{\link{panel.xyplot}}.
+#' @param superpose to overlay observed and modelled time series in one panel.
+#' @param f.value,tails.n arguments to \code{\link{panel.qqmath}}.
+#' @param object,gof.lag passed to the \code{arima} method of
+#' \code{\link{tsdiag}}.
+#' @return the trellis functions return a trellis object.
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{hydromad.object}}, \code{\link{xyplot}},
+#' \code{\link{xyplot.ts}}, \code{\link{xyplot.list}}
+#' @keywords hplot ts
+#' @examples
+#' 
+#' data(Canning)
+#' cannCal <- window(Canning, start = "1978-01-01", end = "1982-12-31")
+#' mod <-
+#'     hydromad(cannCal, sma = "cwi", tw = 162, f = 2, l = 300,
+#'              t_ref = 0, scale = 0.000284,
+#'              routing = "expuh", tau_s = 4.3, delay = 1, warmup = 200)
+#' 
+#' xyplot(mod, with.P = TRUE)
+#' 
+#' c(streamflow = xyplot(mod),
+#'   residuals = xyplot(residuals(mod, type = "h")),
+#'   layout = c(1,2), y.same = TRUE)
+#' 
+#' xyplot(residuals(mod)) +
+#'   latticeExtra::layer(panel.tskernel(..., width = 90, c = 2, col = 1)) +
+#'   latticeExtra::layer(panel.tskernel(..., width = 180, c = 2, col = 1, lwd = 2)) +
+#'   latticeExtra::layer(panel.tskernel(..., width = 360, c = 2, lwd = 2))
+#' 
+#' qqmath(mod, scales = list(y = list(log = TRUE)), distribution = qnorm,
+#'        type = c("g", "l"))
+#' 
 xyplot.hydromad <-
   function(x, data = NULL, ..., scales = list(),
            feasible.bounds = FALSE,

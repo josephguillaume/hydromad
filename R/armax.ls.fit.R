@@ -4,6 +4,64 @@
 ##
 
 
+
+
+#' Estimate transfer function models by Least Squares.
+#' 
+#' Calibrate unit hydrograph transfer function models (\code{\link{armax}} or
+#' \code{\link{expuh}}) using Least Squares with prefiltering.
+#' 
+#' In normal usage, one would not call these functions directly, but rather
+#' specify the routing fitting method for a \code{\link{hydromad}} model using
+#' that function's \code{rfit} argument. E.g. to specify fitting an
+#' \code{expuh} routing model by least squares one could write
+#' 
+#' \code{hydromad(..., routing = "expuh", rfit = "ls")}
+#' 
+#' which uses the default order, \code{hydromad.getOption("order")}, or
+#' 
+#' \code{hydromad(..., routing = "expuh", rfit = list("ls", order = c(2,1)))}.
+#' 
+#' @aliases armax.ls.fit expuh.ls.fit
+#' @param DATA a \code{\link{ts}}-like object with named columns: \describe{
+#' \item{list("U")}{ observed input time series. } \item{list("Q")}{ observed
+#' output time series. } }
+#' @param order the transfer function order. See \code{\link{armax}}.
+#' @param delay delay (lag time / dead time) in number of time steps. If
+#' missing, this will be estimated from the cross correlation function.
+#' @param prefilter
+#' @param warmup
+#' @param normalise
+#' @param fixed.ar
+#' @param weights
+#' @param initX
+#' @param na.action
+#' @param trace
+#' @param \dots passed on to \code{armax.ls.fit}.
+#' @param quiet to suppress the message when re-fitting if non-physical poles
+#' (i.e. negative or imaginary poles) are detected.
+#' @return a \code{tf} object, which is a list with components
+#' \item{coefficients}{ the fitted parameter values.} \item{fitted.values}{ the
+#' fitted values. } \item{residuals}{ the residuals. } \item{delay}{ the
+#' (possibly fitted) delay time. }
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{armax}}, \code{\link{expuh}},
+#' \code{\link{armax.sriv.fit}}, \code{\link{arima}}
+#' @references Jakeman
+#' @keywords ts
+#' @examples
+#' 
+#' U <- ts(c(0, 0, 0, 1, rep(0, 30), 1, rep(0, 20)))
+#' Y <- expuh.sim(lag(U, -1), tau_s = 10, tau_q = 2, v_s = 0.5, v_3 = 0.1)
+#' set.seed(0)
+#' Yh <- Y * rnorm(Y, mean = 1, sd = 0.2)
+#' fit1 <- armax.ls.fit(ts.union(U = U, Q = Yh),
+#'                      order = c(2, 2), warmup = 0)
+#' fit1
+#' xyplot(ts.union(observed = Yh, fitted = fitted(fit1)),
+#'        superpose = TRUE)
+#' 
+#' @export armax.ls.fit
 armax.ls.fit <-
   function(DATA,
            order = hydromad.getOption("order"),

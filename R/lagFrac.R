@@ -1,3 +1,22 @@
+#' Non-integer time delay
+#' 
+#' Delays P by a non-integer number of timesteps using a filter
+#' 
+#' 
+#' @param P Input to delay (typically rainfall)
+#' @param TDopt Positive number with which to delay \code{P}
+#' @return vector of same length as P
+#' @author Thanks to Charles Perrin for original code.  Implemented in R by
+#' Joseph Guillaume
+#' @seealso \code{\link{estimateDelayFrac}}
+#' @keywords ts
+#' @examples
+#' 
+#' L<-0.6
+#' P <- c(2,0,5,1,6,10,0,0,0)
+#' V1<-lagFrac(P,L)
+#' 
+#' @export lagFrac
 lagFrac <- function(P, TDopt) {
   TDopt <- TDopt + 1
   I <- floor(TDopt)

@@ -3,6 +3,42 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+
+
+#' Work with a set of model runs
+#' 
+#' A \code{runlist} object is simply a list of model objects.
+#' 
+#' Note that the \code{coef} method just calls \code{summary(..., FUN = coef)}.
+#' 
+#' @aliases runlist as.runlist [.runlist c.runlist coef.runlist summary.runlist
+#' print.summary.runlist residuals.runlist fitted.runlist
+#' @param \dots for \code{runlist}, a named list of model objects, specified
+#' directly as in \code{\link{list}}.
+#' 
+#' In other cases, arguments are passed on to the generic functions.
+#' @param x a simple \code{list}.
+#' @param object a \code{runlist}: a list of fitted model objects.
+#' @param FUN function returning one or more named numeric values. Any returned
+#' values other than single numeric values will be ignored.
+#' @param items if given, this is used to extract elements of the result from
+#' \code{FUN}; otherwise, all single numeric elements are extracted.
+#' @return \code{runlist} and \code{as.runlist} return a list of class
+#' \code{runlist} and also (firstly) \var{class}\code{.runlist}, where
+#' \var{class} is the first class of the first element of the list.
+#' 
+#' \code{summary} and \code{coef} return a data frame, with rows for each
+#' element of \code{object} and columns for each named item returned by
+#' \code{FUN}. Any missing items will filled in with \code{NA}.
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{xyplot.runlist}}, \code{\link{coef.hydromad}},
+#' \code{\link{summary.hydromad}}
+#' @keywords utilities
+#' @examples
+#' 
+#' 
+#' 
+#' @export runlist
 runlist <- function(...) {
   object <- list(...)
   if (is.null(names(object))) {

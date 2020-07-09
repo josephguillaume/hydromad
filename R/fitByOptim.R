@@ -4,6 +4,94 @@
 ##
 
 
+
+
+#' Fit a hydromad model using general optimisation algorithms.
+#' 
+#' Fits a hydromad model using R's \code{optim} or \code{nlminb} functions. Has
+#' multi-start and pre-sampling options.
+#' 
+#' See \code{\link{optim}} for a brief description of the available algorithms,
+#' including references to literature.
+#' 
+#' \code{\link{fitByOptim1}} handles a single free parameter using
+#' \code{\link{optimize}}; it is called by \code{fitByOptim}, with a warning,
+#' in that case.
+#' 
+#' @aliases fitByOptim fitByOptim1
+#' @param MODEL a model specification created by \code{\link{hydromad}}. It
+#' should not be fully specified, i.e one or more parameters should be defined
+#' by \emph{ranges} of values rather than exact values.
+#' @param objective objective function to maximise, given as a
+#' \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.
+#' @param method,control optimisation algorithm and settings. See
+#' \code{\link{optim}}. The default is \code{"Nelder-Mead"} (a simplex
+#' algorithm).  An additional method \code{"PORT"} can be given, which calls
+#' \code{\link{nlminb}}.
+#' @param samples number of parameter sets to test.
+#' @param sampletype sampling scheme -- see \code{\link{parameterSets}}.
+#' @param initpars initial parameter set.
+#' @param multistart if this is \code{TRUE}, then each of the initial parameter
+#' samples (based on \code{samples} and \code{sampletype}) are used as a
+#' starting value for a separate optimisation run, and the best result is kept.
+#' @param vcov,hessian if \code{vcov = TRUE}, the parameter variance-covariance
+#' matrix will be estimated as the inverse of the hessian matrix returned by
+#' \code{optim()}. This may be a very poor estimate! It can be extract using
+#' \code{\link{vcov}}.  Does not work with \code{method = "PORT"}.
+#' @param tol convergence tolerance, see \code{\link{optimize}}.
+#' @return the best model from those sampled, according to the given
+#' \code{objective} function. Also, these extra elements are inserted:
+#' \item{fit.result}{ the result from \code{\link{optim}}.  } \item{objective}{
+#' the \code{objective} function used.  } \item{funevals}{ total number of
+#' evaluations of the model simulation function.  } \item{timing}{ timing
+#' vector as returned by \code{system.time}.  }
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{fitBySampling}}, \code{\link{optim}},
+#' \code{\link{objFunVal}}
+#' @keywords optimization
+#' @examples
+#' 
+#' data(Cotter)
+#' x <- Cotter[1:1000]
+#' 
+#' ## IHACRES CWI model with power law unit hydrograph
+#' modx <- hydromad(x, sma = "cwi", routing = "powuh")
+#' modx
+#' 
+#' set.seed(0)
+#' foo <- fitByOptim(modx, samples = 100)
+#' 
+#' summary(foo)
+#' 
+#' ## return value from optim (with 'objseq' added):
+#' str(foo$fit.result)
+#' 
+#' ## plot objective function value convergence over time
+#' xyplot(optimtrace(foo), type = "b",
+#'   xlab = "function evaluations", ylab = "objective fn. value")
+#' 
+#' ## repeat optimisation with single random starting points
+#' fooreps <-
+#'   replicate(4,
+#'       fitByOptim(modx, samples = 1, sampletype = "random",
+#'                  objective = hmadstat("r.squared"),
+#'                  method = "Nelder-Mead"),
+#'       simplify = FALSE)
+#' names(fooreps) <- paste("rep.", seq_along(fooreps))
+#' ## extract and plot the optimisation traces
+#' traces <- lapply(fooreps, optimtrace)
+#' tracesraw <- lapply(fooreps, optimtrace, raw = TRUE)
+#' xyplot(do.call("merge", traces), superpose = TRUE,
+#'     sub = 'method = "Nelder-Mead"',
+#'     xlab = "Fn. evaluations", ylab = "Objective value",
+#'     auto.key = list(corner = c(1,0))) +
+#' xyplot(do.call("merge", tracesraw), superpose = TRUE,
+#'     type = "p", cex = 0.5)
+#' 
+#' ## if you try it again with method = "PORT" you will find that all
+#' ## replicates converge to the optimum regardless of starting point.
+#' 
+#' @export fitByOptim
 fitByOptim <-
   function(MODEL,
            objective = hydromad.getOption("objective"),

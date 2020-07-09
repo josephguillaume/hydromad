@@ -1,3 +1,27 @@
+#' Fit a hydromad model using CMA-ES (Covariance matrix adapting evolutionary
+#' strategy) from cmaes package
+#' 
+#' 
+#' %% ~~ If necessary, more details than the description above ~~
+#' 
+#' @param MODEL a model specification created by \code{\link{hydromad}}. It
+#' should not be fully specified, i.e one or more parameters should be defined
+#' by \emph{ranges} of values rather than exact values.
+#' @param objective objective function to maximise, given as a
+#' \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.
+#' @param control settings for the CMA-ES algorithm. See \code{\link{cma_es}}
+#' @param vcov Ignored
+#' @return the best model from those sampled, according to the given
+#' \code{objective} function. Also, these extra elements are inserted:
+#' \item{fit.result}{ the result from \code{\link{SCEoptim}}.  }
+#' \item{objective}{ the \code{objective} function used.  } \item{funevals}{
+#' total number of evaluations of the model simulation function.  }
+#' \item{timing}{ timing vector as returned by \code{system.time}.  }
+#' @author Joseph Guillaume
+#' @seealso \code{\link{cma_es}}
+#' @references %% ~put references to the literature/web site here ~
+#' @keywords optimisation
+#' @export fitByCMAES
 fitByCMAES <- function(MODEL, objective = hydromad.getOption("objective"),
                        control = hydromad.getOption("cmaes.control"), vcov = FALSE) {
   if (!requireNamespace("cmaes")) stop("package cmaes is required for fitByCMAES")

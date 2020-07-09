@@ -4,6 +4,54 @@
 ##
 
 
+
+
+#' Estimate transfer function models by Inverse Filtering.
+#' 
+#' Calibrate unit hydrograph transfer function models (\code{\link{armax}} or
+#' \code{\link{expuh}}) using Inverse Filtering.
+#' 
+#' In normal usage, one would not call these functions directly, but rather
+#' specify the routing fitting method for a \code{\link{hydromad}} model using
+#' that function's \code{rfit} argument. E.g. to specify fitting an
+#' \code{expuh} routing model by inverse filtering one could write
+#' 
+#' \code{hydromad(..., routing = "expuh", rfit = "inverse")}
+#' 
+#' or
+#' 
+#' \code{hydromad(..., routing = "expuh", rfit = list("inverse", order =
+#' c(2,1)))}.
+#' 
+#' @aliases armax.inverse.fit expuh.inverse.fit
+#' @param DATA a \code{\link{ts}}-like object with named columns: \describe{
+#' \item{list("Q")}{ observed output time series. } \item{list("P")}{ observed
+#' input time series (optional). } }
+#' @param order the transfer function order. See \code{\link{armax}}.
+#' @param delay delay (lag time / dead time) in number of time steps. If
+#' missing, this will be estimated from the cross correlation function.
+#' @return a \code{tf} object, which is a list with components
+#' \item{coefficients}{ the fitted parameter values.} \item{fitted.values}{ the
+#' fitted values. } \item{residuals}{ the residuals. } \item{delay}{ the
+#' (possibly fitted) delay time. }
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{armax.inverse.sim}}, \code{\link{armax}},
+#' \code{\link{expuh}}, \code{\link{armax.sriv.fit}}
+#' @references ...
+#' @keywords ts
+#' @examples
+#' 
+#' U <- ts(c(0, 0, 0, 1, rep(0, 30), 1, rep(0, 20)))
+#' Y <- expuh.sim(lag(U, -1), tau_s = 10, tau_q = 2, v_s = 0.5, v_3 = 0.1)
+#' set.seed(0)
+#' Yh <- Y * rnorm(Y, mean = 1, sd = 0.2)
+#' fit1 <- armax.inverse.fit(ts.union(P = U, Q = Yh),
+#'                           order = c(2, 2), warmup = 0)
+#' fit1
+#' xyplot(ts.union(observed = Yh, fitted = fitted(fit1)),
+#'        superpose = TRUE)
+#' 
+#' @export armax.inverse.fit
 armax.inverse.fit <-
   function(DATA,
            order = hydromad.getOption("order"),
@@ -218,6 +266,56 @@ tf.pars.init <-
     if (order["m"] >= 2) {
       v_q <- (1 - v_s - v_3)
     }
+
+
+#' Transfer function with two exponential components and variable partitioning
+#' 
+#' \var{Lambda} unit hydrograph.  Transfer function with two exponential
+#' components and variable partitioning.
+#' 
+#' 
+#' The \var{lambda} unit hydrograph model is a variant of the second-order
+#' \code{\link{expuh}} model, i.e. two exponentially receding stores in
+#' parallel. The \var{lambda} form allows the partitioning of flow between
+#' quick and slow components to depend on the magnitude of effective rainfall.
+#' In this model, runoff from large rainfall events tends to be quick flow, and
+#' runoff from small events tends to be slow flow.
+#' 
+#' \deqn{v_s[t] = v_{s,0} U[t] ^ \lambda} \deqn{v_q[t] = 1 - v_s[t]}
+#' 
+#' where \var{U} is the input (effective rainfall); \eqn{v_{s,0}} is the
+#' maximum fractional volume of the slow flow component, and is given by the
+#' \code{v_s} argument.
+#' 
+#' The \eqn{\lambda} parameter (\code{lambda} argument) must be between 0 and
+#' -1; the case \code{lambda = 0} corresponds to the basic \code{\link{expuh}}
+#' model.
+#' 
+#' @aliases lambda lambda.sim ssg.lambda normalise.lambda
+#' @param U input time series.
+#' @param delay lag (dead time) between input and response, in time steps.
+#' @param tau_s,tau_q time constants for the exponential components.
+#' @param lambda variable partitioning parameter, see Details.
+#' @param v_s maximum fractional volume for the slower exponential component.
+#' @param loss a constant loss (or gain) term subtracted from the \emph{slow}
+#' (\code{s}) component.
+#' @param Xs_0,Xq_0 initial values of the exponential components.
+#' @param return_components whether to return all component time series.
+#' @param na.action function to remove missing values, e.g.
+#' \code{\link[=na.omit.ts]{na.omit}}.
+#' @param epsilon values smaller than this will be set to zero.
+#' @return the model output as a \code{\link{ts}} object, with the same
+#' dimensions and time window as the input \code{U}.  If
+#' \code{return_components = TRUE}, it will have multiple columns named
+#' \code{Xs} and \code{Xq}.
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{expuh}}, \code{\link{lambda.inverse.sim}}
+#' @references ...
+#' @keywords ts
+#' @examples
+#' 
+#' 
+#' 
     lambda <- -runif(1, min = 0, max = 0.9) # -0.01
 
     Q <- coredata(DATA[, "Q"])

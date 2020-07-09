@@ -4,6 +4,33 @@
 ##
 
 
+
+
+#' Compare calibrations with different transfer function (ARMA) orders for
+#' routing.
+#' 
+#' Compare calibrations with different transfer function (ARMA) orders for
+#' routing.
+#' 
+#' 
+#' @aliases tryModelOrders summary.tryModelOrders
+#' @param expr an expression to calibrate a hydromad model.
+#' @param n the set of values of \var{n} to try (order of the auto-regressive
+#' component).
+#' @param m the set of values of \var{m} to try (order of the moving-average
+#' component).
+#' @param delay the set of delays to try.
+#' @param verbose show detailed tracing output.
+#' @return a list of model objects, of class \code{hydromad.\link{runlist}}.
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{armax}}, \code{\link{armax.sriv.fit}}
+#' @references P C Young?
+#' @keywords optimize
+#' @examples
+#' 
+#' 
+#' 
+#' @export tryModelOrders
 tryModelOrders <-
   function(expr, n = 0:3, m = 0:2,
            delay = hydromad.getOption("delay"),

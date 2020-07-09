@@ -2,6 +2,57 @@
 ## by Felix Andrews, Barry Croke and Baihua Fu 2009
 ## (inspired by MFAT Floodplain Hydrology model)
 
+
+
+#' Simple Wetland Inundation Model using Poweroids
+#' 
+#' Model flood area / duration / depth in wetlands.
+#' 
+#' ...
+#' 
+#' @param flow.ML inflow or streamflow in ML per timestep.
+#' @param thresh a threshold for \code{flow.ML}, such that only flow above this
+#' value enters the wetland.
+#' @param alpha,beta parameters defining the shape of the wetland. See
+#' \code{\link{poweroid}}.
+#' @param E.mm,P.mm potential evapo-transpiration and precipitation in mm per
+#' timestep.
+#' @param Ksat.mm.day Saturated hydraulic conductivity in mm per timestep,
+#' relative to a reference pressure of 10cm. If this is 0, the wetland surface
+#' water is isolated from the surrounding water table, i.e. there is no
+#' infiltration nor discharge.
+#' @param e %% ~~Describe \code{e} here~~
+#' @param g stress threshold in terms of Catchment Moisture Deficit (mm), as in
+#' the IHACRES CMD model, where \code{g = f * d}. See
+#' \code{\link{IHACRES.CMD.model}}.
+#' @param Hmax %% ~~Describe \code{Hmax} here~~
+#' @param Amax %% ~~Describe \code{Amax} here~~
+#' @param porosity effective porosity of the soil.
+#' @param M_0 initial value of Catchment Moisture Deficit, mm.
+#' @param V_0 initial volume of surface water in wetland, ML.
+#' @param drainage drainage rate as a proportion of volume above
+#' \code{drainLevel} per timestep.
+#' @param drainLevel water level (millimetres from base) above which drainage
+#' occurs.
+#' @return a \code{\link{zoo}} object (time series object).
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{poweroid}}, \code{\link{convertFlow}}
+#' @references ...
+#' @keywords math models
+#' @examples
+#' 
+#' ## assume Q is inflow in ML/day
+#' set.seed(1)
+#' Q <- rpois(100, lambda = 0.1) * 1000
+#' ## assume depth distribution follows a cone, i.e. beta = 1
+#' ## estimate alpha given known area vs volume
+#' ## lets say a volume of 1000 ML corresponds to area 20 km^2
+#' alpha <- poweroid(V = 1000, A = 20, beta = 1)$alpha
+#' flood <- swimp(Q, alpha = alpha, beta = 1, E.mm = 10)
+#' head(flood, 20)
+#' xyplot(flood)
+#' 
+#' @export swimp
 swimp <-
   function(flow.ML,
            thresh = 0,

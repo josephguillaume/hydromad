@@ -4,6 +4,31 @@
 ##
 
 
+
+
+#' Observed data values
+#' 
+#' Like \code{\link{fitted}}, but return the original "observed" data rather
+#' than the modelled data.
+#' 
+#' The default method should work for any object with methods for
+#' \code{residuals} and \code{fitted}.
+#' 
+#' @aliases observed observed.default
+#' @param object a model object for which to return the observed values.
+#' @param \dots other arguments.
+#' @return the result of \code{fitted(object) + residuals(object)}.
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{residuals}}
+#' @keywords ts
+#' @examples
+#' 
+#' x <- 1:10
+#' mymodel <- list(fitted.values = x + rnorm(10))
+#' mymodel$residuals <- x - fitted(mymodel)
+#' observed(mymodel)
+#' 
+#' @export observed
 observed <- function(object, ...) {
   UseMethod("observed")
 }

@@ -4,6 +4,74 @@
 ##
 
 
+
+
+#' Estimate transfer function models by Simple Refined Instrumental Variables
+#' method.
+#' 
+#' Calibrate unit hydrograph transfer function models (\code{\link{armax}} or
+#' \code{\link{expuh}}) using Simple Refined Instrumental Variables (SRIV)
+#' method.
+#' 
+#' In normal usage, one would not call these functions directly, but rather
+#' specify the routing fitting method for a \code{\link{hydromad}} model using
+#' that function's \code{rfit} argument. E.g. to specify fitting an
+#' \code{expuh} routing model by SRIV one could write
+#' 
+#' \code{hydromad(..., routing = "expuh", rfit = "sriv")}
+#' 
+#' which uses the default order, \code{hydromad.getOption("order")}, or
+#' 
+#' \code{hydromad(..., routing = "expuh", rfit = list("sriv", order =
+#' c(2,1)))}.
+#' 
+#' @aliases armax.sriv.fit expuh.sriv.fit
+#' @param DATA a \code{\link{ts}}-like object with named columns: \describe{
+#' \item{list("U")}{ observed input time series. } \item{list("Q")}{ observed
+#' output time series. } }
+#' @param order the transfer function order. See \code{\link{armax}}.
+#' @param delay delay (lag time / dead time) in number of time steps. If
+#' missing, this will be estimated from the cross correlation function.
+#' @param noise.order
+#' @param fixed.ar
+#' @param \dots further arguments may include \describe{ \item{prefilter}{ }
+#' \item{initX}{ } \item{trace}{ ~~Describe \code{trace} here~~ } }
+#' @param fallback
+#' @param na.action
+#' @param epsilon
+#' @param max.iterations
+#' @param quiet to suppress the message when re-fitting if non-physical poles
+#' (i.e. negative or imaginary poles) are detected.
+#' @return a \code{tf} object, which is a list with components
+#' \item{coefficients}{ the fitted parameter values.} \item{fitted.values}{ the
+#' fitted values. } \item{residuals}{ the residuals. } \item{delay}{ the
+#' (possibly fitted) delay time. }
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{armax}}, \code{\link{expuh}}
+#' @references Young, P. C. (2008). The refined instrumental variable method.
+#' Journal Européen des Systèmes Automatisés 42 (2-3), 149-179.
+#' \url{http://dx.doi.org/10.3166/jesa.42.149-179}
+#' 
+#' Jakeman, A. J., G. A. Thomas and C. R. Dietrich (1991). System
+#' Identification and Validation for Output Prediction of a Dynamic Hydrologic
+#' Process, \emph{Journal of Forecasting} 10, pp. 319--346.
+#' 
+#' Ljung, Lennart (1999). System Identification: Theory for the User (second
+#' edition). Prentice Hall. pp. 224-226, 466.
+#' @keywords ts
+#' @examples
+#' 
+#' U <- ts(c(0, 0, 0, 1, rep(0, 30), 1, rep(0, 20)))
+#' Y <- expuh.sim(lag(U, -1), tau_s = 10, tau_q = 2, v_s = 0.5, v_3 = 0.1)
+#' set.seed(0)
+#' Yh <- Y * rnorm(Y, mean = 1, sd = 0.2)
+#' fit1 <- armax.sriv.fit(ts.union(U = U, Q = Yh),
+#'                        order = c(2, 2), warmup = 0)
+#' fit1
+#' xyplot(ts.union(observed = Yh, fitted = fitted(fit1)),
+#'        superpose = TRUE)
+#' 
+#' @export armax.sriv.fit
 armax.sriv.fit <-
   function(DATA,
            order = hydromad.getOption("order"),

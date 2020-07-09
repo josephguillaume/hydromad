@@ -4,6 +4,53 @@
 ##
 
 
+
+
+#' Estimate the dead time between input and output
+#' 
+#' Use cross-correlation to estimate the delay between an input time series and
+#' (rises in) the corresponding output time series.
+#' 
+#' The estimated delay is the one maximising the cross-correlation function.
+#' 
+#' @param DATA a \code{\link{ts}}-like object with named components: \describe{
+#' \item{list("U")}{ input (forcing) time series. } \item{list("Q")}{ output
+#' (response) time series. } }
+#' @param rises use only rises in the output to estimate delay.
+#' @param lag.max largest delay (in time steps) to consider.
+#' @param n.estimates number of estimates of delay to produce.
+#' @param negative.ok to allow negative delay times to be considered.
+#' @param na.action handler for missing values.  The default removes leading
+#' and trailing NAs only.  Use \code{na.exclude} to remove all NAs, but the
+#' result will not be a valid autocorrelation sequence.
+#' @param plot plot the cross-correlation function.
+#' @param main title for plot.
+#' @param \dots further arguments passed to \code{\link{ccf}} or on to
+#' \code{\link{plot.acf}}.
+#' @return The estimated delay as an integer number of time steps.  If
+#' \code{n.estimates > 1}, that number of integer delays, ordered by the CCF.
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{ccf}},\code{\link{estimateDelayFrac}}
+#' @keywords ts
+#' @examples
+#' 
+#' set.seed(1)
+#' x <- ts(pmax(0, rgamma(200, shape=0.1, scale=20) - 5))
+#' ## simulate error as multiplicative uniform random
+#' y <- x * runif(200, min=0.5, max=1.5)
+#' ## and resample 10 percent of time steps
+#' ii <- sample(seq_along(y), 20)
+#' y[ii] <- rev(y[ii])
+#' ## apply recursive filter and lag
+#' y <- filter(y, 0.8, method="r")
+#' y <- lag(y, -2) # true delay is 2
+#' plot(ts.union(y,x))
+#' ## based on cross correlation function:
+#' estimateDelay(ts.union(y,x), rises = FALSE, plot = TRUE)
+#' ## based on ccf with flow rises only:
+#' estimateDelay(ts.union(y,x), plot = TRUE)
+#' 
+#' @export estimateDelay
 estimateDelay <-
   function(DATA = data.frame(U = , Q = ),
            rises = TRUE,

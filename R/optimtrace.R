@@ -1,5 +1,31 @@
-
-
+#' Extract objective function value series from optimisation results
+#' 
+#' Extract objective function value series from optimisation results.
+#' 
+#' 
+#' @aliases optimtrace optimtrace.default
+#' @param object fitted model object. Currently only \code{\link{hydromad}}
+#' objects are supported.
+#' @param \dots further arguments which may be supported for particular
+#' optimisation algorithms. These are: \describe{ \item{list("raw")}{ if
+#' \code{TRUE}, then raw function values are returned, which may consist of
+#' multiple series in parallel, and may jump up and down. Otherwise (the
+#' default), the best value so far at each time step is returned.  }
+#' \item{list("objective")}{ a function or formula to calculate from
+#' \code{object} to construct the objective function value series.  It is
+#' passed to \code{\link{objFunVal}}.  Currently this is only supported for
+#' \code{dream} results.  } }
+#' @return a \code{zoo} series where the time index represents number of
+#' function evaluations.
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{fitBySCE}}, \code{\link{fitByDE}},
+#' \code{\link{fitByDream}}, \code{\link{fitByOptim}}
+#' @keywords optimization
+#' @examples
+#' 
+#' ## see examples in fitByOptim, fitBySCE, fitByDE, fitByDream
+#' 
+#' @export optimtrace
 optimtrace <- function(object, ...) {
   UseMethod("optimtrace")
 }

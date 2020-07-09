@@ -200,6 +200,27 @@ gr4jrouting.ranges <- function() {
   )
 }
 
+
+
+#' Transform GR4J parameters
+#' 
+#' Apply or reverse transformation of GR4J parameters
+#' 
+#' 
+#' @param pars named vector or list of parameters, e.g. as provided by
+#' \code{\link{coef.hydromad}}.
+#' @param back Whether to transform or untransform (reverse) the parameters.
+#' @return Named list of transformed/untransformed parameters, depending on
+#' value of \code{back}.
+#' @author Joseph Guillaume
+#' @seealso \code{\link{gr4j}}
+#' @keywords models
+#' @examples
+#' 
+#' gr4j.transformpar(c(hydromad.getOption("gr4j"),hydromad.getOption("gr4jrouting")))
+#' gr4j.transformpar(c(x1=150,x2=2,x3=50,x4=2),back=F)
+#' 
+#' @export gr4j.transformpar
 gr4j.transformpar <- function(pars, back = F) {
   pars <- modifyList(list(x1 = NA, x2 = NA, x3 = NA, x4 = NA), as.list(pars))
   newpars <- pars

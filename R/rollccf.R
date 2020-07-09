@@ -21,6 +21,59 @@
 #    slope
 # }
 
+
+
+#' Rolling cross-correlation at given lags.
+#' 
+#' Rolling cross-correlation at given lags.  Can be useful to show how the
+#' relationship between two time series changes over time, including out-by-one
+#' timing errors.
+#' 
+#' This is a fairly straightforward application of \code{\link{rollapply}} with
+#' the \code{\link{ccf}} function. It may be better to do a time-varying
+#' regression between the two series.
+#' 
+#' @aliases rollccf xyplot.rollccf
+#' @param DATA a named list, data frame, time series or zoo object containing
+#' the two data series.
+#' @param width a list or number specifying the width of window(s), in time
+#' steps, in which to calculate cross correlations.
+#' @param by temporal resolution: cross correlation is calculated in windows
+#' spaced every \code{by} time steps.
+#' @param lags,base.lag \code{lags} for which to calculate the cross
+#' correlation. By default these are based on the overall maximum cross
+#' correlation, \code{base.lag}.
+#' @param rises if \code{TRUE}, compute the cross correlation with \emph{rises
+#' in} streamflow. In this case the streamflow series must be named \code{"Q"}.
+#' @param na.action function to handle missing data in each window (not the
+#' whole series). This is only applied when the number of missing values is
+#' less than \code{na.max.fraction}.
+#' 
+#' Could be \code{na.exclude}.
+#' @param na.max.fraction if the proportion of missing values in the moving
+#' window exceeds this value, the corresponding result will be \code{NA}.
+#' @param x,data \code{x} is an object produced by the \code{rollccf} function.
+#' \code{data} is ignored.
+#' @param with.data if \code{TRUE}, include the original data series in the
+#' plot.
+#' @param type,type.data drawing styles for the cross correlation series and
+#' input data series. See \code{\link{panel.xyplot}}.
+#' @param par.settings,layout,strip,ylim,xlab,as.table,...  passed to
+#' \code{\link{xyplot}}.
+#' @return \code{rollccf} returns a list of class \code{"rollccf"}, with
+#' components: \item{rolls}{a list of time series of cross correlations.  One
+#' element for each value of \code{width}. } \item{data}{time series input
+#' data. } \item{lags, width, call}{ values of arguments used. }
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{ccf}}, \code{\link{rollapply}}
+#' @keywords ts
+#' @examples
+#' 
+#' data(Canning)
+#' foo <- rollccf(Canning)
+#' xyplot(foo)
+#' 
+#' @export rollccf
 rollccf <-
   function(DATA = data.frame(Q = , P = ),
            width = list(365, 90),

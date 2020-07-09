@@ -1,3 +1,66 @@
+#' Analysis using Pareto-filtering of model performance across simulation
+#' periods
+#' 
+#' Identify dominated model realisations, that are inferior to another model in
+#' all simulation periods, optionally in multiple catchments.  Summary results
+#' are then produced to help assess how performance of model realisations and
+#' model structures varies across simulation periods.
+#' 
+#' 
+#' @aliases paretoTimeAnalysis paretoTimeAnalysis_performance
+#' paretoTimeAnalysis_areModelsDominated
+#' @param \dots arguments to \code{paretoTimeAnalysis.crossvalidation} or
+#' \code{paretoTimeAnalysis.data.frame}
+#' @param rl a crossvalidation \code{runlist}: a list of fitted model objects
+#' produced by \code{\link{crossValidate}}
+#' @param show.models If \code{TRUE}, print out a table of models and an
+#' indication of whether they are dominated, as produced by
+#' \code{paretoTimeAnalysis_areModelsDominated}. If not \code{NA}, write out
+#' the table to "show.models_isdominated_models_catchments.csv")
+#' @param objectives Vector of column names containing performance measures
+#' used to determine whether models are dominated across time periods. We
+#' assume higher values are better. Values should be transformed prior to use.
+#' @param qoi Quantities of interest to calculate, as interpreted by
+#' \code{\link{objFunVal}}. Defaults are given as examples: 90th percentile
+#' runoff (a scalar prediction) and R Squared using log transformed data (a
+#' performance statistic).
+#' @param stat data.frame of results, including the column \code{sim.period}
+#' and the columns named in \code{objectives}. The following columns may be
+#' included as id variables:
+#' \code{Model.str},\code{Catchment},\code{calib.period},\code{Cal.objfn}
+#' @param pars long format data.frame of parameter values for each model with
+#' columns \code{variable} and \code{value}.  The following columns may be
+#' included as id variables:
+#' \code{Model.str},\code{Catchment},\code{calib.period},\code{Cal.objfn}.  If
+#' \code{pars} is missing, results that require it are skipped.
+#' @return For \code{paretoTimeAnalysis}, no return value. Used for its side
+#' effect of producing text. Optionally writes csv files (see the argument
+#' \code{show.models}).
+#' 
+#' \code{paretoTimeAnalysis_areModelsDominated} produces a wide-format
+#' data.frame with id variable columns, a column for each \code{sim.period}
+#' value, and a column \code{dominated} indicating whether another model is
+#' better in all simulation periods.
+#' @author Joseph Guillaume
+#' @seealso \code{\link{crossValidate}} for an example use of
+#' \code{paretoTimeAnalysis.crossvalidation}
+#' @references
+#' @keywords models
+#' @examples
+#' 
+#' ## Dataset consisting of results for two simulation periods,
+#' ##  obtained by calibration in the same periods with different
+#' ##  model structures.
+#' data(YeAl97)
+#' 
+#' ## For one catchment, produce a table indicating whether models defined by
+#' ## their calib.period and Model.str are dominated according to the objective E
+#' paretoTimeAnalysis_areModelsDominated(subset(YeAl97,Catchment=="Salmon"),objectives="E")
+#' 
+#' ## For all catchments, performance analysis
+#' paretoTimeAnalysis.data.frame(YeAl97,objectives="E")
+#' 
+#' @export paretoTimeAnalysis
 paretoTimeAnalysis <- function(...) UseMethod("paretoTimeAnalysis")
 
 paretoTimeAnalysis.crossvalidation <- function(rl,

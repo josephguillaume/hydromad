@@ -2,6 +2,72 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+
+
+#' Convert between units of flow volume
+#' 
+#' This function converts between units of flow (volumetric throughput),
+#' designed mainly for hydrology applications. As a special case, this function
+#' can also convert units of volume or units of depth (length).
+#' 
+#' This function can convert flow rates between different volume units, or
+#' different timestep units, or both. Volume can be specified directly, or as a
+#' depth and area combination.
+#' 
+#' The unit specifications \code{from} and \code{to} can include a time step,
+#' like \code{"volume / timestep"}. A multiplier may also be included with the
+#' time step, like \code{"volume / N timesteps"}.  If no time step is specified
+#' in \code{from} and \code{to}, then it is taken to be
+#' \code{timestep.default}.
+#' 
+#' The volume units supported are: (these can be abbreviated)
+#' 
+#' \code{mL, cL, dL, L, daL, hL, kL, ML, GL, TL}
+#' 
+#' \code{cm^3, dm^3, m^3, km^3, ft^3}
+#' 
+#' The depth units supported are: (these can be abbreviated)
+#' 
+#' \code{mm, cm, metres, km, inches, feet}
+#' 
+#' The time units supported are: (these can be abbreviated)
+#' 
+#' \code{ms, seconds, minutes, hours, days, weeks, months, years / annum}
+#' 
+#' Additionally, the value \code{"cumecs"} (cubic metres per second) is
+#' equivalent to \code{"m^3/sec"}.
+#' 
+#' @param x a numeric vector or time series.
+#' @param from units to convert from (see Details).
+#' @param to units to convert into (see Details).
+#' @param area.km2 area (in square kilometres) that flow volume is averaged
+#' over.  This must be given when converting between measures of depth and
+#' measures of volume.
+#' @param timestep.default the time step if not specified in \code{from} or
+#' \code{to}.
+#' @return the original object \code{x}, scaled.
+#' @section Warning: The time step \code{"year"} refers to the average length
+#' of a year, i.e. 365.25 days (one \emph{annum}). Similarly, the time step
+#' \code{"month"} refers to the average length of a month, i.e. 365.25 / 12 =
+#' 30.4375 days.
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{difftime}}
+#' @keywords utilities
+#' @examples
+#' 
+#' flowML <- c(0, 1, 100, 10)
+#' ## from megalitres per day to gigalitres per year
+#' convertFlow(flowML, from="ML / day", to="GL / yr")
+#' ## from ML/step to mm/step averaged over 50 km^2
+#' convertFlow(flowML, from="ML", to="mm", area=50)
+#' ## from ML/day to cubic metres per second
+#' (flowCM <- convertFlow(flowML, from="ML/day", to="m^3/sec"))
+#' ## from cubic metres per second to mm/minute averaged over 0.1 km^2
+#' convertFlow(flowCM, from="cumecs", to="mm/15min", area=0.1)
+#' ## 100 mm in inches
+#' convertFlow(100, to="in")
+#' 
+#' @export convertFlow
 convertFlow <-
   function(x, from = "mm", to = "mm", area.km2 = -1,
            timestep.default = "days") {

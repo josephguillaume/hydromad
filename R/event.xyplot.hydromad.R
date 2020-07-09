@@ -5,6 +5,53 @@
 
 
 event.xyplot.hydromad.runlist <-
+
+
+#' Visualise systematic model errors against covariates
+#' 
+#' Visualise systematic model errors against covariates.
+#' 
+#' 
+#' @aliases event.xyplot.hydromad event.xyplot.hydromad.runlist
+#' @param x a \code{hydromad} or \code{hydromad.runlist} object.
+#' @param events event sequence produced by \code{\link{eventseq}}, or a vector
+#' defining continguous groups on the specified variables.
+#' @param formula formula defining the covariates to plot, as passed to the
+#' formula method of \code{\link{event.xyplot}}. It may refer to any of the
+#' variables in the model data frame (\code{observed(x, select = TRUE)});
+#' additionally it may refer to the value \code{U}, for the effective rainfall
+#' series derived from the model.  Finally \code{\link{julian}} may be referred
+#' to (from data time index).
+#' @param extract a function to apply to \code{x} to extract the response
+#' variable; by default this is \code{residuals} but could be e.g.
+#' \code{fitted} or \code{function(x) residuals(x, boxcox = TRUE)}.
+#' @param with.U to include modelled effective rainfall \code{U} as a
+#' covariate.
+#' @param \dots further arguments passed to \code{\link{event.xyplot}} and on
+#' to \code{\link{xyplot}} and the panel function.
+#' @param panel,panel.groups,abline,pch,ylab passed to \code{\link{xyplot}}.
+#' @param data ignored.
+#' @return this function returns a trellis object which can be \code{plot}ted.
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{event.xyplot}}, \code{\link{xyplot}},
+#' \code{\link{eventapply}}
+#' @keywords hplot ts
+#' @examples
+#' 
+#' data(Cotter)
+#' x <- Cotter[1:1000,]
+#' mod <- hydromad(x, sma = "scalar",
+#'          routing = "armax", rfit = list("sriv", order = c(2,1)))
+#' ev <- eventseq(x$P, thresh = 3, inthresh = 1, indur = 5)
+#' event.xyplot(mod, events = ev)
+#' event.xyplot(mod, events = ev,
+#'     extract = function(x) residuals(x, boxcox = TRUE))
+#' 
+#' foo <- event.xyplot(mod, events = ev,
+#'     ~ sqrt(e(P,max)) + sqrt(e(rollmean(lag(P,-1),20,align="left"),first)))
+#' dimnames(foo)[[1]] <- c("sqrt. peak rain (mm/day)", "mean 20-day ante. rain")
+#' foo
+#' 
   event.xyplot.hydromad <-
   function(x, events,
            formula =

@@ -68,6 +68,175 @@ findThresh <-
     return(thresh)
   }
 
+
+
+#' Identify discrete events from time series and apply functions to them.
+#' 
+#' Identify discrete events from time series and apply functions to them.
+#' 
+#' 
+#' @aliases eventseq eventapply eventinfo
+#' @param x,X a \code{\link{ts}} or \code{\link{zoo}} object.  May be
+#' multivariate, i.e. have multiple columns.
+#' @param thresh threshold value: the data must be strictly above this level
+#' (or, if \code{below = TRUE}, below this level) to define an event. If
+#' \code{x} is a matrix (with multiple columns), \code{thresh} is allowed to be
+#' a vector with one value per column. In this case, events continue while any
+#' series exceeds the threshold. Finally, \code{thresh} can be a full matrix or
+#' vector of the same dimension as \code{x}. Any missing values are treated as
+#' below the threshold.
+#' @param mingap the minimum number of time steps that can separate events. Any
+#' inter-event durations shorter than this will be subsumed into the
+#' surrounding event.
+#' @param mindur the minimum number of time steps in each event window. Any
+#' events whose duration is shorter than this will be skipped.
+#' @param extend a number of time steps to include on the end of each event
+#' window, before accounting for \code{inthresh}.  If this causes events to run
+#' into following events they will be merged.
+#' @param inthresh \code{inthresh} gives a second threshold value to define
+#' when events stop: after an event is initiated by exceeding \code{thresh}, it
+#' continues until the second (lower) threshold \code{inthresh} is reached (for
+#' at least \code{indur} steps).  If missing or \code{NULL}, it defaults to
+#' \code{thresh}.  As with \code{thresh}, \code{inthresh} is allowed to be a
+#' vector with values corresponding to the columns of \code{inx}.
+#' @param inx optionally, a different series may be given to determine event
+#' termination with \code{inthresh}. E.g. an input series may define event
+#' starts and a response series may define when they end.  If missing or
+#' \code{NULL}, defaults to \code{x}.  As with \code{x}, this is allowed to be
+#' a matrix.
+#' @param indur the series must remain below \code{inthresh} for this many time
+#' steps in order to terminate an event.
+#' @param below reverses the definition of events, to identify events where the
+#' data falls below \code{thresh} (and/or \code{inthresh}). Setting this to
+#' \code{TRUE} is equivalent to negating \code{x} and \code{thresh}, etc.
+#' @param all to include the periods between events as additional levels (i.e.
+#' as events in themselves). These inter-events will be assigned negative
+#' levels, while the actual events will have positive levels. Otherwise -- in
+#' the default case -- these inter-event periods are left as \code{NA}.
+#' @param continue set \code{continue = TRUE} to extend each event until the
+#' following event; otherwise there are gaps between events (the default
+#' behaviour). This has no effect if \code{all = TRUE}.
+#' @param n number of events to be identified: if this is given (and > 0), then
+#' a value of \code{thresh} is estimated such that about this many events are
+#' returned. A warning is given if the actual number of events is not within 5
+#' percent of \code{n}. Note that there may be multiple possible threshold
+#' levels giving the same number of events!
+#' @param events a \code{factor}-like object, perhaps \code{\link{ts}} or
+#' \code{\link{zoo}}. Its levels (unique values) define events, and \code{NA}
+#' values are ignored. If \code{events} is a factor or vector, its values are
+#' assumed to correspond to \code{X}; otherwise, it is assumed to be a time
+#' series object and is merged (\code{cbind}ed) with \code{X}.
+#' @param FUN, a function to apply to the values in each event. In the default
+#' case of \code{by.column = TRUE}, \code{FUN} will be passed a vector of
+#' values from one column of \code{X}. When \code{by.column = FALSE}, which
+#' only makes sense when \code{X} is a matrix, \code{FUN} will be passed a
+#' matrix. The dots (\code{\dots{}}) are passed on too.
+#' @param list() a function to apply to the values in each event. In the
+#' default case of \code{by.column = TRUE}, \code{FUN} will be passed a vector
+#' of values from one column of \code{X}. When \code{by.column = FALSE}, which
+#' only makes sense when \code{X} is a matrix, \code{FUN} will be passed a
+#' matrix. The dots (\code{\dots{}}) are passed on too.
+#' @param ,by.column a function to apply to the values in each event. In the
+#' default case of \code{by.column = TRUE}, \code{FUN} will be passed a vector
+#' of values from one column of \code{X}. When \code{by.column = FALSE}, which
+#' only makes sense when \code{X} is a matrix, \code{FUN} will be passed a
+#' matrix. The dots (\code{\dots{}}) are passed on too.
+#' @param simplify if \code{FALSE}, the result will be returned as a list with
+#' one (named) element for each event, rather than a time series like object.
+#' This case allows \code{FUN} to return a complex object or vectors of
+#' variable lengths.
+#' @param TIMING defines how to construct the time index of the result. Should
+#' the time corresponding to an event be taken from the \code{time()} of its
+#' start, middle, or end?
+#' @return
+#' 
+#' \code{eventseq} returns a zoo object, with core data consisting of an
+#' ordered \code{\link{factor}}, representing the identified events, and the
+#' same time index as \code{x}. Periods between events are left as \code{NA},
+#' unless \code{all = TRUE} in which case they are treated as separate events.
+#' The returned object stores \code{thresh} as an attribute.
+#' 
+#' \code{eventapply} returns a \code{zoo} object (an irregular time series in
+#' this case), with the value returned from \code{FUN} applied to each discrete
+#' event in \code{X}.
+#' 
+#' \code{eventinfo} returns a \code{data.frame} with columns \describe{
+#' \item{list("Time")}{ time that the event started (from \code{time(X)}).  }
+#' \item{list("Month, Year")}{ month and year (as integers) of the mid-point of
+#' the event.  } \item{list("Value")}{ result of \code{FUN} applied to the
+#' event.  } \item{list("Duration")}{ length of the event in time steps / data
+#' points.  } \item{list("PreDuration")}{ number of time steps since the last
+#' event ended.  } }
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{cut.Date}}, \code{\link{tapply}},
+#' \code{\link{rollapply}}, \code{\link{aggregate.zoo}},
+#' \code{\link{panel.xblocks}}, \code{clusters} in the \pkg{evd} package.
+#' @keywords ts utilities
+#' @examples
+#' 
+#' data(Queanbeyan)
+#' ## wet period
+#' x <- window(Queanbeyan, start = "1974-01-01", end = "1976-12-01")
+#' 
+#' evp <- eventseq(x$P, thresh = 5, inthresh = 1, indur = 4, continue = TRUE)
+#' evq <- eventseq(x$Q, thresh = 2, indur = 4, mingap = 5)
+#' 
+#' nlevels(evp) ## number of events
+#' nlevels(evq)
+#' str(evq)
+#' table(coredata(evq))
+#' eventapply(x$Q, evq, FUN = sum)
+#' eventapply(x, evq, FUN = mean)
+#' eventinfo(x$Q, evq)
+#' 
+#' evplot <- xyplot(x) + 
+#'   layer_(panel.xblocks(evp, col = c("grey90", "grey80"), border = "grey80")) +
+#'   layer(panel.xblocks(evq, block.y = 0, vjust = 1, col = 1))
+#' 
+#' evplot
+#' 
+#' update(evplot, type = "s",
+#'     xlim = as.Date(c("1990-07-01", "1990-08-31"))) +
+#'   layer(panel.abline(h = c(5,1), lty = 2), packets = 1)
+#' 
+#' ## example of requesting a threshold giving about 'n' events
+#' set.seed(0)
+#' ee <- eventseq(rnorm(100), n = 10, mingap = 2)
+#' nlevels(ee)
+#' attr(ee, "thresh")
+#' 
+#' ## 
+#' ## example of classifying events based on hydro properties
+#' ##
+#' 
+#' data(Queanbeyan)
+#' x <- window(Queanbeyan, start = "1974-01-01", end = "1976-12-01")
+#' e <- eventseq(x$P, thresh = 5, inthresh = 1, indur = 4, continue = TRUE)
+#' 
+#' ## classify events based on max flow
+#' qclass <- cut(ave(coredata(x$Q), coredata(e), FUN = max),
+#'               c(0, 0.5, 1, Inf))
+#' qclass <- zoo(qclass, time(x))
+#' 
+#' ## Classify events based on antecedent flow
+#' x <- merge(x, Q1 = lag(x$Q, -1), all = c(TRUE, FALSE))
+#' head1 <- function(z) z[1]
+#' q1class <- cut(ave(coredata(x$Q1), coredata(e), FUN = head1),
+#'                c(0, 0.2, 0.3, Inf))
+#' q1class <- zoo(q1class, time(x))
+#' 
+#' ## combined classification
+#' combin <- factor(paste("M", unclass(qclass), "_A", unclass(q1class), sep =""))
+#' combin <- zoo(combin, time(x))
+#' 
+#' ## check results
+#' head(data.frame(x, event = unclass(e), qclass, q1class, combin), 50)
+#' 
+#' ## number of events in each class
+#' each.e <- !duplicated(e)
+#' table(coredata(combin[each.e]))
+#' 
+#' @export eventseq
 eventseq <-
   function(x, thresh = 0, mingap = 1, mindur = 1, extend = 0,
            inthresh = thresh, inx = x, indur = 1,

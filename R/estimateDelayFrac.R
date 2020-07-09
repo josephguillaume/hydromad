@@ -1,3 +1,32 @@
+#' Estimate the dead time between input and output, with a fractional component
+#' (redistribution of the input)
+#' 
+#' Optimises the delay \code{TDopt} using \code{\link{lagFrac}} to maximise the
+#' correlation between the delayed input time series and (rises in) the
+#' corresponding time series
+#' 
+#' \code{\link{estimateDelay}} may be preferred if there's no good reason to
+#' have a fractional lag/redistribution of the input across days.
+#' 
+#' @param DATA a \code{\link{ts}}-like object with named components: \describe{
+#' \item{list("U")}{ input (forcing) time series. } \item{list("Q")}{ output
+#' (response) time series. } }
+#' @param rises use only rises in the output to estimate delay.
+#' @param lag.max largest delay (in time steps) to consider.
+#' @return The estimated delay as an integer number of time steps.
+#' @author Joseph Guillaume
+#' @seealso \code{\link{estimateDelay}}, \code{\link{lagFrac}}
+#' @keywords ts
+#' @examples
+#' 
+#' L<-0.6 ## Lag of 0.6
+#' P <- c(2,0,5,1,6,10,0,0,0)
+#' V1<-lagFrac(P,L)
+#' 
+#' estimateDelay(cbind(P,V1), rises = FALSE)
+#' estimateDelayFrac(cbind(U=P,Q=V1),lag.max=5,rises=FALSE)
+#' 
+#' @export estimateDelayFrac
 estimateDelayFrac <- function(DATA, rises = TRUE, lag.max = hydromad.getOption("max.delay")) {
   DATA <- as.ts(DATA)
   if (NROW(DATA) <= 1) {

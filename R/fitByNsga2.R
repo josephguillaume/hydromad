@@ -1,3 +1,24 @@
+#' Fit a hydromad model using the NSGA2 genetic algorithm from the mco package
+#' 
+#' 
+#' 
+#' @param MODEL a model specification created by \code{\link{hydromad}}. It
+#' should not be fully specified, i.e one or more parameters should be defined
+#' by \emph{ranges} of values rather than exact values.
+#' @param objective objective function to maximise, given as a
+#' \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.
+#' @param control arguments for nsga2 function. See \code{\link{nsga2}}
+#' @return the best model from those sampled, according to the given
+#' \code{objective} function. Also, these extra elements are inserted:
+#' \item{fit.result}{ the result from \code{\link{SCEoptim}}.  }
+#' \item{objective}{ the \code{objective} function used.  } \item{funevals}{
+#' Not currently implemented. Total number of evaluations of the model
+#' simulation function.  } \item{timing}{ timing vector as returned by
+#' \code{system.time}.  }
+#' @author Joseph Guillaume
+#' @seealso \code{\link{nsga2}}
+#' @keywords optimization
+#' @export fitByNsga2
 fitByNsga2 <- function(MODEL, objective = hydromad.getOption("objective"),
                        control = hydromad.getOption("nsga2.control")) {
   if (!requireNamespace("mco")) stop("package mco is required for fitByNsga2")

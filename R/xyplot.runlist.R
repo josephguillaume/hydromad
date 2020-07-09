@@ -6,6 +6,42 @@
 
 ## This plots fitted vs observed only.
 ## To plot residuals, just call xyplot(residuals())
+
+
+#' Plot results from a set of model runs
+#' 
+#' Plot results from a set of model runs using Lattice graphics.
+#' 
+#' 
+#' @aliases xyplot.runlist qqmath.runlist
+#' @param x a \code{runlist} object, which is a list of fitted model objects.
+#' @param data ignored.
+#' @param \dots further arguments are passed on to plotting functions.
+#' @param all passed to \code{fitted()} and \code{observed()}.
+#' @param superpose to overlay all model result series in one panel.
+#' @param x.same,y.same passed to \code{\link{xyplot.list}}.
+#' @param residuals to plot the residual series rather than fitted and observed
+#' series.
+#' @param f.value,tails.n arguments to \code{\link{panel.qqmath}}.
+#' @return
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{runlist}}, \code{\link{xyplot.ts}},
+#' \code{\link{xyplot}}, \code{\link{qqmath}}
+#' @keywords utilities
+#' @examples
+#' 
+#' data(HydroTestData)
+#' mod1 <- hydromad(HydroTestData, sma = "scalar",
+#'                  routing = "expuh", tau_s = 10)
+#' mod2 <- update(mod1, tau_s = 20, tau_q = 5, v_s = 0.5)
+#' mod3 <- update(mod2, loss = 0.5)
+#' mods <-
+#'   runlist(`single store` = mod1,
+#'           `two stores` = mod2,
+#'           loss = mod3)
+#' xyplot(mods, superpose = TRUE)
+#' xyplot(mods, scales = list(y = list(log = TRUE)))
+#' 
 xyplot.runlist <-
   function(x, data = NULL, ...,
            all = FALSE, superpose = FALSE,

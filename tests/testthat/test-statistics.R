@@ -26,7 +26,7 @@ test_that("all statistics can be evaluated", {
   # Ignore r.sq.vartd because it requires event to be specified
   hydromad_stats$r.sq.vartd <- NULL
   ss <- objFunVal(mod, hydromad_stats)
-  expect_output(ss, "list")
+  expect_is(ss, "list")
   ok <- sapply(ss, is.finite)
   if (!all(ok)) {
     warning(
@@ -41,16 +41,16 @@ test_that("custom objective functions work", {
   spec <- update(mod, v_s = c(0, 1))
   set.seed(0)
   fit1 <- fitByOptim1(spec, function(Q, X, ...) nseStat(Q, X))
-  expect_output(fit1, "hydromad")
+  expect_is(fit1, "hydromad")
   set.seed(0)
   fit2 <- fitByOptim1(spec, ~ hmadstat("r.squared")(Q, X) - 1)
-  expect_output(fit2, "hydromad")
+  expect_is(fit2, "hydromad")
   expect_equal(objFunVal(fit1), objFunVal(fit2))
   set.seed(0)
   fit3 <- fitByOptim1(spec, function(Q, X, ...) {
     hmadstat("r.sq.log")(Q, X) - 0.5 * hmadstat("rel.bias")(Q, X)
   })
-  expect_output(fit3, "hydromad")
+  expect_is(fit3, "hydromad")
   expect_true(coef(fit1)[["v_s"]] != coef(fit3)[["v_s"]])
 })
 

@@ -26,7 +26,7 @@
 #' range of options but only works if the final results matrix is small enough
 #' to fit in memory.
 #' 
-#' @aliases evalParsRollapply evalParsTS
+#' @aliases evalParsTS evalParsRollapply
 #' @param par.matrix Named matrix or data.frame of parameter values, with each
 #' row corresponding to a model realisation to evaluate
 #' @param object an object of class \code{hydromad}.
@@ -111,6 +111,30 @@
 #'   objective=hmadstat("r.squared"),filehash.name=NULL)
 #' ## runs is a matrix
 #' }
+#' 
+#' @export evalParsRollapply
+## Calculate objective function on a rolling window
+evalParsRollapply <- function(par.matrix, object,
+                              width = 30,
+                              objective = hydromad.getOption("objective"),
+                              parallel = hydromad.getOption("parallel")[["evalParsTS"]],
+                              filehash.name = tempfile()) {
+  fun <- function(thisMod, width, objective) {
+    rollapply(cbind(Q = observed(thisMod), X = fitted(thisMod)),
+              width = width, by.column = FALSE,
+              FUN = objFunVal, objective = objective
+    )
+  }
+  
+  evalParsTS(par.matrix, object, fun,
+             length.out = length(observed(object)) - width + 1,
+             parallel = parallel,
+             filehash.name = filehash.name,
+             width = width, objective = objective
+  )
+}
+#' 
+#' 
 #' 
 #' 
 #' 
@@ -210,25 +234,4 @@ evalParsTS <- function(par.matrix, object,
   ) ## switch parallel
   ## ff matrix of ts
   results
-}
-
-## Calculate objective function on a rolling window
-evalParsRollapply <- function(par.matrix, object,
-                              width = 30,
-                              objective = hydromad.getOption("objective"),
-                              parallel = hydromad.getOption("parallel")[["evalParsTS"]],
-                              filehash.name = tempfile()) {
-  fun <- function(thisMod, width, objective) {
-    rollapply(cbind(Q = observed(thisMod), X = fitted(thisMod)),
-      width = width, by.column = FALSE,
-      FUN = objFunVal, objective = objective
-    )
-  }
-
-  evalParsTS(par.matrix, object, fun,
-    length.out = length(observed(object)) - width + 1,
-    parallel = parallel,
-    filehash.name = filehash.name,
-    width = width, objective = objective
-  )
 }

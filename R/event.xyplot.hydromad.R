@@ -4,14 +4,12 @@
 ##
 
 
-event.xyplot.hydromad.runlist <-
-
 
 #' Visualise systematic model errors against covariates
 #' 
 #' Visualise systematic model errors against covariates.
 #' 
-#' 
+#' @name event.xyplot.hydromad
 #' @aliases event.xyplot.hydromad event.xyplot.hydromad.runlist
 #' @param x a \code{hydromad} or \code{hydromad.runlist} object.
 #' @param events event sequence produced by \code{\link{eventseq}}, or a vector
@@ -52,6 +50,7 @@ event.xyplot.hydromad.runlist <-
 #' dimnames(foo)[[1]] <- c("sqrt. peak rain (mm/day)", "mean 20-day ante. rain")
 #' foo
 #' 
+event.xyplot.hydromad.runlist <-
   event.xyplot.hydromad <-
   function(x, events,
            formula =

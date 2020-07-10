@@ -23,7 +23,8 @@
 #' \code{hydromad(..., routing = "expuh", rfit = list("inverse", order =
 #' c(2,1)))}.
 #' 
-#' @aliases armax.inverse.fit expuh.inverse.fit
+#' @name armax.inverse.fit
+#' @aliases expuh.inverse.fit
 #' @param DATA a \code{\link{ts}}-like object with named columns: \describe{
 #' \item{list("Q")}{ observed output time series. } \item{list("P")}{ observed
 #' input time series (optional). } }
@@ -210,8 +211,10 @@ armax.inverse.fit <-
     mod$call <- match.call()
     mod
   }
-
-
+#'
+#'
+#'
+#'
 tf.pars.init <-
   function(DATA, order = NA, delay = NA,
            normalise = hydromad.getOption("normalise"),

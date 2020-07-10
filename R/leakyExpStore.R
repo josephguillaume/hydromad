@@ -14,6 +14,7 @@
 #' \deqn{L[k] = L, G[k]>T+L (with T<=0)} \deqn{L[k] = G[k] - T, T+L > G[k] > T}
 #' \deqn{L[k] = 0, G[k]<T}
 #' 
+#' @name leakyExpStore
 #' @aliases leakyExpStore leakyExpStore.sim
 #' @param x input time series.
 #' @param tau Time constant for flow from exponential store.

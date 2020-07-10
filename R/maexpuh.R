@@ -1,5 +1,50 @@
-## Xs and X3 uses rolling mean effective rainfall as input
-## only series=0 is allowed
+#' Smoothed exponential stores
+#' 
+#' Multiple exponential stores with pre- and post- smoothing on 2nd and 3rd
+#' stores
+#' 
+#' @name maexpuh
+#' @aliases maexpuh.sim
+#' @param U placeholder
+#' @param delay placeholder
+#' @param tau_s placeholder
+#' @param tau_q placeholder
+#' @param tau_3 placeholder
+#' @param v_s placeholder
+#' @param v_q placeholder
+#' @param v_3 placeholder
+#' @param series placeholder
+#' @param loss placeholder
+#' @param Xs_0 placeholder
+#' @param Xq_0 placeholder
+#' @param X3_0 placeholder
+#' @param w_s placeholder
+#' @param w_3 placeholder 
+#' @param pars placeholder
+#' @param return_components placeholder
+#' @param na.action placeholder
+#' @param epsilon placeholder
+#' @return
+#' @author Joseph Guillaume
+#' @seealso \code{\link{expuh}}
+#' @keywords ts
+#' @examples
+#' 
+#' \dontrun{
+#'   ## Pre and post filtered Xs
+#'   Us[]=filter(U,rep(1/w_s,w_s),sides=1)
+#'   Us[1:(w_s-1)] <- cumsum(U[1:(w_s-1)])/1:(w_s-1)
+#'   Xstemp[] <- filter_loss(beta_s * U, alpha_s, loss = lossVal,
+#'                       init = Xs_0)
+#'   Xs[]=filter(Xstemp,rep(1/w_s,w_s),sides=1)
+#'   Xs[1:(w_s-1)] <- cumsum(Xstemp[1:(w_s-1)])/1:(w_s-1)
+#' }
+#'
+#'
+#' ## Xs and X3 uses rolling mean effective rainfall as input
+#' ## only series=0 is allowed
+#' 
+#' @export
 maexpuh.sim <-
   function(U, delay = 0, tau_s = 0, tau_q = 0, tau_3 = 0, v_s = 1,
            v_q = NA, v_3 = 0, series = 0, loss = 0, Xs_0 = 0, Xq_0 = 0,

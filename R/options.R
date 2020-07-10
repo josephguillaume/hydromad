@@ -15,6 +15,7 @@
 #' the stream.
 #' 
 #' 
+#' @name scalar
 #' @aliases scalar scalar.sim absorbScale.hydromad.scalar
 #' @param DATA time-series-like object with a column P (precipitation).
 #' @param scale fraction of rainfall that becomes effective.  If this parameter

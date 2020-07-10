@@ -3,7 +3,7 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
-
+#' @export
 lambda.inverse.fit <-
   function(DATA,
            order = c(n = 2, m = 1),
@@ -29,7 +29,7 @@ lambda.inverse.fit <-
       stop("need Q in DATA")
     }
     P <- if ("P" %in% colnames(DATA)) DATA[, "P"]
-
+    
     if (is.na(delay)) {
       delay <- 0
       if ("P" %in% colnames(DATA)) {
@@ -44,11 +44,11 @@ lambda.inverse.fit <-
     isna <- is.na(Q)
     Q[isna] <- 0
     sumQ <- sum(Q)
-
+    
     U <- NULL
     ## option to initialise from U (as rises(Q)), rather than pars.init
     if (init.U) {
-
+      
       #        if (!is.null(P)) {
       #            zeros <- mean(zapsmall(P, 2) == 0, na.rm = TRUE)
       #        } else {
@@ -72,7 +72,7 @@ lambda.inverse.fit <-
         # ar1 <- coef(arima(Q, order = c(1,0,0), include.mean = FALSE))
         # U <- pmax(Q - ar1 * lag(Q), 0)
       }
-
+      
       ## estimate U as scaled P, scaled in a moving window
       ## (runoff coefficient)
       scale.window <- max(autocorrTime(Q) * 1.5, 16)
@@ -85,9 +85,9 @@ lambda.inverse.fit <-
       ## generate starting parameters
       if (is.null(pars)) {
         pars <- tf.pars.init(DATA,
-          order = order, delay = delay,
-          with.lambda = TRUE,
-          init.attempt = init.attempt
+                             order = order, delay = delay,
+                             with.lambda = TRUE,
+                             init.attempt = init.attempt
         )
       }
       ## TODO: hydromad.getOption("catch.errors")
@@ -104,17 +104,17 @@ lambda.inverse.fit <-
         ## we already have an estimate for U
       } else {
         U <- lambda.inverse.sim(Q,
-          P = P,
-          pars = pars, delay = delay,
-          use.Qm = use.Qm,
-          rises.only = rises.only
+                                P = P,
+                                pars = pars, delay = delay,
+                                use.Qm = use.Qm,
+                                rises.only = rises.only
         )
       }
       ## inverse.sim should be in sync with P not Q,
       ## so delay still applies
       fnName <- paste("lambda", fit.method, "fit", sep = ".")
       modCall <- quote(FUN(cbind(Q = Q, U = U),
-        delay = delay, ...
+                           delay = delay, ...
       ))
       # lambda.init = pars[["lambda"]], ...))
       modCall[[1]] <- as.symbol(fnName)
@@ -122,19 +122,19 @@ lambda.inverse.fit <-
       if (!inherits(mod, "tf")) {
         return(mod)
       }
-
+      
       pars <- coef(mod)
-
+      
       if (trace) {
         message(paste(" iteration = ", i))
         print(pars)
       }
-
+      
       if (!is.null(oldU)) {
         delta <- sum(abs(U - oldU), na.rm = TRUE) / sumQ
         if (delta < rel.tolerance) break
       }
-
+      
       if (i >= max.iterations) {
         warning("reached maximum number of iterations")
         break
@@ -143,7 +143,7 @@ lambda.inverse.fit <-
       oldpars <- pars
       i <- i + 1
     }
-
+    
     mod$call <- match.call()
     mod
   }

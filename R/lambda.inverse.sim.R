@@ -6,6 +6,7 @@
 
 ## TODO: keep attributes of Q
 
+#' @export
 lambda.inverse.sim <-
   function(Q, P = NULL,
            pars = c(tau_s = 0, tau_q = 0, v_s = 1, v_3 = 0),
@@ -53,8 +54,8 @@ lambda.inverse.sim <-
     ## initialise U
     U <- Q
     U[] <- 0
-
-
+    
+    
     ###### TODO
     if (TRUE || hydromad.getOption("pure.R.code")) {
       ## slow version in R for cross-checking
@@ -63,7 +64,7 @@ lambda.inverse.sim <-
       if (is.na(alpha_q)) alpha_q <- 0
       v_s_0 <- pars[["v_s"]]
       lambda <- pars[["lambda"]]
-
+      
       Qs_0 <- min(Q[1:10])
       Qq_0 <- 0
       Qst1 <- Qs_0
@@ -94,7 +95,7 @@ lambda.inverse.sim <-
           Umax <- min(Umax, P[t])
           ## bound based on lambda = -1
           Umin <- max(Umin, (Qstar - v_s_0 * (alpha_q - alpha_s)) /
-            (1 - alpha_q))
+                        (1 - alpha_q))
           Umin <- min(Umin, Umax)
           ## ensure that U values imply possible values of v_s
           if ((v_s_0 * Umax^lambda) >= 1) {
@@ -125,17 +126,17 @@ lambda.inverse.sim <-
       Qs_0 <- min(Q[1:10])
       Qq_0 <- 0
       U <- .C(inverse_filter_lambda,
-        as.double(Q),
-        as.integer(length(Q)),
-        as.double(Qs_0),
-        as.double(Qq_0),
-        as.double(pars["tau_s"]),
-        as.double(pars["tau_q"]),
-        as.double(pars["v_s"]),
-        as.double(pars["lambda"]),
-        as.double(P),
-        U = double(length(Q)),
-        PACKAGE = "hydromad"
+              as.double(Q),
+              as.integer(length(Q)),
+              as.double(Qs_0),
+              as.double(Qq_0),
+              as.double(pars["tau_s"]),
+              as.double(pars["tau_q"]),
+              as.double(pars["v_s"]),
+              as.double(pars["lambda"]),
+              as.double(P),
+              U = double(length(Q)),
+              PACKAGE = "hydromad"
       )$U
       ## make it a time series object again
       attributes(U) <- attributes(Q)

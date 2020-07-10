@@ -175,8 +175,9 @@
 #' 
 #' Clark, Martyn P., and Dmitri Kavetski (2010) Ancient Numerical Daemons of
 #' Conceptual Hydrological Modeling: 1. Fidelity and Efficiency of Time
-#' Stepping Schemes.” Water Resources Research 46 (10).
+#' Stepping Schemes. Water Resources Research 46 (10).
 #' \url{http://dx.doi.org/10.1029/2009WR008894}
+#' 
 #' @keywords models
 #' @examples
 #' 
@@ -290,7 +291,7 @@
 
 #' GR4J rainfall runoff model
 #' 
-#' GR4J model (mode`le du Ge´nie Rural a` 4 parame`tres Journalier).
+#' GR4J model (modele du Genie Rural a 4 parametres Journalier).
 #' 
 #' The default parameter ranges were taken from the "80% confidence intervals"
 #' given in Perrin et. al. (2003).
@@ -656,6 +657,7 @@
 #' @seealso \code{\link{hydromad}(sma = "dbm")} to work with models as objects
 #' (recommended).
 #' @keywords models
+#' 
 #' @examples
 #' 
 #' ## view default parameter ranges:

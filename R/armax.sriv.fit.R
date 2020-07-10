@@ -32,14 +32,14 @@
 #' @param order the transfer function order. See \code{\link{armax}}.
 #' @param delay delay (lag time / dead time) in number of time steps. If
 #' missing, this will be estimated from the cross correlation function.
-#' @param noise.order
-#' @param fixed.ar
+#' @param noise.order placeholder
+#' @param fixed.ar placeholder
 #' @param \dots further arguments may include \describe{ \item{prefilter}{ }
 #' \item{initX}{ } \item{trace}{ ~~Describe \code{trace} here~~ } }
-#' @param fallback
-#' @param na.action
-#' @param epsilon
-#' @param max.iterations
+#' @param fallback placeholder
+#' @param na.action placeholder
+#' @param epsilon placeholder
+#' @param max.iterations placeholder
 #' @param quiet to suppress the message when re-fitting if non-physical poles
 #' (i.e. negative or imaginary poles) are detected.
 #' @return a \code{tf} object, which is a list with components

@@ -29,14 +29,14 @@
 #' @param order the transfer function order. See \code{\link{armax}}.
 #' @param delay delay (lag time / dead time) in number of time steps. If
 #' missing, this will be estimated from the cross correlation function.
-#' @param prefilter
-#' @param warmup
-#' @param normalise
-#' @param fixed.ar
-#' @param weights
-#' @param initX
-#' @param na.action
-#' @param trace
+#' @param prefilter placeholder
+#' @param warmup placeholder
+#' @param normalise placeholder
+#' @param fixed.ar placeholder
+#' @param weights placeholder
+#' @param initX placeholder
+#' @param na.action placeholder
+#' @param trace placeholder
 #' @param \dots passed on to \code{armax.ls.fit}.
 #' @param quiet to suppress the message when re-fitting if non-physical poles
 #' (i.e. negative or imaginary poles) are detected.

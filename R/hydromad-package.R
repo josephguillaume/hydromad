@@ -1,8 +1,8 @@
-
-
 #' ARMAX Transfer Function models
 #' 
-#' ARMAX linear transfer functions with a single input and single output
+#' @name armax
+#' 
+#' @description ARMAX linear transfer functions with a single input and single output
 #' series. Can be used as a general Unit Hydrograph transfer function, defined
 #' by Auto-Regressive and Moving Average coefficients.
 #' 
@@ -125,7 +125,7 @@ NULL
 #' \describe{ \item{Rainfall (P)}{ Daily areal rainfall (mm/day).  Origin
 #' unknown, probably spatial interpolation by Barry Croke.  } \item{Streamflow
 #' (Q)}{ Daily mean streamflow (mm/day).  Stream gauge ID 616024 "Canning River
-#' @ Scenic Drive".  Latitude -33.4176; Longitude 115.9817.  } \item{Potential
+#' at Scenic Drive".  Latitude -33.4176; Longitude 115.9817.  } \item{Potential
 #' Evapotranspiration (E)}{ Origin Unknown.  } }
 #' 
 #' @name Canning
@@ -1074,25 +1074,25 @@ NULL
 #' 
 #' 
 #' @aliases maexpuh maexpuh.sim
-#' @param U
-#' @param delay
-#' @param tau_s
-#' @param tau_q
-#' @param tau_3
-#' @param v_s
-#' @param v_q
-#' @param v_3
-#' @param series
-#' @param loss
-#' @param Xs_0
-#' @param Xq_0
-#' @param X3_0
-#' @param w_s
-#' @param w_3
-#' @param pars
-#' @param return_components
-#' @param na.action
-#' @param epsilon
+#' @param U placeholder
+#' @param delay placeholder
+#' @param tau_s placeholder
+#' @param tau_q placeholder
+#' @param tau_3 placeholder
+#' @param v_s placeholder
+#' @param v_q placeholder
+#' @param v_3 placeholder
+#' @param series placeholder
+#' @param loss placeholder
+#' @param Xs_0 placeholder
+#' @param Xq_0 placeholder
+#' @param X3_0 placeholder
+#' @param w_s placeholder
+#' @param w_3 placeholder
+#' @param pars placeholder
+#' @param return_components placeholder
+#' @param na.action placeholder
+#' @param epsilon placeholder
 #' @return
 #' @author Joseph Guillaume
 #' @seealso \code{\link{expuh}}

@@ -191,18 +191,58 @@ sacramento.sim <-
       )
       sma$epdist <- etmult
       sma$dt <- dt
-
-      for (t in seq_len(length(P))) {
-        sma$ep <- coredata(E[t]) * sma$epdist
-        sma$pxv <- coredata(P[t]) * sma$pxmlt
-
-        out <- fland1(sma, fsum1)
-        sma <- out$sma
-
-        fsum1 <- out$fsum1
-        U[t] <- out$sma$tlci
+      
+      if(return_state)
+      {
+        for (t in seq_len(length(P))) {
+          sma$ep <- coredata(E[t]) * sma$epdist
+          sma$pxv <- coredata(P[t]) * sma$pxmlt
+          
+          out <- fland1(sma, fsum1)
+          sma <- out$sma
+          
+          fsum1 <- out$fsum1
+          U[t] <- out$sma$tlci
+          
+          #SAVE STATE VARIABLES 
+          uztwc[t]=out$sma$uztwc
+          uzfwc[t]=out$sma$uzfwc
+          lztwc[t]=out$sma$lztwc
+          lzfsc[t]=out$sma$lzfsc
+          lzfpc[t]=out$sma$lzfpc
+          adimc[t]=out$sma$adimc
+          
+          #SAVE EVAPORATION TOTALS
+          sett[t]=out$fsum1$sett
+          se1[t]=out$fsum1$se1
+          se3[t]=out$fsum1$se3
+          se4[t]=out$fsum1$se4
+          se5[t]=out$fsum1$se5
+          
+          # SAVE FLOWS 
+          roimp[t]=out$sma$tlci_flows[1]
+          sdro[t]=out$sma$tlci_flows[2]
+          ssur[t]=out$sma$tlci_flows[3]
+          sif[t]=out$sma$tlci_flows[4]
+          bfp[t]=out$sma$tlci_flows[5]
+          bfs[t]=out$sma$tlci_flows[6]
+          bfcc[t]=out$sma$tlci_flows[7]
+        }
+        
       }
-
+      else
+      {
+        for (t in seq_len(length(P))) {
+          sma$ep <- coredata(E[t]) * sma$epdist
+          sma$pxv <- coredata(P[t]) * sma$pxmlt
+          
+          out <- fland1(sma, fsum1)
+          sma <- out$sma
+          
+          fsum1 <- out$fsum1
+          U[t] <- out$sma$tlci
+        }
+      }
 
       ## make it a time series object again
       attributes(U) <- attributes(P)

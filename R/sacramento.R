@@ -70,7 +70,6 @@ sacramento.sim <-
     bad <- is.na(P) | is.na(E)
     P[bad] <- 0
     E[bad] <- 0
-    ## NOTE: there is no pure.R.code implementation
     COMPILED <- (hydromad.getOption("pure.R.code") == FALSE)
     if (COMPILED) {
       if (return_state) {
@@ -109,7 +108,6 @@ sacramento.sim <-
           as.double(adimc_0),
           as.integer(min_ninc),
           NAOK = FALSE,
-          DUP = FALSE,
           PACKAGE = "hydromad"
         )
         for (i in 7:25) {
@@ -135,7 +133,6 @@ sacramento.sim <-
           as.double(adimc_0),
           as.integer(min_ninc),
           NAOK = FALSE,
-          DUP = FALSE,
           PACKAGE = "hydromad"
         )$U
         ## make it a time series object again
@@ -191,64 +188,69 @@ sacramento.sim <-
       )
       sma$epdist <- etmult
       sma$dt <- dt
-      
-      if(return_state)
-      {
-        for (t in seq_len(length(P))) {
-          sma$ep <- coredata(E[t]) * sma$epdist
-          sma$pxv <- coredata(P[t]) * sma$pxmlt
-          
-          out <- fland1(sma, fsum1)
-          sma <- out$sma
-          
-          fsum1 <- out$fsum1
-          U[t] <- out$sma$tlci
-          
-          #SAVE STATE VARIABLES 
-          uztwc[t]=out$sma$uztwc
-          uzfwc[t]=out$sma$uzfwc
-          lztwc[t]=out$sma$lztwc
-          lzfsc[t]=out$sma$lzfsc
-          lzfpc[t]=out$sma$lzfpc
-          adimc[t]=out$sma$adimc
-          
-          #SAVE EVAPORATION TOTALS
-          sett[t]=out$fsum1$sett
-          se1[t]=out$fsum1$se1
-          se3[t]=out$fsum1$se3
-          se4[t]=out$fsum1$se4
-          se5[t]=out$fsum1$se5
-          
-          # SAVE FLOWS 
-          roimp[t]=out$sma$tlci_flows[1]
-          sdro[t]=out$sma$tlci_flows[2]
-          ssur[t]=out$sma$tlci_flows[3]
-          sif[t]=out$sma$tlci_flows[4]
-          bfp[t]=out$sma$tlci_flows[5]
-          bfs[t]=out$sma$tlci_flows[6]
-          bfcc[t]=out$sma$tlci_flows[7]
-        }
-        
-      }
-      else
-      {
-        for (t in seq_len(length(P))) {
-          sma$ep <- coredata(E[t]) * sma$epdist
-          sma$pxv <- coredata(P[t]) * sma$pxmlt
-          
-          out <- fland1(sma, fsum1)
-          sma <- out$sma
-          
-          fsum1 <- out$fsum1
-          U[t] <- out$sma$tlci
-        }
-      }
 
-      ## make it a time series object again
-      attributes(U) <- attributes(P)
-      ## re-insert missing values
-      U[bad] <- NA
-      return(U)
+      if (return_state) {
+        state <- matrix(NA, nrow = length(P), ncol = 19)
+        colnames(state) <- c(
+          "U", "uztwc", "uzfwc", "lztwc", "lzfsc", "lzfpc", "adimc",
+          "sett", "se1", "se3", "se4", "se5", "roimp", "sdro", "ssur",
+          "sif", "bfp", "bfs", "bfcc"
+        )
+        for (t in seq_len(length(P))) {
+          sma$ep <- coredata(E[t]) * sma$epdist
+          sma$pxv <- coredata(P[t]) * sma$pxmlt
+
+          out <- fland1(sma, fsum1)
+          sma <- out$sma
+
+          fsum1 <- out$fsum1
+          state[t, "U"] <- out$sma$tlci
+
+          # SAVE STATE VARIABLES
+          state[t, "uztwc"] <- out$sma$uztwc
+          state[t, "uzfwc"] <- out$sma$uzfwc
+          state[t, "lztwc"] <- out$sma$lztwc
+          state[t, "lzfsc"] <- out$sma$lzfsc
+          state[t, "lzfpc"] <- out$sma$lzfpc
+          state[t, "adimc"] <- out$sma$adimc
+
+          # SAVE EVAPORATION TOTALS
+          state[t, "sett"] <- out$fsum1$sett
+          state[t, "se1"] <- out$fsum1$se1
+          state[t, "se3"] <- out$fsum1$se3
+          state[t, "se4"] <- out$fsum1$se4
+          state[t, "se5"] <- out$fsum1$se5
+
+          # SAVE FLOWS
+          state[t, "roimp"] <- out$sma$tlci_flows[1]
+          state[t, "sdro"] <- out$sma$tlci_flows[2]
+          state[t, "ssur"] <- out$sma$tlci_flows[3]
+          state[t, "sif"] <- out$sma$tlci_flows[4]
+          state[t, "bfp"] <- out$sma$tlci_flows[5]
+          state[t, "bfs"] <- out$sma$tlci_flows[6]
+          state[t, "bfcc"] <- out$sma$tlci_flows[7]
+        }
+        state <- as.zooreg(state, order.by = index(P))
+        return(state)
+      }
+      else {
+        for (t in seq_len(length(P))) {
+          sma$ep <- coredata(E[t]) * sma$epdist
+          sma$pxv <- coredata(P[t]) * sma$pxmlt
+
+          out <- fland1(sma, fsum1)
+          sma <- out$sma
+
+          fsum1 <- out$fsum1
+          U[t] <- out$sma$tlci
+        }
+
+        ## make it a time series object again
+        attributes(U) <- attributes(P)
+        ## re-insert missing values
+        U[bad] <- NA
+        return(U)
+      }
     }
   }
 

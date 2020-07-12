@@ -160,7 +160,7 @@ evalParsTS <- function(par.matrix, object,
   }
 
   # Sets default settings for parallelisation if missing
-  parallel <- hydromad:::hydromad.parallel(parallel)
+  parallel <- hydromad.parallel(parallel)
 
   if (parallel$method == "foreach" && !is.null(filehash.name)) {
     filehash.name <- NULL

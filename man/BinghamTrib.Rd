@@ -64,8 +64,7 @@ Created on Tue 07 Jul 2009 05:48:38 AM GMT from Climate Data Online, Bureau of M
 http://www.bom.gov.au/climate/averages
 }
 \seealso{
-  \code{\link{SalmonBrook}},
-  \code{\link{DonnybrookTemp}}
+  \code{\link{SalmonBrook}}
 }
 \examples{
 data(BinghamTrib)

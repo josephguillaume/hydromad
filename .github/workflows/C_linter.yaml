@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+      - master
+      - continuous_integration
+  pull_request:
+    branches:
+      - master
+      - continuous_integration
+      
+name: C_linter
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - uses: DoozyX/clang-format-lint-action@v0.5
+      with:
+        source: '.'
+        extensions: 'c,h,cpp'
+        clangFormatVersion: 9

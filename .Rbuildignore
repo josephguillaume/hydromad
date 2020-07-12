@@ -2,3 +2,16 @@ R/ltv.R
 inst/doc/hydromad.Rnw
 inst/doc/runlists.Rnw
 inst/doc/dataChecking.Rnw
+^.*\.Rproj$
+^\.Rproj\.user$
+^data-raw$
+^.github$
+src/README
+^docs$
+^web$
+^README\.Rmd$
+^README\.md$
+LICENSE
+^_pkgdown\.yml$
+^web/docs$
+^pkgdown$

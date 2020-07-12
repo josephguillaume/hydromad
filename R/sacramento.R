@@ -1,34 +1,19 @@
 ## hydromad: Hydrological Modelling and Analysis of Data
 ##
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
+## R translation by Anshika Shristi and Joseph Guillaume, 2020
 ##
 
 ## Sacramento Soil Moisture Accounting model.
 ## Developed by the US National Weather Service.
 sacramento.sim <-
   function(DATA,
-           uztwm,
-           uzfwm,
-           uzk,
-           pctim,
-           adimp,
-           zperc,
-           rexp,
-           lztwm,
-           lzfsm,
-           lzfpm,
-           lzsk,
-           lzpk,
-           pfree,
-           etmult = 1,
-           dt = 1,
-           uztwc_0 = 0.5,
-           uzfwc_0 = 0.5,
-           lztwc_0 = 0.5,
-           lzfsc_0 = 0.5,
-           lzfpc_0 = 0.5,
-           adimc_0 = 0.5,
-           min_ninc = 20,
+           uztwm, uzfwm, uzk, pctim, adimp, zperc, rexp,
+           lztwm, lzfsm, lzfpm, lzsk, lzpk, pfree,
+           etmult = 1, dt = 1,
+           uztwc_0 = 0.5, uzfwc_0 = 0.5,
+           lztwc_0 = 0.5, lzfsc_0 = 0.5, lzfpc_0 = 0.5,
+           adimc_0 = 0.5, min_ninc = 20,
            return_state = FALSE) {
     stopifnot(c("P", "E") %in% colnames(DATA))
     ## check values
@@ -49,19 +34,8 @@ sacramento.sim <-
 
     xpar <-
       c(
-        uztwm,
-        uzfwm,
-        uzk,
-        pctim,
-        adimp,
-        zperc,
-        rexp,
-        lztwm,
-        lzfsm,
-        lzfpm,
-        lzsk,
-        lzpk,
-        pfree
+        uztwm, uzfwm, uzk, pctim, adimp, zperc, rexp,
+        lztwm, lzfsm, lzfpm, lzsk, lzpk, pfree
       )
 
     P <- DATA[, "P"]

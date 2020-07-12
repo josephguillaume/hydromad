@@ -16,30 +16,32 @@
 ##     return(nseStat(coredata(lag.rain$Q), coredata(lag.rain$mod1), ...))
 ## }
 
-adjVarTd <- function(obs,mod,event,...){
-    ## Needs to be zoo objects with same indices
-    stopifnot(is.zoo(event))
-    stopifnot(identical(index(obs),index(mod)))
-    stopifnot(identical(index(obs),index(event)))
-    ## Shift events by one day to allow rises to be better picked up
-    event.1lag <- merge(lag(event,1), zoo(, index(event)))
-    event.1lag[length(event.1lag)]<-event.1lag[length(event.1lag)-1]
+adjVarTd <- function(obs, mod, event, ...) {
+  ## Needs to be zoo objects with same indices
+  stopifnot(is.zoo(event))
+  stopifnot(identical(index(obs), index(mod)))
+  stopifnot(identical(index(obs), index(event)))
+  ## Shift events by one day to allow rises to be better picked up
+  event.1lag <- merge(lag(event, 1), zoo(, index(event)))
+  event.1lag[length(event.1lag)] <- event.1lag[length(event.1lag) - 1]
 
-    mod.obs=cbind(U=mod,Q=obs)
-    whole.lag<-estimateDelay(mod.obs,negative.ok=T,...)
-    lag.mod<-eventapply(mod.obs,event.1lag,by.column=FALSE,function(x){
-        ans.lag<-estimateDelay(x, negative.ok=T,...)
-        if (is.na(ans.lag)) {ans.lag <- whole.lag} # if obsQ=0 then delay=NA, put whole delay value
-        x2<-merge(x, mod1 = lag(mod.obs[,1], ans.lag), ans.lag,all = c(TRUE, FALSE))
-        return(x2)
-    })
-    return(do.call(rbind,lag.mod))
+  mod.obs <- cbind(U = mod, Q = obs)
+  whole.lag <- estimateDelay(mod.obs, negative.ok = T, ...)
+  lag.mod <- eventapply(mod.obs, event.1lag, by.column = FALSE, function(x) {
+    ans.lag <- estimateDelay(x, negative.ok = T, ...)
+    if (is.na(ans.lag)) {
+      ans.lag <- whole.lag
+    } # if obsQ=0 then delay=NA, put whole delay value
+    x2 <- merge(x, mod1 = lag(mod.obs[, 1], ans.lag), ans.lag, all = c(TRUE, FALSE))
+    return(x2)
+  })
+  return(do.call(rbind, lag.mod))
 }
 
 
-nseVarTd <- function(obs,mod,event,...){
-    lag.mod <- adjVarTd(obs,mod,event,...)
-    return(nseStat(coredata(lag.mod$Q), coredata(lag.mod$mod1), ...))
+nseVarTd <- function(obs, mod, event, ...) {
+  lag.mod <- adjVarTd(obs, mod, event, ...)
+  return(nseStat(coredata(lag.mod$Q), coredata(lag.mod$mod1), ...))
 }
 
 ################################################################################

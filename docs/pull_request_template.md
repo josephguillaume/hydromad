@@ -3,6 +3,12 @@
 * [ ] Have you followed the guidelines in our **CONTRIBUTING** document?
 * [ ] Have you checked to ensure there aren't other open [Pull Requests](../../../pulls) for the same update/change?
 
+<!-- Does this resolve or supercede an open Issue or Pull Request?
+If so, write a line like Closes #12345 for each Issue or PR number that should be closed
+if this Pull Request is merged. -->
+
+Closes #xxxxx
+
 <!-- You can erase any parts of this template not applicable to your Pull Request. -->
 
 

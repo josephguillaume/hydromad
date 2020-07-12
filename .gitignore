@@ -16,3 +16,4 @@ docs/.DS_Store
 src/RcppExports.cpp
 R/RcppExports.R
 src/hydromad.so
+web/docs

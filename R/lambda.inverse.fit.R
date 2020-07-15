@@ -3,7 +3,12 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
-#' @export
+#' Placeholder
+#' 
+#' Requires documentation
+#'  
+#'  @param DATA Placeholder 
+#'  @export
 lambda.inverse.fit <-
   function(DATA,
            order = c(n = 2, m = 1),

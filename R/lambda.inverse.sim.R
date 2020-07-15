@@ -6,6 +6,12 @@
 
 ## TODO: keep attributes of Q
 
+#' Placeholder
+#' 
+#' Requires documentation
+#'  
+#' 
+#' 
 #' @export
 lambda.inverse.sim <-
   function(Q, P = NULL,

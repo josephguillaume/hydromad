@@ -8,6 +8,9 @@
 \usage{
 hydromad.parallel(settings)
 }
+\arguments{
+\item{settings}{Placeholder}
+}
 \description{
 Support for parallelisation in hydromad
 }

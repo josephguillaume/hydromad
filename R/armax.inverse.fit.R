@@ -43,11 +43,6 @@
 #' @param par.epsilon Placeholder
 #' @param init.attempt Placeholder
 #' @param trace Placeholder
-#' @param DATA Placeholder
-#' @param order Placeholder
-#' @param normalise Placeholder
-#' @param with.lambda Placeholder
-#' @param init.attempt Placeholder
 #' @param ... Placeholder
 #' @return a \code{tf} object, which is a list with components
 #' \item{coefficients}{ the fitted parameter values.} \item{fitted.values}{ the
@@ -322,6 +317,11 @@ tf.pars.init <-
 #' @param na.action function to remove missing values, e.g.
 #' \code{\link[=na.omit.ts]{na.omit}}.
 #' @param epsilon values smaller than this will be set to zero.
+#' @param DATA Placeholder
+#' @param order Placeholder
+#' @param normalise Placeholder
+#' @param with.lambda Placeholder
+#' @param init.attempt Placeholder
 #' @return the model output as a \code{\link{ts}} object, with the same
 #' dimensions and time window as the input \code{U}.  If
 #' \code{return_components = TRUE}, it will have multiple columns named
@@ -330,7 +330,6 @@ tf.pars.init <-
 #' @seealso \code{\link{expuh}}, \code{\link{lambda.inverse.sim}}
 #' @references ...
 #' @keywords ts
-#' @examples
 #' 
 #' 
 #' 

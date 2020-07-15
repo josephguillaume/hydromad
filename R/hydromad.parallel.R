@@ -90,6 +90,7 @@
 #' @name hydromad_parallelisation
 #' @aliases parallel
 #' @author Joseph Guillaume
+#' @param settings Placeholder
 #' @seealso Functions with parallelisation: \code{\link{evalPars}},
 #' \code{\link{crossValidate}}, \code{update.runlist},
 #' \code{\link{objFunVal.runlist}}, \code{\link{paretoObjectivesVaryWeights}}

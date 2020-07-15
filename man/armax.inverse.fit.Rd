@@ -25,9 +25,11 @@ armax.inverse.fit(
 )
 }
 \arguments{
-\item{DATA}{Placeholder}
+\item{DATA}{a \code{\link{ts}}-like object with named columns: \describe{
+\item{list("Q")}{ observed output time series. } \item{list("P")}{ observed
+input time series (optional). } }}
 
-\item{order}{Placeholder}
+\item{order}{the transfer function order. See \code{\link{armax}}.}
 
 \item{delay}{delay (lag time / dead time) in number of time steps. If
 missing, this will be estimated from the cross correlation function.}
@@ -57,8 +59,6 @@ missing, this will be estimated from the cross correlation function.}
 \item{init.attempt}{Placeholder}
 
 \item{trace}{Placeholder}
-
-\item{with.lambda}{Placeholder}
 }
 \value{
 a \code{tf} object, which is a list with components

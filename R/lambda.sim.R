@@ -25,7 +25,7 @@
 #' The \eqn{\lambda} parameter (\code{lambda} argument) must be between 0 and
 #' -1; the case \code{lambda = 0} corresponds to the basic \code{\link{expuh}}
 #' model.
-#' 
+#'
 #' @name lambda
 #' @aliases lambda.sim 
 #' @param U input time series.

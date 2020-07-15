@@ -34,7 +34,6 @@
 #' @seealso \code{\link{xyplot.runlist}}, \code{\link{coef.hydromad}},
 #' \code{\link{summary.hydromad}}
 #' @keywords utilities
-#' @examples
 #' 
 #' 
 #' 

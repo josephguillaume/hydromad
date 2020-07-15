@@ -24,7 +24,7 @@
 #' @param return_components placeholder
 #' @param na.action placeholder
 #' @param epsilon placeholder
-#' @return
+#' @return Placeholder 
 #' @author Joseph Guillaume
 #' @seealso \code{\link{expuh}}
 #' @keywords ts

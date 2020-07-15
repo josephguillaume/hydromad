@@ -40,7 +40,6 @@
 #' @param na.action placeholder
 #' @param epsilon placeholder
 #' @param max.iterations placeholder
-#' @param quiet to suppress the message when re-fitting if non-physical poles
 #' (i.e. negative or imaginary poles) are detected.
 #' @return a \code{tf} object, which is a list with components
 #' \item{coefficients}{ the fitted parameter values.} \item{fitted.values}{ the

@@ -25,14 +25,40 @@ armax.inverse.fit(
 )
 }
 \arguments{
-\item{DATA}{a \code{\link{ts}}-like object with named columns: \describe{
-\item{list("Q")}{ observed output time series. } \item{list("P")}{ observed
-input time series (optional). } }}
+\item{DATA}{Placeholder}
 
-\item{order}{the transfer function order. See \code{\link{armax}}.}
+\item{order}{Placeholder}
 
 \item{delay}{delay (lag time / dead time) in number of time steps. If
 missing, this will be estimated from the cross correlation function.}
+
+\item{fit.method}{Placeholder}
+
+\item{normalise}{Placeholder}
+
+\item{init.U}{Placeholder}
+
+\item{pars}{Placeholder}
+
+\item{use.Qm}{Placeholder}
+
+\item{fft.inverse.sim}{Placeholder}
+
+\item{rises.only}{Placeholder}
+
+\item{...}{Placeholder}
+
+\item{max.iterations}{Placeholder}
+
+\item{rel.tolerance}{Placeholder}
+
+\item{par.epsilon}{Placeholder}
+
+\item{init.attempt}{Placeholder}
+
+\item{trace}{Placeholder}
+
+\item{with.lambda}{Placeholder}
 }
 \value{
 a \code{tf} object, which is a list with components
@@ -74,7 +100,7 @@ xyplot(ts.union(observed = Yh, fitted = fitted(fit1)),
 ...
 }
 \seealso{
-\code{\link{armax.inverse.sim}}, \code{\link{armax}},
+\code{\link{armax.inverse.sim}},
 \code{\link{expuh}}, \code{\link{armax.sriv.fit}}
 }
 \author{

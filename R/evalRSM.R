@@ -39,6 +39,7 @@
 #' @param n Number of independent samples to draw for evaluation of fit
 #' @param method Sampling scheme for \code{evalRSM}. See
 #' \code{\link{parameterSets}}
+#'
 #' @return For \code{runRSM}, an \code{\link{rsm}} object.
 #' 
 #' For \code{evalRSM}, a list with elements: \item{fitted.values}{objective
@@ -169,6 +170,7 @@ runRSM <- function(modx, ..., objective = hydromad.getOption("objective")) {
 
   return(evals.rsm)
 }
+
 
 evalRSM <- function(modx, rsm.object, n = 100,
                     objective = hydromad.getOption("objective"),

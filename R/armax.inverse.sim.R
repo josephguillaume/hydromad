@@ -32,7 +32,23 @@ expuh.inverse.sim <-
 #' @param DATA time-series-like object with columns \code{Q} (streamflow) and
 #' optionally \code{P} (precipitation).
 #' @param delay delay (lag time / dead time) in number of time steps.
-#' @return
+#' @param a_1 Placeholder
+#' @param a_2 Placeholder
+#' @param a_3 Placeholder
+#' @param b_0 Placeholder
+#' @param b_1 Placeholder
+#' @param b_2 Placeholder
+#' @param b_3 Placeholder
+#' @param pars Placeholder
+#' @param init Placeholder
+#' @param rain.factor Placeholder
+#' @param rises.only Placeholder
+#' @param use.Qm Placeholder
+#' @param use.fft.method Placeholder
+#' @param constrain.fft Placeholder
+#' @param mass.balance Placeholder
+#' @param scale.window Placeholder
+#' @param ... Placeholder
 #' @author Felix Andrews \email{felix@@nfrac.org}
 #' @seealso \code{\link{armax.inverse.fit}}, \code{\link{armax}},
 #' \code{\link{expuh}}

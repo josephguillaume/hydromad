@@ -3,8 +3,6 @@
 \name{lambda}
 \alias{lambda}
 \alias{lambda.sim}
-\alias{ssg.lambda}
-\alias{normalise.lambda}
 \title{Transfer function with two exponential components and variable partitioning}
 \usage{
 lambda.sim(

@@ -11,7 +11,8 @@
 #' Scatterplots with variables aggregated in event windows.
 #' 
 #' 
-#' @aliases event.xyplot event.xyplot.formula
+#' @name event.xyplot
+#' @aliases event.xyplot.formula
 #' @param x an object for the generic method; in the \code{formula} method this
 #' is a \code{\link{formula}} as described in the Details section.  All terms
 #' in the formula should be aggregated in the given \code{events}; for this

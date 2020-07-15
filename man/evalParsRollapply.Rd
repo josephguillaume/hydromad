@@ -132,7 +132,7 @@ runs <- evalParsRollapply(par.matrix,object,
 Herman, J. D., P. M. Reed, and T. Wagener. 2013. "Time-Varying
 Sensitivity Analysis Clarifies the Effects of Watershed Model Formulation on
 Model Behavior." Water Resources Research 49 (3): 1400-1414.
-doi:\href{http://dx.doi.org/10.1002/wrcr.2012410.1002/wrcr.20124}
+doi: \href{http://dx.doi.org/10.1002/wrcr.2012410.1002/wrcr.20124}{here}
 }
 \seealso{
 \code{\link{evalPars}} to calculate a single objective function for

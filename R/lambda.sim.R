@@ -27,7 +27,7 @@
 #' model.
 #' 
 #' @name lambda
-#' @aliases lambda lambda.sim ssg.lambda normalise.lambda
+#' @aliases lambda.sim 
 #' @param U input time series.
 #' @param delay lag (dead time) between input and response, in time steps.
 #' @param tau_s,tau_q time constants for the exponential components.

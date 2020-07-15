@@ -61,9 +61,7 @@ simulated time series.
 Generate simulated time series from Hydromad model objects.
 }
 \examples{
-
-
-
+Placeholder
 }
 \seealso{
 \code{\link{hydromad}}, \code{\link{update.hydromad}}

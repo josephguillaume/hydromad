@@ -44,7 +44,7 @@
 #' @author Joseph Guillaume
 #' @seealso \code{\link{crossValidate}} for an example use of
 #' \code{paretoTimeAnalysis.crossvalidation}
-#' @references
+#' @references Placeholder
 #' @keywords models
 #' @examples
 #' 

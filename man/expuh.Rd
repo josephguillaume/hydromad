@@ -17,35 +17,15 @@ expuh.ls.fit(
 )
 }
 \arguments{
-\item{delay}{lag (dead time) between input and response, in time steps.}
+\item{DATA}{Placeholder}
 
-\item{U}{input time series.}
+\item{order}{Placeholder}
 
-\item{tau_s, tau_q, tau_3}{time constants (\eqn{\tau}) for the exponential
-components.}
+\item{delay}{Placeholder}
 
-\item{v_s, v_q, v_3}{fractional volumes (\var{v}) for the exponential
-components.}
+\item{quiet}{Placeholder}
 
-\item{series}{defines the configuration of exponential components, as being
-in parallel and/or series (for second or third order models). See Details.}
-
-\item{loss}{a constant loss (or gain, if negative) term subtracted from the
-\emph{slow} (\code{s}) component.}
-
-\item{Xs_0, Xq_0, X3_0}{initial values of the exponential components.}
-
-\item{pars}{the parameters as a named vector. If this is given, it will
-over-ride the named parmameter arguments.}
-
-\item{return_components}{whether to return all component time series.}
-
-\item{na.action}{function to remove missing values, e.g.
-\code{\link[=na.omit.ts]{na.omit}}.}
-
-\item{epsilon}{values smaller than this in the output will be set to zero.}
-
-\item{theta}{the parameters as a named vector.}
+\item{...}{Placeholder}
 }
 \value{
 the model output as a \code{\link{ts}} object, with the same

@@ -29,6 +29,7 @@
 #' @param FUN, the aggregation function (and any extra arguments) to use on
 #' each group when \code{groups} is specified. The actual aggregation is done
 #' by \code{\link{eventapply}}.
+#' @param ... Placeholder
 #' @param list() the aggregation function (and any extra arguments) to use on
 #' each group when \code{groups} is specified. The actual aggregation is done
 #' by \code{\link{eventapply}}.

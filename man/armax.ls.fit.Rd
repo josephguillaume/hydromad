@@ -2,7 +2,6 @@
 % Please edit documentation in R/armax.ls.fit.R
 \name{armax.ls.fit}
 \alias{armax.ls.fit}
-\alias{expuh.ls.fit}
 \title{Estimate transfer function models by Least Squares.}
 \usage{
 armax.ls.fit(
@@ -45,9 +44,7 @@ missing, this will be estimated from the cross correlation function.}
 
 \item{trace}{placeholder}
 
-\item{\dots}{passed on to \code{armax.ls.fit}.}
-
-\item{quiet}{to suppress the message when re-fitting if non-physical poles
+\item{\dots}{passed on to \code{armax.ls.fit}.
 (i.e. negative or imaginary poles) are detected.}
 }
 \value{

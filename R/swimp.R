@@ -7,8 +7,9 @@
 #' Simple Wetland Inundation Model using Poweroids
 #' 
 #' Model flood area / duration / depth in wetlands.
+#' %% ~~ If necessary, more details than the description above ~~
+#'
 #' 
-#' ...
 #' 
 #' @param flow.ML inflow or streamflow in ML per timestep.
 #' @param thresh a threshold for \code{flow.ML}, such that only flow above this
@@ -21,12 +22,12 @@
 #' relative to a reference pressure of 10cm. If this is 0, the wetland surface
 #' water is isolated from the surrounding water table, i.e. there is no
 #' infiltration nor discharge.
-#' @param e %% ~~Describe \code{e} here~~
+#' @param e Placeholder
 #' @param g stress threshold in terms of Catchment Moisture Deficit (mm), as in
 #' the IHACRES CMD model, where \code{g = f * d}. See
 #' \code{\link{IHACRES.CMD.model}}.
-#' @param Hmax %% ~~Describe \code{Hmax} here~~
-#' @param Amax %% ~~Describe \code{Amax} here~~
+#' @param Hmax Placeholder
+#' @param Amax Placeholder
 #' @param porosity effective porosity of the soil.
 #' @param M_0 initial value of Catchment Moisture Deficit, mm.
 #' @param V_0 initial volume of surface water in wetland, ML.

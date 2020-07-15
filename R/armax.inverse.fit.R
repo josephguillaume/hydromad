@@ -31,12 +31,30 @@
 #' @param order the transfer function order. See \code{\link{armax}}.
 #' @param delay delay (lag time / dead time) in number of time steps. If
 #' missing, this will be estimated from the cross correlation function.
+#' @param fit.method Placeholder
+#' @param normalise Placeholder
+#' @param init.U Placeholder
+#' @param pars Placeholder
+#' @param use.Qm Placeholder
+#' @param fft.inverse.sim Placeholder
+#' @param rises.only Placeholder
+#' @param max.iterations Placeholder
+#' @param rel.tolerance Placeholder
+#' @param par.epsilon Placeholder
+#' @param init.attempt Placeholder
+#' @param trace Placeholder
+#' @param DATA Placeholder
+#' @param order Placeholder
+#' @param normalise Placeholder
+#' @param with.lambda Placeholder
+#' @param init.attempt Placeholder
+#' @param ... Placeholder
 #' @return a \code{tf} object, which is a list with components
 #' \item{coefficients}{ the fitted parameter values.} \item{fitted.values}{ the
 #' fitted values. } \item{residuals}{ the residuals. } \item{delay}{ the
 #' (possibly fitted) delay time. }
 #' @author Felix Andrews \email{felix@@nfrac.org}
-#' @seealso \code{\link{armax.inverse.sim}}, \code{\link{armax}},
+#' @seealso \code{\link{armax.inverse.sim}},
 #' \code{\link{expuh}}, \code{\link{armax.sriv.fit}}
 #' @references ...
 #' @keywords ts
@@ -211,10 +229,7 @@ armax.inverse.fit <-
     mod$call <- match.call()
     mod
   }
-#'
-#'
-#'
-#'
+
 tf.pars.init <-
   function(DATA, order = NA, delay = NA,
            normalise = hydromad.getOption("normalise"),

@@ -2,7 +2,7 @@
 #' strategy) from cmaes package
 #' 
 #' 
-#' %% ~~ If necessary, more details than the description above ~~
+#' Placeholder for description
 #' 
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined
@@ -19,7 +19,7 @@
 #' \item{timing}{ timing vector as returned by \code{system.time}.  }
 #' @author Joseph Guillaume
 #' @seealso \code{\link{cma_es}}
-#' @references %% ~put references to the literature/web site here ~
+#' @references Placeholder
 #' @keywords optimisation
 #' @export fitByCMAES
 fitByCMAES <- function(MODEL, objective = hydromad.getOption("objective"),

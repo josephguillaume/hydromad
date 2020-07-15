@@ -32,6 +32,8 @@
 \item{\dots}{further arguments passed on to \code{\link{xyplot.zoo}} or
 \code{\link{qqmath}}.}
 
+\item{scales}{Placeholder}
+
 \item{feasible.bounds}{if \code{TRUE}, then ensemble simulation bounds are
 extracted and plotted. This only works if a \emph{feasible set} has been
 specified using \code{\link{defineFeasibleSet}} or the \code{update} method.
@@ -48,7 +50,11 @@ simulation bounds if \code{feasible.bounds = TRUE}.}
 
 \item{with.P}{to include the input rainfall series in the plot.}
 
+\item{type}{Placeholder}
+
 \item{type.P}{plot type for rainfall, passed to \code{\link{panel.xyplot}}.}
+
+\item{layout}{Placeholder}
 
 \item{f.value, tails.n}{arguments to \code{\link{panel.qqmath}}.}
 

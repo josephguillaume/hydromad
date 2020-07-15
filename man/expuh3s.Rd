@@ -47,7 +47,7 @@ expuh3s.sim(
 
 \item{G_2}{storage threshold to stop groundwater loss (ML) (less than zero)}
 
-\item{Xs_0, Xq_0, X3_0}{initial values of the exponential components.}
+\item{Xs_0, Xq_0, Xg_0}{initial values of the exponential components.}
 
 \item{pars}{the parameters as a named vector. If this is given, it will
 over-ride the named parmameter arguments.}

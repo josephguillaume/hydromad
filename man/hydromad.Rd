@@ -78,7 +78,6 @@ For a list of the package functions with their help pages, see the website
 \url{http://hydromad.catchment.org/}.
 }
 \examples{
-
 data(Cotter)
 x <- Cotter[1:1000]
 

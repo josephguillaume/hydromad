@@ -68,7 +68,6 @@
 #' \url{http://dx.doi.org/10.1016/j.envsoft.2011.04.006}
 #' @keywords models
 #' @examples
-#' 
 #' data(Cotter)
 #' x <- Cotter[1:1000]
 #' 

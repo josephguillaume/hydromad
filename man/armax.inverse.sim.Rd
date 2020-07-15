@@ -30,10 +30,41 @@ armax.inverse.sim(
 \item{DATA}{time-series-like object with columns \code{Q} (streamflow) and
 optionally \code{P} (precipitation).}
 
-\item{delay}{delay (lag time / dead time) in number of time steps.}
-}
-\value{
+\item{a_1}{Placeholder}
 
+\item{a_2}{Placeholder}
+
+\item{a_3}{Placeholder}
+
+\item{b_0}{Placeholder}
+
+\item{b_1}{Placeholder}
+
+\item{b_2}{Placeholder}
+
+\item{b_3}{Placeholder}
+
+\item{pars}{Placeholder}
+
+\item{delay}{delay (lag time / dead time) in number of time steps.}
+
+\item{init}{Placeholder}
+
+\item{rain.factor}{Placeholder}
+
+\item{rises.only}{Placeholder}
+
+\item{use.Qm}{Placeholder}
+
+\item{use.fft.method}{Placeholder}
+
+\item{constrain.fft}{Placeholder}
+
+\item{mass.balance}{Placeholder}
+
+\item{scale.window}{Placeholder}
+
+\item{...}{Placeholder}
 }
 \description{
 Invert transfer function models to estimate input series.

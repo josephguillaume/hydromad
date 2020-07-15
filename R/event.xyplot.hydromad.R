@@ -50,6 +50,7 @@
 #' dimnames(foo)[[1]] <- c("sqrt. peak rain (mm/day)", "mean 20-day ante. rain")
 #' foo
 #' 
+#' @export
 event.xyplot.hydromad.runlist <-
   event.xyplot.hydromad <-
   function(x, events,

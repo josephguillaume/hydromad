@@ -20,10 +20,11 @@
 #' @param all passed to \code{fitted()} and \code{observed()}.
 #' @param superpose to overlay all model result series in one panel.
 #' @param x.same,y.same passed to \code{\link{xyplot.list}}.
+#' series.
 #' @param residuals to plot the residual series rather than fitted and observed
 #' series.
 #' @param f.value,tails.n arguments to \code{\link{panel.qqmath}}.
-#' @return
+#' @param layout Placeholder
 #' @author Felix Andrews \email{felix@@nfrac.org}
 #' @seealso \code{\link{runlist}}, \code{\link{xyplot.ts}},
 #' \code{\link{xyplot}}, \code{\link{qqmath}}
@@ -63,6 +64,7 @@ xyplot.runlist <-
   }
 
 ## Handles either fitted vs observed, or residuals.
+
 qqmath.runlist <-
   function(x, data = NULL, ..., all = FALSE,
            residuals = FALSE, superpose = FALSE,

@@ -26,8 +26,6 @@
 #' @seealso \code{\link{armax}}, \code{\link{armax.sriv.fit}}
 #' @references P C Young?
 #' @keywords optimize
-#' @examples
-#' 
 #' 
 #' 
 #' @export tryModelOrders

@@ -61,24 +61,11 @@
 #' 
 #' @name expuh
 #' @aliases expuh.sim ssg.expuh normalise.expuh
-#' @param U input time series.
-#' @param delay lag (dead time) between input and response, in time steps.
-#' @param tau_s,tau_q,tau_3 time constants (\eqn{\tau}) for the exponential
-#' components.
-#' @param v_s,v_q,v_3 fractional volumes (\var{v}) for the exponential
-#' components.
-#' @param series defines the configuration of exponential components, as being
-#' in parallel and/or series (for second or third order models). See Details.
-#' @param loss a constant loss (or gain, if negative) term subtracted from the
-#' \emph{slow} (\code{s}) component.
-#' @param Xs_0,Xq_0,X3_0 initial values of the exponential components.
-#' @param pars the parameters as a named vector. If this is given, it will
-#' over-ride the named parmameter arguments.
-#' @param return_components whether to return all component time series.
-#' @param na.action function to remove missing values, e.g.
-#' \code{\link[=na.omit.ts]{na.omit}}.
-#' @param epsilon values smaller than this in the output will be set to zero.
-#' @param theta the parameters as a named vector.
+#' @param DATA Placeholder
+#' @param order Placeholder
+#' @param quiet Placeholder
+#' @param delay Placeholder
+#' @param ... Placeholder
 #' @return the model output as a \code{\link{ts}} object, with the same
 #' dimensions and time window as the input \code{U}.  If
 #' \code{return_components = TRUE}, it will have multiple columns named

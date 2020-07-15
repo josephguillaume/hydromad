@@ -34,11 +34,6 @@ a list of model objects, of class \code{hydromad.\link{runlist}}.
 Compare calibrations with different transfer function (ARMA) orders for
 routing.
 }
-\examples{
-
-
-
-}
 \references{
 P C Young?
 }

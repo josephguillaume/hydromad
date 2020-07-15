@@ -27,15 +27,15 @@
 
 \item{superpose}{to overlay all model result series in one panel.}
 
-\item{x.same, y.same}{passed to \code{\link{xyplot.list}}.}
+\item{x.same, y.same}{passed to \code{\link{xyplot.list}}.
+series.}
+
+\item{layout}{Placeholder}
 
 \item{residuals}{to plot the residual series rather than fitted and observed
 series.}
 
 \item{f.value, tails.n}{arguments to \code{\link{panel.qqmath}}.}
-}
-\value{
-
 }
 \description{
 Plot results from a set of model runs using Lattice graphics.

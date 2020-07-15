@@ -23,6 +23,9 @@ plot.hydromad <-
 #' tsdiag.hydromad
 #' @param x an object of class \code{hydromad}.
 #' @param data ignored.
+#' @param scales Placeholder
+#' @param type Placeholder
+#' @param layout Placeholder
 #' @param \dots further arguments passed on to \code{\link{xyplot.zoo}} or
 #' \code{\link{qqmath}}.
 #' @param feasible.bounds if \code{TRUE}, then ensemble simulation bounds are
@@ -173,6 +176,7 @@ xyplot.hydromad.runlist <-
     foo$call <- sys.call(sys.parent())
     foo
   }
+
 
 qqmath.hydromad <-
   function(x, data = NULL, ..., all = FALSE, type = "l",

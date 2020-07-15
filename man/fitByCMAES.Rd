@@ -33,10 +33,10 @@ total number of evaluations of the model simulation function.  }
 \item{timing}{ timing vector as returned by \code{system.time}.  }
 }
 \description{
-%% ~~ If necessary, more details than the description above ~~
+Placeholder for description
 }
 \references{
-%% ~put references to the literature/web site here ~
+Placeholder
 }
 \seealso{
 \code{\link{cma_es}}

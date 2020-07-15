@@ -40,15 +40,15 @@ relative to a reference pressure of 10cm. If this is 0, the wetland surface
 water is isolated from the surrounding water table, i.e. there is no
 infiltration nor discharge.}
 
-\item{e}{%% ~~Describe \code{e} here~~}
+\item{e}{Placeholder}
 
 \item{g}{stress threshold in terms of Catchment Moisture Deficit (mm), as in
 the IHACRES CMD model, where \code{g = f * d}. See
 \code{\link{IHACRES.CMD.model}}.}
 
-\item{Hmax}{%% ~~Describe \code{Hmax} here~~}
+\item{Hmax}{Placeholder}
 
-\item{Amax}{%% ~~Describe \code{Amax} here~~}
+\item{Amax}{Placeholder}
 
 \item{porosity}{effective porosity of the soil.}
 
@@ -67,9 +67,7 @@ a \code{\link{zoo}} object (time series object).
 }
 \description{
 Model flood area / duration / depth in wetlands.
-}
-\details{
-...
+%% ~~ If necessary, more details than the description above ~~
 }
 \examples{
 

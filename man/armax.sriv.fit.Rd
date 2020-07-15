@@ -42,9 +42,7 @@ missing, this will be estimated from the cross correlation function.}
 
 \item{epsilon}{placeholder}
 
-\item{max.iterations}{placeholder}
-
-\item{quiet}{to suppress the message when re-fitting if non-physical poles
+\item{max.iterations}{placeholder
 (i.e. negative or imaginary poles) are detected.}
 }
 \value{

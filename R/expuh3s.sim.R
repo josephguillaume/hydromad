@@ -54,7 +54,7 @@
 #' @param G_1 storage threshold to stop recharge (ML) (less than zero)
 #' @param loss Groundwater loss (ML/day)
 #' @param G_2 storage threshold to stop groundwater loss (ML) (less than zero)
-#' @param Xs_0,Xq_0,X3_0 initial values of the exponential components.
+#' @param Xs_0,Xq_0,Xg_0 initial values of the exponential components.
 #' @param pars the parameters as a named vector. If this is given, it will
 #' over-ride the named parmameter arguments.
 #' @param return_components whether to return all component time series.

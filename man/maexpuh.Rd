@@ -67,7 +67,7 @@ maexpuh.sim(
 \item{epsilon}{placeholder}
 }
 \value{
-
+Placeholder
 }
 \description{
 Multiple exponential stores with pre- and post- smoothing on 2nd and 3rd

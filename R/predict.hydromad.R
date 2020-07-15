@@ -41,10 +41,7 @@
 #' @author Felix Andrews \email{felix@@nfrac.org}
 #' @seealso \code{\link{hydromad}}, \code{\link{update.hydromad}}
 #' @keywords methods
-#' @examples
-#' 
-#' 
-#' 
+#' @examples Placeholder
 predict.hydromad <-
   function(object, newdata = NULL,
            which = c("both", "sma", "routing"),

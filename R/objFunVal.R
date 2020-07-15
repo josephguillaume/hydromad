@@ -49,7 +49,7 @@
 #' @return the objective function value, or a list of objective function
 #' values. They must be numeric and of length one; anything else is an error.
 #' @author Felix Andrews \email{felix@@nfrac.org}
-#' @seealso \code{\link{hydromad.stats}}, \link{hydromad.object}
+#' @seealso \code{\link{hydromad.stats}}, \code{hydromad.object}
 #' @keywords utilities
 #' @examples
 #' 

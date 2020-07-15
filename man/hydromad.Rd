@@ -51,7 +51,7 @@ character string is given, then a corresponding function
 }
 \value{
 the result from \code{hydromad()} is a
-\link[=hydromad.object]{hydromad object}.
+\code{hydromad object}.
 }
 \description{
 The \code{hydromad} function can be used to specify models with their model
@@ -63,11 +63,11 @@ be specified for fitting the dependent routing component.
 \details{
 The \code{hydromad()} function allows models to be specified with the given
 component models and parameter specifications. The resulting object can
-later be modified using the \code{\link[=update.hydromad]{update}} method
+later be modified using the \code{update.hydromad} method
 using the same syntax.
 
 Methods for working with the model objects are listed under
-\code{\link{hydromad.object}}.
+\code{hydromad.object}.
 
 For a tutorial, type \code{vignette("tutorial", package = "hydromad")}.
 
@@ -115,7 +115,7 @@ software environment for hydrological model assessment and development.
 \url{http://dx.doi.org/10.1016/j.envsoft.2011.04.006}
 }
 \seealso{
-\code{\link{hydromad.object}}
+\code{hydromad.object}
 }
 \author{
 Felix Andrews \email{felix@nfrac.org}

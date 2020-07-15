@@ -328,7 +328,7 @@ gr4jrouting.ranges <- function() {
 #' 
 #' 
 #' @param pars named vector or list of parameters, e.g. as provided by
-#' \code{\link{coef.hydromad}}.
+#' \code{coef.hydromad}.
 #' @param back Whether to transform or untransform (reverse) the parameters.
 #' @return Named list of transformed/untransformed parameters, depending on
 #' value of \code{back}.

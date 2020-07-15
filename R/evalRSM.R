@@ -1,15 +1,15 @@
 #' Response Surface Method
 #' 
 #' Fit second-order response-surface model to model objective function, see
-#' \code{\link{rsm}}; and evaluate on an independent sample. Uses the
-#' \code{\link[rsm]{rsm}} package.
+#' \code{rsm}; and evaluate on an independent sample. Uses the
+#' \code{rsm} package.
 #' 
-#' Wrapper around \code{\link{ccd}}, \code{\link{evalPars}} and
-#' \code{\link{rsm}} to respectively generate a response-surface design, run a
+#' Wrapper around \code{ccd}, \code{\link{evalPars}} and
+#' \code{rsm} to respectively generate a response-surface design, run a
 #' \code{hydromad} model and fit a second-order response-surface model.
 #' 
-#' Parameters for \code{\link{ccd}} need to be determined before hand by the
-#' user, e.g. using \code{\link{ccd.pick}}.
+#' Parameters for \code{ccd} need to be determined before hand by the
+#' user, e.g. using \code{ccd.pick}.
 #' 
 #' The fit of the resulting response surface model should evaluated, e.g. using
 #' \code{summary.lm}. Fit might be improved with better design parameters
@@ -32,7 +32,7 @@
 #' 
 #' \code{\link{findUnivariateBounds}} can be used as a heuristic method to
 #' narrow down bounds
-#' @param \dots Passed to \code{\link{ccd}} to select an experimental design.
+#' @param \dots Passed to \code{ccd} to select an experimental design.
 #' @param objective objective function to use to generate response surface,
 #' given as a \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.
 #' @param rsm.object rsm object produced by runRSM
@@ -40,7 +40,7 @@
 #' @param method Sampling scheme for \code{evalRSM}. See
 #' \code{\link{parameterSets}}
 #'
-#' @return For \code{runRSM}, an \code{\link{rsm}} object.
+#' @return For \code{runRSM}, an \code{rsm} object.
 #' 
 #' For \code{evalRSM}, a list with elements: \item{fitted.values}{objective
 #' values from rsm object} \item{model.values}{objective values from hydromad
@@ -52,9 +52,9 @@
 #' \item{adj.r.squared}{the above R^2 statistic 'adjusted', penalizing for
 #' higher p}
 #' @author Joseph Guillaume
-#' @seealso the \code{\link[rsm]{rsm}} package;
+#' @seealso the \code{rsm} package;
 #' \code{\link{findUnivariateBounds}} to help reduce bounds to a quadratic
-#' region, \code{\link{ccd.pick}} to help determine parameters of design
+#' region, \code{ccd.pick} to help determine parameters of design
 #' (passed as \dots{})
 #' @references Shin, Mun-Ju, Joseph H.A. Guillaume, Barry F.W. Croke, and
 #' Anthony J. Jakeman. 2015. "A Review of Foundational Methods for Checking the

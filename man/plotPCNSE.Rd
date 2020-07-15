@@ -20,7 +20,7 @@ assume higher values are better. Values should be transformed prior to use.}
 Facilitates custom plotting.}
 }
 \value{
-\code{\link{ggplot}} object, which can be plotted. Or data.frame if
+\code{ggplot} object, which can be plotted. Or data.frame if
 \code{return.data} is \code{TRUE}.
 }
 \description{
@@ -33,8 +33,8 @@ plotPCNSE(subset(YeAl97,Catchment=="Salmon"),objectives="E")
 
 }
 \seealso{
-\code{\link{areModelsDominated}} for raw data,
-\code{\link{paretoCatchments}} for further analysis
+\code{areModelsDominated} for raw data,
+\code{paretoCatchments} for further analysis
 }
 \author{
 Joseph Guillaume

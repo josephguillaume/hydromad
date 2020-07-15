@@ -26,7 +26,7 @@ constructors, such as morris, sobol2002, etc.}
 \item{ts.matrix}{A matrix of model responses, with each row corresponding to
 the parameter sets identified in \code{x} and each column a timestep for
 which to evaluate sensitivity indices. If the matrix does not fit in memory,
-\code{\link{ff}} matrices are also supported.}
+\code{ff} matrices are also supported.}
 
 \item{fun}{A function \code{fun(i,x)} which returns a \code{data.frame},
 where \code{i} is the index of the time series and \code{x} is a complete
@@ -140,7 +140,7 @@ Model Behavior." Water Resources Research 49 (3): 1400-1414.
 doi: \href{http://dx.doi.org/10.1002/wrcr.20124}{10.1002/wrcr.20124}
 }
 \seealso{
-\code{\link{hydromad_sensitivity}} for sensitivity analysis on
+\code{hydromad_sensitivity} for sensitivity analysis on
 static rather than time series model output, \code{\link{evalParsRollapply}}
 to obtain parameter sets
 }

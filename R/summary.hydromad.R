@@ -43,7 +43,7 @@ summary.hydromad.runlist <-
 #' \code{zoo} object of class \code{"summaryWithBreaks"}.
 #' @author Felix Andrews \email{felix@@nfrac.org}
 #' @seealso \code{\link{hydromad.stats}}, \code{\link{objFunVal}} for a way to
-#' calculate statistic values directly; \code{\link{hydromad.object}}
+#' calculate statistic values directly; \code{hydromad.object}
 #' @keywords methods
 #' @examples
 #' 

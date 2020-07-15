@@ -9,7 +9,7 @@
 #' 
 #' \code{evalPars} evaluates a model for a named matrix of parameters.
 #' 
-#' \code{evalPars} is used in conjunction with \code{\link{getFreeParsRanges}}
+#' \code{evalPars} is used in conjunction with \code{getFreeParsRanges}
 #' and the \code{sensitivity} package to perform sensitivity analysis. See
 #' \code{demo(sensitivity)}. Note that the objective function may more
 #' generally return any scalar result, e.g. a scalar prediction calculated only
@@ -33,7 +33,7 @@
 #' corresponding to the evaluation of each row of \code{par.matrix}.
 #' @author Joseph Guillaume
 #' @seealso \code{\link{objFunVal.hydromad}}, \code{\link{parameterSets}},
-#' \code{\link{getFreeParsRanges}}
+#' \code{getFreeParsRanges}
 #' @keywords models
 #' @examples
 #' 

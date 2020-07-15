@@ -24,7 +24,7 @@ result in an error.}
 Markov Chain Monte Carlo method, the sequences should be thinned first to
 remove autocorrelation and achieve an efficient sample of the parameter
 distributions. The default thinning interval \code{NA} uses the empirical
-autocorrelation.  See \code{\link{window.mcmc}}.}
+autocorrelation.  See \code{window.mcmc}.}
 
 \item{model}{the \code{hydromad} model object to be used to run simulations.
 Does not apply to the \code{hydromad} method.}
@@ -158,7 +158,7 @@ mean((sim[,1] < observed(newglu) + 0.1) &
 
 }
 \seealso{
-\code{\link{predict.hydromad}}, \code{\link{update.hydromad}},
+\code{\link{predict.hydromad}}, \code{update.hydromad},
 \code{\link{fitBySampling}}, \code{\link{fitByDream}}
 }
 \author{

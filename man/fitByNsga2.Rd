@@ -18,7 +18,7 @@ by \emph{ranges} of values rather than exact values.}
 \item{objective}{objective function to maximise, given as a
 \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.}
 
-\item{control}{arguments for nsga2 function. See \code{\link{nsga2}}}
+\item{control}{arguments for nsga2 function. See \code{nsga2}}
 }
 \value{
 the best model from those sampled, according to the given
@@ -33,7 +33,7 @@ simulation function.  } \item{timing}{ timing vector as returned by
 Fit a hydromad model using the NSGA2 genetic algorithm from the mco package
 }
 \seealso{
-\code{\link{nsga2}}
+\code{nsga2}
 }
 \author{
 Joseph Guillaume

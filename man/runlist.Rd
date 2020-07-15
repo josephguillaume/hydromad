@@ -46,7 +46,7 @@ A \code{runlist} object is simply a list of model objects.
 Note that the \code{coef} method just calls \code{summary(..., FUN = coef)}.
 }
 \seealso{
-\code{\link{xyplot.runlist}}, \code{\link{coef.hydromad}},
+\code{\link{xyplot.runlist}}, \code{coef.hydromad},
 \code{\link{summary.hydromad}}
 }
 \author{

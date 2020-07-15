@@ -18,7 +18,7 @@ by \emph{ranges} of values rather than exact values.}
 \item{objective}{objective functions to maximise, as a list with elements as
 \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.}
 
-\item{control}{arguments for nsga2 function. See \code{\link{nsga2}}}
+\item{control}{arguments for nsga2 function. See \code{nsga2}.}
 }
 \value{
 \code{\link{runlist}} of models on Pareto front

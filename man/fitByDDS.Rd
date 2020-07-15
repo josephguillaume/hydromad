@@ -20,7 +20,7 @@ by \emph{ranges} of values rather than exact values.}
 \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.}
 
 \item{control}{settings for the DDS algorithm. These are the arguments to
-\code{\link{optim_dds}}.}
+\code{optim_dds}.}
 
 \item{save}{Optional \code{function(pars,objective value,model)} that will
 be called for every model evaluation, for example to save every model run.}
@@ -38,7 +38,7 @@ Fit a hydromad model using DDS (Dynamically Dimensioned Search) algorithm.
 }
 \details{
 This function depends on the \code{ppso} package, available from
-\link{http://www.rforge.net/ppso/}. For alternative optimisation algorithms,
+\href{http://www.rforge.net/ppso/}{http://www.rforge.net/ppso/}. For alternative optimisation algorithms,
 consider \code{\link{fitBySCE}}.
 }
 \examples{
@@ -71,7 +71,7 @@ calibration, Water Resour. Res., 43, W01413, doi:10.1029/2005WR004723.
 http://www.agu.org/journals/wr/wr0701/2005WR004723/
 }
 \seealso{
-\code{\link{optim_dds}},\code{\link{fitBySCE}}
+\code{optim_dds},\code{\link{fitBySCE}}
 }
 \author{
 Joseph Guillaume \email{josephguillaume@gmail.com}

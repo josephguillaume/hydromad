@@ -64,7 +64,7 @@ Generate simulated time series from Hydromad model objects.
 Placeholder
 }
 \seealso{
-\code{\link{hydromad}}, \code{\link{update.hydromad}}
+\code{\link{hydromad}}, \code{update.hydromad}
 }
 \author{
 Felix Andrews \email{felix@nfrac.org}

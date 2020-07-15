@@ -39,7 +39,7 @@
 #' return flow components.
 #' @return simulated time series.
 #' @author Felix Andrews \email{felix@@nfrac.org}
-#' @seealso \code{\link{hydromad}}, \code{\link{update.hydromad}}
+#' @seealso \code{\link{hydromad}}, \code{update.hydromad}
 #' @keywords methods
 #' @examples Placeholder
 predict.hydromad <-

@@ -31,7 +31,7 @@
 #' element of \code{object} and columns for each named item returned by
 #' \code{FUN}. Any missing items will filled in with \code{NA}.
 #' @author Felix Andrews \email{felix@@nfrac.org}
-#' @seealso \code{\link{xyplot.runlist}}, \code{\link{coef.hydromad}},
+#' @seealso \code{\link{xyplot.runlist}}, \code{coef.hydromad},
 #' \code{\link{summary.hydromad}}
 #' @keywords utilities
 #' 

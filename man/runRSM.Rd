@@ -19,7 +19,7 @@ to the optimum.
 \code{\link{findUnivariateBounds}} can be used as a heuristic method to
 narrow down bounds}
 
-\item{\dots}{Passed to \code{\link{ccd}} to select an experimental design.}
+\item{\dots}{Passed to \code{ccd} to select an experimental design.}
 
 \item{objective}{objective function to use to generate response surface,
 given as a \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.}
@@ -32,7 +32,7 @@ given as a \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.}
 \code{\link{parameterSets}}}
 }
 \value{
-For \code{runRSM}, an \code{\link{rsm}} object.
+For \code{runRSM}, an \code{rsm} object.
 
 For \code{evalRSM}, a list with elements: \item{fitted.values}{objective
 values from rsm object} \item{model.values}{objective values from hydromad
@@ -46,16 +46,16 @@ higher p}
 }
 \description{
 Fit second-order response-surface model to model objective function, see
-\code{\link{rsm}}; and evaluate on an independent sample. Uses the
-\code{\link[rsm]{rsm}} package.
+\code{rsm}; and evaluate on an independent sample. Uses the
+\code{rsm} package.
 }
 \details{
-Wrapper around \code{\link{ccd}}, \code{\link{evalPars}} and
-\code{\link{rsm}} to respectively generate a response-surface design, run a
+Wrapper around \code{ccd}, \code{\link{evalPars}} and
+\code{rsm} to respectively generate a response-surface design, run a
 \code{hydromad} model and fit a second-order response-surface model.
 
-Parameters for \code{\link{ccd}} need to be determined before hand by the
-user, e.g. using \code{\link{ccd.pick}}.
+Parameters for \code{ccd} need to be determined before hand by the
+user, e.g. using \code{ccd.pick}.
 
 The fit of the resulting response surface model should evaluated, e.g. using
 \code{summary.lm}. Fit might be improved with better design parameters
@@ -155,9 +155,9 @@ indices" J. Chem. Technol. Biot., 76(4):430-438.
 doi: \href{http://dx.doi.org/10.1002/jctb.39810.1002/jctb.398}{http://dx.doi.org/10.1002/jctb.39810.1002/jctb.398}
 }
 \seealso{
-the \code{\link[rsm]{rsm}} package;
+the \code{rsm} package;
 \code{\link{findUnivariateBounds}} to help reduce bounds to a quadratic
-region, \code{\link{ccd.pick}} to help determine parameters of design
+region, \code{ccd.pick} to help determine parameters of design
 (passed as \dots{})
 }
 \author{

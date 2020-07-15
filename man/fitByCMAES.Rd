@@ -20,7 +20,7 @@ by \emph{ranges} of values rather than exact values.}
 \item{objective}{objective function to maximise, given as a
 \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.}
 
-\item{control}{settings for the CMA-ES algorithm. See \code{\link{cma_es}}}
+\item{control}{settings for the CMA-ES algorithm. See \code{cma_es}}
 
 \item{vcov}{Ignored}
 }
@@ -39,7 +39,7 @@ Placeholder for description
 Placeholder
 }
 \seealso{
-\code{\link{cma_es}}
+\code{cma_es}
 }
 \author{
 Joseph Guillaume

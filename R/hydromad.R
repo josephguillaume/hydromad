@@ -15,11 +15,11 @@
 #' 
 #' The \code{hydromad()} function allows models to be specified with the given
 #' component models and parameter specifications. The resulting object can
-#' later be modified using the \code{\link[=update.hydromad]{update}} method
+#' later be modified using the \code{update.hydromad} method
 #' using the same syntax.
 #' 
 #' Methods for working with the model objects are listed under
-#' \code{\link{hydromad.object}}.
+#' \code{hydromad.object}.
 #' 
 #' For a tutorial, type \code{vignette("tutorial", package = "hydromad")}.
 #' 
@@ -59,9 +59,9 @@
 #' \var{routing}\code{.}\var{rfit}\code{.fit} must exist.
 #' @param warmup warmup period in number of time steps.
 #' @return the result from \code{hydromad()} is a
-#' \link[=hydromad.object]{hydromad object}.
+#' \code{hydromad object}.
 #' @author Felix Andrews \email{felix@@nfrac.org}
-#' @seealso \code{\link{hydromad.object}}
+#' @seealso \code{hydromad.object}
 #' @references F.T. Andrews, B.F.W. Croke and A.J. Jakeman (2011). An open
 #' software environment for hydrological model assessment and development.
 #' \emph{Environmental Modelling and Software} 26 (2011), pp. 1171-1185.

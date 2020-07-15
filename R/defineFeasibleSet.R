@@ -21,7 +21,7 @@
 #' Markov Chain Monte Carlo method, the sequences should be thinned first to
 #' remove autocorrelation and achieve an efficient sample of the parameter
 #' distributions. The default thinning interval \code{NA} uses the empirical
-#' autocorrelation.  See \code{\link{window.mcmc}}.
+#' autocorrelation.  See \code{window.mcmc}.
 #' @param model the \code{hydromad} model object to be used to run simulations.
 #' Does not apply to the \code{hydromad} method.
 #' @param objseq objective function values corresponding to the parameter sets
@@ -73,7 +73,7 @@
 #' \code{xyplot}, \code{fitted}, \code{predict}, \code{update}, \code{coef},
 #' and \code{print}.
 #' @author Felix Andrews \email{felix@@nfrac.org}
-#' @seealso \code{\link{predict.hydromad}}, \code{\link{update.hydromad}},
+#' @seealso \code{\link{predict.hydromad}}, \code{update.hydromad},
 #' \code{\link{fitBySampling}}, \code{\link{fitByDream}}
 #' @keywords ts
 #' @examples

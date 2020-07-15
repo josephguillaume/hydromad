@@ -65,11 +65,11 @@ paretoFilter <- function(x, ...) {
 #' assume higher values are better. Values should be transformed prior to use.
 #' @param return.data return data.frame used in call to \code{ggplot}.
 #' Facilitates custom plotting.
-#' @return \code{\link{ggplot}} object, which can be plotted. Or data.frame if
+#' @return \code{ggplot} object, which can be plotted. Or data.frame if
 #' \code{return.data} is \code{TRUE}.
 #' @author Joseph Guillaume
-#' @seealso \code{\link{areModelsDominated}} for raw data,
-#' \code{\link{paretoCatchments}} for further analysis
+#' @seealso \code{areModelsDominated} for raw data,
+#' \code{paretoCatchments} for further analysis
 #' @keywords models
 #' @examples
 #' 

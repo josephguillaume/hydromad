@@ -8,7 +8,7 @@
 #' by \emph{ranges} of values rather than exact values.
 #' @param objective objective functions to maximise, as a list with elements as
 #' \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.
-#' @param control arguments for nsga2 function. See \code{\link{nsga2}}
+#' @param control arguments for nsga2 function. See \code{nsga2}.
 #' @return \code{\link{runlist}} of models on Pareto front
 #' @author Joseph Guillaume
 #' @keywords optimization

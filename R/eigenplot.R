@@ -28,7 +28,7 @@ eigen.plot.single <- function(e, max.value = NA) {
 #' Plot pair-wise eigen values of quadratic response surface model
 #' 
 #' 
-#' @param obj \code{\link{rsm}} object, as produced by \code{\link{evalRSM}}
+#' @param obj \code{rsm} object, as produced by \code{\link{evalRSM}}
 #' @param fixed.axis Whether to use the same dimensions for each pair of
 #' variables. Allows comparison of relative width/height of ellipses
 #' @param e List with elements \code{values} and \code{vectors}. Usually

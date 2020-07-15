@@ -64,7 +64,7 @@ objFunVal(dat, hmadstat("RMSE"))
 
 }
 \seealso{
-\code{\link{hydromad.stats}}, \link{hydromad.object}
+\code{\link{hydromad.stats}}, \code{hydromad.object}
 }
 \author{
 Felix Andrews \email{felix@nfrac.org}

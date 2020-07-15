@@ -9,7 +9,7 @@
 #' by \emph{ranges} of values rather than exact values.
 #' @param objective objective function to maximise, given as a
 #' \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.
-#' @param control settings for the CMA-ES algorithm. See \code{\link{cma_es}}
+#' @param control settings for the CMA-ES algorithm. See \code{cma_es}
 #' @param vcov Ignored
 #' @return the best model from those sampled, according to the given
 #' \code{objective} function. Also, these extra elements are inserted:
@@ -18,7 +18,7 @@
 #' total number of evaluations of the model simulation function.  }
 #' \item{timing}{ timing vector as returned by \code{system.time}.  }
 #' @author Joseph Guillaume
-#' @seealso \code{\link{cma_es}}
+#' @seealso \code{cma_es}
 #' @references Placeholder
 #' @keywords optimisation
 #' @export fitByCMAES

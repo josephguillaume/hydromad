@@ -80,7 +80,7 @@ str(objFunVal(mod0, hydromad_stats))
 }
 \seealso{
 \code{\link{hydromad.stats}}, \code{\link{objFunVal}} for a way to
-calculate statistic values directly; \code{\link{hydromad.object}}
+calculate statistic values directly; \code{hydromad.object}
 }
 \author{
 Felix Andrews \email{felix@nfrac.org}

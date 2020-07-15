@@ -19,7 +19,7 @@
 #' @param ts.matrix A matrix of model responses, with each row corresponding to
 #' the parameter sets identified in \code{x} and each column a timestep for
 #' which to evaluate sensitivity indices. If the matrix does not fit in memory,
-#' \code{\link{ff}} matrices are also supported.
+#' \code{ff} matrices are also supported.
 #' @param fun A function \code{fun(i,x)} which returns a \code{data.frame},
 #' where \code{i} is the index of the time series and \code{x} is a complete
 #' sensitivity analysis object, i.e. the result of calling \code{tell(x,y)}.
@@ -32,7 +32,7 @@
 #' @param \dots Ignored by default implementation
 #' @return a data.frame with columns produced by \code{fun}
 #' @author Joseph Guillaume
-#' @seealso \code{\link{hydromad_sensitivity}} for sensitivity analysis on
+#' @seealso \code{hydromad_sensitivity} for sensitivity analysis on
 #' static rather than time series model output, \code{\link{evalParsRollapply}}
 #' to obtain parameter sets
 #' @references Herman, J. D., P. M. Reed, and T. Wagener. 2013. "Time-Varying

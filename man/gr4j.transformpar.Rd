@@ -8,7 +8,7 @@ gr4j.transformpar(pars, back = F)
 }
 \arguments{
 \item{pars}{named vector or list of parameters, e.g. as provided by
-\code{\link{coef.hydromad}}.}
+\code{coef.hydromad}.}
 
 \item{back}{Whether to transform or untransform (reverse) the parameters.}
 }

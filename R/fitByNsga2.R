@@ -7,7 +7,7 @@
 #' by \emph{ranges} of values rather than exact values.
 #' @param objective objective function to maximise, given as a
 #' \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.
-#' @param control arguments for nsga2 function. See \code{\link{nsga2}}
+#' @param control arguments for nsga2 function. See \code{nsga2}
 #' @return the best model from those sampled, according to the given
 #' \code{objective} function. Also, these extra elements are inserted:
 #' \item{fit.result}{ the result from \code{\link{SCEoptim}}.  }
@@ -16,7 +16,7 @@
 #' simulation function.  } \item{timing}{ timing vector as returned by
 #' \code{system.time}.  }
 #' @author Joseph Guillaume
-#' @seealso \code{\link{nsga2}}
+#' @seealso \code{nsga2}
 #' @keywords optimization
 #' @export fitByNsga2
 fitByNsga2 <- function(MODEL, objective = hydromad.getOption("objective"),

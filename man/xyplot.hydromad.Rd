@@ -92,7 +92,7 @@ qqmath(mod, scales = list(y = list(log = TRUE)), distribution = qnorm,
 
 }
 \seealso{
-\code{\link{hydromad.object}}, \code{\link{xyplot}},
+\code{hydromad.object}, \code{\link{xyplot}},
 \code{\link{xyplot.ts}}, \code{\link{xyplot.list}}
 }
 \author{

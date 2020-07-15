@@ -3,7 +3,7 @@
 #' Fit a hydromad model using DDS (Dynamically Dimensioned Search) algorithm.
 #' 
 #' This function depends on the \code{ppso} package, available from
-#' \link{http://www.rforge.net/ppso/}. For alternative optimisation algorithms,
+#' \href{http://www.rforge.net/ppso/}{http://www.rforge.net/ppso/}. For alternative optimisation algorithms,
 #' consider \code{\link{fitBySCE}}.
 #' 
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
@@ -12,7 +12,7 @@
 #' @param objective objective function to maximise, given as a
 #' \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.
 #' @param control settings for the DDS algorithm. These are the arguments to
-#' \code{\link{optim_dds}}.
+#' \code{optim_dds}.
 #' @param save Optional \code{function(pars,objective value,model)} that will
 #' be called for every model evaluation, for example to save every model run.
 #' @return the best model from those sampled, according to the given
@@ -22,7 +22,7 @@
 #' total number of evaluations of the model simulation function.  }
 #' \item{timing}{ timing vector as returned by \code{system.time}.  }
 #' @author Joseph Guillaume \email{josephguillaume@@gmail.com}
-#' @seealso \code{\link{optim_dds}},\code{\link{fitBySCE}}
+#' @seealso \code{optim_dds},\code{\link{fitBySCE}}
 #' @references Tolson, B. A., and C. A. Shoemaker (2007) Dynamically
 #' dimensioned search algorithm for computationally efficient watershed model
 #' calibration, Water Resour. Res., 43, W01413, doi:10.1029/2005WR004723.

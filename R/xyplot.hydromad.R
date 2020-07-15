@@ -45,7 +45,7 @@ plot.hydromad <-
 #' \code{\link{tsdiag}}.
 #' @return the trellis functions return a trellis object.
 #' @author Felix Andrews \email{felix@@nfrac.org}
-#' @seealso \code{\link{hydromad.object}}, \code{\link{xyplot}},
+#' @seealso \code{hydromad.object}, \code{\link{xyplot}},
 #' \code{\link{xyplot.ts}}, \code{\link{xyplot.list}}
 #' @keywords hplot ts
 #' @examples

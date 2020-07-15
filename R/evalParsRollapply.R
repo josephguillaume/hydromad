@@ -16,12 +16,12 @@
 #' 
 #' If timeseries are long, then the results matrix will be large
 #' (\code{nrow(par.matrix)} x \code{length.out}). By default the results matrix
-#' is therefore stored in a \code{\link{ff}} file-backed matrix.
+#' is therefore stored in a \code{ff} file-backed matrix.
 #' 
 #' Individual model evaluations are generally very fast, so parallelisation is
 #' only really worthwhile when large numbers of evaluations are needed.
 #' Parallelisation method \code{"clusterApply"} uses multiple R sessions that
-#' write to a shared \code{\link{ff}} object. It only operates on a single
+#' write to a shared \code{ff} object. It only operates on a single
 #' multicore machine. Parallelisation method \code{"foreach"} offers a broader
 #' range of options but only works if the final results matrix is small enough
 #' to fit in memory.
@@ -37,10 +37,10 @@
 #' \code{par.matrix}.
 #' @param \dots Additional arguments to \code{fun}
 #' @param parallel If \code{"clusterApply"}, evaluate parameters in parallel
-#' using a local cluster. The implementation assumes that the \code{\link{ff}}
+#' using a local cluster. The implementation assumes that the \code{ff}
 #' file \code{filehash.name} can be written to simultaneously all cluster
 #' workers.
-#' @param filehash.name Name of \code{\link{ff}} file in which to store
+#' @param filehash.name Name of \code{ff} file in which to store
 #' results, allowing large samples that do not fit in memory. Defaults to
 #' \code{tempfile()}, which is automatically deleted when exiting from R. To
 #' store results in memory, set \code{filehash.name=NULL}.
@@ -48,7 +48,7 @@
 #' \code{\link[zoo]{rollapply}}
 #' @param objective the objective function or expression, which can refer to Q
 #' and X.  See \code{\link{objFunVal.hydromad}}
-#' @return Either a matrix or \code{\link{ff}} file-backed matrix, with each
+#' @return Either a matrix or \code{ff} file-backed matrix, with each
 #' row being a time series of rolling objective functions for the corresponding
 #' row of \code{par.matrix}
 #' @note When using \code{ff}, performance may be improved by specifying

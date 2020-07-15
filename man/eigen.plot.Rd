@@ -7,7 +7,7 @@
 eigen.plot(obj, fixed.axis = TRUE)
 }
 \arguments{
-\item{obj}{\code{\link{rsm}} object, as produced by \code{\link{evalRSM}}}
+\item{obj}{\code{rsm} object, as produced by \code{\link{evalRSM}}}
 
 \item{fixed.axis}{Whether to use the same dimensions for each pair of
 variables. Allows comparison of relative width/height of ellipses}

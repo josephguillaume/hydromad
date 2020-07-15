@@ -48,8 +48,6 @@
 #' @seealso \code{\link{expuh}}, \code{\link{lambda.inverse.sim}}
 #' @references ...
 #' @keywords ts
-#' @examples
-#' 
 #' 
 #' @export
 lambda.sim <-

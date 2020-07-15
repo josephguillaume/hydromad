@@ -60,7 +60,7 @@
 #' Anthony J. Jakeman. 2015. "A Review of Foundational Methods for Checking the
 #' Structural Identifiability of Models: Results for Rainfall-Runoff." Journal
 #' of Hydrology 520(November): 1-16.
-#' doi:\href{http://dx.doi.org/10.1016/j.jhydrol.2014.11.04010.1016/j.jhydrol.2014.11.040}
+#' doi:\href{http://dx.doi.org/10.1016/j.jhydrol.2014.11.040}{10.1016/j.jhydrol.2014.11.040}
 #' 
 #' Lenth RV (2009) "Response-Surface Methods in R, Using rsm", Journal of
 #' Statistical Software, 32(7), 1-17. \url{http://www.jstatsoft.org/v32/i07/}
@@ -72,7 +72,7 @@
 #' "Sensitivity analysis in oxidation ditch modelling: the effect of variations
 #' in stoichiometric, kinetic and operating parameters on the performance
 #' indices" J. Chem. Technol. Biot., 76(4):430-438.
-#' doi:\href{http://dx.doi.org/10.1002/jctb.39810.1002/jctb.398}
+#' doi: \href{http://dx.doi.org/10.1002/jctb.39810.1002/jctb.398}{http://dx.doi.org/10.1002/jctb.39810.1002/jctb.398}
 #' @keywords models
 #' @examples
 #' 

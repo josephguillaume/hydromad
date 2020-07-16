@@ -37,7 +37,7 @@
 #' 
 #' 
 #' 
-#' @export runlist
+#' @export
 runlist <- function(...) {
   object <- list(...)
   if (is.null(names(object))) {
@@ -60,6 +60,8 @@ runlist <- function(...) {
   object
 }
 
+
+#' @export
 as.runlist <- function(x, ...) {
   do.call("runlist", as.list(x))
 }
@@ -68,6 +70,8 @@ as.runlist <- function(x, ...) {
   structure(NextMethod("["), class = class(x))
 }
 
+
+#' @export
 c.hydromad <- function(..., recursive = FALSE) {
   args <- list(...)
 
@@ -82,6 +86,8 @@ c.hydromad <- function(..., recursive = FALSE) {
   runlist(...)
 }
 
+
+#' @export
 c.runlist <- function(..., recursive = FALSE) {
   args <- list(...)
 
@@ -108,12 +114,15 @@ c.runlist <- function(..., recursive = FALSE) {
   rval
 }
 
+
+#' @export
 coef.runlist <-
   function(object, ..., items = NULL) {
     summary(object, ..., FUN = coef, items = items)
   }
 
 
+#' @export
 summary.runlist <-
   function(object, ..., FUN = summary, items = NULL) {
     stopifnot(is.list(object))
@@ -157,6 +166,8 @@ summary.runlist <-
 #    invisible(x)
 # }
 
+
+#' @export
 print.runlist <-
   function(x, ...) {
     cat("\nList of model runs:\n")
@@ -164,6 +175,8 @@ print.runlist <-
     invisible(x)
   }
 
+
+#' @export
 residuals.runlist <-
   function(object, ...) {
     ans <- lapply(object, residuals, ...)
@@ -177,6 +190,8 @@ residuals.runlist <-
     do.call("cbind", ans)
   }
 
+
+#' @export
 fitted.runlist <-
   function(object, ...) {
     ans <- lapply(object, fitted, ...)
@@ -190,6 +205,8 @@ fitted.runlist <-
     do.call("cbind", ans)
   }
 
+
+#' @export
 update.runlist <-
   function(object, ...) {
     switch(hydromad.getOption("parallel")[["update.runlist"]],
@@ -201,6 +218,8 @@ update.runlist <-
     return(runs)
   }
 
+
+#' @export
 isValidModel.runlist <- function(object, ...) {
   return(TRUE)
 }

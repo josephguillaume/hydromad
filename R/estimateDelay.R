@@ -50,7 +50,7 @@
 #' ## based on ccf with flow rises only:
 #' estimateDelay(ts.union(y,x), plot = TRUE)
 #' 
-#' @export estimateDelay
+#' @export
 estimateDelay <-
   function(DATA = data.frame(U = , Q = ),
            rises = TRUE,

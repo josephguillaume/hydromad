@@ -48,7 +48,7 @@
 #' x[15:20] <- NA
 #' plot.ts(filter_tv(x, a), log="y")
 #' 
-#' @export filter_tv
+#' @export
 filter_tv <-
   function(x, a, init = 0) {
     stopifnot(is.numeric(x))

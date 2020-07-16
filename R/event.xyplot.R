@@ -66,6 +66,8 @@ event.xyplot <- function(x, ...) {
   UseMethod("event.xyplot")
 }
 
+
+#' @export
 event.xyplot.formula <-
   function(x, data = list(), events, ...,
            response = NULL, eFUN = sum,

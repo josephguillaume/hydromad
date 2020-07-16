@@ -26,7 +26,7 @@
 #' estimateDelay(cbind(P,V1), rises = FALSE)
 #' estimateDelayFrac(cbind(U=P,Q=V1),lag.max=5,rises=FALSE)
 #' 
-#' @export estimateDelayFrac
+#' @export
 estimateDelayFrac <- function(DATA, rises = TRUE, lag.max = hydromad.getOption("max.delay")) {
   DATA <- as.ts(DATA)
   if (NROW(DATA) <= 1) {

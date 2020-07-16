@@ -3,11 +3,6 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
-#' Placeholder
-#' 
-#' Requires documentation
-#'  
-#'  @param DATA Placeholder 
 #'  @export
 lambda.inverse.fit <-
   function(DATA,

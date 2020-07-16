@@ -91,7 +91,7 @@
 #' ## if you try it again with method = "PORT" you will find that all
 #' ## replicates converge to the optimum regardless of starting point.
 #' 
-#' @export fitByOptim
+#' @export
 fitByOptim <-
   function(MODEL,
            objective = hydromad.getOption("objective"),

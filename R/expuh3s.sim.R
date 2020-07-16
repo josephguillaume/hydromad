@@ -41,8 +41,7 @@
 #' \code{thres<G1<thres+loss}. Setting \code{G_1=0} (the default) ceases
 #' recharge when flow ceases.
 #' 
-#' @name expuh3s
-#' @aliases expuh3s.sim
+#' @name expuh3s.sim
 #' @param U input time series (units below assume ML/day)
 #' @param delay lag (dead time) between input and response, in time steps.
 #' @param v_s Fraction of effective rainfall that goes to groundwater
@@ -77,7 +76,7 @@
 #' \url{http://www.mssanz.org.au/modsim09/I1/herron.pdf}
 #' @keywords ts
 #' 
-#' @export
+#' @export 
 expuh3s.sim <-
   function(U, delay = 0, v_s,
            tau_q, tau_s, tau_g,

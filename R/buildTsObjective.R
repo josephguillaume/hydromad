@@ -17,7 +17,7 @@
 #' and an optional reference model.
 #' 
 #' 
-#' @aliases buildTsObjective buildObjectiveFun
+#' @aliases buildTsObjective buildObjectiveFun buildTsLikelihood
 #' @param Q observed data, typically a \code{\link{zoo}} object.
 #' @param groups an optional grouping variable, of the same length as \code{Q},
 #' to aggregate the observed, fitted and reference time series. This can be a
@@ -84,7 +84,7 @@
 #' objfun(X = dat$Q + 10)
 #' 
 #' 
-#' @export buildTsObjective
+#' @export
 buildTsObjective <-
   function(Q, groups = NULL, FUN = sum, ...,
            ref = NULL, boxcox = FALSE, start = NULL) {
@@ -135,6 +135,7 @@ buildTsObjective <-
     }
   }
 
+#' @export
 buildTsLikelihood <-
   function(Q, groups = NULL, FUN = sum, ...,
            boxcox = FALSE, start = NULL,

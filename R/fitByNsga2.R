@@ -18,7 +18,7 @@
 #' @author Joseph Guillaume
 #' @seealso \code{nsga2}
 #' @keywords optimization
-#' @export fitByNsga2
+#' @export
 fitByNsga2 <- function(MODEL, objective = hydromad.getOption("objective"),
                        control = hydromad.getOption("nsga2.control")) {
   if (!requireNamespace("mco")) stop("package mco is required for fitByNsga2")

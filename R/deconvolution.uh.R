@@ -22,7 +22,7 @@
 #' h <- deconvolution.uh(Murrindindi$P,Murrindindi$Q,do.plot=T)
 #' head(h)
 #' 
-#' @export deconvolution.uh
+#' @export
 deconvolution.uh <- function(P, Q, FWHM = length(P), do.plot = FALSE) {
   ## Calculate PQ and PP cross correlations
   c <- ccf(Q, P, lag.max = length(P), plot = FALSE, na.action = na.pass)

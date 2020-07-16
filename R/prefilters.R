@@ -16,6 +16,8 @@ defaultPrefilters <- function() {
   split(as.matrix(aa), 1:NROW(aa))
 }
 
+
+#' @export
 makePrefilter <-
   function(DATA,
            order = hydromad.getOption("order"),

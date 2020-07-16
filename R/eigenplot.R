@@ -42,7 +42,7 @@ eigen.plot.single <- function(e, max.value = NA) {
 #' @author Dario Mavec, Mun-Ju Shin, Joseph Guillaume
 #' @seealso \code{\link{evalRSM}} which includes an example of \code{eigenplot}
 #' @keywords models
-#' @export eigen.plot
+#' @export
 eigen.plot <- function(obj, fixed.axis = TRUE) {
   stopifnot(inherits(obj, "rsm"))
   ## Calculated pair-wise eigen values first to allow fixed axis

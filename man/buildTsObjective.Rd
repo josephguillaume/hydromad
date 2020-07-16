@@ -3,6 +3,7 @@
 \name{buildTsObjective}
 \alias{buildTsObjective}
 \alias{buildObjectiveFun}
+\alias{buildTsLikelihood}
 \title{Generate objective functions with aggregation, transformation and a
 reference model}
 \usage{

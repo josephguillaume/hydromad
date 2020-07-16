@@ -141,7 +141,7 @@
 #' ## Rotation of ellipses is more visible with fixed axes
 #' 
 #' 
-#' @export runRSM
+#' @export
 runRSM <- function(modx, ..., objective = hydromad.getOption("objective")) {
   if (!requireNamespace("rsm")) stop("package rsm is required for runRSM")
   ## Sample using design
@@ -171,7 +171,7 @@ runRSM <- function(modx, ..., objective = hydromad.getOption("objective")) {
   return(evals.rsm)
 }
 
-
+#' @export
 evalRSM <- function(modx, rsm.object, n = 100,
                     objective = hydromad.getOption("objective"),
                     method = "latin.hypercube") {
@@ -199,6 +199,7 @@ evalRSM <- function(modx, rsm.object, n = 100,
   ans
 }
 
+#' @export
 print.summary.rsm.hydromad <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   rdf <- x$df[2L]
   cat("\nResidual standard error:", format(signif(

@@ -54,6 +54,7 @@ mods <-
 xyplot(mods, superpose = TRUE)
 xyplot(mods, scales = list(y = list(log = TRUE)))
 
+
 }
 \seealso{
 \code{\link{runlist}}, \code{\link{xyplot.ts}},

@@ -50,7 +50,7 @@
 #' ## return value from DDS:
 #' str(foo$fit.result)
 #' 
-#' @export fitByDDS
+#' @export
 fitByDDS <- function(MODEL, objective = hydromad.getOption("objective"),
                      control = hydromad.getOption("dds.control"), save = NULL) {
   if (!requireNamespace("ppso")) stop("package ppso is required for fitByDDS")

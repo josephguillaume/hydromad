@@ -37,13 +37,15 @@
 #' xyplot(tmp, panel = panel.ribbon, y2 = 0)
 #' 
 #' 
-#' @export panel.ribbon
+#' @export 
 panel.ribbon <- function(...) {
   UseMethod("panel.ribbon")
 }
 
 ## Plot the area between 2 series as a filled polygon.
 ## With groups, acts like panel.superpose, but with polygon style settings.
+
+#' @export
 panel.ribbon.default <-
   function(x, y, y2, groups = NULL,
            col = if (is.null(groups)) plot.polygon$col else superpose.polygon$col,
@@ -106,6 +108,8 @@ panel.ribbon.default <-
     }
   }
 
+
+#' @export
 panel.ribbon.ts <- function(y, y2 = NULL, ...) {
   ## allow one 'ts' argument with 2 columns
   if (is.null(y2)) {
@@ -119,6 +123,8 @@ panel.ribbon.ts <- function(y, y2 = NULL, ...) {
   panel.ribbon(x = as.vector(time(y)), y, y2, ...)
 }
 
+
+#' @export
 panel.ribbon.zoo <- function(y, y2 = NULL, ...) {
   ## allow one 'zoo' argument with 2 columns
   if (is.null(y2)) {

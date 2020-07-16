@@ -76,7 +76,7 @@ paretoFilter <- function(x, ...) {
 #' data(YeAl97)
 #' plotPCNSE(subset(YeAl97,Catchment=="Salmon"),objectives="E")
 #' 
-#' @export plotPCNSE
+#' @export
 plotPCNSE <- function(res, objectives = "r.squared", return.data = FALSE) {
   if (!require("ggplot2")) stop("package ggplot2 is required for plotPCNSE")
   res <- as.data.frame(res)

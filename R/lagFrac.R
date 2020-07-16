@@ -16,7 +16,7 @@
 #' P <- c(2,0,5,1,6,10,0,0,0)
 #' V1<-lagFrac(P,L)
 #' 
-#' @export lagFrac
+#' @export
 lagFrac <- function(P, TDopt) {
   TDopt <- TDopt + 1
   I <- floor(TDopt)

@@ -122,7 +122,7 @@
 #'   facet_wrap(~variable)
 #' }
 #' 
-#' @export tellTS
+#' @export
 tellTS <- function(x, ts.matrix, fun,
                    indices,
                    parallel = hydromad.getOption("parallel")[["tellTS"]],
@@ -130,6 +130,8 @@ tellTS <- function(x, ts.matrix, fun,
   UseMethod("tellTS")
 }
 
+
+#' @export
 tellTS.default <- function(x, ts.matrix, fun,
                            indices,
                            parallel = hydromad.getOption("parallel")[["tellTS"]],
@@ -163,6 +165,8 @@ tellTS.default <- function(x, ts.matrix, fun,
   return(do.call(rbind, results))
 }
 
+
+#' @export
 tellTS.sobol2002 <- function(x, ts.matrix, fun,
                              indices,
                              parallel = hydromad.getOption("parallel")[["tellTS"]],
@@ -184,8 +188,12 @@ tellTS.sobol2002 <- function(x, ts.matrix, fun,
   )
 }
 
+
+#' @export
 tellTS.sobol2007 <- tellTS.sobol2002
 
+
+#' @export
 tellTS.morris <- function(x, ts.matrix, fun,
                           indices,
                           parallel = hydromad.getOption("parallel")[["tellTS"]],

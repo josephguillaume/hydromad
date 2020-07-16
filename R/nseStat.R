@@ -3,6 +3,8 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+
+# Deprecated
 fitStat <- function(...) {
   .Deprecated("nseStat")
   nseStat(...)
@@ -89,7 +91,7 @@ fitStat <- function(...) {
 #' ## see how the reference model performs in terms of R Squared
 #' nseStat(Q, ave(Q, months(time(Q))))
 #' 
-#' @export nseStat
+#' @export 
 nseStat <-
   function(obs, mod, ref = NULL, ..., p = 2,
            trans = NULL, negatives.ok = FALSE,

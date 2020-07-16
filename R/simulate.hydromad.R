@@ -58,7 +58,7 @@
 #' ## dotty plots (list any number of parameters in formula)
 #' xyplot(result ~ tw + f, sim1, outer = TRUE)
 #' 
-#' 
+#' @export
 simulate.hydromad <-
   function(object, nsim, seed, ...,
            sampletype = c("latin.hypercube", "random", "all.combinations"),

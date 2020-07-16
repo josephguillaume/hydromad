@@ -60,7 +60,7 @@
 #' total volume will be 1 if \code{v_s} and \code{v_3} are also 1.  } }
 #' 
 #' @name expuh
-#' @aliases expuh.sim ssg.expuh normalise.expuh
+#' @aliases ssg.expuh normalise.expuh expuh.ls.fit expuh.sim
 #' @param DATA Placeholder
 #' @param order Placeholder
 #' @param quiet Placeholder
@@ -125,8 +125,9 @@ expuh.ls.fit <-
     model$coefficients <- coef(model, "tau,v")
     model
   }
-#'
-#'
+
+
+
 #' @export
 expuh.sriv.fit <-
   function(DATA,
@@ -158,8 +159,9 @@ expuh.sriv.fit <-
     model$coefficients <- coef(model, "tau,v")
     model
   }
-#' 
-#' 
+
+
+
 #' @export
 expuh.inverse.fit <-
   function(DATA,
@@ -175,9 +177,9 @@ expuh.inverse.fit <-
     model$coefficients <- coef(model, "tau,v")
     model
   }
-#'
-#'
-#'
+
+
+
 fitWithPoleConstraints <-
   function(DATA, fitfun, poles, ...,
            control = as.list(hydromad.getOption("optim.control.expuh"))) {

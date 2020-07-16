@@ -29,8 +29,8 @@
 #' it is used in conjunction with \code{\link{evalPars}} to perform sensitivity
 #' analyses.
 #' 
-#' @name hydromad.object
-#' @aliases update.hydromad fitted.hydromad observed.hydromad
+#' 
+#' @aliases hydromad.object update.hydromad fitted.hydromad observed.hydromad
 #' residuals.hydromad coef.hydromad getFreeParsRanges vcov.hydromad
 #' isValidModel print.hydromad
 #' @param object an object of class \code{hydromad}.

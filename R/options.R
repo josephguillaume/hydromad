@@ -74,10 +74,14 @@
 
 ## code below copied from lattice
 
+
+#' @export
 hydromad.getOption <- function(name) {
   .HydromadEnv$options[[name]]
 }
 
+
+#' @export
 hydromad.options <- function(...) {
   ## this would have been really simple if only form allowed were
   ## lattice.options("foo", "bar") and

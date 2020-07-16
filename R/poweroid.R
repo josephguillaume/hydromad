@@ -161,7 +161,7 @@
 #' # --> A:   6.72  29.11 126.20
 #' 
 #' 
-#' @export poweroid
+#' @export
 poweroid <-
   function(alpha = NULL, beta = NULL,
            V = NULL, H = NULL,

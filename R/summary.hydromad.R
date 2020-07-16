@@ -71,6 +71,7 @@ summary.hydromad.runlist <-
 #' str(objFunVal(mod0, hydromad_stats))
 #' 
 #' 
+#' @export
 summary.hydromad <-
   function(object, breaks = NULL,
            stats = hydromad.getOption("summary.stats"),
@@ -184,6 +185,8 @@ summary.hydromad <-
     ans
   }
 
+
+#' @export
 print.summary.hydromad <-
   function(x, digits = max(3, getOption("digits") - 3), ...) {
     cat("\nCall:\n")
@@ -226,6 +229,8 @@ print.summary.hydromad <-
     invisible(x)
   }
 
+
+#' @export
 print.summaryWithBreaks.hydromad <-
   function(x, digits = max(3, getOption("digits") - 3), ...) {
     ## just simplify the printed output by rounding

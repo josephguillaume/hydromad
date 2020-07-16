@@ -2,80 +2,13 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
-findThresh <-
-  function(x, thresh = NA, ## ignored
-           n, within = (n %/% 20) + 1,
-           mingap = 1, mindur = 1,
-           below = FALSE, ...,
-           trace = FALSE, optimize.tol = 0.1) {
-    stopifnot(n > 0)
-    n <- round(n)
-    stopifnot(n * mindur + n * mingap <= NROW(x))
-    x <- coredata(x)
-    if (below) {
-      x <- -x
-    }
-    ## return (difference from 'n' of) number of events for 'thresh'
-    nDiffForThresh <- function(thresh) {
-      ev <- eventseq(x,
-        thresh = thresh, mingap = mingap,
-        mindur = mindur, ...
-      )
-      newn <- nlevels(ev)
-      if (trace) {
-        message(sprintf("thresh = %.3f, n = %d", thresh, newn))
-      }
-      abs(newn - n)
-    }
-
-    ## do a quick run with a rough guess for the range
-    rng <- quantile(x, (1 - (n * mindur / NROW(x)))^c(1, 3),
-      na.rm = TRUE, names = FALSE
-    )
-    if (trace) {
-      message("initial range guess: ", toString(signif(rng, 4)))
-    }
-    res <- optimize(nDiffForThresh,
-      interval = rng,
-      tol = optimize.tol
-    )
-    if (res$objective > within) {
-      if (trace) {
-        message("initial run off by ", res$objective)
-      }
-      ## expand possible range; only exclude minimum and maximum values
-      rng2 <- quantile(x, range(ppoints(length(x))),
-        na.rm = TRUE, names = FALSE
-      )
-      res2 <- optimize(nDiffForThresh,
-        interval = rng2,
-        tol = optimize.tol
-      )
-      if (res2$objective < res$objective) {
-        res <- res2
-      }
-    }
-    if (res$objective > within) {
-      warning(
-        "actual number of events differs from target (", n, ") by ",
-        res$objective
-      )
-    }
-    thresh <- res$minimum
-    if (below) {
-      thresh <- -thresh
-    }
-    return(thresh)
-  }
-
-
 
 #' Identify discrete events from time series and apply functions to them.
 #' 
 #' Identify discrete events from time series and apply functions to them.
 #' 
-#' 
-#' @aliases eventseq eventapply eventinfo
+#' @name events
+#' @aliases eventseq eventapply eventinfo findThresh
 #' @param x,X a \code{\link{ts}} or \code{\link{zoo}} object.  May be
 #' multivariate, i.e. have multiple columns.
 #' @param thresh threshold value: the data must be strictly above this level
@@ -236,7 +169,76 @@ findThresh <-
 #' each.e <- !duplicated(e)
 #' table(coredata(combin[each.e]))
 #' 
-#' @export eventseq
+#'
+#' @export
+findThresh <-
+  function(x, thresh = NA, ## ignored
+           n, within = (n %/% 20) + 1,
+           mingap = 1, mindur = 1,
+           below = FALSE, ...,
+           trace = FALSE, optimize.tol = 0.1) {
+    stopifnot(n > 0)
+    n <- round(n)
+    stopifnot(n * mindur + n * mingap <= NROW(x))
+    x <- coredata(x)
+    if (below) {
+      x <- -x
+    }
+    ## return (difference from 'n' of) number of events for 'thresh'
+    nDiffForThresh <- function(thresh) {
+      ev <- eventseq(x,
+        thresh = thresh, mingap = mingap,
+        mindur = mindur, ...
+      )
+      newn <- nlevels(ev)
+      if (trace) {
+        message(sprintf("thresh = %.3f, n = %d", thresh, newn))
+      }
+      abs(newn - n)
+    }
+
+    ## do a quick run with a rough guess for the range
+    rng <- quantile(x, (1 - (n * mindur / NROW(x)))^c(1, 3),
+      na.rm = TRUE, names = FALSE
+    )
+    if (trace) {
+      message("initial range guess: ", toString(signif(rng, 4)))
+    }
+    res <- optimize(nDiffForThresh,
+      interval = rng,
+      tol = optimize.tol
+    )
+    if (res$objective > within) {
+      if (trace) {
+        message("initial run off by ", res$objective)
+      }
+      ## expand possible range; only exclude minimum and maximum values
+      rng2 <- quantile(x, range(ppoints(length(x))),
+        na.rm = TRUE, names = FALSE
+      )
+      res2 <- optimize(nDiffForThresh,
+        interval = rng2,
+        tol = optimize.tol
+      )
+      if (res2$objective < res$objective) {
+        res <- res2
+      }
+    }
+    if (res$objective > within) {
+      warning(
+        "actual number of events differs from target (", n, ") by ",
+        res$objective
+      )
+    }
+    thresh <- res$minimum
+    if (below) {
+      thresh <- -thresh
+    }
+    return(thresh)
+  }
+
+
+#' @export 
 eventseq <-
   function(x, thresh = 0, mingap = 1, mindur = 1, extend = 0,
            inthresh = thresh, inx = x, indur = 1,
@@ -385,6 +387,8 @@ eventseq <-
     ans
   }
 
+
+#' @export
 eventapply <-
   function(X, events,
            FUN = sum, ..., by.column = TRUE, simplify = TRUE,

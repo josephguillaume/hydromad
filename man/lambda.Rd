@@ -3,6 +3,8 @@
 \name{lambda}
 \alias{lambda}
 \alias{lambda.sim}
+\alias{lambda.inverse.sim}
+\alias{lambda.inverse.fit}
 \title{Transfer function with two exponential components and variable partitioning}
 \usage{
 lambda.sim(

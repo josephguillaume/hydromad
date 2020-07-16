@@ -154,7 +154,7 @@ sceDefaults <- function() {
 #'                 control = list(trace = 1))
 #' ans$par
 #' 
-#' @export SCEoptim
+#' @export
 SCEoptim <- function(FUN, par, ...,
                      lower = -Inf, upper = Inf,
                      control = list()) {

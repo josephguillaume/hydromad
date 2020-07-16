@@ -3,6 +3,11 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+#' Title
+#'
+#' Placeholder description
+#'
+#' @export
 fitDbmToPeaks <-
   function(MODEL,
            objective = hmadstat("r.sq.sqrt"),

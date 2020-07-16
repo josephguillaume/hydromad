@@ -33,7 +33,7 @@
 #'  plot(X[,1],X[,2],col="red",cex=2)
 #'  points(Y[,1],Y[,2],pch=".")
 #' 
-#' @export rotatedSampling
+#' @export
 rotatedSampling <- function(X, samples, expand = 0, ...) {
   if (is.null(colnames(X))) colnames(X) <- sprintf("X%d", 1:ncol(X))
   ## TODO: set fixed

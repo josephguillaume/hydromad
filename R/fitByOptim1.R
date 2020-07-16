@@ -4,6 +4,7 @@
 ##
 
 
+#' @export
 fitByOptim1 <-
   function(MODEL,
            objective = hydromad.getOption("objective"),

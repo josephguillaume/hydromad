@@ -153,8 +153,8 @@ bucket.sim <-
     }
     return(ans)
   }
-#'
-#'
+
+
 bucket.ranges <- function() {
   list(
     Sb = c(0.1, 1200),

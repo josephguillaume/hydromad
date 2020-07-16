@@ -60,7 +60,7 @@
 #' 
 #' hydromad::parameterSets(pars, 20, method = "all.combinations")
 #' 
-#' @export parameterSets
+#' @export 
 parameterSets <-
   function(par.ranges, samples,
            method = c("latin.hypercube", "random", "all.combinations")) {

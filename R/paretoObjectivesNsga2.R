@@ -29,7 +29,7 @@
 #' stats <- t(sapply(front,objFunVal,objective=list(hmadstat("r.sq.log"),hmadstat("r.squared"))))
 #' splom(stats)
 #' 
-#' @export paretoObjectivesNsga2
+#' @export
 paretoObjectivesNsga2 <- function(MODEL, objective = hydromad.getOption("objective"),
                                   control = hydromad.getOption("nsga2.control")) {
   if (!requireNamespace("mco")) stop("package mco is required for paretoObjectivesNsga2")

@@ -73,8 +73,8 @@ dbm.sim <-
     ## compute effective rainfall U
     scale * P * Qd^power
   }
-#'
-#' 
+
+
 dbm.ranges <- function() {
   list(
     power = c(0, 0.9),
@@ -82,8 +82,9 @@ dbm.ranges <- function() {
     scale = NA_real_
   )
 }
-#'
-#'
+
+
+#' @export
 absorbScale.hydromad.dbm <- function(object, gain, ...) {
   absorbScale.hydromad.scalar(object, gain, parname = "scale")
 }

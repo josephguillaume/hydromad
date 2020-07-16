@@ -42,6 +42,8 @@ tfParsCheck <-
     return(TRUE)
   }
 
+
+#' @export
 tfParsConvert <-
   function(pars, form = c("a,b", "tau,v", "alpha,beta")) {
     form <- match.arg(form)

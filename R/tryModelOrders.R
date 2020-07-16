@@ -28,7 +28,7 @@
 #' @keywords optimize
 #' 
 #' 
-#' @export tryModelOrders
+#' @export
 tryModelOrders <-
   function(expr, n = 0:3, m = 0:2,
            delay = hydromad.getOption("delay"),
@@ -86,6 +86,8 @@ tryModelOrders <-
     ans
   }
 
+
+#' @export
 summary.tryModelOrders <-
   function(object,
            stats = c("ARPE", "r.squared", "r.sq.log"),

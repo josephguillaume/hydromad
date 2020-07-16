@@ -2,6 +2,7 @@
 % Please edit documentation in R/evalPars.R
 \name{evalPars}
 \alias{evalPars}
+\alias{getFreeParsRanges}
 \title{Evaluate a model for a matrix of parameters}
 \usage{
 evalPars(

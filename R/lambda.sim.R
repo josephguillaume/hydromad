@@ -27,7 +27,7 @@
 #' model.
 #'
 #' @name lambda
-#' @aliases lambda.sim 
+#' @aliases lambda.sim lambda.inverse.sim lambda.inverse.fit
 #' @param U input time series.
 #' @param delay lag (dead time) between input and response, in time steps.
 #' @param tau_s,tau_q time constants for the exponential components.

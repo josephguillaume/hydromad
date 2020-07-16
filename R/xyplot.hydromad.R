@@ -131,6 +131,8 @@ xyplot.hydromad <-
     foo
   }
 
+
+#' @export
 xyplot.hydromad.runlist <-
   function(x, data = NULL, ..., scales = list(),
            all = FALSE, superpose = FALSE,
@@ -178,6 +180,7 @@ xyplot.hydromad.runlist <-
   }
 
 
+#' @export
 qqmath.hydromad <-
   function(x, data = NULL, ..., all = FALSE, type = "l",
            auto.key = list(lines = TRUE, points = FALSE),
@@ -199,6 +202,8 @@ qqmath.hydromad <-
     foo
   }
 
+
+#' @export
 tsdiag.hydromad <- function(object, gof.lag, ...) {
   stats:::tsdiag.Arima(object$uh, gof.lag = gof.lag, ...)
 }

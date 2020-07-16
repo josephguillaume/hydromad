@@ -60,9 +60,11 @@
 #' ## For all catchments, performance analysis
 #' paretoTimeAnalysis.data.frame(YeAl97,objectives="E")
 #' 
-#' @export paretoTimeAnalysis
+#' @export 
 paretoTimeAnalysis <- function(...) UseMethod("paretoTimeAnalysis")
 
+
+#' @export
 paretoTimeAnalysis.crossvalidation <- function(rl,
                                                show.models = NA,
                                                objectives = "r.squared",

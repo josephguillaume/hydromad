@@ -82,7 +82,7 @@
 #' cast(melt(summary(runs),id.vars=c("calib.period","sim.period")),calib.period~variable+sim.period)
 #' paretoTimeAnalysis(runs)
 #' 
-#' @export crossValidate
+#' @export
 crossValidate <- function(MODEL, periods,
                           name.Model.str = paste(MODEL$sma, MODEL$routing),
                           name.Cal.objfn = "unknown",

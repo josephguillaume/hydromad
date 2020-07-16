@@ -3,6 +3,7 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+#' @export
 armax.sim <-
   function(U, a_1 = 0, a_2 = 0, a_3 = 0,
            b_0 = 1, b_1 = 0, b_2 = 0, b_3 = 0,
@@ -73,10 +74,12 @@ armax.sim <-
   }
 
 
+#' @export
 ssg.armax <- function(theta) {
   ssg.tf.coef(theta)
 }
 
+#' @export
 normalise.armax <- function(theta) {
   normalise.tf.coef(theta)
 }

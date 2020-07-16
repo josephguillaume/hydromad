@@ -56,11 +56,13 @@
 #' dat <- data.frame(Q = rnorm(10), X = rnorm(10))
 #' objFunVal(dat, hmadstat("RMSE"))
 #' 
-#' @export objFunVal
+#' @export
 objFunVal <- function(x, objective, ...) {
   UseMethod("objFunVal")
 }
 
+
+#' @export
 objFunVal.default <-
   function(x, objective = hydromad.getOption("objective"),
            ..., nan.ok = FALSE) {
@@ -110,7 +112,7 @@ objFunVal.default <-
   }
 
 ## TODO: could this just merge the data and call the default method? slow?
-##
+#' @export
 objFunVal.tf <-
   objFunVal.hydromad <-
   function(x, objective = hydromad.getOption("objective"),
@@ -177,6 +179,8 @@ objFunVal.tf <-
     }
   }
 
+
+#' @export
 objFunVal.runlist <- function(x, objective = list(hydromad.getOption("objective"), mean), ...) {
   if (is.list(objective) && length(objective) == 2) {
     switch(hydromad.getOption("parallel")[["objFunVal.runlist"]],

@@ -43,6 +43,8 @@
 #' xyplot(mods, superpose = TRUE)
 #' xyplot(mods, scales = list(y = list(log = TRUE)))
 #' 
+#' 
+#' @export
 xyplot.runlist <-
   function(x, data = NULL, ...,
            all = FALSE, superpose = FALSE,
@@ -65,6 +67,8 @@ xyplot.runlist <-
 
 ## Handles either fitted vs observed, or residuals.
 
+
+#' @export
 qqmath.runlist <-
   function(x, data = NULL, ..., all = FALSE,
            residuals = FALSE, superpose = FALSE,

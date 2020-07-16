@@ -70,7 +70,7 @@
 #' xyplot(ts.union(observed = Yh, fitted = fitted(fit1)),
 #'        superpose = TRUE)
 #' 
-#' @export armax.sriv.fit
+#' @export 
 armax.sriv.fit <-
   function(DATA,
            order = hydromad.getOption("order"),
@@ -116,6 +116,7 @@ armax.sriv.fit <-
     }
     obj
   }
+
 
 do_srivfit <-
   function(DATA,

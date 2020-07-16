@@ -49,7 +49,7 @@
 #' xyplot(optimtrace(foo), type = "b",
 #'   xlab = "function evaluations", ylab = "objective fn. value")
 #' 
-#' @export fitByDE
+#' @export
 fitByDE <-
   function(MODEL,
            objective = hydromad.getOption("objective"),

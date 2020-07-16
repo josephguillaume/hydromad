@@ -67,7 +67,7 @@
 #' ## 100 mm in inches
 #' convertFlow(100, to="in")
 #' 
-#' @export convertFlow
+#' @export
 convertFlow <-
   function(x, from = "mm", to = "mm", area.km2 = -1,
            timestep.default = "days") {

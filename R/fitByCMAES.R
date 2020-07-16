@@ -21,7 +21,7 @@
 #' @seealso \code{cma_es}
 #' @references Placeholder
 #' @keywords optimisation
-#' @export fitByCMAES
+#' @export
 fitByCMAES <- function(MODEL, objective = hydromad.getOption("objective"),
                        control = hydromad.getOption("cmaes.control"), vcov = FALSE) {
   if (!requireNamespace("cmaes")) stop("package cmaes is required for fitByCMAES")

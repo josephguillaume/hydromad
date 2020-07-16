@@ -3,6 +3,7 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+#' @export
 expuh.sim <-
   function(U, delay = 0,
            tau_s = 0, tau_q = 0, tau_3 = 0,
@@ -138,6 +139,7 @@ expuh.sim <-
   }
 
 
+#' @export
 ssg.expuh <- function(theta) {
   if (length(theta) == 0) {
     return(1)
@@ -146,6 +148,7 @@ ssg.expuh <- function(theta) {
   ssg.tf.coef(theta)
 }
 
+#' @export
 normalise.expuh <- function(theta) {
   theta <- tfParsConvert(theta, "a,b")
   tmp <- normalise.tf.coef(theta)

@@ -102,6 +102,8 @@ runoffratio.sim <-
     return(ans)
   }
 
+
+
 runoffratio.ranges <- function() {
   list(
     rrthresh = c(0, 0.2),
@@ -109,6 +111,8 @@ runoffratio.ranges <- function() {
   )
 }
 
+
+#' @export
 absorbScale.hydromad.runoffratio <-
   function(object, gain, ...) {
     absorbScale.hydromad.scalar(object, gain, parname = "scale")

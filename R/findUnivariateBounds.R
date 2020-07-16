@@ -54,7 +54,7 @@
 #' modx2
 #' 
 #' 
-#' @export findUnivariateBounds
+#' @export
 findUnivariateBounds <- function(modx, fitx, thres, objective = hydromad.getOption("objective")) {
   pars <- getFreeParsRanges(modx)
   for (p in names(pars)) {

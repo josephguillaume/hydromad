@@ -4,6 +4,8 @@
 ##
 
 ## IHACRES Catchment Moisture Deficit (CMD) model.
+
+#' @export
 cmd.sim <-
   function(DATA,
            f, e, d, shape = 0,

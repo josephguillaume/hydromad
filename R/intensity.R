@@ -76,9 +76,9 @@ intensity.sim <-
     ## compute effective rainfall U
     scale * P * pmin((P^power) / (maxP^power), 1)
   }
-#'
-#'
-#'
+
+
+
 intensity.ranges <- function() {
   list(
     power = c(0, 2),
@@ -86,9 +86,9 @@ intensity.ranges <- function() {
     scale = NA_real_
   )
 }
-#'
-#'
-#'
+
+
+#' @export
 absorbScale.hydromad.intensity <- function(object, gain, ...) {
   absorbScale.hydromad.scalar(object, gain, parname = "scale")
 }

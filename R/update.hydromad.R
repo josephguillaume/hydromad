@@ -3,6 +3,8 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+
+#' @export
 update.hydromad <-
   function(object, ..., newdata = NULL, newpars = NULL,
            sma, routing, rfit, warmup,
@@ -297,10 +299,13 @@ update.hydromad <-
   }
 
 
+#' @export
 absorbScale <- function(object, gain, ...) {
   UseMethod("absorbScale")
 }
 
+
+#' @export
 absorbScale.hydromad <- function(object, gain, ...) {
   return(NULL)
 }

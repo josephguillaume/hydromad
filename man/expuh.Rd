@@ -3,9 +3,9 @@
 \name{expuh}
 \alias{expuh}
 \alias{expuh.ls.fit}
-\alias{expuh.sim}
 \alias{ssg.expuh}
 \alias{normalise.expuh}
+\alias{expuh.sim}
 \title{Exponential components transfer function models}
 \usage{
 expuh.ls.fit(

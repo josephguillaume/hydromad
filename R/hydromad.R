@@ -97,7 +97,7 @@
 #' summary(fit1)
 #' xyplot(fit1)
 #' 
-#' @export hydromad
+#' @export
 hydromad <-
   function(DATA = zoo(),
            ...,
@@ -120,10 +120,14 @@ hydromad <-
     return(obj)
   }
 
+
+
 isFullySpecified <- function(object, ...) {
   !is.list(coef(object, ..., warn = FALSE))
 }
 
+
+#' @export
 fitted.hydromad <-
   function(object, ..., U = FALSE,
            all = FALSE,
@@ -158,6 +162,8 @@ fitted.hydromad <-
     if (all) tmp else stripWarmup(tmp, object$warmup)
   }
 
+
+#' @export
 residuals.hydromad <-
   function(object, ..., all = FALSE, boxcox = FALSE, start = NULL) {
     fit <- fitted(object, all = TRUE)
@@ -185,6 +191,8 @@ residuals.hydromad <-
     if (all) tmp else stripWarmup(tmp, object$warmup)
   }
 
+
+#' @export
 observed.hydromad <- function(object, ..., select = "Q", all = FALSE) {
   ## observed.default will work (for Q), but this may be slightly faster
   if (is.character(select)) {
@@ -196,6 +204,8 @@ observed.hydromad <- function(object, ..., select = "Q", all = FALSE) {
   if (all) tmp else stripWarmup(tmp, object$warmup)
 }
 
+
+#' @export
 vcov.hydromad <- function(object, ...) {
   cov.mat <- object$cov.mat ## may be NULL
   rcov <- object$vcov.rfit
@@ -218,6 +228,8 @@ vcov.hydromad <- function(object, ...) {
   ans
 }
 
+
+#' @export
 logLik.hydromad <-
   function(object, loglik = hydromad.getOption("loglik"), ...) {
     val <- objFunVal(object, objective = loglik, ...)
@@ -229,8 +241,12 @@ logLik.hydromad <-
     val
   }
 
+
+#' @export
 deviance.hydromad <- stats:::deviance.lm
 
+
+#' @export
 print.hydromad <-
   function(x, digits = max(3, getOption("digits") - 3), ...) {
     cat("\n",
@@ -316,6 +332,8 @@ print.hydromad <-
     invisible(x)
   }
 
+
+#' @export
 str.hydromad.runlist <-
   function(object, ...) {
     cat("\nList of Hydromad model runs:\n")
@@ -329,14 +347,20 @@ str.hydromad.runlist <-
     invisible()
   }
 
+
+#' @export
 isValidModel <- function(object, ...) {
   UseMethod("isValidModel")
 }
 
+
+#' @export
 isValidModel.default <- function(object, ...) {
   return(FALSE)
 }
 
+
+#' @export
 isValidModel.hydromad <- function(object, ...) {
   is.numeric(fitted(object, all = TRUE))
 }

@@ -20,6 +20,8 @@
 #' \code{"clusterApply"} has a slightly lower overhead. \code{"foreach"} allows
 #' a broader range of options.
 #' 
+#' @name evalPars
+#' @aliases getFreeParsRanges
 #' @param par.matrix Named matrix or data.frame of parameter values, with each
 #' row corresponding to a model realisation to evaluate
 #' @param object an object of class \code{hydromad}.
@@ -56,7 +58,7 @@
 #' pars <- parameterSets(coef(modx,warn=FALSE),10,method="random")
 #' 
 #' 
-#' @export evalPars
+#' @export
 evalPars <- function(par.matrix, object, objective = hydromad.getOption("objective"),
                      parallel = hydromad.getOption("parallel")[["evalPars"]]) {
   stopifnot(inherits(object, "hydromad"))
@@ -113,6 +115,7 @@ evalPars <- function(par.matrix, object, objective = hydromad.getOption("objecti
 }
 
 
+#' @export
 getFreeParsRanges <- function(object) {
   stopifnot(inherits(object, "hydromad"))
   ## identify varying parameters

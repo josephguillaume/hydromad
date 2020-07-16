@@ -76,7 +76,7 @@
 #' 
 #' }
 #' 
-#' @export fitByDream
+#' @export
 fitByDream <-
   function(MODEL,
            loglik = hydromad.getOption("loglik"),

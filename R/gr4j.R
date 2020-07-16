@@ -340,7 +340,7 @@ gr4jrouting.ranges <- function() {
 #' gr4j.transformpar(c(hydromad.getOption("gr4j"),hydromad.getOption("gr4jrouting")))
 #' gr4j.transformpar(c(x1=150,x2=2,x3=50,x4=2),back=F)
 #' 
-#' @export gr4j.transformpar
+#' @export
 gr4j.transformpar <- function(pars, back = F) {
   pars <- modifyList(list(x1 = NA, x2 = NA, x3 = NA, x4 = NA), as.list(pars))
   newpars <- pars

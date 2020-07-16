@@ -141,11 +141,13 @@
 #'      (sim[,2] > observed(newglu) - 0.1))
 #' 
 #' 
-#' @export defineFeasibleSet
+#' @export 
 defineFeasibleSet <- function(x, ...) {
   UseMethod("defineFeasibleSet")
 }
 
+
+#' @export
 defineFeasibleSet.hydromad <-
   function(x, ..., thin = NA) {
     x <- update(x, feasible.set = NULL)
@@ -178,6 +180,8 @@ defineFeasibleSet.hydromad <-
     defineFeasibleSet.default(psets, model = x, objseq = objseq, ...)
   }
 
+
+#' @export
 defineFeasibleSet.default <-
   function(x, model,
            objseq = rep(1, NROW(x)),

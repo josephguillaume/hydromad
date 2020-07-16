@@ -2,7 +2,7 @@
 % Please edit documentation in R/lambda.inverse.fit.R
 \name{lambda.inverse.fit}
 \alias{lambda.inverse.fit}
-\title{Placeholder}
+\title{@export}
 \usage{
 lambda.inverse.fit(
   DATA,
@@ -23,8 +23,5 @@ lambda.inverse.fit(
 )
 }
 \description{
-Requires documentation
- 
- @param DATA Placeholder 
- @export
+@export
 }

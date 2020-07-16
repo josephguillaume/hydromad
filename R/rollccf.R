@@ -73,7 +73,7 @@
 #' foo <- rollccf(Canning)
 #' xyplot(foo)
 #' 
-#' @export rollccf
+#' @export
 rollccf <-
   function(DATA = data.frame(Q = , P = ),
            width = list(365, 90),
@@ -125,6 +125,8 @@ rollccf <-
     obj
   }
 
+
+#' @export
 xyplot.rollccf <-
   function(x, data = NULL, ...,
            with.data = TRUE,
@@ -160,6 +162,8 @@ xyplot.rollccf <-
     return(rollplot)
   }
 
+
+#' @export
 ccfForLags <- function(DATA, lags = 0,
                        na.action = na.contiguous,
                        na.max.fraction = 1 / 3) {

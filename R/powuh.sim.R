@@ -104,6 +104,8 @@ powuh.sim <-
     X
   }
 
+
+
 powuh.ranges <- function() {
   list(
     a = c(0.01, 60),
@@ -112,10 +114,14 @@ powuh.ranges <- function() {
   )
 }
 
+
+#' @export
 ssg.powuh <- function(theta) {
   1
 }
 
+
+#' @export
 normalise.powuh <- function(theta) {
   theta
 }

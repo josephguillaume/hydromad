@@ -35,7 +35,7 @@
 #' ## Evaluate the resulting model on all periods
 #' rl.first=update(rl,newpars=coef(fitx))
 #' 
-#' @export splitData
+#' @export 
 splitData <- function(object, start.dates = NULL, end.dates = NULL, periods = NULL) {
   ## Split data according to start.dates and end.dates
   if (!is.null(periods)) {

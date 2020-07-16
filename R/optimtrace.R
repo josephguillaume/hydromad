@@ -25,11 +25,13 @@
 #' 
 #' ## see examples in fitByOptim, fitBySCE, fitByDE, fitByDream
 #' 
-#' @export optimtrace
+#' @export
 optimtrace <- function(object, ...) {
   UseMethod("optimtrace")
 }
 
+
+#' @export
 optimtrace.default <- function(object, ..., model = object) {
   stopifnot(is.list(object))
   stopifnot(length(object$fit.result) > 0)

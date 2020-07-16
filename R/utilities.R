@@ -28,11 +28,14 @@
 #' mymodel$residuals <- x - fitted(mymodel)
 #' observed(mymodel)
 #' 
-#' @export observed
+#' 
+#' @export 
 observed <- function(object, ...) {
   UseMethod("observed")
 }
 
+
+#' @export
 observed.default <- function(object, ...) {
   fitted(object, ...) + residuals(object, ...)
 }
@@ -144,6 +147,8 @@ stripWarmup <-
 #    ans <- ts(x, t_warm, t_end, freq)
 # }
 
+
+#' @export
 numericSummary <- function(x) {
   x <- as.data.frame(x)
   foo <- sapply(x, function(z) {

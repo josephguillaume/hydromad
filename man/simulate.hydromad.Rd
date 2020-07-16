@@ -75,7 +75,6 @@ latticeExtra::layer(panel.2dsmoother(...),under=TRUE)
 ## dotty plots (list any number of parameters in formula)
 xyplot(result ~ tw + f, sim1, outer = TRUE)
 
-
 }
 \seealso{
 \code{\link{parameterSets}}, \code{\link{fitBySampling}}

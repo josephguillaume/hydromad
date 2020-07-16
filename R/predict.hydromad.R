@@ -42,6 +42,7 @@
 #' @seealso \code{\link{hydromad}}, \code{update.hydromad}
 #' @keywords methods
 #' @examples Placeholder
+#' @export
 predict.hydromad <-
   function(object, newdata = NULL,
            which = c("both", "sma", "routing"),

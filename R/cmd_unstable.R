@@ -150,9 +150,8 @@ cmd_unstable.sim <-
     return(ans)
   }
 
-#'
-#'
-#'
+
+
 cmd_unstable.ranges <- function() {
   list(
     g = c(0.01 * 50, 3 * 550),

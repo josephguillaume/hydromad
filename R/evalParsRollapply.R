@@ -112,7 +112,7 @@
 #' ## runs is a matrix
 #' }
 #' 
-#' @export evalParsRollapply
+#' @export
 ## Calculate objective function on a rolling window
 evalParsRollapply <- function(par.matrix, object,
                               width = 30,
@@ -133,13 +133,10 @@ evalParsRollapply <- function(par.matrix, object,
              width = width, objective = objective
   )
 }
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' @export evalParsTS
+
+
+
+#' @export 
 evalParsTS <- function(par.matrix, object,
                        fun = function(thisMod) fitted(thisMod),
                        length.out = NULL,

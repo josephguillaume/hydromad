@@ -54,7 +54,7 @@
 #'   xlab = "function evaluations", ylab = "objective fn. value") +
 #' layer(panel.average(..., horiz = FALSE, fun = max, lwd = 2))
 #' 
-#' @export fitBySCE
+#' @export
 fitBySCE <-
   function(MODEL,
            objective = hydromad.getOption("objective"),

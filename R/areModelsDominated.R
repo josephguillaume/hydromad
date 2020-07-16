@@ -2,6 +2,9 @@
 ## Catchment calib.period sim.period Model.str     + objectives + other
 ## Objectives need to be specified (default r.squared)
 ## Assume objectives higher value is better. Values should be transformed prior to use
+
+
+#' @export
 paretoTimeAnalysis_areModelsDominated <- function(stat, objectives = "r.squared") {
   stat <- as.data.frame(stat)
 

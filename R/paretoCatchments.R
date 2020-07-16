@@ -1,3 +1,4 @@
+#' @export
 paretoTimeAnalysis.data.frame <- function(stat, show.models = NA, objectives = "r.squared",
                                           pars, ...) {
   cat("\nCross-validation Pareto analysis\nWhich models cannot be rejected, due to dataset uncertainty/non-stationarity?\n")

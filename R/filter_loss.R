@@ -4,7 +4,12 @@
 ##
 
 
-## recursive filter with a constant loss
+#' Recursive filter with a constant loss
+#'
+#' Description
+#'
+#'
+#' @export
 filter_loss <-
   function(x, a, loss, init = 0) {
     stopifnot(is.numeric(x))

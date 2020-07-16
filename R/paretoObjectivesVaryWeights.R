@@ -49,7 +49,7 @@
 #' stats <- t(sapply(front,objFunVal,objective=list(hmadstat("r.sq.log"),hmadstat("r.squared"))))
 #' plot(stats)
 #' 
-#' @export paretoObjectivesVaryWeights
+#' @export
 paretoObjectivesVaryWeights <- function(MODEL, objective = hydromad.getOption("objective"), weights, fitBy, ...) {
   objective <- buildCachedObjectiveFun(objective, MODEL)
   switch(hydromad.getOption("parallel")[["paretoObjectivesVaryWeights"]],

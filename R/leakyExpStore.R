@@ -73,7 +73,7 @@
 #' ),superpose=TRUE)
 #' 
 #' 
-#' @export leakyExpStore.sim
+#' @export 
 leakyExpStore.sim <- function(x, tau, loss, thres, init = 0, return_components = FALSE) {
   stopifnot(is.numeric(x))
   stopifnot(is.numeric(loss))

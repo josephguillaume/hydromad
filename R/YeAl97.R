@@ -26,4 +26,4 @@
 #' data(YeAl97)
 #' YeAl97
 #' 
-"YeAl972"
+"YeAl97"

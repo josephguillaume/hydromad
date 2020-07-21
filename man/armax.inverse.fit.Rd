@@ -100,7 +100,7 @@ xyplot(ts.union(observed = Yh, fitted = fitted(fit1)),
 ...
 }
 \seealso{
-\code{\link{armax.inverse.sim}},
+\code{armax.inverse.sim},
 \code{\link{expuh}}, \code{\link{armax.sriv.fit}}
 }
 \author{

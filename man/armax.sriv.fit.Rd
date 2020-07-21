@@ -40,6 +40,8 @@ missing, this will be estimated from the cross correlation function.}
 
 \item{na.action}{placeholder}
 
+\item{epsilon}{placeholder}
+
 \item{max.iterations}{placeholder
 (i.e. negative or imaginary poles) are detected.}
 }

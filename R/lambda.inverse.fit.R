@@ -3,28 +3,8 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
-#' Title
-#'
-#' Description
-#'
-#' @param DATA Placeholder
-#' @param order Placeholder
-#' @param delay Placeholder
-#' @param fit.method Placeholder
-#' @param normalise Placeholder
-#' @param init.U Placeholder
-#' @param pars Placeholder
-#' @param use.Qm Placeholder
-#' @param rises.only Placeholder
-#' @param ... Placeholder
-#' @param max.iterations Placeholder
-#' @param rel.tolerance Placeholder
-#' @param par.epsilon Placeholder
-#' @param init.attempt Placeholder
-#' @param trace Placeholder
 
-
-#'  @export
+#' @export
 lambda.inverse.fit <-
   function(DATA,
            order = c(n = 2, m = 1),

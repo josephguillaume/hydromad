@@ -10,7 +10,7 @@
 #' Visualise systematic model errors against covariates.
 #' 
 #' @name event.xyplot.hydromad
-#' @aliases event.xyplot.hydromad event.xyplot.hydromad.runlist
+#' @aliases event.xyplot.hydromad.runlist
 #' @param x a \code{hydromad} or \code{hydromad.runlist} object.
 #' @param events event sequence produced by \code{\link{eventseq}}, or a vector
 #' defining continguous groups on the specified variables.
@@ -29,6 +29,7 @@
 #' to \code{\link{xyplot}} and the panel function.
 #' @param panel,panel.groups,abline,pch,ylab passed to \code{\link{xyplot}}.
 #' @param data ignored.
+#' @param y code passed to panel.groups.funs
 #' @return this function returns a trellis object which can be \code{plot}ted.
 #' @author Felix Andrews \email{felix@@nfrac.org}
 #' @seealso \code{\link{event.xyplot}}, \code{\link{xyplot}},
@@ -49,7 +50,8 @@
 #'     ~ sqrt(e(P,max)) + sqrt(e(rollmean(lag(P,-1),20,align="left"),first)))
 #' dimnames(foo)[[1]] <- c("sqrt. peak rain (mm/day)", "mean 20-day ante. rain")
 #' foo
-#' 
+
+
 #' @export
 event.xyplot.hydromad.runlist <-
   event.xyplot.hydromad <-
@@ -63,11 +65,7 @@ event.xyplot.hydromad.runlist <-
            with.U = TRUE,
            ...,
            panel = panel.superpose,
-           panel.groups = function(x, y, ...) {
-             panel.xyplot(x, y, ...)
-             if (!requireNamespace("mgcv")) stop("package mgcv is required for event.xyplot")
-             panel.smoother(x, y, y ~ s(x), method = "gam", ...)
-           },
+           panel.groups = panel.groups.funs,
            abline = list(h = 0), pch = ".",
            ylab = "residual flow sums in event windows (mm)",
            data = NULL) {
@@ -95,3 +93,12 @@ event.xyplot.hydromad.runlist <-
     foo$call <- sys.call(sys.parent())
     foo
   }
+
+
+#' @rdname event.xyplot.hydromad
+#' @export
+panel.groups.funs <- function(x, y, ...) {
+  panel.xyplot(x, y, ...)
+  if (!requireNamespace("mgcv")) stop("package mgcv is required for event.xyplot")
+  panel.smoother(x, y, y ~ s(x), method = "gam", ...)
+}

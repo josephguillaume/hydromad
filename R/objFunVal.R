@@ -62,6 +62,7 @@ objFunVal <- function(x, objective, ...) {
 }
 
 
+#' @rdname objFunVal
 #' @export
 objFunVal.default <-
   function(x, objective = hydromad.getOption("objective"),
@@ -112,6 +113,7 @@ objFunVal.default <-
   }
 
 ## TODO: could this just merge the data and call the default method? slow?
+#' @rdname objFunVal
 #' @export
 objFunVal.tf <-
   objFunVal.hydromad <-
@@ -180,6 +182,7 @@ objFunVal.tf <-
   }
 
 
+#' @rdname objFunVal
 #' @export
 objFunVal.runlist <- function(x, objective = list(hydromad.getOption("objective"), mean), ...) {
   if (is.list(objective) && length(objective) == 2) {

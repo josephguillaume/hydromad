@@ -64,12 +64,12 @@
 #' values from one column of \code{X}. When \code{by.column = FALSE}, which
 #' only makes sense when \code{X} is a matrix, \code{FUN} will be passed a
 #' matrix. The dots (\code{\dots{}}) are passed on too.
-#' @param list() a function to apply to the values in each event. In the
-#' default case of \code{by.column = TRUE}, \code{FUN} will be passed a vector
-#' of values from one column of \code{X}. When \code{by.column = FALSE}, which
-#' only makes sense when \code{X} is a matrix, \code{FUN} will be passed a
-#' matrix. The dots (\code{\dots{}}) are passed on too.
-#' @param ,by.column a function to apply to the values in each event. In the
+# @param list() a function to apply to the values in each event. In the
+# default case of \code{by.column = TRUE}, \code{FUN} will be passed a vector
+# of values from one column of \code{X}. When \code{by.column = FALSE}, which
+# only makes sense when \code{X} is a matrix, \code{FUN} will be passed a
+# matrix. The dots (\code{\dots{}}) are passed on too.
+#' @param by.column a function to apply to the values in each event. In the
 #' default case of \code{by.column = TRUE}, \code{FUN} will be passed a vector
 #' of values from one column of \code{X}. When \code{by.column = FALSE}, which
 #' only makes sense when \code{X} is a matrix, \code{FUN} will be passed a
@@ -81,6 +81,10 @@
 #' @param TIMING defines how to construct the time index of the result. Should
 #' the time corresponding to an event be taken from the \code{time()} of its
 #' start, middle, or end?
+#' @param within Placeholder
+#' @param trace Placeholder
+#' @param optimize.tol Placeholder
+#' @param ... Placeholder
 #' @return
 #' 
 #' \code{eventseq} returns a zoo object, with core data consisting of an
@@ -238,6 +242,7 @@ findThresh <-
   }
 
 
+#' @rdname events
 #' @export 
 eventseq <-
   function(x, thresh = 0, mingap = 1, mindur = 1, extend = 0,
@@ -387,7 +392,7 @@ eventseq <-
     ans
   }
 
-
+#' @rdname events
 #' @export
 eventapply <-
   function(X, events,

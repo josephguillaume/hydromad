@@ -126,6 +126,7 @@ rollccf <-
   }
 
 
+#' @rdname rollccf
 #' @export
 xyplot.rollccf <-
   function(x, data = NULL, ...,
@@ -163,6 +164,7 @@ xyplot.rollccf <-
   }
 
 
+#' @rdname rollccf
 #' @export
 ccfForLags <- function(DATA, lags = 0,
                        na.action = na.contiguous,

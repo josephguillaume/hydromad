@@ -8,6 +8,26 @@
 \title{Plot the area between two series as a filled polygon.}
 \usage{
 panel.ribbon(...)
+
+\method{panel.ribbon}{default}(
+  x,
+  y,
+  y2,
+  groups = NULL,
+  col = if (is.null(groups)) plot.polygon$col else superpose.polygon$col,
+  border = if (is.null(groups)) plot.polygon$border else superpose.polygon$border,
+  lty = if (is.null(groups)) plot.polygon$lty else superpose.polygon$lty,
+  lwd = if (is.null(groups)) plot.polygon$lwd else superpose.polygon$lwd,
+  alpha = if (is.null(groups)) plot.polygon$alpha else superpose.polygon$alpha,
+  ...,
+  col.line = border,
+  fill,
+  panel.groups = panel.ribbon
+)
+
+\method{panel.ribbon}{ts}(y, y2 = NULL, ...)
+
+\method{panel.ribbon}{zoo}(y, y2 = NULL, ...)
 }
 \arguments{
 \item{\dots}{further arguments passed on to \code{\link{panel.polygon}}.}

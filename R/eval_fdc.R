@@ -4,6 +4,7 @@
 #' 
 #' @name eval_fdc
 #' @aliases fdc.sample, fdc.allpoints
+#' @param Q Placeholder  
 #'  
 #' @export
 fdc.sample <- function(Q) {

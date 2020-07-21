@@ -14,6 +14,16 @@ evalParsRollapply(
   parallel = hydromad.getOption("parallel")[["evalParsTS"]],
   filehash.name = tempfile()
 )
+
+evalParsTS(
+  par.matrix,
+  object,
+  fun = function(thisMod) fitted(thisMod),
+  length.out = NULL,
+  ...,
+  parallel = hydromad.getOption("parallel")[["evalParsTS"]],
+  filehash.name = tempfile()
+)
 }
 \arguments{
 \item{par.matrix}{Named matrix or data.frame of parameter values, with each

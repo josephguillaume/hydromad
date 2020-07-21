@@ -31,11 +31,11 @@ eigen.plot.single <- function(e, max.value = NA) {
 #' @param obj \code{rsm} object, as produced by \code{\link{evalRSM}}
 #' @param fixed.axis Whether to use the same dimensions for each pair of
 #' variables. Allows comparison of relative width/height of ellipses
-#' @param e List with elements \code{values} and \code{vectors}. Usually
-#' determined internally by \code{eigen.plot}.
-#' @param max.value If not \code{NA}, \code{xlim} and \code{ylim} are
-#' \code{c(-max.value,max.value)}, so that separated plots can be compared.
-#' Usually determined internally by \code{eigen.plot}.
+# @param e List with elements \code{values} and \code{vectors}. Usually
+# determined internally by \code{eigen.plot}.
+# @param max.value If not \code{NA}, \code{xlim} and \code{ylim} are
+# \code{c(-max.value,max.value)}, so that separated plots can be compared.
+# Usually determined internally by \code{eigen.plot}.
 #' @return Plot of ellipses for each pair of variables, with larger
 #' width/height of ellipse indicating lower level of identifiability, and
 #' rotation of ellipse away from the vertical indicating level of interaction.

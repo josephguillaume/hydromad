@@ -39,6 +39,8 @@
 #' @param n Number of independent samples to draw for evaluation of fit
 #' @param method Sampling scheme for \code{evalRSM}. See
 #' \code{\link{parameterSets}}
+#' @param x Placeholder
+#' @param digits Placeholder
 #'
 #' @return For \code{runRSM}, an \code{rsm} object.
 #' 
@@ -171,6 +173,7 @@ runRSM <- function(modx, ..., objective = hydromad.getOption("objective")) {
   return(evals.rsm)
 }
 
+#' @rdname runRSM
 #' @export
 evalRSM <- function(modx, rsm.object, n = 100,
                     objective = hydromad.getOption("objective"),
@@ -199,6 +202,7 @@ evalRSM <- function(modx, rsm.object, n = 100,
   ans
 }
 
+#' @rdname runRSM
 #' @export
 print.summary.rsm.hydromad <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   rdf <- x$df[2L]

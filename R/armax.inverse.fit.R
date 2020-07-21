@@ -65,7 +65,7 @@
 #' xyplot(ts.union(observed = Yh, fitted = fitted(fit1)),
 #'        superpose = TRUE)
 #' 
-#' @export armax.inverse.fit
+#' @export 
 armax.inverse.fit <-
   function(DATA,
            order = hydromad.getOption("order"),

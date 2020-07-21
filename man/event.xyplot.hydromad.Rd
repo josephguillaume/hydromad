@@ -18,10 +18,10 @@
     (!requireNamespace("mgcv"))         
     stop("package mgcv is required for event.xyplot")     panel.smoother(x, y, y ~ s(x),
     method = "gam", ...) },
+  data = NULL,
   abline = list(h = 0),
   pch = ".",
-  ylab = "residual flow sums in event windows (mm)",
-  data = NULL
+  ylab = "residual flow sums in event windows (mm)"
 )
 }
 \arguments{

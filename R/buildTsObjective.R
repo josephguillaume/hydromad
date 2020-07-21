@@ -30,9 +30,9 @@
 #' each group when \code{groups} is specified. The actual aggregation is done
 #' by \code{\link{eventapply}}.
 #' @param ... Placeholder
-#' @param list() the aggregation function (and any extra arguments) to use on
-#' each group when \code{groups} is specified. The actual aggregation is done
-#' by \code{\link{eventapply}}.
+# @param list() the aggregation function (and any extra arguments) to use on
+# each group when \code{groups} is specified. The actual aggregation is done
+# by \code{\link{eventapply}}.
 #' @param ref output from a reference model correponding to \code{Q}. This is
 #' passed, after any aggregation and/or transformation, to
 #' \code{\link{nseStat}}. If left as \code{NULL}, the mean (of
@@ -45,6 +45,8 @@
 #' \code{boxcox = 0} is a log transform. The offset is specified as the
 #' \code{start} argument; if \code{NULL} it defaults to the 10 percentile (i.e.
 #' lowest decile) of the non-zero values of \code{Q}.
+#' @param distribution Placeholder
+#' @param outliers Placeholder
 #' @return \code{buildTsObjective} returns a \code{function}, which can be
 #' passed arguments \code{Q, X, ...} (the standard signature for hydromad
 #' objective functions). The \code{Q} argument is ignored since it was already
@@ -135,6 +137,7 @@ buildTsObjective <-
     }
   }
 
+#' @rdname buildTsObjective
 #' @export
 buildTsLikelihood <-
   function(Q, groups = NULL, FUN = sum, ...,

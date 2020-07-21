@@ -38,7 +38,7 @@
 #' \item{initX}{ } \item{trace}{ ~~Describe \code{trace} here~~ } }
 #' @param fallback placeholder
 #' @param na.action placeholder
-#' @param epsilon placeholder
+# @param epsilon placeholder
 #' @param max.iterations placeholder
 #' (i.e. negative or imaginary poles) are detected.
 #' @return a \code{tf} object, which is a list with components

@@ -11,13 +11,6 @@ eigen.plot(obj, fixed.axis = TRUE)
 
 \item{fixed.axis}{Whether to use the same dimensions for each pair of
 variables. Allows comparison of relative width/height of ellipses}
-
-\item{e}{List with elements \code{values} and \code{vectors}. Usually
-determined internally by \code{eigen.plot}.}
-
-\item{max.value}{If not \code{NA}, \code{xlim} and \code{ylim} are
-\code{c(-max.value,max.value)}, so that separated plots can be compared.
-Usually determined internally by \code{eigen.plot}.}
 }
 \value{
 Plot of ellipses for each pair of variables, with larger

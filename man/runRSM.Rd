@@ -3,9 +3,20 @@
 \name{runRSM}
 \alias{runRSM}
 \alias{evalRSM}
+\alias{print.summary.rsm.hydromad}
 \title{Response Surface Method}
 \usage{
 runRSM(modx, ..., objective = hydromad.getOption("objective"))
+
+evalRSM(
+  modx,
+  rsm.object,
+  n = 100,
+  objective = hydromad.getOption("objective"),
+  method = "latin.hypercube"
+)
+
+\method{print}{summary.rsm.hydromad}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }
 \arguments{
 \item{modx}{a model specification created by \code{\link{hydromad}}. It
@@ -30,6 +41,10 @@ given as a \code{function(Q, X, ...)}.  See \code{\link{objFunVal}}.}
 
 \item{method}{Sampling scheme for \code{evalRSM}. See
 \code{\link{parameterSets}}}
+
+\item{x}{Placeholder}
+
+\item{digits}{Placeholder}
 }
 \value{
 For \code{runRSM}, an \code{rsm} object.

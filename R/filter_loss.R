@@ -8,6 +8,10 @@
 #'
 #' Description
 #'
+#' @param x Placeholder
+#' @param a Placeholder
+#' @param loss Placeholder
+#' @param init Placeholder
 #'
 #' @export
 filter_loss <-

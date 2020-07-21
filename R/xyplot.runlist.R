@@ -25,6 +25,8 @@
 #' series.
 #' @param f.value,tails.n arguments to \code{\link{panel.qqmath}}.
 #' @param layout Placeholder
+#' @param auto.key Placeholder
+#' @param type Placeholder
 #' @author Felix Andrews \email{felix@@nfrac.org}
 #' @seealso \code{\link{runlist}}, \code{\link{xyplot.ts}},
 #' \code{\link{xyplot}}, \code{\link{qqmath}}
@@ -68,6 +70,7 @@ xyplot.runlist <-
 ## Handles either fitted vs observed, or residuals.
 
 
+#' @rdname xyplot.runlist
 #' @export
 qqmath.runlist <-
   function(x, data = NULL, ..., all = FALSE,

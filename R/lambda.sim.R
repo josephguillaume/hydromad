@@ -102,13 +102,13 @@ lambda.sim <-
       return(Xs + Xq)
     }
   }
-#'
-#'
+
+
 ssg.lambda <- function(theta) {
   return(1)
 }
-#'
-#'
+
+
 normalise.lambda <- function(theta) {
   return(theta)
 }

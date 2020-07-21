@@ -15,6 +15,18 @@ gr4j.sim(
   return_state = FALSE,
   transformed = FALSE
 )
+
+gr4jrouting.sim(
+  U,
+  x2,
+  x3,
+  x4,
+  R_0 = 0,
+  split = 0.9,
+  return_components = FALSE,
+  epsilon = hydromad.getOption("sim.epsilon"),
+  transformed = FALSE
+)
 }
 \arguments{
 \item{DATA}{time-series-like object with columns P (precipitation, mm) and E

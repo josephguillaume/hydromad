@@ -45,8 +45,6 @@ starting value for a separate optimisation run, and the best result is kept.}
 matrix will be estimated as the inverse of the hessian matrix returned by
 \code{optim()}. This may be a very poor estimate! It can be extract using
 \code{\link{vcov}}.  Does not work with \code{method = "PORT"}.}
-
-\item{tol}{convergence tolerance, see \code{\link{optimize}}.}
 }
 \value{
 the best model from those sampled, according to the given

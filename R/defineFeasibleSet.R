@@ -147,6 +147,7 @@ defineFeasibleSet <- function(x, ...) {
 }
 
 
+#' @rdname defineFeasibleSet
 #' @export
 defineFeasibleSet.hydromad <-
   function(x, ..., thin = NA) {
@@ -181,6 +182,8 @@ defineFeasibleSet.hydromad <-
   }
 
 
+
+#' @rdname defineFeasibleSet
 #' @export
 defineFeasibleSet.default <-
   function(x, model,

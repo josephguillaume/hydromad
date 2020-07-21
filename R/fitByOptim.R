@@ -38,7 +38,7 @@
 #' matrix will be estimated as the inverse of the hessian matrix returned by
 #' \code{optim()}. This may be a very poor estimate! It can be extract using
 #' \code{\link{vcov}}.  Does not work with \code{method = "PORT"}.
-#' @param tol convergence tolerance, see \code{\link{optimize}}.
+# @param tol convergence tolerance, see \code{\link{optimize}}.
 #' @return the best model from those sampled, according to the given
 #' \code{objective} function. Also, these extra elements are inserted:
 #' \item{fit.result}{ the result from \code{\link{optim}}.  } \item{objective}{

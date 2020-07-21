@@ -5,9 +5,22 @@
 \alias{objFunVal.hydromad}
 \alias{objFunVal.default}
 \alias{objFunVal.runlist}
+\alias{objFunVal.tf}
 \title{Calculate objective function value for a fitted model.}
 \usage{
 objFunVal(x, objective, ...)
+
+\method{objFunVal}{default}(x, objective = hydromad.getOption("objective"), ..., nan.ok = FALSE)
+
+\method{objFunVal}{tf}(
+  x,
+  objective = hydromad.getOption("objective"),
+  ...,
+  all = FALSE,
+  nan.ok = FALSE
+)
+
+\method{objFunVal}{runlist}(x, objective = list(hydromad.getOption("objective"), mean), ...)
 }
 \arguments{
 \item{x}{object from which to calculate stats. For the \code{hydromad}
@@ -27,10 +40,10 @@ a single value.}
 \item{...}{ignored for \code{hydromad} and \code{default}, passed to
 \code{objFunVal.hydromad} for \code{runlist}}
 
-\item{all}{passed to \code{fitted} and \code{observed}.}
-
 \item{nan.ok}{by default, an error is thrown if the result is \code{NaN}.
 Set this argument to \code{TRUE} to suppress the error.}
+
+\item{all}{passed to \code{fitted} and \code{observed}.}
 }
 \value{
 the objective function value, or a list of objective function

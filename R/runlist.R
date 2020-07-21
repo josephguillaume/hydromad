@@ -23,6 +23,7 @@
 #' values other than single numeric values will be ignored.
 #' @param items if given, this is used to extract elements of the result from
 #' \code{FUN}; otherwise, all single numeric elements are extracted.
+#' @param recursive Placeholder
 #' @return \code{runlist} and \code{as.runlist} return a list of class
 #' \code{runlist} and also (firstly) \var{class}\code{.runlist}, where
 #' \var{class} is the first class of the first element of the list.
@@ -61,6 +62,7 @@ runlist <- function(...) {
 }
 
 
+#' @rdname runlist
 #' @export
 as.runlist <- function(x, ...) {
   do.call("runlist", as.list(x))
@@ -71,6 +73,7 @@ as.runlist <- function(x, ...) {
 }
 
 
+#' @rdname runlist
 #' @export
 c.hydromad <- function(..., recursive = FALSE) {
   args <- list(...)
@@ -86,7 +89,7 @@ c.hydromad <- function(..., recursive = FALSE) {
   runlist(...)
 }
 
-
+#' @rdname runlist
 #' @export
 c.runlist <- function(..., recursive = FALSE) {
   args <- list(...)
@@ -114,14 +117,14 @@ c.runlist <- function(..., recursive = FALSE) {
   rval
 }
 
-
+#' @rdname runlist
 #' @export
 coef.runlist <-
   function(object, ..., items = NULL) {
     summary(object, ..., FUN = coef, items = items)
   }
 
-
+#' @rdname runlist
 #' @export
 summary.runlist <-
   function(object, ..., FUN = summary, items = NULL) {
@@ -166,7 +169,7 @@ summary.runlist <-
 #    invisible(x)
 # }
 
-
+#' @rdname runlist
 #' @export
 print.runlist <-
   function(x, ...) {
@@ -175,7 +178,7 @@ print.runlist <-
     invisible(x)
   }
 
-
+#' @rdname runlist
 #' @export
 residuals.runlist <-
   function(object, ...) {
@@ -190,7 +193,7 @@ residuals.runlist <-
     do.call("cbind", ans)
   }
 
-
+#' @rdname runlist
 #' @export
 fitted.runlist <-
   function(object, ...) {
@@ -205,7 +208,7 @@ fitted.runlist <-
     do.call("cbind", ans)
   }
 
-
+#' @rdname runlist
 #' @export
 update.runlist <-
   function(object, ...) {
@@ -218,7 +221,7 @@ update.runlist <-
     return(runs)
   }
 
-
+#' @rdname runlist
 #' @export
 isValidModel.runlist <- function(object, ...) {
   return(TRUE)

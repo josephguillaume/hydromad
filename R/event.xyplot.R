@@ -67,6 +67,7 @@ event.xyplot <- function(x, ...) {
 }
 
 
+#' @rdname event.xyplot
 #' @export
 event.xyplot.formula <-
   function(x, data = list(), events, ...,

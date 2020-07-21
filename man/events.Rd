@@ -20,6 +20,31 @@ findThresh(
   trace = FALSE,
   optimize.tol = 0.1
 )
+
+eventseq(
+  x,
+  thresh = 0,
+  mingap = 1,
+  mindur = 1,
+  extend = 0,
+  inthresh = thresh,
+  inx = x,
+  indur = 1,
+  below = FALSE,
+  all = FALSE,
+  continue = FALSE,
+  n = NA
+)
+
+eventapply(
+  X,
+  events,
+  FUN = sum,
+  ...,
+  by.column = TRUE,
+  simplify = TRUE,
+  TIMING = c("start", "middle", "end")
+)
 }
 \arguments{
 \item{x, X}{a \code{\link{ts}} or \code{\link{zoo}} object.  May be
@@ -39,6 +64,8 @@ returned. A warning is given if the actual number of events is not within 5
 percent of \code{n}. Note that there may be multiple possible threshold
 levels giving the same number of events!}
 
+\item{within}{Placeholder}
+
 \item{mingap}{the minimum number of time steps that can separate events. Any
 inter-event durations shorter than this will be subsumed into the
 surrounding event.}
@@ -49,6 +76,12 @@ events whose duration is shorter than this will be skipped.}
 \item{below}{reverses the definition of events, to identify events where the
 data falls below \code{thresh} (and/or \code{inthresh}). Setting this to
 \code{TRUE} is equivalent to negating \code{x} and \code{thresh}, etc.}
+
+\item{...}{Placeholder}
+
+\item{trace}{Placeholder}
+
+\item{optimize.tol}{Placeholder}
 
 \item{extend}{a number of time steps to include on the end of each event
 window, before accounting for \code{inthresh}.  If this causes events to run
@@ -91,13 +124,7 @@ values from one column of \code{X}. When \code{by.column = FALSE}, which
 only makes sense when \code{X} is a matrix, \code{FUN} will be passed a
 matrix. The dots (\code{\dots{}}) are passed on too.}
 
-\item{list()}{a function to apply to the values in each event. In the
-default case of \code{by.column = TRUE}, \code{FUN} will be passed a vector
-of values from one column of \code{X}. When \code{by.column = FALSE}, which
-only makes sense when \code{X} is a matrix, \code{FUN} will be passed a
-matrix. The dots (\code{\dots{}}) are passed on too.}
-
-\item{, by.column}{a function to apply to the values in each event. In the
+\item{by.column}{a function to apply to the values in each event. In the
 default case of \code{by.column = TRUE}, \code{FUN} will be passed a vector
 of values from one column of \code{X}. When \code{by.column = FALSE}, which
 only makes sense when \code{X} is a matrix, \code{FUN} will be passed a

@@ -7,6 +7,23 @@
 \title{Extract the feasible parameter sets meeting some criteria.}
 \usage{
 defineFeasibleSet(x, ...)
+
+\method{defineFeasibleSet}{hydromad}(x, ..., thin = NA)
+
+\method{defineFeasibleSet}{default}(
+  x,
+  model,
+  objseq = rep(1, NROW(x)),
+  frac.within = 0,
+  within.rel = 0.01,
+  within.abs = 0.1,
+  groups = NULL,
+  FUN = sum,
+  target.coverage = 1,
+  threshold = -Inf,
+  glue.quantiles = c(0, 1),
+  ...
+)
 }
 \arguments{
 \item{x}{in the \code{hydromad} method this is a \code{\link{hydromad}}

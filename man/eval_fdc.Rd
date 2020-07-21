@@ -9,6 +9,9 @@
 \usage{
 fdc.sample(Q)
 }
+\arguments{
+\item{Q}{Placeholder}
+}
 \description{
 Description placeholder.
 }

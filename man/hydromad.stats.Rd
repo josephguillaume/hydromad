@@ -3,9 +3,22 @@
 \name{hydromad.stats}
 \alias{hydromad.stats}
 \alias{hmadstat}
+\alias{buildCachedObjectiveFun}
+\alias{.defaultHydromadStats}
 \title{Statistics for use in hydromad}
 \usage{
 hydromad.stats(...)
+
+buildCachedObjectiveFun(
+  objective,
+  model,
+  DATA = observed(model, select = TRUE),
+  Q = DATA[, "Q"]
+)
+
+.defaultHydromadStats()
+
+hmadstat(name, DATA = NULL, Q = DATA[, "Q"])
 }
 \arguments{
 \item{...}{new stats can be defined, or existing ones modified, using one
@@ -13,7 +26,9 @@ or more arguments of the form 'name = value' or by passing a list of such
 tagged values.  Existing values can be retrieved by supplying the names (as
 character strings) of the components as unnamed arguments.}
 
-\item{name}{character giving the name of a statistic.}
+\item{objective}{Placeholder}
+
+\item{model}{Placeholder}
 
 \item{DATA, Q}{If either \code{DATA} or \code{Q} is given, the returned
 statistic function will be pre-evaluated with the given data. Technically,
@@ -26,6 +41,8 @@ the warmup period removed, not the whole time series passed to
 \code{hydromad}. The observed data excluding warmup can be extracted from a
 model object as \code{Q = observed(model)} or \code{DATA = observed(model,
 select = TRUE)}.}
+
+\item{name}{character giving the name of a statistic.}
 }
 \description{
 These functions provide access to a built-in set of statistics, and also

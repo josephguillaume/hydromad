@@ -57,8 +57,6 @@
 #' of parameters for mass balance.
 #' @param which selects either the SMA or routing model, or both models (the
 #' default).
-#' @param boxcox
-#' @param start
 #' @param all if \code{TRUE}, return the entire time series for which data
 #' exists. Otherwise, the warmup period (specified as an argument to
 #' \code{\link{hydromad}} or \code{update}) is stripped off.
@@ -88,6 +86,8 @@
 #' function(s) will be returned, which may include other data types like
 #' logicals or time series. In this case the return value is always a
 #' \code{list}.
+# @param boxcox Placeholder
+# @param start Placeholder
 #' @return
 #' 
 #' \code{update} returns a new \code{hydromad} object.

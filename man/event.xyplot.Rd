@@ -6,6 +6,20 @@
 \title{Scatterplots with variables aggregated in event windows}
 \usage{
 event.xyplot(x, ...)
+
+\method{event.xyplot}{formula}(
+  x,
+  data = list(),
+  events,
+  ...,
+  response = NULL,
+  eFUN = sum,
+  as.table = TRUE,
+  layout = NULL,
+  auto.key = NCOL(response) > 1,
+  xlab = "event-aggregated covariate values",
+  ylab = "event-aggregated response"
+)
 }
 \arguments{
 \item{x}{an object for the generic method; in the \code{formula} method this

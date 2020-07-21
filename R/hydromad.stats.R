@@ -82,6 +82,8 @@
 #' or more arguments of the form 'name = value' or by passing a list of such
 #' tagged values.  Existing values can be retrieved by supplying the names (as
 #' character strings) of the components as unnamed arguments.
+#' @param objective Placeholder
+#' @param model Placeholder
 #' @seealso \code{\link{buildTsObjective}}, \code{\link{nseStat}},
 #' \code{\link{objFunVal}}, \code{\link{summary.hydromad}}
 #' @keywords programming
@@ -172,7 +174,7 @@ hydromad.stats <- function(...) {
 
 
 
-
+#' @rdname hydromad.stats
 #' @export
 buildCachedObjectiveFun <-
   function(objective, model,
@@ -210,6 +212,7 @@ buildCachedObjectiveFun <-
   }
 
 
+#' @rdname hydromad.stats
 #' @export
 .defaultHydromadStats <- function() {
   ## keep R CMD check happy:
@@ -440,7 +443,7 @@ buildCachedObjectiveFun <-
   )
 }
 
-
+#' @rdname hydromad.stats
 #' @export
 hmadstat <- function(name, DATA = NULL, Q = DATA[, "Q"]) {
   STATFUN <- .HydromadEnv$stats[[name]]

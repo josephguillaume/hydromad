@@ -15,6 +15,19 @@
   y.same = NA,
   layout = c(1, NA)
 )
+
+\method{qqmath}{runlist}(
+  x,
+  data = NULL,
+  ...,
+  all = FALSE,
+  residuals = FALSE,
+  superpose = FALSE,
+  f.value = ppoints(100),
+  tails.n = 100,
+  type = "l",
+  auto.key = list(lines = TRUE, points = FALSE)
+)
 }
 \arguments{
 \item{x}{a \code{runlist} object, which is a list of fitted model objects.}
@@ -36,6 +49,10 @@ series.}
 series.}
 
 \item{f.value, tails.n}{arguments to \code{\link{panel.qqmath}}.}
+
+\item{type}{Placeholder}
+
+\item{auto.key}{Placeholder}
 }
 \description{
 Plot results from a set of model runs using Lattice graphics.

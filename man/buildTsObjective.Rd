@@ -16,6 +16,17 @@ buildTsObjective(
   boxcox = FALSE,
   start = NULL
 )
+
+buildTsLikelihood(
+  Q,
+  groups = NULL,
+  FUN = sum,
+  ...,
+  boxcox = FALSE,
+  start = NULL,
+  distribution = dnorm,
+  outliers = 0
+)
 }
 \arguments{
 \item{Q}{observed data, typically a \code{\link{zoo}} object.}
@@ -48,9 +59,9 @@ can be specified as the value of the \code{boxcox} argument.  Note that
 \code{start} argument; if \code{NULL} it defaults to the 10 percentile (i.e.
 lowest decile) of the non-zero values of \code{Q}.}
 
-\item{list()}{the aggregation function (and any extra arguments) to use on
-each group when \code{groups} is specified. The actual aggregation is done
-by \code{\link{eventapply}}.}
+\item{distribution}{Placeholder}
+
+\item{outliers}{Placeholder}
 }
 \value{
 \code{buildTsObjective} returns a \code{function}, which can be

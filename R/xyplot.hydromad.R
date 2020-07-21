@@ -26,6 +26,7 @@ plot.hydromad <-
 #' @param scales Placeholder
 #' @param type Placeholder
 #' @param layout Placeholder
+#' @param auto.key Placeholder
 #' @param \dots further arguments passed on to \code{\link{xyplot.zoo}} or
 #' \code{\link{qqmath}}.
 #' @param feasible.bounds if \code{TRUE}, then ensemble simulation bounds are
@@ -132,6 +133,7 @@ xyplot.hydromad <-
   }
 
 
+#' @rdname xyplot.hydromad
 #' @export
 xyplot.hydromad.runlist <-
   function(x, data = NULL, ..., scales = list(),
@@ -180,6 +182,7 @@ xyplot.hydromad.runlist <-
   }
 
 
+#' @rdname xyplot.hydromad
 #' @export
 qqmath.hydromad <-
   function(x, data = NULL, ..., all = FALSE, type = "l",
@@ -203,6 +206,7 @@ qqmath.hydromad <-
   }
 
 
+#' @rdname xyplot.hydromad
 #' @export
 tsdiag.hydromad <- function(object, gof.lag, ...) {
   stats:::tsdiag.Arima(object$uh, gof.lag = gof.lag, ...)

@@ -6,6 +6,15 @@
 \usage{
 filter_loss(x, a, loss, init = 0)
 }
+\arguments{
+\item{x}{Placeholder}
+
+\item{a}{Placeholder}
+
+\item{loss}{Placeholder}
+
+\item{init}{Placeholder}
+}
 \description{
 Description
 }

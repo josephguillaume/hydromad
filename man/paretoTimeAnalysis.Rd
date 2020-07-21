@@ -4,10 +4,20 @@
 \alias{paretoTimeAnalysis}
 \alias{paretoTimeAnalysis_performance}
 \alias{paretoTimeAnalysis_areModelsDominated}
+\alias{paretoTimeAnalysis.crossvalidation}
 \title{Analysis using Pareto-filtering of model performance across simulation
 periods}
 \usage{
 paretoTimeAnalysis(...)
+
+\method{paretoTimeAnalysis}{crossvalidation}(
+  rl,
+  show.models = NA,
+  objectives = "r.squared",
+  qoi = list(q90.in.units.of.runoff = function(Q, X, ...) quantile(X, 0.9, na.rm =
+    TRUE), r.sq.log = hmadstat("r.sq.log")),
+  ...
+)
 }
 \arguments{
 \item{\dots}{arguments to \code{paretoTimeAnalysis.crossvalidation} or
@@ -29,17 +39,6 @@ assume higher values are better. Values should be transformed prior to use.}
 \code{\link{objFunVal}}. Defaults are given as examples: 90th percentile
 runoff (a scalar prediction) and R Squared using log transformed data (a
 performance statistic).}
-
-\item{stat}{data.frame of results, including the column \code{sim.period}
-and the columns named in \code{objectives}. The following columns may be
-included as id variables:
-\code{Model.str},\code{Catchment},\code{calib.period},\code{Cal.objfn}}
-
-\item{pars}{long format data.frame of parameter values for each model with
-columns \code{variable} and \code{value}.  The following columns may be
-included as id variables:
-\code{Model.str},\code{Catchment},\code{calib.period},\code{Cal.objfn}.  If
-\code{pars} is missing, results that require it are skipped.}
 }
 \value{
 For \code{paretoTimeAnalysis}, no return value. Used for its side

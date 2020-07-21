@@ -10,9 +10,33 @@
 \alias{print.summary.runlist}
 \alias{residuals.runlist}
 \alias{fitted.runlist}
+\alias{c.hydromad}
+\alias{print.runlist}
+\alias{update.runlist}
+\alias{isValidModel.runlist}
 \title{Work with a set of model runs}
 \usage{
 runlist(...)
+
+as.runlist(x, ...)
+
+\method{c}{hydromad}(..., recursive = FALSE)
+
+\method{c}{runlist}(..., recursive = FALSE)
+
+\method{coef}{runlist}(object, ..., items = NULL)
+
+\method{summary}{runlist}(object, ..., FUN = summary, items = NULL)
+
+\method{print}{runlist}(x, ...)
+
+\method{residuals}{runlist}(object, ...)
+
+\method{fitted}{runlist}(object, ...)
+
+\method{update}{runlist}(object, ...)
+
+\method{isValidModel}{runlist}(object, ...)
 }
 \arguments{
 \item{\dots}{for \code{runlist}, a named list of model objects, specified
@@ -22,13 +46,15 @@ In other cases, arguments are passed on to the generic functions.}
 
 \item{x}{a simple \code{list}.}
 
-\item{object}{a \code{runlist}: a list of fitted model objects.}
+\item{recursive}{Placeholder}
 
-\item{FUN}{function returning one or more named numeric values. Any returned
-values other than single numeric values will be ignored.}
+\item{object}{a \code{runlist}: a list of fitted model objects.}
 
 \item{items}{if given, this is used to extract elements of the result from
 \code{FUN}; otherwise, all single numeric elements are extracted.}
+
+\item{FUN}{function returning one or more named numeric values. Any returned
+values other than single numeric values will be ignored.}
 }
 \value{
 \code{runlist} and \code{as.runlist} return a list of class

@@ -23,6 +23,32 @@
   type.P = c("h", if ("g" \%in\% type) "g"),
   layout = c(1, NA)
 )
+
+\method{xyplot}{hydromad.runlist}(
+  x,
+  data = NULL,
+  ...,
+  scales = list(),
+  all = FALSE,
+  superpose = FALSE,
+  with.P = FALSE,
+  type = "l",
+  type.P = c("h", if ("g" \%in\% type) "g"),
+  layout = c(1, NA)
+)
+
+\method{qqmath}{hydromad}(
+  x,
+  data = NULL,
+  ...,
+  all = FALSE,
+  type = "l",
+  auto.key = list(lines = TRUE, points = FALSE),
+  f.value = ppoints(100),
+  tails.n = 100
+)
+
+\method{tsdiag}{hydromad}(object, gof.lag, ...)
 }
 \arguments{
 \item{x}{an object of class \code{hydromad}.}
@@ -55,6 +81,8 @@ simulation bounds if \code{feasible.bounds = TRUE}.}
 \item{type.P}{plot type for rainfall, passed to \code{\link{panel.xyplot}}.}
 
 \item{layout}{Placeholder}
+
+\item{auto.key}{Placeholder}
 
 \item{f.value, tails.n}{arguments to \code{\link{panel.qqmath}}.}
 

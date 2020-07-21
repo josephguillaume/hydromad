@@ -24,15 +24,15 @@
 #' \code{\link{objFunVal}}. Defaults are given as examples: 90th percentile
 #' runoff (a scalar prediction) and R Squared using log transformed data (a
 #' performance statistic).
-#' @param stat data.frame of results, including the column \code{sim.period}
-#' and the columns named in \code{objectives}. The following columns may be
-#' included as id variables:
-#' \code{Model.str},\code{Catchment},\code{calib.period},\code{Cal.objfn}
-#' @param pars long format data.frame of parameter values for each model with
-#' columns \code{variable} and \code{value}.  The following columns may be
-#' included as id variables:
-#' \code{Model.str},\code{Catchment},\code{calib.period},\code{Cal.objfn}.  If
-#' \code{pars} is missing, results that require it are skipped.
+# @param stat data.frame of results, including the column \code{sim.period}
+# and the columns named in \code{objectives}. The following columns may be
+# included as id variables:
+# \code{Model.str},\code{Catchment},\code{calib.period},\code{Cal.objfn}
+# @param pars long format data.frame of parameter values for each model with
+# columns \code{variable} and \code{value}.  The following columns may be
+# included as id variables:
+# \code{Model.str},\code{Catchment},\code{calib.period},\code{Cal.objfn}.  If
+# \code{pars} is missing, results that require it are skipped.
 #' @return For \code{paretoTimeAnalysis}, no return value. Used for its side
 #' effect of producing text. Optionally writes csv files (see the argument
 #' \code{show.models}).
@@ -63,7 +63,7 @@
 #' @export 
 paretoTimeAnalysis <- function(...) UseMethod("paretoTimeAnalysis")
 
-
+#' @rdname paretoTimeAnalysis
 #' @export
 paretoTimeAnalysis.crossvalidation <- function(rl,
                                                show.models = NA,

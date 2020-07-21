@@ -12,6 +12,17 @@ fitDbmToPeaks(
   return_fit = FALSE
 )
 }
+\arguments{
+\item{MODEL}{Placeholder}
+
+\item{objective}{Placeholder}
+
+\item{P.thresh}{Placeholder}
+
+\item{delay}{Placeholder}
+
+\item{return_fit}{Placeholder}
+}
 \description{
 Placeholder description
 }

@@ -3,6 +3,7 @@
 \name{rollccf}
 \alias{rollccf}
 \alias{xyplot.rollccf}
+\alias{ccfForLags}
 \title{Rolling cross-correlation at given lags.}
 \usage{
 rollccf(
@@ -15,6 +16,23 @@ rollccf(
   na.action = na.contiguous,
   na.max.fraction = 1/3
 )
+
+\method{xyplot}{rollccf}(
+  x,
+  data = NULL,
+  ...,
+  with.data = TRUE,
+  type = list(c("h", "b")),
+  type.data = "l",
+  par.settings = simpleTheme(pch = ".", cex = 2),
+  layout = c(1, length(x$rolls) + with.data * 2),
+  strip = strip.default,
+  ylim = c(0, 1),
+  xlab = NULL,
+  as.table = TRUE
+)
+
+ccfForLags(DATA, lags = 0, na.action = na.contiguous, na.max.fraction = 1/3)
 }
 \arguments{
 \item{DATA}{a named list, data frame, time series or zoo object containing

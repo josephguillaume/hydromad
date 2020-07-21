@@ -136,6 +136,7 @@ evalParsRollapply <- function(par.matrix, object,
 
 
 
+#' @rdname evalParsRollapply
 #' @export 
 evalParsTS <- function(par.matrix, object,
                        fun = function(thisMod) fitted(thisMod),

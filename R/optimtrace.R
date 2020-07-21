@@ -1,8 +1,8 @@
 #' Extract objective function value series from optimisation results
-#' 
+#'
 #' Extract objective function value series from optimisation results.
-#' 
-#' 
+#'
+#'
 #' @aliases optimtrace optimtrace.default
 #' @param object fitted model object. Currently only \code{\link{hydromad}}
 #' objects are supported.
@@ -22,9 +22,8 @@
 #' \code{\link{fitByDream}}, \code{\link{fitByOptim}}
 #' @keywords optimization
 #' @examples
-#' 
+#'
 #' ## see examples in fitByOptim, fitBySCE, fitByDE, fitByDream
-#' 
 #' @export
 optimtrace <- function(object, ...) {
   UseMethod("optimtrace")

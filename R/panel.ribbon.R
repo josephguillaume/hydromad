@@ -5,11 +5,11 @@
 
 
 #' Plot the area between two series as a filled polygon.
-#' 
+#'
 #' Plot the area between two series as a filled polygon.
-#' 
+#'
 #' none yet.
-#' 
+#'
 #' @aliases panel.ribbon panel.ribbon.default panel.ribbon.ts panel.ribbon.zoo
 #' @param x,y,y2 data vectors, where y and y2 give lower and upper bounds.  For
 #' the \code{ts} and \code{zoo} methods, \code{y,y2} are time series objects;
@@ -27,17 +27,15 @@
 #' @seealso \code{\link{panel.xyplot}}, \code{\link{panel.polygon}}
 #' @keywords dplot
 #' @examples
-#' 
+#'
 #' xyplot(sunspot.year, aspect = "xy", cut = 3) +
 #'   layer_(panel.ribbon(x, y = y * 0.9, y2 = y * 1.1, ..., col = "grey"))
-#' 
+#'
 #' ## missing values are handled by splitting the series
 #' tmp <- window(sunspot.year, start = 1900)
 #' tmp[c(1:2, 50:60)] <- NA
 #' xyplot(tmp, panel = panel.ribbon, y2 = 0)
-#' 
-#' 
-#' @export 
+#' @export
 panel.ribbon <- function(...) {
   UseMethod("panel.ribbon")
 }

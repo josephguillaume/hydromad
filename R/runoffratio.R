@@ -5,12 +5,12 @@
 
 
 #' Simple time-varying runoff proportion
-#' 
+#'
 #' Simple time-varying runoff proportion. Rainfall is scaled by the runoff
 #' coefficient estimated in a moving window.  This SMA uses streamflow data, so
 #' can not be used for prediction.
-#' 
-#' 
+#'
+#'
 #' @name runoffratio
 #' @aliases runoffratio.sim absorbScale.hydromad.runoffratio
 #' @param DATA time-series-like object with columns \code{P} (precipitation)
@@ -36,39 +36,44 @@
 #' objects (recommended).
 #' @keywords models
 #' @examples
-#' 
+#'
 #' ## view default parameter ranges:
 #' str(hydromad.options("runoffratio"))
-#' 
+#'
 #' data(HydroTestData)
 #' mod0 <- hydromad(HydroTestData, sma = "runoffratio", routing = "expuh")
 #' mod0
-#' 
+#'
 #' ## simulate with some arbitrary parameter values
 #' mod1 <- update(mod0, width = 30, rrthresh = 0.2, tau_s = 10)
-#' 
+#'
 #' ## plot results with state variables
 #' testQ <- predict(mod1, return_state = TRUE)
-#' xyplot(cbind(HydroTestData[,1:2], runoffratio = testQ))
-#' 
+#' xyplot(cbind(HydroTestData[, 1:2], runoffratio = testQ))
+#'
 #' ## show effect of increase/decrease in each parameter
-#' parRanges <- list(width = c(10, 180), qlag = c(-30, 30),
-#'                   rrthresh = c(0,0.5))
-#' parsims <- mapply(val = parRanges, nm = names(parRanges),
+#' parRanges <- list(
+#'   width = c(10, 180), qlag = c(-30, 30),
+#'   rrthresh = c(0, 0.5)
+#' )
+#' parsims <- mapply(
+#'   val = parRanges, nm = names(parRanges),
 #'   FUN = function(val, nm) {
 #'     lopar <- min(val)
 #'     hipar <- max(val)
 #'     names(lopar) <- names(hipar) <- nm
-#'     fitted(runlist(decrease = update(mod1, newpars = lopar),
-#'                    increase = update(mod1, newpars = hipar)))
-#'   }, SIMPLIFY = FALSE)
-#' 
-#' xyplot.list(parsims, superpose = TRUE, layout = c(1,NA),
-#'             main = "Simple parameter perturbation example") +
+#'     fitted(runlist(
+#'       decrease = update(mod1, newpars = lopar),
+#'       increase = update(mod1, newpars = hipar)
+#'     ))
+#'   }, SIMPLIFY = FALSE
+#' )
+#'
+#' xyplot.list(parsims,
+#'   superpose = TRUE, layout = c(1, NA),
+#'   main = "Simple parameter perturbation example"
+#' ) +
 #'   latticeExtra::layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
-#' 
-#'
-#'
 #' @export
 runoffratio.sim <-
   function(DATA, width = 30, kernel = 2, sides = 2, rrthresh = 0,

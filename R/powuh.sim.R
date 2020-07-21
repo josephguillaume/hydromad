@@ -4,19 +4,19 @@
 ##
 
 #' Power law transfer function models
-#' 
+#'
 #' A power-law form of unit hydrograph (transfer function).
-#' 
-#' 
+#'
+#'
 #' The power law form of the unit hydrograph is:
-#' 
+#'
 #' \deqn{H = 1 / (1 + (t/a)^{b/c}) ^ c}
-#' 
+#'
 #' where H is the fraction of peak flow, t is the time since peak, and a, b and
 #' c are parameters.
-#' 
+#'
 #' From Croke (2006):
-#' 
+#'
 #' Parameter a is the value of t (time since peak) at which the ordinate of the
 #' asymptote \eqn{(t/a)^(-b)} has a value of 1, b determines the persistence of
 #' the flow response and c defines the shape of the response curve near its
@@ -28,14 +28,14 @@
 #' \eqn{t >> a} only the b parameter is significant. Since the value of the a
 #' parameter is typically significantly less than one (see Table 1) the
 #' recession curve can be written as
-#' 
+#'
 #' \deqn{H = (t_r / t)^b}
-#' 
+#'
 #' where \eqn{t_r} is some reference time (\eqn{t_r >> a}) at which the
 #' hydrograph profile has been normalized. Thus the remaining two parameters (a
 #' and c) only influence the response curve near the event peak, and [the
 #' equation above] can be taken as a single parameter recession model.
-#' 
+#'
 #' @name powuh
 #' @aliases powuh.sim ssg.powuh normalise.powuh
 #' @param U input time series.
@@ -59,15 +59,15 @@
 #' catchments. \emph{Advances in Water Resources} 29, pp. 493--502.
 #' @keywords ts
 #' @examples
-#' 
-#' U  <- ts(c(1, rep(0, 99)))
-#' xyplot(cbind("a = 5" = powuh.sim(U, a = 5),
-#'              "& b = 2" = powuh.sim(U, a = 5, b = 2),
-#'              "& c = 2" = powuh.sim(U, a = 5, c = 2)),
-#'        superpose = TRUE)
-#' 
 #'
-#'
+#' U <- ts(c(1, rep(0, 99)))
+#' xyplot(cbind(
+#'   "a = 5" = powuh.sim(U, a = 5),
+#'   "& b = 2" = powuh.sim(U, a = 5, b = 2),
+#'   "& c = 2" = powuh.sim(U, a = 5, c = 2)
+#' ),
+#' superpose = TRUE
+#' )
 #' @export
 powuh.sim <-
   function(U, delay = 0,

@@ -51,15 +51,15 @@ sceDefaults <- function() {
 
 
 #' Shuffled Complex Evolution (SCE) optimisation.
-#' 
+#'
 #' Shuffled Complex Evolution (SCE) optimisation.  Designed to have a similar
 #' interface to the standard \code{\link{optim}} function.
-#' 
+#'
 #' This is an evolutionary algorithm combined with a simplex algorithm.
-#' 
+#'
 #' Options can be given in the list \code{control}, in the same way as with
 #' \code{\link{optim}}:
-#' 
+#'
 #' \describe{ \item{list("ncomplex")}{ number of complexes. Defaults to
 #' \code{5}.  } \item{list("cce.iter")}{ number of iteration in inner loop (CCE
 #' algorithm).  Defaults to \code{NA}, in which case it is taken as \code{2 *
@@ -74,19 +74,19 @@ sceDefaults <- function() {
 #' \item{list("reltol")}{ \code{reltol} is the convergence threshold: relative
 #' improvement factor required in an SCE iteration (in same sense as
 #' \code{optim}), and defaults to \code{1e-5}.
-#' 
+#'
 #' \code{tolsteps} is the number of iterations where the improvement is within
 #' \code{reltol} required to confirm convergence. This defaults to \code{7}.
 #' }\item{, }{ \code{reltol} is the convergence threshold: relative improvement
 #' factor required in an SCE iteration (in same sense as \code{optim}), and
 #' defaults to \code{1e-5}.
-#' 
+#'
 #' \code{tolsteps} is the number of iterations where the improvement is within
 #' \code{reltol} required to confirm convergence. This defaults to \code{7}.
 #' }\item{list("tolsteps")}{ \code{reltol} is the convergence threshold:
 #' relative improvement factor required in an SCE iteration (in same sense as
 #' \code{optim}), and defaults to \code{1e-5}.
-#' 
+#'
 #' \code{tolsteps} is the number of iterations where the improvement is within
 #' \code{reltol} required to confirm convergence. This defaults to \code{7}.  }
 #' \item{list("maxit")}{ maximum number of iterations. Defaults to
@@ -98,7 +98,7 @@ sceDefaults <- function() {
 #' integer specifying the level of user feedback. Defaults to \code{0}.  }
 #' \item{list("REPORT")}{ number of iterations between reports when trace >= 1.
 #' Defaults to \code{1}.  } }
-#' 
+#'
 #' @param FUN function to optimise (to minimise by default), or the name of
 #' one.  This should return a scalar numeric value.
 #' @param par a numeric vector of initial parameter values.
@@ -118,42 +118,44 @@ sceDefaults <- function() {
 #' from each iteration are returned in a three dimensional array.  }
 #' \item{control}{ the list of options settings in effect. }
 #' @author Felix Andrews \email{felix@@nfrac.org}
-#' 
+#'
 #' This was adapted, and substantially revised, from Brecht Donckels' MATLAB
 #' code, which was in turn adapted from Qingyun Duan's MATLAB code:
-#' 
+#'
 #' \url{http://biomath.ugent.be/~brecht/downloads.html}
 #' @seealso \code{\link{optim}}, \pkg{DEoptim} package, \pkg{rgenoud} package
 #' @references Qingyun Duan, Soroosh Sorooshian and Vijai Gupta (1992).
 #' Effective and Efficient Global Optimization for Conceptual Rainfall-Runoff
 #' Models, \emph{Water Resources Research} 28(4), pp. 1015-1031.
-#' 
+#'
 #' Qingyun Duan, Soroosh Sorooshian and Vijai Gupta (1994).  Optimal use of the
 #' SCE-UA global optimization method for calibrating watershed models,
 #' \emph{Journal of Hydrology} 158, pp. 265-284.
 #' @keywords optimize
 #' @examples
-#' 
+#'
 #' ## reproduced from help("optim")
-#' 
+#'
 #' ## Rosenbrock Banana function
-#' Rosenbrock <- function(x){
+#' Rosenbrock <- function(x) {
 #'   x1 <- x[1]
 #'   x2 <- x[2]
 #'   100 * (x2 - x1 * x1)^2 + (1 - x1)^2
 #' }
-#' #lower <- c(-10,-10)
-#' #upper <- -lower
-#' ans <- SCEoptim(Rosenbrock, c(-1.2,1), control = list(trace = 1))
+#' # lower <- c(-10,-10)
+#' # upper <- -lower
+#' ans <- SCEoptim(Rosenbrock, c(-1.2, 1), control = list(trace = 1))
 #' str(ans)
-#' 
+#'
 #' ## 'Wild' function, global minimum at about -15.81515
-#' Wild <- function(x)
-#'   10*sin(0.3*x)*sin(1.3*x^2) + 0.00001*x^4 + 0.2*x+80
-#' ans <- SCEoptim(Wild, 0, lower = -50, upper = 50,
-#'                 control = list(trace = 1))
+#' Wild <- function(x) {
+#'   10 * sin(0.3 * x) * sin(1.3 * x^2) + 0.00001 * x^4 + 0.2 * x + 80
+#' }
+#' ans <- SCEoptim(Wild, 0,
+#'   lower = -50, upper = 50,
+#'   control = list(trace = 1)
+#' )
 #' ans$par
-#' 
 #' @export
 SCEoptim <- function(FUN, par, ...,
                      lower = -Inf, upper = Inf,

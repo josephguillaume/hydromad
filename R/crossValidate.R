@@ -6,11 +6,11 @@
 
 
 #' Cross-validation of hydromad model specification
-#' 
+#'
 #' Using a split dataset, estimate parameters using optimisation on data
 #' subsets and evaluate their performance on all other subsets.
-#' 
-#' 
+#'
+#'
 #' @param MODEL an object of class \code{hydromad}.
 #' @param periods named list of start and end dates, passed to
 #' \code{\link{splitData}}
@@ -36,13 +36,13 @@
 #' \code{method="foreach"}. This is usually only worthwhile for longer running
 #' optimisations such as \code{\link{fitBySCE}} rather than relatively fast
 #' methods such as \code{\link{fitByOptim}}.
-#' 
+#'
 #' The total runtime is limited by the runtime of the slowest of optimisations,
 #' e.g. the longest data subset, most complex objective function response
 #' surface, or slowest computer on which an optimisation is being run. Some of
 #' the workers may therefore be idle (potentially wasting money) even though
 #' others are still running.
-#' 
+#'
 #' The evaluation of parameters on validation data subsets is also optionally
 #' parallelised through the function \code{update.runlist}, by setting
 #' \code{hydromad.options(parallel=list(update.runlist="clusterApply"))}. The
@@ -50,7 +50,7 @@
 #' validation periods are used, due to the overhead involved and its relative
 #' speed compared to the optimisation. Note that this requires parallelisation
 #' to be setup on the worker, which is where the evaluation occurs.
-#' 
+#'
 #' If the parallelisation backend for \code{foreach} supports it, the
 #' cross-validations can be set to occur in the background using
 #' \code{parallel=list(method="foreach",async=TRUE)}. In this case, the
@@ -60,28 +60,31 @@
 #' immediately needed. As with a single cross-validation, mixing long and short
 #' running optimisations can make it difficult to fully utilise available
 #' workers.
-#' 
+#'
 #' In future, it may also be possible to parallelise each optimisation itself
 #' in addition to or instead of parallelising the optimisation of each data
 #' period.
 #' @author Joseph Guillaume
 #' @seealso \code{\link{paretoTimeAnalysis}}
 #' @examples
-#' 
+#'
 #' data(Cotter)
-#' modx <- hydromad(Cotter, sma = "cwi", routing = "expuh",
-#'                  tau_s = c(2,100), v_s = c(0,1))
-#' periods=list(P1=as.Date(c("1966-05-01","1976-04-30")),
-#'              P2=as.Date(c("1976-05-1","1986-04-30")))
+#' modx <- hydromad(Cotter,
+#'   sma = "cwi", routing = "expuh",
+#'   tau_s = c(2, 100), v_s = c(0, 1)
+#' )
+#' periods <- list(
+#'   P1 = as.Date(c("1966-05-01", "1976-04-30")),
+#'   P2 = as.Date(c("1976-05-1", "1986-04-30"))
+#' )
 #' ## Estimate parameters using single fitByOptim run
 #' ## from single initial parameter set
-#' runs=crossValidate(modx,periods=periods,fitBy=fitByOptim,samples=1)
+#' runs <- crossValidate(modx, periods = periods, fitBy = fitByOptim, samples = 1)
 #' summary(runs)
 #' ## Cross-validation statistics can then be analysed with other methods
 #' paretoTimeAnalysis_areModelsDominated(summary(runs))
-#' cast(melt(summary(runs),id.vars=c("calib.period","sim.period")),calib.period~variable+sim.period)
+#' cast(melt(summary(runs), id.vars = c("calib.period", "sim.period")), calib.period ~ variable + sim.period)
 #' paretoTimeAnalysis(runs)
-#' 
 #' @export
 crossValidate <- function(MODEL, periods,
                           name.Model.str = paste(MODEL$sma, MODEL$routing),

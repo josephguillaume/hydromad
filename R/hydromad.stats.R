@@ -17,17 +17,17 @@
 
 
 #' Statistics for use in hydromad
-#' 
+#'
 #' These functions provide access to a built-in set of statistics, and also
 #' allow the user to change or add named statistics.  Its usage is similar to
 #' \code{\link{hydromad.options}}.
-#' 
+#'
 #' \code{hmadstat} returns the named statistical function, while
 #' \code{hydromad.stats} gets or sets a list of named functions.
-#' 
+#'
 #' The default set of available statistics can be listed with
 #' \code{str(hydromad.stats())}, and consists of:
-#' 
+#'
 #' \describe{ \item{abs.err}{ the mean absolute error.  } \item{RMSE}{ Root
 #' Mean Squared Error.  } \item{bias}{ bias in data units, \eqn{\sum ( X - Q )}
 #' } \item{rel.bias}{ bias as a fraction of the total observed flow, \eqn{\sum
@@ -54,17 +54,17 @@
 #' have been coalesced to observed peaks, minimising timing error. Note that
 #' this statistic requires \code{event} to be specified using
 #' \code{\link{eventseq}} }
-#' 
+#'
 #' \item{persistence}{ R Squared where the reference model predicts each time
 #' step as the previous observed value. This statistic therefore represents a
 #' model's performance compared to a \emph{naive} one-time-step forecast.  }
-#' 
+#'
 #' \item{X0}{ correlation of modelled flow with the model residuals.  }
 #' \item{X1}{ correlation of modelled flow with the model residuals from the
 #' previous time step.  } \item{ARPE}{ Average Relative Parameter Error.
 #' Requires that a variance-covariance matrix was estimated during calibration.
 #' } }
-#' 
+#'
 #' @aliases hydromad.stats hmadstat
 #' @param name character giving the name of a statistic.
 #' @param DATA,Q If either \code{DATA} or \code{Q} is given, the returned
@@ -88,59 +88,57 @@
 #' \code{\link{objFunVal}}, \code{\link{summary.hydromad}}
 #' @keywords programming
 #' @examples
-#' 
+#'
 #' ## see current set of stats
 #' names(hydromad.stats())
-#' 
+#'
 #' ## extract only one
 #' hmadstat("RMSE")
-#' 
+#'
 #' ## calculate stat value with random data
 #' hmadstat("rel.bias")(Q = 1:10, X = 2:11)
-#' 
+#'
 #' ## add a new objective function.
 #' ## A weighted combination of NSE and bias
 #' ## as proposed by Neil Viney
 #' ## OF = NSE – 5*|ln(1+Bias)|^2.5
-#' 
+#'
 #' hydromad.stats("viney" = function(Q, X, ...) {
-#'     hmadstat("r.squared")(Q, X, ...) -
-#'       5*(abs(log(1+hmadstat("rel.bias")(Q,X)))^2.5)
+#'   hmadstat("r.squared")(Q, X, ...) -
+#'     5 * (abs(log(1 + hmadstat("rel.bias")(Q, X)))^2.5)
 #' })
-#' 
-#' 
 #' @export
 hydromad.stats <- function(...) {
   ## this would have been really simple if only form allowed were
   ## lattice.options("foo", "bar") and
   ## lattice.options(foo=1, bar=2). But it could also be
   ## lattice.options(foo=1, "bar"), which makes some juggling necessary
-  
+
   new <- list(...)
   if (is.null(names(new)) && length(new) == 1 && is.list(new[[1]])) new <- new[[1]]
   old <- .HydromadEnv$stats
-  
+
   ## if no args supplied, returns full options list
   if (length(new) == 0) {
     return(old)
   }
-  
+
   nm <- names(new)
   if (is.null(nm)) {
     return(old[unlist(new)])
   } ## typically getting options, not setting
   isNamed <- nm != "" ## typically all named when setting, but could have mix
   if (any(!isNamed)) nm[!isNamed] <- unlist(new[!isNamed])
-  
+
   ## so now everything has non-"" names, but only the isNamed ones should be set
   ## everything should be returned, however
-  
+
   retVal <- old[nm]
   names(retVal) <- nm
   nm <- nm[isNamed]
-  
+
   newfuns <- new[nm]
-  
+
   ## ensure that everything being assigned is of the required type:
   ## functions of (Q, X, ...)
   if (!all(sapply(newfuns, is.function))) {
@@ -153,21 +151,21 @@ hydromad.stats <- function(...) {
   for (x in newfuns) {
     assign(".", base::force, environment(x))
   }
-  
+
   ## this used to be
-  
+
   ## modified <- updateList(retVal[nm], new[nm])
   ## .LatticeEnv$lattice.options[names(modified)] <- modified
-  
+
   ## but then calling lattice.options(foo = NULL) had no effect
   ## because foo would be missing from modified.  So, we now do:
-  
+
   updateList <- function(x, val) {
     if (is.null(x)) x <- list()
     utils::modifyList(x, val)
   }
   .HydromadEnv$stats <- updateList(old, newfuns)
-  
+
   ## return changed entries invisibly
   invisible(retVal)
 }
@@ -454,4 +452,3 @@ hmadstat <- function(name, DATA = NULL, Q = DATA[, "Q"]) {
 }
 
 ## this function based on lattice::lattice.options, but with some extra bits
-

@@ -7,15 +7,15 @@
 
 
 #' Fit a hydromad model by sampling the parameter space.
-#' 
+#'
 #' Fit a hydromad model by sampling the parameter space.  Returns best result
 #' from sampling in parameter ranges using random, latin hypercube sampling, or
 #' a uniform grid (all combinations). The function also retains the parameter
 #' sets and objective function values, which can be used to define a
 #' \link[=defineFeasibleSet]{feasible parameter set}
-#' 
+#'
 #' See \code{\link{parameterSets}}.
-#' 
+#'
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined
 #' by \emph{ranges} of values rather than exact values.
@@ -30,23 +30,24 @@
 #' \code{\link{objFunVal}}
 #' @keywords optimization
 #' @examples
-#' 
-#' 
+#'
+#'
 #' data(Cotter)
 #' x <- Cotter[1:1000]
-#' 
+#'
 #' ## IHACRES CWI model with armax unit hydrograph fitted by least squares
 #' modx <- hydromad(x, sma = "cwi", routing = "armax", rfit = "ls")
 #' modx
-#' 
+#'
 #' foo <- fitBySampling(modx)
-#' 
+#'
 #' summary(foo)
-#' 
+#'
 #' ## plot objective function value improvement over time
-#' xyplot(optimtrace(foo), type = "b",
-#'   xlab = "function evaluations", ylab = "objective fn. value")
-#' 
+#' xyplot(optimtrace(foo),
+#'   type = "b",
+#'   xlab = "function evaluations", ylab = "objective fn. value"
+#' )
 #' @export
 fitBySampling <-
   function(MODEL,

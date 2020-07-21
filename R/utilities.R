@@ -7,13 +7,13 @@
 
 
 #' Observed data values
-#' 
+#'
 #' Like \code{\link{fitted}}, but return the original "observed" data rather
 #' than the modelled data.
-#' 
+#'
 #' The default method should work for any object with methods for
 #' \code{residuals} and \code{fitted}.
-#' 
+#'
 #' @name utilities
 #' @aliases observed observed.default numericSummary
 #' @param object a model object for which to return the observed values.
@@ -24,15 +24,13 @@
 #' @seealso \code{\link{residuals}}
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' x <- 1:10
 #' mymodel <- list(fitted.values = x + rnorm(10))
 #' mymodel$residuals <- x - fitted(mymodel)
 #' observed(mymodel)
-#' 
-#' 
 #' @rdname utilities
-#' @export 
+#' @export
 observed <- function(object, ...) {
   UseMethod("observed")
 }

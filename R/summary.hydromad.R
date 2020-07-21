@@ -14,13 +14,13 @@ summary.hydromad.runlist <-
 
 
 #' Assess and summarise performance of Hydromad models
-#' 
+#'
 #' Assess and summarise performance of Hydromad models.
-#' 
+#'
 #' Definitions of statistics are looked up by name in
 #' \code{\link{hydromad.stats}()}, and you can also use that function to add
 #' new statistics.
-#' 
+#'
 #' @aliases summary.hydromad print.summary.hydromad
 #' print.summaryWithBreaks.hydromad summary.hydromad.runlist
 #' @param object an object of class \code{hydromad}.
@@ -46,31 +46,31 @@ summary.hydromad.runlist <-
 #' calculate statistic values directly; \code{hydromad.object}
 #' @keywords methods
 #' @examples
-#' 
-#' 
+#'
+#'
 #' data(HydroTestData)
-#' mod0 <- hydromad(HydroTestData, sma = "scalar",
-#'                  routing = "expuh", tau_s = 10)
+#' mod0 <- hydromad(HydroTestData,
+#'   sma = "scalar",
+#'   routing = "expuh", tau_s = 10
+#' )
 #' mod0
-#' 
+#'
 #' summary(mod0)
-#' 
+#'
 #' summary(mod0, breaks = "months")
-#' #summary(mod0, breaks = 3)
-#' 
+#' # summary(mod0, breaks = 3)
+#'
 #' allstats <- names(hydromad.stats())
 #' ## Ignore r.sq.vartd because it requires event to be specified
-#' allstats<-setdiff(allstats,"r.sq.vartd")
+#' allstats <- setdiff(allstats, "r.sq.vartd")
 #' summary(mod0, stats = allstats)
-#' 
+#'
 #' objFunVal(mod0, hmadstat("r.sq.log"))
-#' 
-#' hydromad_stats<- hydromad.stats()
-#' #Ignore r.sq.vartd because it requires event to be specified
-#' hydromad_stats$r.sq.vartd<-NULL
+#'
+#' hydromad_stats <- hydromad.stats()
+#' # Ignore r.sq.vartd because it requires event to be specified
+#' hydromad_stats$r.sq.vartd <- NULL
 #' str(objFunVal(mod0, hydromad_stats))
-#' 
-#' 
 #' @export
 summary.hydromad <-
   function(object, breaks = NULL,

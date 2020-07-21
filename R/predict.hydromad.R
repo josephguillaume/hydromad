@@ -7,10 +7,10 @@
 
 
 #' Generate simulated time series from Hydromad model objects
-#' 
+#'
 #' Generate simulated time series from Hydromad model objects.
-#' 
-#' 
+#'
+#'
 #' @param object an object of class \code{hydromad}.
 #' @param newdata a \code{\link{ts}}-like object containing a new time series
 #' dataset (replacing the original \code{DATA} argument given to the
@@ -41,7 +41,8 @@
 #' @author Felix Andrews \email{felix@@nfrac.org}
 #' @seealso \code{\link{hydromad}}, \code{update.hydromad}
 #' @keywords methods
-#' @examples Placeholder
+#' @examples
+#' Placeholder
 #' @export
 predict.hydromad <-
   function(object, newdata = NULL,

@@ -7,10 +7,10 @@
 
 
 #' Fit a hydromad model using the SCE (Shuffled Complex Evolution) algorithm.
-#' 
+#'
 #' Fit a hydromad model using the SCE (Shuffled Complex Evolution) algorithm.
-#' 
-#' 
+#'
+#'
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined
 #' by \emph{ranges} of values rather than exact values.
@@ -32,28 +32,29 @@
 #' @seealso \code{\link{SCEoptim}}, \code{\link{objFunVal}}
 #' @keywords optimization
 #' @examples
-#' 
+#'
 #' data(Cotter)
 #' x <- Cotter[1:1000]
-#' 
+#'
 #' ## IHACRES CWI model with power law unit hydrograph
 #' modx <- hydromad(x, sma = "cwi", routing = "powuh")
 #' modx
-#' 
+#'
 #' ## run with cut-down settings (for a speedy example only!)
 #' foo <- fitBySCE(modx, control = list(maxit = 5, ncomplex = 2))
-#' 
+#'
 #' summary(foo)
-#' 
+#'
 #' ## return value from SCE:
 #' str(foo$fit.result)
-#' 
+#'
 #' ## plot objective function value convergence over time
-#' xyplot(optimtrace(foo, raw = TRUE), screens = 1, type = "p",
+#' xyplot(optimtrace(foo, raw = TRUE),
+#'   screens = 1, type = "p",
 #'   jitter.x = TRUE, ylim = c(0.7, NA), xlim = c(0, NA),
-#'   xlab = "function evaluations", ylab = "objective fn. value") +
-#' layer(panel.average(..., horiz = FALSE, fun = max, lwd = 2))
-#' 
+#'   xlab = "function evaluations", ylab = "objective fn. value"
+#' ) +
+#'   layer(panel.average(..., horiz = FALSE, fun = max, lwd = 2))
 #' @export
 fitBySCE <-
   function(MODEL,

@@ -1,8 +1,8 @@
 #' Pareto filter
-#' 
+#'
 #' Filter a matrix of values to identify pareto-optimal solutions
-#' 
-#' 
+#'
+#'
 #' @param x matrix of values with each row representing a solution
 #' @param \dots ignored
 #' @return Those values in 'x' which are not dominated by any other solution.
@@ -14,11 +14,13 @@
 #' function to evaluate model performance across time-periods
 #' @keywords models
 #' @examples
-#' 
+#'
 #' ## Performance measures from 4 models in the Salmon catchment,
 #' ##  see YeAl97
-#' mat <- matrix(c(0.865,0.892,-0.847,0.795,
-#' 0.774,0.905,0.819,0.930),nrow=4)
+#' mat <- matrix(c(
+#'   0.865, 0.892, -0.847, 0.795,
+#'   0.774, 0.905, 0.819, 0.930
+#' ), nrow = 4)
 #' mat
 #' ## Identify dominated rows of the matrix, interpreting
 #' ##   higher values to be better
@@ -26,7 +28,6 @@
 #' ## FALSE: The 1st and 3rd rows are both inferior to the 2nd row,
 #' ##   and are therefore dominated
 #' paretoFilter(-mat)
-#' 
 #' @export paretoFilter
 paretoFilter <- function(x, ...) {
   d <- ncol(x)
@@ -52,10 +53,10 @@ paretoFilter <- function(x, ...) {
 
 
 #' Annotated parallel coordinates plot of model performance across periods
-#' 
+#'
 #' Plot performance of model realisations, identifying non-dominated models
-#' 
-#' 
+#'
+#'
 #' @param res data.frame of results, including the column \code{sim.period} and
 #' the columns named in \code{objectives}. At least one of the following column
 #' names should be included as id variables:
@@ -72,10 +73,9 @@ paretoFilter <- function(x, ...) {
 #' \code{paretoCatchments} for further analysis
 #' @keywords models
 #' @examples
-#' 
+#'
 #' data(YeAl97)
-#' plotPCNSE(subset(YeAl97,Catchment=="Salmon"),objectives="E")
-#' 
+#' plotPCNSE(subset(YeAl97, Catchment == "Salmon"), objectives = "E")
 #' @export
 plotPCNSE <- function(res, objectives = "r.squared", return.data = FALSE) {
   if (!require("ggplot2")) stop("package ggplot2 is required for plotPCNSE")

@@ -5,10 +5,10 @@
 
 
 #' Simple constant runoff proportion
-#' 
+#'
 #' Simple constant runoff proportion: a constant fraction of rainfall reaches
 #' the stream.
-#' 
+#'
 #' @name scalar
 #' @aliases scalar.sim absorbScale.hydromad.scalar
 #' @param DATA time-series-like object with a column P (precipitation).
@@ -23,19 +23,17 @@
 #' objects (recommended).
 #' @keywords models
 #' @examples
-#' 
+#'
 #' ## view default parameter ranges:
 #' str(hydromad.options("scalar"))
-#' 
+#'
 #' data(HydroTestData)
 #' mod0 <- hydromad(HydroTestData, sma = "scalar", routing = "expuh")
 #' mod0
-#' 
+#'
 #' ## simulate with some arbitrary parameter values
 #' testQ <- predict(update(mod0, scale = 0.5, tau_s = 10))
-#' xyplot(cbind(HydroTestData[,1:2], scalar.Q = testQ))
-#' 
-#' 
+#' xyplot(cbind(HydroTestData[, 1:2], scalar.Q = testQ))
 #' @export
 scalar.sim <-
   function(DATA, scale, return_state = FALSE) {

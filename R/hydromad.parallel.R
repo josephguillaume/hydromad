@@ -1,14 +1,14 @@
 #' Support for parallelisation in hydromad
-#' 
+#'
 #' Support for parallelisation in hydromad
-#' 
+#'
 #' Hydromad allows model runs in some functions to be parallelised. The
 #' parallelisation methods provided for each function depend on its
 #' characteristics and are documented below and in each function's help page.
 #' Parallelisation is by default turned off, as it requires the user to set it
 #' up for their particular computer and to judge whether parallelisation is
 #' worthwhile for their particular case.
-#' 
+#'
 #' A number of functions in hydromad involve performing a large number of model
 #' runs that are to some extent independent of each other. Hydromad uses a
 #' number of R packages to allow these models runs to occur simultaneously.
@@ -22,46 +22,46 @@
 #' quickly. Several settings of the parallelisation can be modified by
 #' specifying a list of options to the function to be parallelised, with the
 #' argument \code{parallel}, e.g.:
-#' 
+#'
 #' \code{evalPars(pars,model,parallel=list(method="foreach",
-#' packages=c("hydromad","fuse"), async=TRUE))} 
-#' 
+#' packages=c("hydromad","fuse"), async=TRUE))}
+#'
 #' The available options are described below.
-#' 
+#'
 #' @section Method:
-#' 
+#'
 #' The available \code{method} are specific
 #' to each function that is parallelised and documented in its respective help
 #' page. A summary of the most common methods is given here.
 #' \code{method="clusterApply"} uses either the built-in \code{parallel}
 #' package or the \code{snow} package. Setting up the cluster requires code
-#' like: 
-#' 
+#' like:
+#'
 #' \code{library(parallel)}\cr \code{cl <- makeCluster(2, type="SOCK")}
-#' 
+#'
 #' Functions look for the object 'cl' in the global environment. The function
 #' can be run on multiple cores on non-Windows machines by creating cl using
 #' \code{\link{makeForkCluster}}. \code{method="foreach"} allows a number of
 #' backends, e.g. the packages \pkg{doParallel}, \pkg{doRedis}. Each of these
 #' packages provides a backend-specific registration function that needs to be
 #' called, e.g.:
-#' 
+#'
 #' \code{library(doParallel)}
 #' \code{registerDoParallel()}
-#' 
+#'
 #' \code{foreach} generally incurs a higher overhead than other methods, but
 #' has the advantage of flexibility.
-#' 
-#' @section Export: 
-#' 
+#'
+#' @section Export:
+#'
 #' If the model being run depends on functions
 #' or variables not defined in the hydromad package,
 #' they may need to be explicitly exported. The names of the variables to be
 #' exported are specified as a character vector, e.g.:
-#' 
-#' \code{export=c("mySMA.sim","myNewObjectiveFunction")} 
-#' 
-#' Examples: 
+#'
+#' \code{export=c("mySMA.sim","myNewObjectiveFunction")}
+#'
+#' Examples:
 #' \itemize{
 #' \item if you have created your own soil moisture accounting function
 #' \code{mySMA.sim} \item if your objective function or a model you have made
@@ -69,24 +69,24 @@
 #' e.g.
 #' \code{objective=function(Q,X){myNewObjectiveFunction(Q-X)+hmadstat("r.squared")(Q,X)}}
 #' }
-#' 
+#'
 #' @section Packages:
-#' 
+#'
 #' If you are using models that defined in another
 #' package, e.g. the \code{fuse} set of models, then the workers can be told to
 #' load the package as well as hydromad by specifying, e.g.
 #' \code{packages=c("hydromad","fuse")}. Make sure the package is installed on
-#' all the workers. 
-#' 
+#' all the workers.
+#'
 #' @section Async:
-#' 
+#'
 #' If the parallelisation method supports
 #' it, some functions allow runs to occur in the background. Instead the
 #' function returns immediately. Results can be retrieved later using methods
 #' specific to the parallelisation method. Where available, this feature is
 #' enabled with \code{async=TRUE}.
-#' 
-#' 
+#'
+#'
 #' @name hydromad_parallelisation
 #' @aliases parallel
 #' @author Joseph Guillaume

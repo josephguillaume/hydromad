@@ -6,10 +6,10 @@
 
 
 #' Split data of a model instance
-#' 
+#'
 #' Creates a runlist of model instances with separate data periods
-#' 
-#' 
+#'
+#'
 #' @param object an object of class \code{hydromad}.
 #' @param start.dates dates at which each model instance should start, passed
 #' as \code{start} to \code{\link{window.zoo}}
@@ -22,20 +22,21 @@
 #' @author Joseph Guillaume
 #' @seealso \code{\link{crossValidate}}
 #' @examples
-#' 
+#'
 #' data(Cotter)
-#' modx <- hydromad(Cotter, sma = "cwi", routing = "expuh",
-#'                  tau_s = c(2,100), v_s = c(0,1))
-#' start.dates=as.Date(c("1966-05-01","1976-05-1"))
-#' end.dates=as.Date(c("1976-04-30","1986-04-30"))
-#' rl=splitData(modx,start.dates,end.dates)
+#' modx <- hydromad(Cotter,
+#'   sma = "cwi", routing = "expuh",
+#'   tau_s = c(2, 100), v_s = c(0, 1)
+#' )
+#' start.dates <- as.Date(c("1966-05-01", "1976-05-1"))
+#' end.dates <- as.Date(c("1976-04-30", "1986-04-30"))
+#' rl <- splitData(modx, start.dates, end.dates)
 #' str(rl)
 #' ## Fit the first period
 #' fitx <- fitByOptim(rl[[1]])
 #' ## Evaluate the resulting model on all periods
-#' rl.first=update(rl,newpars=coef(fitx))
-#' 
-#' @export 
+#' rl.first <- update(rl, newpars = coef(fitx))
+#' @export
 splitData <- function(object, start.dates = NULL, end.dates = NULL, periods = NULL) {
   ## Split data according to start.dates and end.dates
   if (!is.null(periods)) {

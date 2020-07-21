@@ -1,17 +1,17 @@
 #' ARMAX Transfer Function models
-#' 
+#'
 #' ARMAX linear transfer functions with a single input and single output
 #' series. Can be used as a general Unit Hydrograph transfer function, defined
 #' by Auto-Regressive and Moving Average coefficients.
-#' 
+#'
 #' The transfer function used here, with input \var{u} and output \var{x} is:
 #' \deqn{x[t] = a_1 x[t-1] + \ldots + a_n x[t-n] + }{ x[t] = a[1] x[t-1] + ...
 #' + a[n] x[t-n] + b[0] u[t-d] + ... + b[m] u[t-m-d]}\deqn{ b_0 u[t-\delta] +
 #' \ldots + b_m u[t-m-\delta]}{ x[t] = a[1] x[t-1] + ... + a[n] x[t-n] + b[0]
 #' u[t-d] + ... + b[m] u[t-m-d]}
-#' 
+#'
 #' and the \emph{order} is denoted \eqn{(n, m)}, with delay \eqn{\delta}{d}.
-#' 
+#'
 #' @aliases armax armax.sim ssg.armax normalise.armax
 #' @param U input time series.
 #' @param a_1,a_2,a_3,b_0,b_1,b_2,b_3 ARMAX coefficients. Auto-regressive terms
@@ -42,12 +42,12 @@
 #' Hydrology}, 117: 275-300.
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' data(HydroTestData)
 #' fit <- hydromad(HydroTestData, routing = "armax",
 #'                 rfit = list("ls", order = c(n = 2, m = 1)))
 #' pars <- coef(fit)
 #' pars
-#' 
+#'
 #' xyplot(armax.sim(HydroTestData[,"P"], pars = pars))
-#' 
+#'

@@ -1,7 +1,7 @@
 #' Fit a hydromad model using the NSGA2 genetic algorithm from the mco package
-#' 
-#' 
-#' 
+#'
+#'
+#'
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined
 #' by \emph{ranges} of values rather than exact values.

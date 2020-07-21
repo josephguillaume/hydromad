@@ -1,8 +1,8 @@
 #' Multi-objective optimisation using NSGAII
-#' 
+#'
 #' Estimate multi-objective Pareto front using NSGAII
-#' 
-#' 
+#'
+#'
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined
 #' by \emph{ranges} of values rather than exact values.
@@ -13,22 +13,23 @@
 #' @author Joseph Guillaume
 #' @keywords optimization
 #' @examples
-#' 
+#'
 #' data(Cotter)
 #' x <- Cotter[1:1000]
-#' 
+#'
 #' ## IHACRES CWI model with exponential unit hydrograph
 #' ## an unfitted model, with ranges of possible parameter values
-#' modx <- hydromad(x, sma = "cwi", routing = "expuh",
-#'                  tau_s = c(2,100), v_s = c(0,1))
+#' modx <- hydromad(x,
+#'   sma = "cwi", routing = "expuh",
+#'   tau_s = c(2, 100), v_s = c(0, 1)
+#' )
 #' ## Multi-objective optimisation
-#' front <- paretoObjectivesNsga2(modx,objective=list(hmadstat("r.sq.log"),hmadstat("r.squared")))
+#' front <- paretoObjectivesNsga2(modx, objective = list(hmadstat("r.sq.log"), hmadstat("r.squared")))
 #' ## Pairwise plot of parameters on Pareto front
 #' splom(coef(front))
 #' ## Calculate objectives
-#' stats <- t(sapply(front,objFunVal,objective=list(hmadstat("r.sq.log"),hmadstat("r.squared"))))
+#' stats <- t(sapply(front, objFunVal, objective = list(hmadstat("r.sq.log"), hmadstat("r.squared"))))
 #' splom(stats)
-#' 
 #' @export
 paretoObjectivesNsga2 <- function(MODEL, objective = hydromad.getOption("objective"),
                                   control = hydromad.getOption("nsga2.control")) {

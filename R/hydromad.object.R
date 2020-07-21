@@ -1,34 +1,34 @@
 #' Standard methods for Hydromad model objects
-#' 
+#'
 #' A \code{hydromad} object represents a model, which may be fully specified
 #' (calibrated) or be defined only by parameter ranges.  The model
 #' specification and parameter values are stored along with the observed input
 #' and output time-series data.
-#' 
+#'
 #' Several standard methods are available for \code{hydromad} objects:
-#' 
+#'
 #' (note: these are links to the generic functions only)
-#' 
+#'
 #' \code{\link{update}}, \code{\link{predict}}, \code{\link{fitted}},
 #' \code{\link{observed}}, \code{\link{residuals}}, \code{\link{coef}},
 #' \code{\link{vcov}}, etc.
-#' 
+#'
 #' The \code{\link[=summary.hydromad]{summary}} and
 #' \code{\link[=predict.hydromad]{predict}} methods are documented on different
 #' pages.
-#' 
+#'
 #' The main plot methods are \code{\link{xyplot.hydromad}} and
 #' \code{\link{qqmath.hydromad}}.
-#' 
+#'
 #' \code{isValidModel()} returns \code{TRUE} only if the supplied
 #' \code{hydromad} object is fully specified and has a calculated output
 #' series.
-#' 
+#'
 #' To help sample parameters, \code{getFreeParsRanges} returns the list of
 #' ranges of parameters that do not have fixed parameter values. In particular,
 #' it is used in conjunction with \code{\link{evalPars}} to perform sensitivity
 #' analyses.
-#' 
+#'
 #' @name hydromad.object
 #' @aliases update.hydromad fitted.hydromad observed.hydromad
 #' residuals.hydromad coef.hydromad vcov.hydromad
@@ -92,14 +92,14 @@
 #' @param x Placeholder
 #' @param digits Placeholder
 #' @return
-#' 
+#'
 #' \code{update} returns a new \code{hydromad} object.
-#' 
+#'
 #' \code{fitted}, \code{observed} and \code{residuals} returns time series.
-#' 
+#'
 #' \code{coef} returns a named numeric vector, or a named \code{list} if one or
 #' more parameters are not fully specified.
-#' 
+#'
 #' \code{getFreeParsRanges} returns a named list of parameter ranges, for each
 #' parameter that has a range defined. Note that this excludes fixed parameters
 #' and parameters defines as a set of discrete values, for which
@@ -246,15 +246,15 @@ deviance.hydromad <- stats:::deviance.lm
 print.hydromad <-
   function(x, digits = max(3, getOption("digits") - 3), ...) {
     cat("\n",
-        "Hydromad model with ", toString(deparse(x$sma)), " SMA",
-        " and ", toString(deparse(x$routing)), " routing:", "\n",
-        sep = ""
+      "Hydromad model with ", toString(deparse(x$sma)), " SMA",
+      " and ", toString(deparse(x$routing)), " routing:", "\n",
+      sep = ""
     )
     rx <- x$data
     cat("Start = ", index2char(index(rx)[1], frequency(rx)),
-        ", End = ", index2char(index(rx)[NROW(rx)], frequency(rx)),
-        "\n",
-        sep = ""
+      ", End = ", index2char(index(rx)[NROW(rx)], frequency(rx)),
+      "\n",
+      sep = ""
     )
     cat("\n")
     for (which in c("sma", "routing")) {
@@ -269,7 +269,7 @@ print.hydromad <-
           coefx <- coef(x, which = which)
           print(coefx, digits = digits, quote = FALSE, print.gap = 2)
           if ((which == "routing") &&
-              isTRUE(x$routing %in% c("armax", "expuh"))) {
+            isTRUE(x$routing %in% c("armax", "expuh"))) {
             tmp <- describeTF(coefx)
             if (!is.null(tmp) && !is.na(tmp)) {
               cat("TF Structure:", tmp, "\n")
@@ -302,7 +302,7 @@ print.hydromad <-
       cat(
         "Routing fit spec.:",
         toString(deparse(x$rfit, control = c(), width = 500),
-                 width = getOption("width")
+          width = getOption("width")
         ), "\n"
       )
     }
@@ -318,7 +318,7 @@ print.hydromad <-
       cat(
         "\nRouting fit info: ",
         toString(deparse(x$info.rfit, control = c(), width = 500),
-                 width = getOption("width")
+          width = getOption("width")
         ), "\n"
       )
     }

@@ -7,22 +7,22 @@
 
 
 #' Estimate transfer function models by Inverse Filtering.
-#' 
+#'
 #' Calibrate unit hydrograph transfer function models (\code{\link{armax}} or
 #' \code{\link{expuh}}) using Inverse Filtering.
-#' 
+#'
 #' In normal usage, one would not call these functions directly, but rather
 #' specify the routing fitting method for a \code{\link{hydromad}} model using
 #' that function's \code{rfit} argument. E.g. to specify fitting an
 #' \code{expuh} routing model by inverse filtering one could write
-#' 
+#'
 #' \code{hydromad(..., routing = "expuh", rfit = "inverse")}
-#' 
+#'
 #' or
-#' 
+#'
 #' \code{hydromad(..., routing = "expuh", rfit = list("inverse", order =
 #' c(2,1)))}.
-#' 
+#'
 #' @name armax.inverse.fit
 #' @aliases expuh.inverse.fit
 #' @param DATA a \code{\link{ts}}-like object with named columns: \describe{
@@ -54,18 +54,19 @@
 #' @references ...
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' U <- ts(c(0, 0, 0, 1, rep(0, 30), 1, rep(0, 20)))
 #' Y <- expuh.sim(lag(U, -1), tau_s = 10, tau_q = 2, v_s = 0.5, v_3 = 0.1)
 #' set.seed(0)
 #' Yh <- Y * rnorm(Y, mean = 1, sd = 0.2)
 #' fit1 <- armax.inverse.fit(ts.union(P = U, Q = Yh),
-#'                           order = c(2, 2), warmup = 0)
+#'   order = c(2, 2), warmup = 0
+#' )
 #' fit1
 #' xyplot(ts.union(observed = Yh, fitted = fitted(fit1)),
-#'        superpose = TRUE)
-#' 
-#' @export 
+#'   superpose = TRUE
+#' )
+#' @export
 armax.inverse.fit <-
   function(DATA,
            order = hydromad.getOption("order"),

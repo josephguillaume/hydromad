@@ -12,14 +12,14 @@
 #' Description here. Requires documentation.
 #'
 #' @aliases simhyd.sim simhyd.ranges simhydrouting.sim simhydrouting.ranges
-#' 
+#'
 #' @param DATA Placeholder
 #' @param INSC Placeholder
 #' @param COEFF Placeholder
 #' @param SQ Placeholder
 #' @param SMSC Placeholder
 #' @param SUB Placeholder
-#' @param CRAK Placeholder 
+#' @param CRAK Placeholder
 #' @param K Placeholder
 #' @param etmult Placeholder
 #' @param GWt0 Placeholder

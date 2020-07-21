@@ -7,10 +7,10 @@
 
 
 #' Scatterplots with variables aggregated in event windows
-#' 
+#'
 #' Scatterplots with variables aggregated in event windows.
-#' 
-#' 
+#'
+#'
 #' @name event.xyplot
 #' @aliases event.xyplot.formula
 #' @param x an object for the generic method; in the \code{formula} method this
@@ -42,25 +42,30 @@
 #' \code{\link{panel.xyplot}}, \code{\link{eventapply}}
 #' @keywords hplot ts
 #' @examples
-#' 
+#'
 #' data(Canning)
-#' ev <- eventseq(Canning$P, thresh = 20, inthresh = 1, indur = 3,
-#'                continue = FALSE)
-#' event.xyplot(e(Q,sum) / e(P,sum) ~ e(P,sum) + e(P,max) + e(lag(Q,-1),first),
-#'              data = Canning, events = ev,
-#'              scales = list(y = list(log = TRUE)),
-#'              yscale.components = yscale.components.fractions,
-#'              ylab = "event runoff ratio (Q/P)", layout = c(3,1),
-#'              xlab = c("total rain (mm)", "max rain (mm/day)",
-#'              "antecedent flow (mm/day)"))
-#' 
+#' ev <- eventseq(Canning$P,
+#'   thresh = 20, inthresh = 1, indur = 3,
+#'   continue = FALSE
+#' )
+#' event.xyplot(e(Q, sum) / e(P, sum) ~ e(P, sum) + e(P, max) + e(lag(Q, -1), first),
+#'   data = Canning, events = ev,
+#'   scales = list(y = list(log = TRUE)),
+#'   yscale.components = yscale.components.fractions,
+#'   ylab = "event runoff ratio (Q/P)", layout = c(3, 1),
+#'   xlab = c(
+#'     "total rain (mm)", "max rain (mm/day)",
+#'     "antecedent flow (mm/day)"
+#'   )
+#' )
+#'
 #' ## multiple response variables
-#' event.xyplot(cbind(e(Q,quantile,0.9),e(Q,quantile,0.99)) ~
-#'              e(P,max) + e(P,mean) + e(P,sum),
-#'              data = Canning, events = ev,
-#'              scales = list(y = list(log = TRUE)),
-#'              yscale.components = yscale.components.log10.3)
-#' 
+#' event.xyplot(cbind(e(Q, quantile, 0.9), e(Q, quantile, 0.99)) ~
+#' e(P, max) + e(P, mean) + e(P, sum),
+#' data = Canning, events = ev,
+#' scales = list(y = list(log = TRUE)),
+#' yscale.components = yscale.components.log10.3
+#' )
 #' @export event.xyplot
 event.xyplot <- function(x, ...) {
   UseMethod("event.xyplot")

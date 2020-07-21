@@ -1,11 +1,11 @@
 #' Title placeholder
-#' 
+#'
 #' Description placeholder.
-#' 
+#'
 #' @name eval_fdc
 #' @aliases fdc.sample, fdc.allpoints
-#' @param Q Placeholder  
-#'  
+#' @param Q Placeholder
+#'
 #' @export
 fdc.sample <- function(Q) {
   if (is.zoo(Q)) Q <- coredata(Q)

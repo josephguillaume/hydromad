@@ -6,18 +6,18 @@
 
 #' Calculate an objective function on a rolling time series for a matrix of
 #' parameters
-#' 
+#'
 #' For each row of a named matrix of parameters, run a model and return a
 #' vector. By default, \code{evalParsTS} returns the predicted time series.
 #' \code{evalParsRollapply} instead calculates an objective function on rolling
 #' windows of the resulting time series, i.e. see how the objective function
 #' changes over time. Special facilities are provided to evaluate large sample
 #' sizes, including with parallelisation.
-#' 
+#'
 #' If timeseries are long, then the results matrix will be large
 #' (\code{nrow(par.matrix)} x \code{length.out}). By default the results matrix
 #' is therefore stored in a \code{ff} file-backed matrix.
-#' 
+#'
 #' Individual model evaluations are generally very fast, so parallelisation is
 #' only really worthwhile when large numbers of evaluations are needed.
 #' Parallelisation method \code{"clusterApply"} uses multiple R sessions that
@@ -25,7 +25,7 @@
 #' multicore machine. Parallelisation method \code{"foreach"} offers a broader
 #' range of options but only works if the final results matrix is small enough
 #' to fit in memory.
-#' 
+#'
 #' @aliases evalParsTS evalParsRollapply
 #' @param par.matrix Named matrix or data.frame of parameter values, with each
 #' row corresponding to a model realisation to evaluate
@@ -62,56 +62,59 @@
 #' doi: \href{http://dx.doi.org/10.1002/wrcr.2012410.1002/wrcr.20124}{here}
 #' @keywords models
 #' @examples
-#' 
+#'
 #' data(Cotter)
 #' obs <- Cotter[1:1000]
-#' 
+#'
 #' ## Define rainfall-runoff model structure
-#' object <- hydromad(obs, sma = "cwi", routing = "expuh",
-#'                    tau_q=c(0,2),tau_s = c(2,100), v_s = c(0,1))
-#' 
+#' object <- hydromad(obs,
+#'   sma = "cwi", routing = "expuh",
+#'   tau_q = c(0, 2), tau_s = c(2, 100), v_s = c(0, 1)
+#' )
+#'
 #' ## Set the random seed to obtain replicable results
 #' set.seed(19)
-#' 
+#'
 #' # Draw 10 Latin Hypercube random samples
-#' par.matrix<-parameterSets(getFreeParsRanges(object),samples=10)
+#' par.matrix <- parameterSets(getFreeParsRanges(object), samples = 10)
 #' # Calculate rolling time series of r.squared for each parameter set,
 #' #   keeping results in memory
-#' runs <- evalParsRollapply(par.matrix,object,
-#'   objective=hmadstat("r.squared"),filehash.name=NULL)
-#' 
-#' 
+#' runs <- evalParsRollapply(par.matrix, object,
+#'   objective = hmadstat("r.squared"), filehash.name = NULL
+#' )
 #' \dontrun{
 #' ## Setup parallelisation on three cores
 #' library(parallel)
-#' hydromad.options("parallel"=list("evalParsTS"="clusterApply"))
+#' hydromad.options("parallel" = list("evalParsTS" = "clusterApply"))
 #' cl <- makeCluster(3)
-#' clusterEvalQ(cl,library(hydromad))
-#' 
-#' par.matrix<-parameterSets(getFreeParsRanges(object),samples=1000)
+#' clusterEvalQ(cl, library(hydromad))
+#'
+#' par.matrix <- parameterSets(getFreeParsRanges(object), samples = 1000)
 #' # Calculate rolling time series of r.squared for each parameter set,
 #' #  storing result in tempfile()
 #' # Takes about 2 minutes
-#' runs <- evalParsRollapply(par.matrix,object,
-#'   objective=hmadstat("r.squared"))
-#' 
+#' runs <- evalParsRollapply(par.matrix, object,
+#'   objective = hmadstat("r.squared")
+#' )
+#'
 #' # Excerpt of results
 #' runs
 #' # Path of backing file - about 7MB
 #' filename(runs)
-#' # ff object can be used like a regular matrix, e.g. plotting the 
+#' # ff object can be used like a regular matrix, e.g. plotting the
 #' #  rolling time series of R.squared for the first parameter set
-#' plot(runs[1,])
-#' 
+#' plot(runs[1, ])
+#'
 #' ## Do the same with foreach
 #' library(doParallel)
 #' registerDoParallel(cl)
-#' hydromad.options("parallel"=list("evalParsTS"="foreach"))
-#' runs <- evalParsRollapply(par.matrix,object,
-#'   objective=hmadstat("r.squared"),filehash.name=NULL)
+#' hydromad.options("parallel" = list("evalParsTS" = "foreach"))
+#' runs <- evalParsRollapply(par.matrix, object,
+#'   objective = hmadstat("r.squared"), filehash.name = NULL
+#' )
 #' ## runs is a matrix
 #' }
-#' 
+#'
 #' @export
 ## Calculate objective function on a rolling window
 evalParsRollapply <- function(par.matrix, object,
@@ -121,23 +124,23 @@ evalParsRollapply <- function(par.matrix, object,
                               filehash.name = tempfile()) {
   fun <- function(thisMod, width, objective) {
     rollapply(cbind(Q = observed(thisMod), X = fitted(thisMod)),
-              width = width, by.column = FALSE,
-              FUN = objFunVal, objective = objective
+      width = width, by.column = FALSE,
+      FUN = objFunVal, objective = objective
     )
   }
-  
+
   evalParsTS(par.matrix, object, fun,
-             length.out = length(observed(object)) - width + 1,
-             parallel = parallel,
-             filehash.name = filehash.name,
-             width = width, objective = objective
+    length.out = length(observed(object)) - width + 1,
+    parallel = parallel,
+    filehash.name = filehash.name,
+    width = width, objective = objective
   )
 }
 
 
 
 #' @rdname evalParsRollapply
-#' @export 
+#' @export
 evalParsTS <- function(par.matrix, object,
                        fun = function(thisMod) fitted(thisMod),
                        length.out = NULL,

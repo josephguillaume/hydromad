@@ -1,10 +1,10 @@
 #' Model performance statistics from Ye et al. 1997
-#' 
+#'
 #' Performance statistics from calibrations of three model structures in three
 #' catchments in two data periods, assessed using absolute mean deviation, bias
 #' and efficiency.
-#' 
-#' 
+#'
+#'
 #' @name YeAl97
 #' @docType data
 #' @format A data frame with 36 observations on the following 7 variables.
@@ -22,8 +22,7 @@
 #' \url{http://dx.doi.org/10.1029/96wr02840}.
 #' @keywords datasets
 #' @examples
-#' 
+#'
 #' data(YeAl97)
 #' YeAl97
-#' 
 "YeAl97"

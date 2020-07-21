@@ -9,7 +9,7 @@
 #'
 #' @name tfUtils
 #' @aliases tfParsConvert
-#' 
+#'
 #' @param pars Placeholder
 
 

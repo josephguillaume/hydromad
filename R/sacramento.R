@@ -4,12 +4,12 @@
 ##
 
 #' Sacramento Soil Moisture Accounting model
-#' 
+#'
 #' Sacramento Soil Moisture Accounting model.  Developed by the US National
 #' Weather Service.
-#' 
+#'
 #' This description of the model is given by Burnash (1995):
-#' 
+#'
 #' \dQuote{The moisture accounting system utilized in the Sacramento Catchment
 #' Model is a carefully structured representation of the catchment's soil
 #' moisture storage system. It is based on using simple approximations of many
@@ -22,9 +22,9 @@
 #' with a good understanding of the three basic types of soil moisture which
 #' can potentially influence catchment runoff conditions. These soil moisture
 #' types are: (1) Hygroscopic Water, (2) Tension Water and (3) Free Water. }
-#' 
+#'
 #' [...]
-#' 
+#'
 #' \dQuote{Streamflow as computed by the Sacramento Catchment Model is the
 #' result of processing precipiatation through an algorithm representing the
 #' uppermost soil mantle identified as the upper zone and a deeper portion of
@@ -35,9 +35,9 @@
 #' are full, (3) interflow resulting from the lateral drainage of a temporary
 #' free water storage, (4) supplemental base flow, and (5) primary base flow.}
 #' (Burnash, 1995)
-#' 
+#'
 #' The default parameter ranges were taken from Blasone et. al. (2008).
-#' 
+#'
 #' Note that the Sacramento model potentially suffers from numerical
 #' instabilities, which can be seen for example as discontinuities in output
 #' and derivatives of outputs (see Hendrickson et al. 1988). Ideally, the
@@ -48,7 +48,7 @@
 #' defines the minimum number of inner loops used within each timestep. The
 #' user is encouraged to test the effect of increasing \code{min_ninc} on their
 #' dataset.
-#' 
+#'
 #' @name sacramento
 #' @aliases sacramento.sim
 #' @param DATA time-series-like object with columns \code{P} (precipitation,
@@ -99,7 +99,7 @@
 #' component
 #' @return the simulated effective rainfall (\dQuote{total channel inflow}), a
 #' time series of the same length as the input series.
-#' 
+#'
 #' if \code{return_state=TRUE}, a list with components: \item{uztwc}{Upper zone
 #' tension water content} \item{uzfwc}{Upper zone free water content}
 #' \item{lztwc}{Lower zone tension water content} \item{lzfsc}{Lower zone free
@@ -121,57 +121,63 @@
 #' Catchment Modeling.  In: Vijay P. Singh (ed.), \emph{Computer models of
 #' watershed hydrology.} Revised edition, Highlands Ranch, Colo. : Water
 #' Resources Publications, c1995.  \url{http://www.wrpllc.com/books/cmwh.html}.
-#' 
+#'
 #' Blasone, R., J.A. Vrugt, H. Madsen, D. Rosbjerg, B.A. Robinson, G.A.
 #' Zyvoloski (2008). Generalized likelihood uncertainty estimation (GLUE) using
 #' adaptive Markov Chain Monte Carlo sampling. \emph{Advances in Water
 #' Resources} 31, pp. 630-648.
-#' 
+#'
 #' Hendrickson, Jene' D., Soroosh Sorooshian, and Larry E. Brazil (1988)
 #' Comparison of Newton-Type and Direct Search Algorithms for Calibration of
 #' Conceptual Rainfall-Runoff Models. \emph{Water Resources Research} 24 (5):
 #' 691-700.  \url{http://dx.doi.org/10.1029/WR024i005p00691}
-#' 
+#'
 #' Clark, Martyn P., and Dmitri Kavetski (2010) Ancient Numerical Daemons of
 #' Conceptual Hydrological Modeling: 1. Fidelity and Efficiency of Time
 #' Stepping Schemes.” Water Resources Research 46 (10).
 #' \url{http://dx.doi.org/10.1029/2009WR008894}
 #' @keywords models
 #' @examples
-#' 
+#'
 #' ## view default parameter ranges:
 #' str(hydromad.options("sacramento"))
-#' 
+#'
 #' data(HydroTestData)
 #' mod0 <- hydromad(HydroTestData, sma = "sacramento")
 #' mod0
-#' 
+#'
 #' ## simulate with some arbitrary parameter values
 #' set.seed(2)
-#' mod1 <- simulate(update(mod0, etmult = 0.01), 1, sampletype =
-#' "random")[[1]]
-#' 
+#' mod1 <- simulate(update(mod0, etmult = 0.01), 1,
+#'   sampletype =
+#'     "random"
+#' )[[1]]
+#'
 #' testQ <- predict(mod1, return_state = TRUE)
-#' xyplot(window(cbind(HydroTestData[,1:2], sacramento = testQ), start = 100))
+#' xyplot(window(cbind(HydroTestData[, 1:2], sacramento = testQ), start = 100))
 #' mod1
-#' 
+#'
 #' ## show effect of increase/decrease in each parameter
 #' parRanges <- hydromad.getOption("sacramento")
-#' parsims <- mapply(val = parRanges, nm = names(parRanges),
+#' parsims <- mapply(
+#'   val = parRanges, nm = names(parRanges),
 #'   FUN = function(val, nm) {
 #'     lopar <- min(val)
 #'     hipar <- max(val)
 #'     names(lopar) <- names(hipar) <- nm
-#'     fitted(runlist(decrease = update(mod1, newpars = lopar),
-#'                    increase = update(mod1, newpars = hipar)))
-#'   }, SIMPLIFY = FALSE)
-#' 
-#' xyplot.list(parsims, superpose = TRUE, layout = c(1,NA),
-#'             strip = FALSE, strip.left = TRUE,
-#'             main = "Simple parameter perturbation example") +
+#'     fitted(runlist(
+#'       decrease = update(mod1, newpars = lopar),
+#'       increase = update(mod1, newpars = hipar)
+#'     ))
+#'   }, SIMPLIFY = FALSE
+#' )
+#'
+#' xyplot.list(parsims,
+#'   superpose = TRUE, layout = c(1, NA),
+#'   strip = FALSE, strip.left = TRUE,
+#'   main = "Simple parameter perturbation example"
+#' ) +
 #'   latticeExtra::layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
-#' 
-#' 
 #' @export
 sacramento.sim <-
   function(DATA,

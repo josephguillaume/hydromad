@@ -12,11 +12,11 @@
 
 #' Generate objective functions with aggregation, transformation and a
 #' reference model
-#' 
+#'
 #' Generate objective functions with temporal aggregation, data transformation
 #' and an optional reference model.
-#' 
-#' 
+#'
+#'
 #' @aliases buildTsObjective buildObjectiveFun buildTsLikelihood
 #' @param Q observed data, typically a \code{\link{zoo}} object.
 #' @param groups an optional grouping variable, of the same length as \code{Q},
@@ -63,29 +63,31 @@
 #' \code{\link{cut.Date}}, \code{\link{hydromad.stats}}
 #' @keywords utilities optimization
 #' @examples
-#' 
+#'
 #' data(Cotter)
 #' dat <- window(Cotter, start = "1990-01-01", end = "1993-01-01")
-#' 
+#'
 #' ## use Box-Cox transform with parameters estimated from Q
 #' objfun <- buildTsObjective(dat$Q, boxcox = TRUE)
 #' objfun(X = dat$Q + 10)
 #' ## extract the estimated Box-Cox parameters
 #' lambda <- environment(objfun)$lambda
 #' start <- environment(objfun)$start
-#' 
+#'
 #' require(car)
 #' qqmath(~ bcPower(dat$Q + start, lambda))
 #' ## in this case the result is the same as:
-#' nseStat(bcPower(dat$Q + start, lambda),
-#'         bcPower(dat$Q + 10 + start, lambda))
-#' 
+#' nseStat(
+#'   bcPower(dat$Q + start, lambda),
+#'   bcPower(dat$Q + 10 + start, lambda)
+#' )
+#'
 #' ## use monthly aggregation and log transform (Box-Cox lambda = 0)
-#' objfun <- buildTsObjective(dat$Q, groups = cut(time(dat), "months"),
-#'                            FUN = sum, boxcox = 0)
+#' objfun <- buildTsObjective(dat$Q,
+#'   groups = cut(time(dat), "months"),
+#'   FUN = sum, boxcox = 0
+#' )
 #' objfun(X = dat$Q + 10)
-#' 
-#' 
 #' @export
 buildTsObjective <-
   function(Q, groups = NULL, FUN = sum, ...,

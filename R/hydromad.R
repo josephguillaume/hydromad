@@ -6,29 +6,29 @@
 
 
 #' Specify rainfall - runoff (hydrology) models.
-#' 
+#'
 #' The \code{hydromad} function can be used to specify models with their model
 #' equations, data, parameters and settings. It allows a general two-component
 #' structure, where the Soil Moisture Accounting (\code{sma}) component and the
 #' Routing (\code{routing}) component can be arbitrary functions. A method can
 #' be specified for fitting the dependent routing component.
-#' 
+#'
 #' The \code{hydromad()} function allows models to be specified with the given
 #' component models and parameter specifications. The resulting object can
 #' later be modified using the \code{update.hydromad} method
 #' using the same syntax.
-#' 
+#'
 #' Methods for working with the model objects are listed under
 #' \code{hydromad.object}.
-#' 
+#'
 #' For a tutorial, type \code{vignette("tutorial", package = "hydromad")}.
-#' 
+#'
 #' For an overview of the package, see the paper
 #' \code{vignette("hydromad_paper")}.
-#' 
+#'
 #' For a list of the package functions with their help pages, see the website
 #' \url{http://hydromad.catchment.org/}.
-#' 
+#'
 #' @name hydromad
 #' @param DATA a \code{\link{ts}}-like object with named columns: \describe{
 #' \item{list("P")}{ time series of areal rainfall depths, usually in mm.  }
@@ -71,33 +71,36 @@
 #' @examples
 #' data(Cotter)
 #' x <- Cotter[1:1000]
-#' 
+#'
 #' ## IHACRES CWI model with exponential unit hydrograph
 #' ## an unfitted model, with ranges of possible parameter values
-#' modx <- hydromad(x, sma = "cwi", routing = "expuh",
-#'                  tau_s = c(2,100), v_s = c(0,1))
+#' modx <- hydromad(x,
+#'   sma = "cwi", routing = "expuh",
+#'   tau_s = c(2, 100), v_s = c(0, 1)
+#' )
 #' modx
 #' ## now try to fit it
 #' fitx <- fitByOptim(modx)
 #' fitx
 #' summary(fitx)
 #' xyplot(fitx, with.P = TRUE, type = c("l", "g"))
-#' 
+#'
 #' data(Canning)
 #' x <- window(Canning, start = "1980-01-01", end = "1982-01-01")
 #' xyplot(x)
 #' ## IHACRES CWI model with extra parameter l
 #' ## Fixed UH (fit once) by inverse method
 #' ## an unfitted model, with ranges of possible parameter values
-#' mod0 <- hydromad(x, sma = "cwi", l = c(0, 100), 
-#'              routing = "armax", rfit = list("inverse", order = c(1,1)))
+#' mod0 <- hydromad(x,
+#'   sma = "cwi", l = c(0, 100),
+#'   routing = "armax", rfit = list("inverse", order = c(1, 1))
+#' )
 #' mod0
 #' ## now try to fit the free parameters
 #' fit1 <- fitByOptim(mod0)
 #' fit1
 #' summary(fit1)
 #' xyplot(fit1)
-#' 
 #' @export
 hydromad <-
   function(DATA = zoo(),

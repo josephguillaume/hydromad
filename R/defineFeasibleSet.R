@@ -1,11 +1,11 @@
 #' Extract the feasible parameter sets meeting some criteria.
-#' 
+#'
 #' Extract the feasible (or \emph{behavioural}) parameter sets meeting some
 #' criteria. These could be used as a feasible set or to estimate prediction
 #' quantiles according to the GLUE (Generalised Likelihood Uncertainty
 #' Estimation) method.
-#' 
-#' 
+#'
+#'
 #' @aliases defineFeasibleSet defineFeasibleSet.hydromad
 #' defineFeasibleSet.default
 #' @param x in the \code{hydromad} method this is a \code{\link{hydromad}}
@@ -77,71 +77,82 @@
 #' \code{\link{fitBySampling}}, \code{\link{fitByDream}}
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' data(Queanbeyan)
 #' ts74 <- window(Queanbeyan, start = "1974-01-01", end = "1976-12-01")
-#' mod <- hydromad(ts74, routing = "expuh", rfit = list("inverse", order = c(2,1)))
-#' mod <- update(mod, sma = "cwi",
-#'     tw = c(0,100), f = c(0, 8), loss = c(-0.1, 0.1))
-#' 
+#' mod <- hydromad(ts74, routing = "expuh", rfit = list("inverse", order = c(2, 1)))
+#' mod <- update(mod,
+#'   sma = "cwi",
+#'   tw = c(0, 100), f = c(0, 8), loss = c(-0.1, 0.1)
+#' )
+#'
 #' ## Calculate the set of simulations within 15% error (or 1 mm/day) 90% of time.
 #' ## In this case we do not need to calculate objective function values
 #' ## beforehand. For GLUE quantiles, however, need to give 'objective'.
 #' psets <- parameterSets(coef(mod), samples = 300)
-#' feas <- defineFeasibleSet(psets, model = mod,
-#'               frac.within = 0.9, within.rel = 0.15, within.abs = 1)
-#' 
+#' feas <- defineFeasibleSet(psets,
+#'   model = mod,
+#'   frac.within = 0.9, within.rel = 0.15, within.abs = 1
+#' )
+#'
 #' ## How many of the 300 possible parameter sets were retained?
 #' nrow(coef(feas, feasible.set = TRUE))
-#' 
+#'
 #' ## View ranges of parameters in feasible set
 #' feas
-#' 
+#'
 #' ## Plot simulation bounds
 #' xyplot(feas, feasible.bounds = TRUE, cut = 3)
-#' 
+#'
 #' ## Generate set of simulations with NSE > 0.5, for GLUE.
 #' ## First, need to calculate objective function values:
 #' fit <- fitBySampling(mod, samples = 300, objective = hmadstat("r.squared"))
 #' ## Calculate 5 percent and 95 percent GLUE quantiles (i.e. weighted).
-#' fitglu <- defineFeasibleSet(fit, threshold = 0.5,
-#'                             glue.quantiles = c(0.05, 0.95))
+#' fitglu <- defineFeasibleSet(fit,
+#'   threshold = 0.5,
+#'   glue.quantiles = c(0.05, 0.95)
+#' )
 #' ## Coverage of the GLUE quantile simulations (within 0.1 mm/day)
 #' sim <- fitted(fitglu, feasible.bounds = TRUE)
 #' head(sim)
-#' mean((sim[,1] < observed(fitglu) + 0.1) &
-#'      (sim[,2] > observed(fitglu) - 0.1))
-#' 
+#' mean((sim[, 1] < observed(fitglu) + 0.1) &
+#'   (sim[, 2] > observed(fitglu) - 0.1))
+#'
 #' ## Or - keep adding parameter sets until we reach a target coverage:
 #' ## Calculate 5 percent and 95 percent GLUE quantiles (i.e. weighted).
-#' fitglu <- defineFeasibleSet(fit, target.coverage = 0.9,
-#'                             glue.quantiles = c(0.05, 0.95))
+#' fitglu <- defineFeasibleSet(fit,
+#'   target.coverage = 0.9,
+#'   glue.quantiles = c(0.05, 0.95)
+#' )
 #' ## Coverage of the GLUE quantile simulations (within 0.1 mm/day)
 #' ## (not to be confused with the target.coverage to define overall feasible set)
 #' sim <- fitted(fitglu, feasible.bounds = TRUE)
-#' mean((sim[,1] < observed(fitglu) + 0.1) &
-#'      (sim[,2] > observed(fitglu) - 0.1))
-#' 
+#' mean((sim[, 1] < observed(fitglu) + 0.1) &
+#'   (sim[, 2] > observed(fitglu) - 0.1))
+#'
 #' ## Plot simulated GLUE quantiles
 #' xyplot(fitglu, feasible.bounds = TRUE, cut = 3)
-#' xyplot(fitglu, feasible.bounds = TRUE, cut = 3,
-#'        scales = list(y = list(log = TRUE)))
+#' xyplot(fitglu,
+#'   feasible.bounds = TRUE, cut = 3,
+#'   scales = list(y = list(log = TRUE))
+#' )
 #' ## Summarise size of the simulation bounds: lower as fraction of upper
-#' summary(coredata(sim[,1] / sim[,2]))
-#'  
+#' summary(coredata(sim[, 1] / sim[, 2]))
+#'
 #' ## Simulate on a new data period
-#' newglu <- update(fitglu, newdata = window(Queanbeyan,
-#'                    start = "1980-01-01", end = "1982-01-01"),
-#'                  glue.quantiles = c(0.05, 0.95))
+#' newglu <- update(fitglu,
+#'   newdata = window(Queanbeyan,
+#'     start = "1980-01-01", end = "1982-01-01"
+#'   ),
+#'   glue.quantiles = c(0.05, 0.95)
+#' )
 #' ## The new period is very dry, all model simulations overestimate flow.
 #' xyplot(newglu, feasible.bounds = TRUE, cut = 3)
 #' ## Coverage of the GLUE quantile simulations (within 0.1 mm/day)
 #' sim <- fitted(newglu, feasible.bounds = TRUE)
-#' mean((sim[,1] < observed(newglu) + 0.1) &
-#'      (sim[,2] > observed(newglu) - 0.1))
-#' 
-#' 
-#' @export 
+#' mean((sim[, 1] < observed(newglu) + 0.1) &
+#'   (sim[, 2] > observed(newglu) - 0.1))
+#' @export
 defineFeasibleSet <- function(x, ...) {
   UseMethod("defineFeasibleSet")
 }

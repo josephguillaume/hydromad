@@ -8,7 +8,7 @@
 #' Description here.
 #'
 #' @aliases absorbScale
-#' 
+#'
 #' @param object Placeholder
 #' @param gain Placeholder
 #' @param ... Placeholder
@@ -319,5 +319,3 @@ update.hydromad <-
 
     return(object)
   }
-
-

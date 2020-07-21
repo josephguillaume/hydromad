@@ -4,22 +4,22 @@
 ##
 
 #' Exponential components transfer function models with layered slowflow stores
-#' 
+#'
 #' A unit hydrograph with a quickflow pathway and two layered slowflow pathways
 #' modelling recharge to groundwater in order to allow modelling of long-term
 #' disconnection of slowflow stores from streamflow.
-#' 
-#' 
+#'
+#'
 #' The \code{expuh3s} model consists of a single quickflow pathway modelled as
 #' an exponential store, and a slowflow pathway comprised of two layered
 #' stores.
-#' 
+#'
 #' Each slowflow store is modelled as a \code{\link{leakyExpStore}}, which has
 #' a loss term, has no flow when the store drops below a given level, and can
 #' therefore model longer-term disconnection of a store from streamflow.
-#' 
+#'
 #' Adapted from Herron and Croke (2009):
-#' 
+#'
 #' The upper store, G1, receives rainfall inputs and discharges to the stream,
 #' Qs and recharges the lower store. G1 has a lower limit of 0, where flow
 #' ceases representing the fully 'drained' condition. Conceptually, the upper
@@ -28,19 +28,19 @@
 #' constant, \code{tau_s}, for discharge from the 'soil' store will be
 #' somewhere between that for quickflow, \code{tau_q} and the groundwater
 #' discharge constant, \code{tau_g}.
-#' 
+#'
 #' G2 is recharged from G1 when \code{G1>G_1} and discharges to the stream
 #' \code{Q_g} when \code{G2>0}. The sum of \code{Q_s} and \code{Q_g} represents
 #' the total slowflow pathway. We assume that all extraction and natural
 #' groundwater losses (\code{loss}) are from G2. The approach avoids the need
 #' to specify a maximum capacity for either storage, but the introduction of a
 #' recharge term, \code{R} between the stores adds a new parameter.
-#' 
+#'
 #' Recharge is represented by a constant rate \code{R} which ceases when
 #' \code{G1<G_1}, diminishing linearly to that point when
 #' \code{thres<G1<thres+loss}. Setting \code{G_1=0} (the default) ceases
 #' recharge when flow ceases.
-#' 
+#'
 #' @name expuh3s.sim
 #' @param U input time series (units below assume ML/day)
 #' @param delay lag (dead time) between input and response, in time steps.
@@ -75,8 +75,8 @@
 #' July 2009, pp. 3081-3087. ISBN: 978-0-9758400-7-8.
 #' \url{http://www.mssanz.org.au/modsim09/I1/herron.pdf}
 #' @keywords ts
-#' 
-#' @export 
+#'
+#' @export
 expuh3s.sim <-
   function(U, delay = 0, v_s,
            tau_q, tau_s, tau_g,

@@ -5,12 +5,12 @@
 
 
 #' Prefilter
-#' 
+#'
 #' Description goes here.
-#' 
+#'
 #' @name prefilters
 #' @aliases makePrefilter defaultPrefilters
-#' 
+#'
 #' @param DATA Placeholder
 #' @param order Placeholder
 #' @param pureAR Placeholder

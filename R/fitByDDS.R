@@ -1,11 +1,11 @@
 #' Fit a hydromad model using DDS (Dynamically Dimensioned Search) algorithm.
-#' 
+#'
 #' Fit a hydromad model using DDS (Dynamically Dimensioned Search) algorithm.
-#' 
+#'
 #' This function depends on the \code{ppso} package, available from
 #' \href{http://www.rforge.net/ppso/}{http://www.rforge.net/ppso/}. For alternative optimisation algorithms,
 #' consider \code{\link{fitBySCE}}.
-#' 
+#'
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined
 #' by \emph{ranges} of values rather than exact values.
@@ -29,27 +29,26 @@
 #' http://www.agu.org/journals/wr/wr0701/2005WR004723/
 #' @keywords optimization
 #' @examples
-#' 
+#'
 #' data(Cotter)
 #' x <- Cotter[1:1000]
-#' 
+#'
 #' ## IHACRES CWI model with power law unit hydrograph
 #' modx <- hydromad(x, sma = "cwi", routing = "powuh")
 #' modx
-#' 
+#'
 #' ## run with cut-down settings (for a speedy example only!)
 #' foo <- fitByDDS(modx, control = list(
-#'    max_number_function_calls=100,
-#'    logfile=NULL,
-#'            projectfile=NULL,
-#'            load_projectfile="no"
+#'   max_number_function_calls = 100,
+#'   logfile = NULL,
+#'   projectfile = NULL,
+#'   load_projectfile = "no"
 #' ))
-#' 
+#'
 #' summary(foo)
-#' 
+#'
 #' ## return value from DDS:
 #' str(foo$fit.result)
-#' 
 #' @export
 fitByDDS <- function(MODEL, objective = hydromad.getOption("objective"),
                      control = hydromad.getOption("dds.control"), save = NULL) {

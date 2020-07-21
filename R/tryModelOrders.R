@@ -8,11 +8,11 @@
 
 #' Compare calibrations with different transfer function (ARMA) orders for
 #' routing.
-#' 
+#'
 #' Compare calibrations with different transfer function (ARMA) orders for
 #' routing.
-#' 
-#' 
+#'
+#'
 #' @aliases tryModelOrders summary.tryModelOrders
 #' @param expr an expression to calibrate a hydromad model.
 #' @param n the set of values of \var{n} to try (order of the auto-regressive
@@ -26,8 +26,8 @@
 #' @seealso \code{\link{armax}}, \code{\link{armax.sriv.fit}}
 #' @references P C Young?
 #' @keywords optimize
-#' 
-#' 
+#'
+#'
 #' @export
 tryModelOrders <-
   function(expr, n = 0:3, m = 0:2,

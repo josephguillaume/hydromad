@@ -5,17 +5,17 @@
 
 #' Unstable/unoptimised version of IHACRES Catchment Moisture Deficit (CMD)
 #' model
-#' 
+#'
 #' Unoptimised version of CMD model. \code{g} is directly specified, and
 #' therefore highly correlated with \code{d}.  Other anything than for
 #' demonstration purposes, \code{\link{cmd}} should be used instead.
-#' 
+#'
 #' See \code{\link{cmd.sim}} for details.
-#' 
+#'
 #' This version is modified so that \code{g} is specified directly instead of
 #' being calculated as \code{g=f*d}
-#' 
-#' 
+#'
+#'
 #' @name cmd_unstable
 #' @aliases cmd_unstable.sim
 #' @param DATA a \code{\link{ts}}-like object with named columns: \describe{
@@ -40,7 +40,7 @@
 #' @author Joseph Guillaume
 #' @seealso \code{\link{cmd.sim}} for preferred version.
 #' @keywords models
-#' 
+#'
 #' ## Unoptimised/unstable version of IHACRES Catchment Moisture Deficit (CMD) model
 #' @export
 cmd_unstable.sim <-

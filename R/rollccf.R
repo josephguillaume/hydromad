@@ -24,15 +24,15 @@
 
 
 #' Rolling cross-correlation at given lags.
-#' 
+#'
 #' Rolling cross-correlation at given lags.  Can be useful to show how the
 #' relationship between two time series changes over time, including out-by-one
 #' timing errors.
-#' 
+#'
 #' This is a fairly straightforward application of \code{\link{rollapply}} with
 #' the \code{\link{ccf}} function. It may be better to do a time-varying
 #' regression between the two series.
-#' 
+#'
 #' @aliases rollccf xyplot.rollccf
 #' @param DATA a named list, data frame, time series or zoo object containing
 #' the two data series.
@@ -48,7 +48,7 @@
 #' @param na.action function to handle missing data in each window (not the
 #' whole series). This is only applied when the number of missing values is
 #' less than \code{na.max.fraction}.
-#' 
+#'
 #' Could be \code{na.exclude}.
 #' @param na.max.fraction if the proportion of missing values in the moving
 #' window exceeds this value, the corresponding result will be \code{NA}.
@@ -68,11 +68,10 @@
 #' @seealso \code{\link{ccf}}, \code{\link{rollapply}}
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' data(Canning)
 #' foo <- rollccf(Canning)
 #' xyplot(foo)
-#' 
 #' @export
 rollccf <-
   function(DATA = data.frame(Q = , P = ),

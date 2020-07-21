@@ -1,9 +1,9 @@
 #' Fit a hydromad model using CMA-ES (Covariance matrix adapting evolutionary
 #' strategy) from cmaes package
-#' 
-#' 
+#'
+#'
 #' Placeholder for description
-#' 
+#'
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined
 #' by \emph{ranges} of values rather than exact values.

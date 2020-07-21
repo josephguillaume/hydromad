@@ -7,7 +7,7 @@
 
 #' Fit a hydromad model using the DREAM (DiffeRential Evolution Adaptive
 #' Metropolis) algorithm.
-#' 
+#'
 #' Fit a hydromad model using the DREAM (DiffeRential Evolution Adaptive
 #' Metropolis) algorithm. This is a Markov Chain Monte Carlo algorithm which
 #' gives estimates of the joint probability distribution of parameters
@@ -15,8 +15,8 @@
 #' likelihood model, but the full MCMC results are also available as component
 #' \code{$fit.result}. The result can also be used to define a
 #' \link[=defineFeasibleSet]{feasible parameter set}.
-#' 
-#' 
+#'
+#'
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined
 #' by \emph{ranges} of values rather than exact values.
@@ -40,42 +40,41 @@
 #' @seealso \code{\link[dream]{dream}}, \code{\link{objFunVal}}
 #' @keywords optimization
 #' @examples
-#' 
-#' 
+#'
+#'
 #' if (require("dream", quietly = TRUE)) {
-#' 
-#' data(Cotter)
-#' x <- Cotter[1:1000]
-#' 
-#' ## IHACRES CWI model with power law unit hydrograph
-#' modx <- hydromad(x, sma = "cwi", routing = "powuh")
-#' modx
-#' 
-#' ## a very short run! just to demonstrate methods
-#' foo <- fitByDream(modx, control = list(ndraw = 500))
-#' 
-#' summary(foo)
-#' 
-#' ## parameter correlation matrix with symbols
-#' symnum(cov2cor(vcov(foo)))
-#' 
-#' ## return value from dream:
-#' str(foo$fit.result)
-#' 
-#' ## plot log-likelihood value convergence over time
-#' xyplot(window(optimtrace(foo, raw = TRUE), start = 50),
-#'   superpose = TRUE, auto.key = FALSE,
-#'   xlab = "function evaluations", ylab = "neg. log likelihood")
-#' 
-#' ## calculate corresponding objective function values over time.
-#' xyplot(optimtrace(foo, objective = ~ - hmadstat("r.squared")(Q,X)),
-#'   xlab = "function evaluations", ylab = "negative R Squared")
-#' 
-#' ## MCMC diagnostics and more are available:
-#' methods(class = "dream")
-#' 
+#'   data(Cotter)
+#'   x <- Cotter[1:1000]
+#'
+#'   ## IHACRES CWI model with power law unit hydrograph
+#'   modx <- hydromad(x, sma = "cwi", routing = "powuh")
+#'   modx
+#'
+#'   ## a very short run! just to demonstrate methods
+#'   foo <- fitByDream(modx, control = list(ndraw = 500))
+#'
+#'   summary(foo)
+#'
+#'   ## parameter correlation matrix with symbols
+#'   symnum(cov2cor(vcov(foo)))
+#'
+#'   ## return value from dream:
+#'   str(foo$fit.result)
+#'
+#'   ## plot log-likelihood value convergence over time
+#'   xyplot(window(optimtrace(foo, raw = TRUE), start = 50),
+#'     superpose = TRUE, auto.key = FALSE,
+#'     xlab = "function evaluations", ylab = "neg. log likelihood"
+#'   )
+#'
+#'   ## calculate corresponding objective function values over time.
+#'   xyplot(optimtrace(foo, objective = ~ -hmadstat("r.squared")(Q, X)),
+#'     xlab = "function evaluations", ylab = "negative R Squared"
+#'   )
+#'
+#'   ## MCMC diagnostics and more are available:
+#'   methods(class = "dream")
 #' }
-#' 
 #' @export
 fitByDream <-
   function(MODEL,

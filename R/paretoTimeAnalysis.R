@@ -1,12 +1,12 @@
 #' Analysis using Pareto-filtering of model performance across simulation
 #' periods
-#' 
+#'
 #' Identify dominated model realisations, that are inferior to another model in
 #' all simulation periods, optionally in multiple catchments.  Summary results
 #' are then produced to help assess how performance of model realisations and
 #' model structures varies across simulation periods.
-#' 
-#' 
+#'
+#'
 #' @aliases paretoTimeAnalysis paretoTimeAnalysis_performance
 #' paretoTimeAnalysis_areModelsDominated
 #' @param \dots arguments to \code{paretoTimeAnalysis.crossvalidation} or
@@ -36,7 +36,7 @@
 #' @return For \code{paretoTimeAnalysis}, no return value. Used for its side
 #' effect of producing text. Optionally writes csv files (see the argument
 #' \code{show.models}).
-#' 
+#'
 #' \code{paretoTimeAnalysis_areModelsDominated} produces a wide-format
 #' data.frame with id variable columns, a column for each \code{sim.period}
 #' value, and a column \code{dominated} indicating whether another model is
@@ -47,20 +47,19 @@
 #' @references Placeholder
 #' @keywords models
 #' @examples
-#' 
+#'
 #' ## Dataset consisting of results for two simulation periods,
 #' ##  obtained by calibration in the same periods with different
 #' ##  model structures.
 #' data(YeAl97)
-#' 
+#'
 #' ## For one catchment, produce a table indicating whether models defined by
 #' ## their calib.period and Model.str are dominated according to the objective E
-#' paretoTimeAnalysis_areModelsDominated(subset(YeAl97,Catchment=="Salmon"),objectives="E")
-#' 
+#' paretoTimeAnalysis_areModelsDominated(subset(YeAl97, Catchment == "Salmon"), objectives = "E")
+#'
 #' ## For all catchments, performance analysis
-#' paretoTimeAnalysis.data.frame(YeAl97,objectives="E")
-#' 
-#' @export 
+#' paretoTimeAnalysis.data.frame(YeAl97, objectives = "E")
+#' @export
 paretoTimeAnalysis <- function(...) UseMethod("paretoTimeAnalysis")
 
 #' @rdname paretoTimeAnalysis

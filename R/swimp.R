@@ -5,12 +5,12 @@
 
 
 #' Simple Wetland Inundation Model using Poweroids
-#' 
+#'
 #' Model flood area / duration / depth in wetlands.
 #' %% ~~ If necessary, more details than the description above ~~
 #'
-#' 
-#' 
+#'
+#'
 #' @param flow.ML inflow or streamflow in ML per timestep.
 #' @param thresh a threshold for \code{flow.ML}, such that only flow above this
 #' value enters the wetland.
@@ -41,7 +41,7 @@
 #' @references ...
 #' @keywords math models
 #' @examples
-#' 
+#'
 #' ## assume Q is inflow in ML/day
 #' set.seed(1)
 #' Q <- rpois(100, lambda = 0.1) * 1000
@@ -52,7 +52,6 @@
 #' flood <- swimp(Q, alpha = alpha, beta = 1, E.mm = 10)
 #' head(flood, 20)
 #' xyplot(flood)
-#' 
 #' @export
 swimp <-
   function(flow.ML,

@@ -1,9 +1,9 @@
 #' Multi-objective optimisation by varying weights
-#' 
+#'
 #' Estimate multi-objective Pareto front using multiple weighted single
 #' objective optimisations
-#' 
-#' 
+#'
+#'
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined
 #' by \emph{ranges} of values rather than exact values.
@@ -20,35 +20,38 @@
 #' @seealso \code{\link{paretoObjectivesNsga2}}
 #' @keywords optimization
 #' @examples
-#' 
+#'
 #' data(Cotter)
 #' x <- Cotter[1:1000]
-#' 
+#'
 #' ## IHACRES CWI model with exponential unit hydrograph
 #' ## an unfitted model, with ranges of possible parameter values
-#' modx <- hydromad(x, sma = "cwi", routing = "expuh",
-#'                  tau_s = c(2,100), v_s = c(0,1))
-#' 
+#' modx <- hydromad(x,
+#'   sma = "cwi", routing = "expuh",
+#'   tau_s = c(2, 100), v_s = c(0, 1)
+#' )
+#'
 #' ## Uncomment to parallelise the fitBy runs
-#' #library(parallel)
-#' #cl <- makeCluster(getOption("cl.cores", 2))
-#' #clusterEvalQ(cl,library(hydromad))
-#' #hydromad.options(parallel="clusterApply")
-#' 
-#' 
+#' # library(parallel)
+#' # cl <- makeCluster(getOption("cl.cores", 2))
+#' # clusterEvalQ(cl,library(hydromad))
+#' # hydromad.options(parallel="clusterApply")
+#'
+#'
 #' ## Optimisation of multiple weights for r.sq.log and r.squared
-#' weights<-cbind(c(0,0.33,0.5,0.67,1),1-c(0,0.33,0.5,0.67,1))
-#' 
+#' weights <- cbind(c(0, 0.33, 0.5, 0.67, 1), 1 - c(0, 0.33, 0.5, 0.67, 1))
+#'
 #' ## Estimate parameters using single fitByOptim run
 #' ## from single initial parameter set
-#' front <- paretoObjectivesVaryWeights(modx,objective=list(hmadstat("r.sq.log"),hmadstat("r.squared")),
-#'   weights=weights,fitBy=fitByOptim,samples=1)
-#' 
+#' front <- paretoObjectivesVaryWeights(modx,
+#'   objective = list(hmadstat("r.sq.log"), hmadstat("r.squared")),
+#'   weights = weights, fitBy = fitByOptim, samples = 1
+#' )
+#'
 #' summary(front)
 #' ## Plot objectives
-#' stats <- t(sapply(front,objFunVal,objective=list(hmadstat("r.sq.log"),hmadstat("r.squared"))))
+#' stats <- t(sapply(front, objFunVal, objective = list(hmadstat("r.sq.log"), hmadstat("r.squared"))))
 #' plot(stats)
-#' 
 #' @export
 paretoObjectivesVaryWeights <- function(MODEL, objective = hydromad.getOption("objective"), weights, fitBy, ...) {
   objective <- buildCachedObjectiveFun(objective, MODEL)

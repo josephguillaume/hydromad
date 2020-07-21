@@ -6,9 +6,9 @@
 
 
 #' Visualise systematic model errors against covariates
-#' 
+#'
 #' Visualise systematic model errors against covariates.
-#' 
+#'
 #' @name event.xyplot.hydromad
 #' @aliases event.xyplot.hydromad.runlist
 #' @param x a \code{hydromad} or \code{hydromad.runlist} object.
@@ -36,22 +36,26 @@
 #' \code{\link{eventapply}}
 #' @keywords hplot ts
 #' @examples
-#' 
+#'
 #' data(Cotter)
-#' x <- Cotter[1:1000,]
-#' mod <- hydromad(x, sma = "scalar",
-#'          routing = "armax", rfit = list("sriv", order = c(2,1)))
+#' x <- Cotter[1:1000, ]
+#' mod <- hydromad(x,
+#'   sma = "scalar",
+#'   routing = "armax", rfit = list("sriv", order = c(2, 1))
+#' )
 #' ev <- eventseq(x$P, thresh = 3, inthresh = 1, indur = 5)
 #' event.xyplot(mod, events = ev)
-#' event.xyplot(mod, events = ev,
-#'     extract = function(x) residuals(x, boxcox = TRUE))
-#' 
-#' foo <- event.xyplot(mod, events = ev,
-#'     ~ sqrt(e(P,max)) + sqrt(e(rollmean(lag(P,-1),20,align="left"),first)))
+#' event.xyplot(mod,
+#'   events = ev,
+#'   extract = function(x) residuals(x, boxcox = TRUE)
+#' )
+#'
+#' foo <- event.xyplot(mod,
+#'   events = ev,
+#'   ~ sqrt(e(P, max)) + sqrt(e(rollmean(lag(P, -1), 20, align = "left"), first))
+#' )
 #' dimnames(foo)[[1]] <- c("sqrt. peak rain (mm/day)", "mean 20-day ante. rain")
 #' foo
-
-
 #' @export
 event.xyplot.hydromad.runlist <-
   event.xyplot.hydromad <-

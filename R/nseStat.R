@@ -13,22 +13,22 @@ fitStat <- function(...) {
 
 
 #' Generalisation of Nash-Sutcliffe Efficiency (R Squared)
-#' 
+#'
 #' Generalisation of Nash-Sutcliffe Efficiency (R Squared) as a fit statistic
 #' for time series.
-#' 
+#'
 #' The result is, after transformation of variables,
-#' 
+#'
 #' \deqn{1 - sum(abs(obs-mod)^p) / sum(abs(obs-ref)^p)}
-#' 
+#'
 #' A perfect fit gives a value of 1 and a fit equivalent to the reference model
 #' gives a value of 0. Values less than 0 are worse than the reference model.
-#' 
+#'
 #' If the arguments \code{obs}, \code{mod} or \code{ref} are not plain vectors,
 #' \code{nseStat} will attempt to merge them together, so that corresponding
 #' time steps are compared to each other even if the time windows are not
 #' equal.
-#' 
+#'
 #' @aliases nseStat fitStat
 #' @param obs observed data vector.
 #' @param mod model-predicted data vector corresponding to \code{obs}.
@@ -53,11 +53,11 @@ fitStat <- function(...) {
 #' \code{\link{objFunVal}}, \code{\link{summary.hydromad}}
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' ## generate some data -- it is autocorrelated so the use of these
 #' ## stats is somewhat problematic!
 #' set.seed(0)
-#' U <- ts(pmax(0, rgamma(200, shape=0.1, scale=20) - 5))
+#' U <- ts(pmax(0, rgamma(200, shape = 0.1, scale = 20) - 5))
 #' ## simulate error as multiplicative uniform random
 #' Ue <- U * runif(200, min = 0.5, max = 1.5)
 #' ## and resample 10 percent of time steps
@@ -66,32 +66,31 @@ fitStat <- function(...) {
 #' ## apply recursive filter
 #' Q <- filter(U, 0.7, method = "r")
 #' X <- filter(Ue, 0.75, method = "r")
-#' 
+#'
 #' ## convert to 'zoo' objects with Date index
 #' Q <- zoo(Q, as.Date("2000-01-01") + 1:200)
 #' X <- zoo(X, time(Q))
-#' 
+#'
 #' xyplot(merge(Q, X), superpose = TRUE)
-#' 
+#'
 #' nseStat(Q, X)
-#' 
+#'
 #' nseStat(Q, X, trans = sqrt)
-#' 
-#' nseStat(Q, X, trans = function(x) log(x+1))
-#' 
+#'
+#' nseStat(Q, X, trans = function(x) log(x + 1))
+#'
 #' ## use absolute residuals rather than squared residuals
 #' nseStat(Q, X, p = 1)
-#' 
+#'
 #' ## use a different reference model (one-step-ahead forecast)
-#' nseStat(Q, X, ref = lag(Q,-1))
-#' 
+#' nseStat(Q, X, ref = lag(Q, -1))
+#'
 #' ## reference as seasonal averages rather than overall average
 #' nseStat(Q, X, ref = ave(Q, months(time(Q))))
-#' 
+#'
 #' ## see how the reference model performs in terms of R Squared
 #' nseStat(Q, ave(Q, months(time(Q))))
-#' 
-#' @export 
+#' @export
 nseStat <-
   function(obs, mod, ref = NULL, ..., p = 2,
            trans = NULL, negatives.ok = FALSE,

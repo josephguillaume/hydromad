@@ -1,10 +1,10 @@
 #' Unit Hydrograph using deconvolution
-#' 
+#'
 #' Estimates the unit hydrograph using deconvolution.
-#' 
+#'
 #' Estimates the unit hydrograph by fourier transform deconvolution of the
 #' ratio of the cross correlation and auto-correlation functions.
-#' 
+#'
 #' @param P Rainfall or effective rainfall time series
 #' @param Q Flow time series
 #' @param FWHM Full Width Half Maximum to use for Gaussian apodisation function
@@ -17,11 +17,10 @@
 #' @references Barry
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' data(Murrindindi)
-#' h <- deconvolution.uh(Murrindindi$P,Murrindindi$Q,do.plot=T)
+#' h <- deconvolution.uh(Murrindindi$P, Murrindindi$Q, do.plot = T)
 #' head(h)
-#' 
 #' @export
 deconvolution.uh <- function(P, Q, FWHM = length(P), do.plot = FALSE) {
   ## Calculate PQ and PP cross correlations

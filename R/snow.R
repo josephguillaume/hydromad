@@ -1,17 +1,17 @@
 ## hydromad: Hydrological Modelling and Analysis of Data
 
 #' Simple degree day factor snow model
-#' 
+#'
 #' Simple degree day factor snow model coupled with IHACRES CMD soil moisture
 #' model.
-#' 
+#'
 #' SWE snow water equivalent
-#' 
+#'
 #' ISWE water equivalent of ice in the snowpack
-#' 
+#'
 #' LSWE liquid water retained in the snowpack
-#' 
-#' 
+#'
+#'
 #' @name snow
 #' @aliases snow.sim
 #' @param DATA a \code{\link{ts}}-like object with named columns: \describe{
@@ -38,7 +38,7 @@
 #' named columns \code{U} (effective rainfall), \code{SWE} (snow water
 #' equivalent) and \code{TF}, as well as the CMD state variables.
 #' @author Coded in R by Jarkko Koskela @@tkk.fi 2010-02-26.
-#' 
+#'
 #' Converted to C by Felix Andrews \email{felix@@nfrac.org}.
 #' @seealso \code{\link{hydromad}(sma = "snow")} to work with models as objects
 #' (recommended).
@@ -48,42 +48,50 @@
 #' Available through www.iemss.org
 #' @keywords models
 #' @examples
-#' 
+#'
 #' ## view default parameter ranges:
 #' str(hydromad.options("snow"))
-#' 
+#'
 #' data(HydroTestData)
 #' mod0 <- hydromad(HydroTestData, sma = "snow", routing = "expuh")
 #' mod0
-#' 
+#'
 #' ## simulate with some arbitrary parameter values
-#' mod1 <- update(mod0, Tmax = 15, Tmin = 5, cr = 1, cs = 1, 
-#'                kd = 3, kf = 1, rcap = 0.5,
-#'                d = 200, f = 0.5, e = 0.1, tau_s = 10)
-#' 
+#' mod1 <- update(mod0,
+#'   Tmax = 15, Tmin = 5, cr = 1, cs = 1,
+#'   kd = 3, kf = 1, rcap = 0.5,
+#'   d = 200, f = 0.5, e = 0.1, tau_s = 10
+#' )
+#'
 #' ## plot results with state variables
 #' testQ <- predict(mod1, return_state = TRUE)
-#' xyplot(cbind(HydroTestData[,1:2], snow = testQ))
-#' 
+#' xyplot(cbind(HydroTestData[, 1:2], snow = testQ))
+#'
 #' ## show effect of increase/decrease in each parameter
-#' parlist <- list(Tmax = c(10, 20), Tmin = c(0, 10),
-#'                 cr = c(0.5, 2), cs = c(0.5, 2),
-#'                 kd = c(2, 5), kf = c(0, 2), rcap = c(0, 1))
-#' parsims <- mapply(val = parlist, nm = names(parlist),
+#' parlist <- list(
+#'   Tmax = c(10, 20), Tmin = c(0, 10),
+#'   cr = c(0.5, 2), cs = c(0.5, 2),
+#'   kd = c(2, 5), kf = c(0, 2), rcap = c(0, 1)
+#' )
+#' parsims <- mapply(
+#'   val = parlist, nm = names(parlist),
 #'   FUN = function(val, nm) {
 #'     lopar <- min(val)
 #'     hipar <- max(val)
 #'     names(lopar) <- names(hipar) <- nm
-#'     fitted(runlist(decrease = update(mod1, newpars = lopar),
-#'                    increase = update(mod1, newpars = hipar)))
-#'   }, SIMPLIFY = FALSE)
-#' 
-#' xyplot.list(parsims, superpose = TRUE, layout = c(1,NA),
-#'             strip = FALSE, strip.left = TRUE,
-#'             main = "Simple parameter perturbation example") +
+#'     fitted(runlist(
+#'       decrease = update(mod1, newpars = lopar),
+#'       increase = update(mod1, newpars = hipar)
+#'     ))
+#'   }, SIMPLIFY = FALSE
+#' )
+#'
+#' xyplot.list(parsims,
+#'   superpose = TRUE, layout = c(1, NA),
+#'   strip = FALSE, strip.left = TRUE,
+#'   main = "Simple parameter perturbation example"
+#' ) +
 #'   latticeExtra::layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
-#' 
-#' 
 #' @export
 snow.sim <-
   function(DATA, Tmax, Tmin, kd, kf, rcap, Tmelt = Tmin,

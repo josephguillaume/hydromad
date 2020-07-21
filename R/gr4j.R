@@ -200,6 +200,7 @@ gr4j.sim <-
     return(ans)
   }
 
+
 gr4j.ranges <- function() {
   list(
     x1 = c(100, 1200),
@@ -207,6 +208,9 @@ gr4j.ranges <- function() {
   )
 }
 
+
+#' @rdname gr4j
+#' @export
 gr4jrouting.sim <-
   function(U, x2, x3, x4, R_0 = 0, split = 0.9,
            return_components = FALSE,
@@ -311,6 +315,7 @@ gr4jrouting.sim <-
       return(Qr + Qd)
     }
   }
+
 
 gr4jrouting.ranges <- function() {
   list(

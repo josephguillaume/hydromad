@@ -7,6 +7,25 @@
 ## SimHyd model
 
 
+#' SimHyd model
+#'
+#' Description here. Requires documentation.
+#'
+#' @aliases simhyd.sim simhyd.ranges simhydrouting.sim simhydrouting.ranges
+#' 
+#' @param DATA Placeholder
+#' @param INSC Placeholder
+#' @param COEFF Placeholder
+#' @param SQ Placeholder
+#' @param SMSC Placeholder
+#' @param SUB Placeholder
+#' @param CRAK Placeholder 
+#' @param K Placeholder
+#' @param etmult Placeholder
+#' @param GWt0 Placeholder
+#' @param SMSt0 Placeholder
+#' @param return_state Placeholder
+
 #' @export
 simhyd.sim <-
   function(DATA,

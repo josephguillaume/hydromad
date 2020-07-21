@@ -1,29 +1,62 @@
-## hydromad: Hydrological Modelling and Analysis of Data
-##
-## Copyright (c) Felix Andrews <felix@nfrac.org>
-##
-
+#' Invert transfer function models to estimate input series.
+#' 
+#' Invert transfer function models to estimate input series.
+#' 
+#' 
+#' @aliases armax.inverse.sim expuh.inverse.sim
+#' @param DATA time-series-like object with columns \code{Q} (streamflow) and
+#' optionally \code{P} (precipitation).
+#' @param delay delay (lag time / dead time) in number of time steps.
+#' @param a_1 Placeholder
+#' @param a_2 Placeholder
+#' @param a_3 Placeholder
+#' @param b_0 Placeholder
+#' @param b_1 Placeholder
+#' @param b_2 Placeholder
+#' @param b_3 Placeholder
+#' @param pars Placeholder
+#' @param init Placeholder
+#' @param rain.factor Placeholder
+#' @param rises.only Placeholder
+#' @param use.Qm Placeholder
+#' @param use.fft.method Placeholder
+#' @param constrain.fft Placeholder
+#' @param mass.balance Placeholder
+#' @param scale.window Placeholder
+#' @author Felix Andrews \email{felix@@nfrac.org}
+#' @seealso \code{\link{armax.inverse.fit}}, \code{\link{armax}},
+#' \code{\link{expuh}}
+#' @references ...
+#' @keywords ts
+#' @examples
+#' 
+#' ## baseflow filtering using two-store unit hydrograph
+#' data(Murrindindi)
+#' x <- Murrindindi[1:1000,]
+#' 
+#' ## case 1 (preferred): streamflow + rainfall data constrained
+#' ## such that effective rainfall is less than observed rainfall
+#' foo <- hydromad(x, sma = "armax.inverse", routing = "armax",
+#'                 rfit = list("inverse", order = c(2,1)))
+#' foo
+#' xsq <- predict(foo, return_components = TRUE)
+#' xyplot(cbind(observed = x$Q, slow_component = xsq$Xs), superpose = TRUE)
+#' 
+#' ## case 2: using streamflow data only, constrained
+#' ## to have effective rainfall only when flow is rising
+#' foo <- hydromad(x$Q, sma = "armax.inverse", routing = "armax",
+#'                 rfit = list("inverse", order = c(2,1), rises.only = TRUE))
+#' xsq <- predict(foo, return_components = TRUE)
+#' xyplot(cbind(observed = x$Q, slow_component = xsq$Xs), superpose = TRUE)
+#' 
+#' ## case 3: using streamflow data only, unconstrained
+#' foo <- hydromad(x$Q, sma = "armax.inverse", routing = "armax",
+#'                 rfit = list("inverse", order = c(2,1)))
+#' xsq <- predict(foo, return_components = TRUE)
+#' xyplot(cbind(observed = x$Q, slow_component = xsq$Xs), superpose = TRUE)
+ 
 
 #' @export
-expuh.inverse.sim <-
-  function(DATA, delay = 0,
-           tau_s = 0, tau_q = 0, tau_3 = 0,
-           v_s = 1, v_q = NA, v_3 = 0,
-           series = 0,
-           Xs_0 = 0, Xq_0 = 0, X3_0 = 0,
-           pars = NULL,
-           ...) {
-    pars0 <- list(
-      tau_s = tau_s, tau_q = tau_q, tau_3 = tau_3,
-      v_s = v_s, v_q = v_q, v_3 = v_3, series = series
-    )
-    pars <- modifyList(pars0, as.list(pars))
-    pars <- tfParsConvert(pars, "a,b")
-    armax.inverse.sim(DATA, pars = pars, ...)
-  }
-
-
-#' @export 
 armax.inverse.sim <-
   function(DATA,
            a_1 = 0, a_2 = 0, a_3 = 0,
@@ -49,7 +82,7 @@ armax.inverse.sim <-
     inAttr <- attributes(Q)
     Q <- as.ts(Q)
     if (!is.null(P)) P <- as.ts(P)
-
+    
     pars <- tfParsConvert(pars, "a,b")
     pars0 <- list(
       a_1 = a_1, a_2 = a_2, a_3 = a_3,
@@ -101,7 +134,7 @@ armax.inverse.sim <-
     ## initialise U
     U <- Q
     U[] <- 0
-
+    
     if (use.fft.method) {
       ## fourier deconvolution method
       bb <- b[-1] / b[1]
@@ -113,41 +146,41 @@ armax.inverse.sim <-
         U <- pmin(U, P)
       }
     } else
-
-    if (hydromad.getOption("pure.R.code")) {
-      ## slow version in R for cross-checking
-      Qm <- Q
-      for (t in seq(max(n, m) + 1, length(Q))) {
-        Ut <- Q[t]
-        if (n > 0) {
-          Ut <- Ut - sum(a * Qm[t - seq_len(n)])
+      
+      if (hydromad.getOption("pure.R.code")) {
+        ## slow version in R for cross-checking
+        Qm <- Q
+        for (t in seq(max(n, m) + 1, length(Q))) {
+          Ut <- Q[t]
+          if (n > 0) {
+            Ut <- Ut - sum(a * Qm[t - seq_len(n)])
+          }
+          if (m > 0) {
+            Ut <- Ut - sum(b[-1] * U[t - seq_len(m)])
+          }
+          Ut <- Ut / b[1]
+          U[t] <- max(0, min(Ut, P[t]))
+          if (use.Qm) {
+            Qm[t] <- (sum(a * Qm[t - seq_len(n)]) +
+                        sum(b * U[t - 0:m]))
+          }
         }
-        if (m > 0) {
-          Ut <- Ut - sum(b[-1] * U[t - seq_len(m)])
-        }
-        Ut <- Ut / b[1]
-        U[t] <- max(0, min(Ut, P[t]))
-        if (use.Qm) {
-          Qm[t] <- (sum(a * Qm[t - seq_len(n)]) +
-            sum(b * U[t - 0:m]))
-        }
+      } else {
+        U <- .C(inverse_filter,
+                as.double(Q[]), ## force copy
+                as.integer(length(Q)),
+                as.double(a),
+                as.double(b),
+                as.integer(n),
+                as.integer(m),
+                as.integer(use.Qm),
+                as.double(P),
+                U = double(length(Q)),
+                PACKAGE = "hydromad"
+        )$U
+        ## make it a time series object again
+        attributes(U) <- attributes(Q)
       }
-    } else {
-      U <- .C(inverse_filter,
-        as.double(Q[]), ## force copy
-        as.integer(length(Q)),
-        as.double(a),
-        as.double(b),
-        as.integer(n),
-        as.integer(m),
-        as.integer(use.Qm),
-        as.double(P),
-        U = double(length(Q)),
-        PACKAGE = "hydromad"
-      )$U
-      ## make it a time series object again
-      attributes(U) <- attributes(Q)
-    }
     U[isna] <- NA
     ## scale to ensure mass balance with Q
     if (mass.balance) {
@@ -170,6 +203,7 @@ armax.inverse.sim <-
   }
 
 
+
 ## based on http://en.wikipedia.org/w/index.php?title=Wiener_filter&oldid=211541130
 wiener <- function(y, h, N, gamma = 0) {
   length(h) <- length(y)
@@ -178,7 +212,7 @@ wiener <- function(y, h, N, gamma = 0) {
   H <- fft(h)
   Y <- fft(y)
   S <- abs(Y)^2 / length(y)^2
-
+  
   ## experimental threshold to reduce sensitivity
   ## based on http://cnx.org/content/m13144/latest/wienerFilter.m
   ## TODO: is this ever useful?
@@ -186,10 +220,28 @@ wiener <- function(y, h, N, gamma = 0) {
   if (any(zap)) {
     H[zap] <- gamma * Mod(H[zap]) / H[zap]
   }
-
+  
   G <- (Conj(H) * S) /
     (abs(H)^2 * S + N)
-
+  
   x <- Re(fft(G * Y, inverse = TRUE) / length(y))
   x
 }
+
+#' @export
+expuh.inverse.sim <-
+  function(DATA, delay = 0,
+           tau_s = 0, tau_q = 0, tau_3 = 0,
+           v_s = 1, v_q = NA, v_3 = 0,
+           series = 0,
+           Xs_0 = 0, Xq_0 = 0, X3_0 = 0,
+           pars = NULL,
+           ...) {
+    pars0 <- list(
+      tau_s = tau_s, tau_q = tau_q, tau_3 = tau_3,
+      v_s = v_s, v_q = v_q, v_3 = v_3, series = series
+    )
+    pars <- modifyList(pars0, as.list(pars))
+    pars <- tfParsConvert(pars, "a,b")
+    armax.inverse.sim(DATA, pars = pars, ...)
+  }

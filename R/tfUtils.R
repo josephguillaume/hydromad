@@ -3,6 +3,15 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+#' tfUtils
+#'
+#' Description here.
+#'
+#' @name tfUtils
+#' @aliases tfParsConvert
+#' 
+#' @param pars Placeholder
+
 
 tfParsCheck <-
   function(pars) {

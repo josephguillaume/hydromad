@@ -14,9 +14,11 @@
 #' The default method should work for any object with methods for
 #' \code{residuals} and \code{fitted}.
 #' 
-#' @aliases observed observed.default
+#' @name utilities
+#' @aliases observed observed.default numericSummary
 #' @param object a model object for which to return the observed values.
 #' @param \dots other arguments.
+#' @param x Placeholder
 #' @return the result of \code{fitted(object) + residuals(object)}.
 #' @author Felix Andrews \email{felix@@nfrac.org}
 #' @seealso \code{\link{residuals}}
@@ -29,12 +31,14 @@
 #' observed(mymodel)
 #' 
 #' 
+#' @rdname utilities
 #' @export 
 observed <- function(object, ...) {
   UseMethod("observed")
 }
 
 
+#' @rdname utilities
 #' @export
 observed.default <- function(object, ...) {
   fitted(object, ...) + residuals(object, ...)
@@ -148,6 +152,7 @@ stripWarmup <-
 # }
 
 
+#' @rdname utilities
 #' @export
 numericSummary <- function(x) {
   x <- as.data.frame(x)

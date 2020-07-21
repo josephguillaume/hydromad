@@ -4,6 +4,20 @@
 ##
 
 
+#' Prefilter
+#' 
+#' Description goes here.
+#' 
+#' @name prefilters
+#' @aliases makePrefilter defaultPrefilters
+#' 
+#' @param DATA Placeholder
+#' @param order Placeholder
+#' @param pureAR Placeholder
+#' @param na.action = Placeholder
+
+
+#' @rdname prefilters
 defaultPrefilters <- function() {
   alpha_q <- c(0.01, 0.2)
   alpha_s <- c(0.9, 0.95, 0.98, 0.8)
@@ -17,6 +31,7 @@ defaultPrefilters <- function() {
 }
 
 
+#' @rdname prefilters
 #' @export
 makePrefilter <-
   function(DATA,

@@ -3,6 +3,28 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+#' Placeholder title for absorbScale
+#'
+#' Description here.
+#'
+#' @aliases absorbScale
+#' 
+#' @param object Placeholder
+#' @param gain Placeholder
+#' @param ... Placeholder
+
+
+#' @export
+absorbScale <- function(object, gain, ...) {
+  UseMethod("absorbScale")
+}
+
+
+#' @export
+absorbScale.hydromad <- function(object, gain, ...) {
+  return(NULL)
+}
+
 
 #' @export
 update.hydromad <-
@@ -299,13 +321,3 @@ update.hydromad <-
   }
 
 
-#' @export
-absorbScale <- function(object, gain, ...) {
-  UseMethod("absorbScale")
-}
-
-
-#' @export
-absorbScale.hydromad <- function(object, gain, ...) {
-  return(NULL)
-}

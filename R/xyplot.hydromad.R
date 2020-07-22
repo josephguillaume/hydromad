@@ -19,7 +19,7 @@ plot.hydromad <-
 #' Plot methods...
 #'
 #' @importFrom lattice qqmath xyplot
-#' 
+#'
 #' @aliases xyplot.hydromad xyplot.hydromad.runlist qqmath.hydromad
 #' tsdiag.hydromad
 #' @param x an object of class \code{hydromad}.

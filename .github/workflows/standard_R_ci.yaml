@@ -2,16 +2,14 @@ on:
   push:
     branches:
       - master
-      - continuous_integration
   pull_request:
     branches:
       - master
-      - continuous_integration
 
-name: standard_ci
+name: R-CMD-check
 
 jobs:
-  standard_ci:
+  R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})

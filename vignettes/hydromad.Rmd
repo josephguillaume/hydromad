@@ -1,0 +1,36 @@
+---
+title: "hydromad"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{hydromad}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction to hydromad
+
+`hydromad` is an R package (i.e. a software package for the [R statistical computing environment](http://www.r-project.org/)). It provides a modelling framework for environmental hydrology: water balance accounting and flow routing in spatially aggregated catchments. It supports simulation, estimation, assessment and visualisation of flow response to time series of rainfall and other drivers.
+
+A minimal unit hydrograph framework is used, where areal rainfall is passed through a soil moisture accounting (SMA) model to estimate effective rainfall; this is then passed through a routing model to estimate streamflow. Included are several implementations of models consistent with this framework, notably the IHACRES CWI and CMD soil moisture accounting models, and unit hydrograph transfer functions for the routing.
+
+```{r, echo=FALSE}
+knitr::include_graphics('figures/ihacres_framework.png')
+```
+
+This site serves as a reference for the R functions and datasets in the package. A gentler introduction can be found in the vignette [_hydromad tutorial_](http://hydromad.catchment.org/downloads/tutorial.pdf) and the paper [_An open software environment for hydrological model assessment and development_](http://hydromad.catchment.org/downloads/hydromad_paper.pdf) (both included in the package). You can also look at the [_source code for the paper_](http://www.nfrac.org/felix/papers/).
+
+The package is maintained by [Joseph Guillaume](joseph.guillaume@anu.edu.au). The modelling approach is based on work by Tony Jakeman and Barry Croke at The Australian National University.
+
+For more information, see
+
+* [Installation instructions](#installation)
+* [hydromad users group](http://groups.google.com/group/hydromad-users) (questions and discussion).
+* [hydromad github repository](http://github.com/josephguillaume/hydromad) (source code and bugs)
+    * [latest NEWS](http://github.com/josephguillaume/hydromad/raw/master/NEWS)

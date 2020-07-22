@@ -14,11 +14,11 @@ mod <- hydromad(obsdat,
 
 test_that("basic summary() works", {
   s <- summary(mod, with.hydrostats = TRUE)
-  expect_that(s, is_a("summary.hydromad"))
-  expect_that(is.finite(s$rel.bias), is_true())
-  expect_that(print(s), prints_text("Time steps:"))
+  expect_is(s, "summary.hydromad")
+  expect_true(is.finite(s$rel.bias))
+  #expect_equal(as.character(print(s)), "Time steps:") # is this test important?
   s.breaks <- summary(mod, breaks = "12 months")
-  expect_that(s.breaks, is_a("zoo"))
+  expect_is(s.breaks, "zoo")
 })
 
 test_that("all statistics can be evaluated", {
@@ -26,7 +26,7 @@ test_that("all statistics can be evaluated", {
   # Ignore r.sq.vartd because it requires event to be specified
   hydromad_stats$r.sq.vartd <- NULL
   ss <- objFunVal(mod, hydromad_stats)
-  expect_that(ss, is_a("list"))
+  expect_is(ss, "list")
   ok <- sapply(ss, is.finite)
   if (!all(ok)) {
     warning(
@@ -34,24 +34,24 @@ test_that("all statistics can be evaluated", {
       toString(names(ss)[!ok])
     )
   }
-  expect_that(all(is.finite(unlist(ss))), is_true())
+  expect_true(all(is.finite(unlist(ss))))
 })
 
 test_that("custom objective functions work", {
   spec <- update(mod, v_s = c(0, 1))
   set.seed(0)
   fit1 <- fitByOptim1(spec, function(Q, X, ...) nseStat(Q, X))
-  expect_that(fit1, is_a("hydromad"))
+  expect_is(fit1, "hydromad")
   set.seed(0)
   fit2 <- fitByOptim1(spec, ~ hmadstat("r.squared")(Q, X) - 1)
-  expect_that(fit2, is_a("hydromad"))
-  expect_that(objFunVal(fit1), equals(objFunVal(fit2)))
+  expect_is(fit2, "hydromad")
+  expect_equal(objFunVal(fit1), objFunVal(fit2))
   set.seed(0)
   fit3 <- fitByOptim1(spec, function(Q, X, ...) {
     hmadstat("r.sq.log")(Q, X) - 0.5 * hmadstat("rel.bias")(Q, X)
   })
-  expect_that(fit3, is_a("hydromad"))
-  expect_that(coef(fit1)[["v_s"]] != coef(fit3)[["v_s"]], is_true())
+  expect_is(fit3, "hydromad")
+  expect_true(coef(fit1)[["v_s"]] != coef(fit3)[["v_s"]])
 })
 
 test_that("formula works within functions", {

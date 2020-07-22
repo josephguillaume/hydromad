@@ -36,9 +36,7 @@ mod0
 
 ## simulate with some arbitrary parameter values
 testQ <- predict(update(mod0, scale = 0.5, tau_s = 10))
-xyplot(cbind(HydroTestData[,1:2], scalar.Q = testQ))
-
-
+xyplot(cbind(HydroTestData[, 1:2], scalar.Q = testQ))
 }
 \seealso{
 \code{\link{hydromad}(sma = "scalar")} to work with models as

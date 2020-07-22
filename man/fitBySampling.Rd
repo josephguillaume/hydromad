@@ -52,9 +52,10 @@ foo <- fitBySampling(modx)
 summary(foo)
 
 ## plot objective function value improvement over time
-xyplot(optimtrace(foo), type = "b",
-  xlab = "function evaluations", ylab = "objective fn. value")
-
+xyplot(optimtrace(foo),
+  type = "b",
+  xlab = "function evaluations", ylab = "objective fn. value"
+)
 }
 \seealso{
 \code{\link{fitByOptim}}, \code{\link{parameterSets}},

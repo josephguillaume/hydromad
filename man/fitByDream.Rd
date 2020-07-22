@@ -53,39 +53,38 @@ likelihood model, but the full MCMC results are also available as component
 
 
 if (require("dream", quietly = TRUE)) {
+  data(Cotter)
+  x <- Cotter[1:1000]
 
-data(Cotter)
-x <- Cotter[1:1000]
+  ## IHACRES CWI model with power law unit hydrograph
+  modx <- hydromad(x, sma = "cwi", routing = "powuh")
+  modx
 
-## IHACRES CWI model with power law unit hydrograph
-modx <- hydromad(x, sma = "cwi", routing = "powuh")
-modx
+  ## a very short run! just to demonstrate methods
+  foo <- fitByDream(modx, control = list(ndraw = 500))
 
-## a very short run! just to demonstrate methods
-foo <- fitByDream(modx, control = list(ndraw = 500))
+  summary(foo)
 
-summary(foo)
+  ## parameter correlation matrix with symbols
+  symnum(cov2cor(vcov(foo)))
 
-## parameter correlation matrix with symbols
-symnum(cov2cor(vcov(foo)))
+  ## return value from dream:
+  str(foo$fit.result)
 
-## return value from dream:
-str(foo$fit.result)
+  ## plot log-likelihood value convergence over time
+  xyplot(window(optimtrace(foo, raw = TRUE), start = 50),
+    superpose = TRUE, auto.key = FALSE,
+    xlab = "function evaluations", ylab = "neg. log likelihood"
+  )
 
-## plot log-likelihood value convergence over time
-xyplot(window(optimtrace(foo, raw = TRUE), start = 50),
-  superpose = TRUE, auto.key = FALSE,
-  xlab = "function evaluations", ylab = "neg. log likelihood")
+  ## calculate corresponding objective function values over time.
+  xyplot(optimtrace(foo, objective = ~ -hmadstat("r.squared")(Q, X)),
+    xlab = "function evaluations", ylab = "negative R Squared"
+  )
 
-## calculate corresponding objective function values over time.
-xyplot(optimtrace(foo, objective = ~ - hmadstat("r.squared")(Q,X)),
-  xlab = "function evaluations", ylab = "negative R Squared")
-
-## MCMC diagnostics and more are available:
-methods(class = "dream")
-
+  ## MCMC diagnostics and more are available:
+  methods(class = "dream")
 }
-
 }
 \seealso{
 \code{\link[dream]{dream}}, \code{\link{objFunVal}}

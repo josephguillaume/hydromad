@@ -63,8 +63,6 @@ xyplot(sunspot.year, aspect = "xy", cut = 3) +
 tmp <- window(sunspot.year, start = 1900)
 tmp[c(1:2, 50:60)] <- NA
 xyplot(tmp, panel = panel.ribbon, y2 = 0)
-
-
 }
 \seealso{
 \code{\link{panel.xyplot}}, \code{\link{panel.polygon}}

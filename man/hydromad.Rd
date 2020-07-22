@@ -83,8 +83,10 @@ x <- Cotter[1:1000]
 
 ## IHACRES CWI model with exponential unit hydrograph
 ## an unfitted model, with ranges of possible parameter values
-modx <- hydromad(x, sma = "cwi", routing = "expuh",
-                 tau_s = c(2,100), v_s = c(0,1))
+modx <- hydromad(x,
+  sma = "cwi", routing = "expuh",
+  tau_s = c(2, 100), v_s = c(0, 1)
+)
 modx
 ## now try to fit it
 fitx <- fitByOptim(modx)
@@ -98,15 +100,16 @@ xyplot(x)
 ## IHACRES CWI model with extra parameter l
 ## Fixed UH (fit once) by inverse method
 ## an unfitted model, with ranges of possible parameter values
-mod0 <- hydromad(x, sma = "cwi", l = c(0, 100), 
-             routing = "armax", rfit = list("inverse", order = c(1,1)))
+mod0 <- hydromad(x,
+  sma = "cwi", l = c(0, 100),
+  routing = "armax", rfit = list("inverse", order = c(1, 1))
+)
 mod0
 ## now try to fit the free parameters
 fit1 <- fitByOptim(mod0)
 fit1
 summary(fit1)
 xyplot(fit1)
-
 }
 \references{
 F.T. Andrews, B.F.W. Croke and A.J. Jakeman (2011). An open

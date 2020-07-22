@@ -60,18 +60,20 @@ Plot results from a set of model runs using Lattice graphics.
 \examples{
 
 data(HydroTestData)
-mod1 <- hydromad(HydroTestData, sma = "scalar",
-                 routing = "expuh", tau_s = 10)
+mod1 <- hydromad(HydroTestData,
+  sma = "scalar",
+  routing = "expuh", tau_s = 10
+)
 mod2 <- update(mod1, tau_s = 20, tau_q = 5, v_s = 0.5)
 mod3 <- update(mod2, loss = 0.5)
 mods <-
-  runlist(`single store` = mod1,
-          `two stores` = mod2,
-          loss = mod3)
+  runlist(
+    `single store` = mod1,
+    `two stores` = mod2,
+    loss = mod3
+  )
 xyplot(mods, superpose = TRUE)
 xyplot(mods, scales = list(y = list(log = TRUE)))
-
-
 }
 \seealso{
 \code{\link{runlist}}, \code{\link{xyplot.ts}},

@@ -37,8 +37,6 @@ x <- 1:10
 mymodel <- list(fitted.values = x + rnorm(10))
 mymodel$residuals <- x - fitted(mymodel)
 observed(mymodel)
-
-
 }
 \seealso{
 \code{\link{residuals}}

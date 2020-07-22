@@ -65,26 +65,31 @@ mod1 <- update(mod0, width = 30, rrthresh = 0.2, tau_s = 10)
 
 ## plot results with state variables
 testQ <- predict(mod1, return_state = TRUE)
-xyplot(cbind(HydroTestData[,1:2], runoffratio = testQ))
+xyplot(cbind(HydroTestData[, 1:2], runoffratio = testQ))
 
 ## show effect of increase/decrease in each parameter
-parRanges <- list(width = c(10, 180), qlag = c(-30, 30),
-                  rrthresh = c(0,0.5))
-parsims <- mapply(val = parRanges, nm = names(parRanges),
+parRanges <- list(
+  width = c(10, 180), qlag = c(-30, 30),
+  rrthresh = c(0, 0.5)
+)
+parsims <- mapply(
+  val = parRanges, nm = names(parRanges),
   FUN = function(val, nm) {
     lopar <- min(val)
     hipar <- max(val)
     names(lopar) <- names(hipar) <- nm
-    fitted(runlist(decrease = update(mod1, newpars = lopar),
-                   increase = update(mod1, newpars = hipar)))
-  }, SIMPLIFY = FALSE)
+    fitted(runlist(
+      decrease = update(mod1, newpars = lopar),
+      increase = update(mod1, newpars = hipar)
+    ))
+  }, SIMPLIFY = FALSE
+)
 
-xyplot.list(parsims, superpose = TRUE, layout = c(1,NA),
-            main = "Simple parameter perturbation example") +
+xyplot.list(parsims,
+  superpose = TRUE, layout = c(1, NA),
+  main = "Simple parameter perturbation example"
+) +
   latticeExtra::layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
-
-
-
 }
 \seealso{
 \code{\link{hydromad}(sma = "runoffratio")} to work with models as

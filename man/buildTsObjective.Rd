@@ -95,15 +95,17 @@ start <- environment(objfun)$start
 require(car)
 qqmath(~ bcPower(dat$Q + start, lambda))
 ## in this case the result is the same as:
-nseStat(bcPower(dat$Q + start, lambda),
-        bcPower(dat$Q + 10 + start, lambda))
+nseStat(
+  bcPower(dat$Q + start, lambda),
+  bcPower(dat$Q + 10 + start, lambda)
+)
 
 ## use monthly aggregation and log transform (Box-Cox lambda = 0)
-objfun <- buildTsObjective(dat$Q, groups = cut(time(dat), "months"),
-                           FUN = sum, boxcox = 0)
+objfun <- buildTsObjective(dat$Q,
+  groups = cut(time(dat), "months"),
+  FUN = sum, boxcox = 0
+)
 objfun(X = dat$Q + 10)
-
-
 }
 \seealso{
 \code{\link{nseStat}}, \code{\link{eventseq}},

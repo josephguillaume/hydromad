@@ -65,11 +65,10 @@ data(YeAl97)
 
 ## For one catchment, produce a table indicating whether models defined by
 ## their calib.period and Model.str are dominated according to the objective E
-paretoTimeAnalysis_areModelsDominated(subset(YeAl97,Catchment=="Salmon"),objectives="E")
+paretoTimeAnalysis_areModelsDominated(subset(YeAl97, Catchment == "Salmon"), objectives = "E")
 
 ## For all catchments, performance analysis
-paretoTimeAnalysis.data.frame(YeAl97,objectives="E")
-
+paretoTimeAnalysis.data.frame(YeAl97, objectives = "E")
 }
 \references{
 Placeholder

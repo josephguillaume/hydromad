@@ -32,7 +32,6 @@ and efficiency.
 
 data(YeAl97)
 YeAl97
-
 }
 \references{
 Used by \code{\link{paretoTimeAnalysis}}.

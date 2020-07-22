@@ -100,24 +100,29 @@ Plot methods...
 data(Canning)
 cannCal <- window(Canning, start = "1978-01-01", end = "1982-12-31")
 mod <-
-    hydromad(cannCal, sma = "cwi", tw = 162, f = 2, l = 300,
-             t_ref = 0, scale = 0.000284,
-             routing = "expuh", tau_s = 4.3, delay = 1, warmup = 200)
+  hydromad(cannCal,
+    sma = "cwi", tw = 162, f = 2, l = 300,
+    t_ref = 0, scale = 0.000284,
+    routing = "expuh", tau_s = 4.3, delay = 1, warmup = 200
+  )
 
 xyplot(mod, with.P = TRUE)
 
-c(streamflow = xyplot(mod),
+c(
+  streamflow = xyplot(mod),
   residuals = xyplot(residuals(mod, type = "h")),
-  layout = c(1,2), y.same = TRUE)
+  layout = c(1, 2), y.same = TRUE
+)
 
 xyplot(residuals(mod)) +
   latticeExtra::layer(panel.tskernel(..., width = 90, c = 2, col = 1)) +
   latticeExtra::layer(panel.tskernel(..., width = 180, c = 2, col = 1, lwd = 2)) +
   latticeExtra::layer(panel.tskernel(..., width = 360, c = 2, lwd = 2))
 
-qqmath(mod, scales = list(y = list(log = TRUE)), distribution = qnorm,
-       type = c("g", "l"))
-
+qqmath(mod,
+  scales = list(y = list(log = TRUE)), distribution = qnorm,
+  type = c("g", "l")
+)
 }
 \seealso{
 \code{hydromad.object}, \code{\link{xyplot}},

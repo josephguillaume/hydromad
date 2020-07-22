@@ -47,24 +47,28 @@ mod1 <- update(mod0, power = 1, maxP = 200, tau_s = 10)
 
 ## plot results with state variables
 testQ <- predict(mod1, return_state = TRUE)
-xyplot(cbind(HydroTestData[,1:2], intensity = testQ))
+xyplot(cbind(HydroTestData[, 1:2], intensity = testQ))
 
 ## show effect of increase/decrease in each parameter
-parRanges <- list(power = c(0,2), maxP = c(100,500), scale = NA)
-parsims <- mapply(val = parRanges, nm = names(parRanges),
+parRanges <- list(power = c(0, 2), maxP = c(100, 500), scale = NA)
+parsims <- mapply(
+  val = parRanges, nm = names(parRanges),
   FUN = function(val, nm) {
     lopar <- min(val)
     hipar <- max(val)
     names(lopar) <- names(hipar) <- nm
-    fitted(runlist(decrease = update(mod1, newpars = lopar),
-                   increase = update(mod1, newpars = hipar)))
-  }, SIMPLIFY = FALSE)
+    fitted(runlist(
+      decrease = update(mod1, newpars = lopar),
+      increase = update(mod1, newpars = hipar)
+    ))
+  }, SIMPLIFY = FALSE
+)
 
-xyplot.list(parsims, superpose = TRUE, layout = c(1,NA),
-            main = "Simple parameter perturbation example") +
+xyplot.list(parsims,
+  superpose = TRUE, layout = c(1, NA),
+  main = "Simple parameter perturbation example"
+) +
   layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
-
-
 }
 \seealso{
 \code{\link{hydromad}(sma = "intensity")} to work with models as

@@ -81,7 +81,6 @@ alpha <- poweroid(V = 1000, A = 20, beta = 1)$alpha
 flood <- swimp(Q, alpha = alpha, beta = 1, E.mm = 10)
 head(flood, 20)
 xyplot(flood)
-
 }
 \references{
 ...

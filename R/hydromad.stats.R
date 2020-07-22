@@ -65,6 +65,12 @@
 #' Requires that a variance-covariance matrix was estimated during calibration.
 #' } }
 #'
+#' @importFrom zoo coredata rollmean
+#' @importFrom stats complete.cases quantile time ave fitted lag cor
+#' @importFrom latticeExtra simpleSmoothTs
+#' @importFrom utils head tail
+#'
+#'
 #' @aliases hydromad.stats hmadstat
 #' @param name character giving the name of a statistic.
 #' @param DATA,Q If either \code{DATA} or \code{Q} is given, the returned

@@ -90,20 +90,27 @@ total volume will be 1 if \code{v_s} and \code{v_3} are also 1.  } }
 \examples{
 
 data(HydroTestData)
-mod1 <- hydromad(HydroTestData, routing = "expuh",
-                 tau_s = 30, tau_q = 5, v_s = 0.5)
+mod1 <- hydromad(HydroTestData,
+  routing = "expuh",
+  tau_s = 30, tau_q = 5, v_s = 0.5
+)
 flowcomps <- predict(mod1, return_components = TRUE)
-xyplot(cbind(`Slow component` = flowcomps[,"Xs"],
-             `Total flow` = flowcomps[,1] + flowcomps[,2]),
-       superpose = TRUE) +
+xyplot(cbind(
+  `Slow component` = flowcomps[, "Xs"],
+  `Total flow` = flowcomps[, 1] + flowcomps[, 2]
+),
+superpose = TRUE
+) +
   layer(panel.refline(h = 0))
 
-U  <- ts(c(1, rep(0, 30)))
-xyplot(cbind("tau_s = 10" = expuh.sim(U, tau_s = 10),
-             "& tau_q = 1" = expuh.sim(U, tau_s = 10, tau_q = 1, v_s = 0.5),
-             "&& v_s = 0.9" = expuh.sim(U, tau_s = 10, tau_q = 1, v_s = 0.9)),
-       superpose = TRUE)
-
+U <- ts(c(1, rep(0, 30)))
+xyplot(cbind(
+  "tau_s = 10" = expuh.sim(U, tau_s = 10),
+  "& tau_q = 1" = expuh.sim(U, tau_s = 10, tau_q = 1, v_s = 0.5),
+  "&& v_s = 0.9" = expuh.sim(U, tau_s = 10, tau_q = 1, v_s = 0.9)
+),
+superpose = TRUE
+)
 }
 \references{
 Jakeman, A.J., I.G. Littlewood, and P.G. Whitehead (1990),

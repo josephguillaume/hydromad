@@ -30,9 +30,8 @@ ratio of the cross correlation and auto-correlation functions.
 \examples{
 
 data(Murrindindi)
-h <- deconvolution.uh(Murrindindi$P,Murrindindi$Q,do.plot=T)
+h <- deconvolution.uh(Murrindindi$P, Murrindindi$Q, do.plot = T)
 head(h)
-
 }
 \references{
 Barry

@@ -67,7 +67,7 @@ equal.
 ## generate some data -- it is autocorrelated so the use of these
 ## stats is somewhat problematic!
 set.seed(0)
-U <- ts(pmax(0, rgamma(200, shape=0.1, scale=20) - 5))
+U <- ts(pmax(0, rgamma(200, shape = 0.1, scale = 20) - 5))
 ## simulate error as multiplicative uniform random
 Ue <- U * runif(200, min = 0.5, max = 1.5)
 ## and resample 10 percent of time steps
@@ -87,20 +87,19 @@ nseStat(Q, X)
 
 nseStat(Q, X, trans = sqrt)
 
-nseStat(Q, X, trans = function(x) log(x+1))
+nseStat(Q, X, trans = function(x) log(x + 1))
 
 ## use absolute residuals rather than squared residuals
 nseStat(Q, X, p = 1)
 
 ## use a different reference model (one-step-ahead forecast)
-nseStat(Q, X, ref = lag(Q,-1))
+nseStat(Q, X, ref = lag(Q, -1))
 
 ## reference as seasonal averages rather than overall average
 nseStat(Q, X, ref = ave(Q, months(time(Q))))
 
 ## see how the reference model performs in terms of R Squared
 nseStat(Q, ave(Q, months(time(Q))))
-
 }
 \seealso{
 \code{\link{hydromad.stats}}, \code{\link{buildTsObjective}},

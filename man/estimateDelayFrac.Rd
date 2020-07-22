@@ -34,13 +34,12 @@ have a fractional lag/redistribution of the input across days.
 }
 \examples{
 
-L<-0.6 ## Lag of 0.6
-P <- c(2,0,5,1,6,10,0,0,0)
-V1<-lagFrac(P,L)
+L <- 0.6 ## Lag of 0.6
+P <- c(2, 0, 5, 1, 6, 10, 0, 0, 0)
+V1 <- lagFrac(P, L)
 
-estimateDelay(cbind(P,V1), rises = FALSE)
-estimateDelayFrac(cbind(U=P,Q=V1),lag.max=5,rises=FALSE)
-
+estimateDelay(cbind(P, V1), rises = FALSE)
+estimateDelayFrac(cbind(U = P, Q = V1), lag.max = 5, rises = FALSE)
 }
 \seealso{
 \code{\link{estimateDelay}}, \code{\link{lagFrac}}

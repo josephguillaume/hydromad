@@ -31,7 +31,6 @@ Extract objective function value series from optimisation results.
 \examples{
 
 ## see examples in fitByOptim, fitBySCE, fitByDE, fitByDream
-
 }
 \seealso{
 \code{\link{fitBySCE}}, \code{\link{fitByDE}},

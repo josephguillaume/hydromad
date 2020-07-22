@@ -45,6 +45,8 @@ eventapply(
   simplify = TRUE,
   TIMING = c("start", "middle", "end")
 )
+
+eventinfo(X, events, FUN = mean, ...)
 }
 \arguments{
 \item{x, X}{a \code{\link{ts}} or \code{\link{zoo}} object.  May be
@@ -178,15 +180,17 @@ eventapply(x$Q, evq, FUN = sum)
 eventapply(x, evq, FUN = mean)
 eventinfo(x$Q, evq)
 
-evplot <- xyplot(x) + 
+evplot <- xyplot(x) +
   layer_(panel.xblocks(evp, col = c("grey90", "grey80"), border = "grey80")) +
   layer(panel.xblocks(evq, block.y = 0, vjust = 1, col = 1))
 
 evplot
 
-update(evplot, type = "s",
-    xlim = as.Date(c("1990-07-01", "1990-08-31"))) +
-  layer(panel.abline(h = c(5,1), lty = 2), packets = 1)
+update(evplot,
+  type = "s",
+  xlim = as.Date(c("1990-07-01", "1990-08-31"))
+) +
+  layer(panel.abline(h = c(5, 1), lty = 2), packets = 1)
 
 ## example of requesting a threshold giving about 'n' events
 set.seed(0)
@@ -194,7 +198,7 @@ ee <- eventseq(rnorm(100), n = 10, mingap = 2)
 nlevels(ee)
 attr(ee, "thresh")
 
-## 
+##
 ## example of classifying events based on hydro properties
 ##
 
@@ -203,19 +207,23 @@ x <- window(Queanbeyan, start = "1974-01-01", end = "1976-12-01")
 e <- eventseq(x$P, thresh = 5, inthresh = 1, indur = 4, continue = TRUE)
 
 ## classify events based on max flow
-qclass <- cut(ave(coredata(x$Q), coredata(e), FUN = max),
-              c(0, 0.5, 1, Inf))
+qclass <- cut(
+  ave(coredata(x$Q), coredata(e), FUN = max),
+  c(0, 0.5, 1, Inf)
+)
 qclass <- zoo(qclass, time(x))
 
 ## Classify events based on antecedent flow
 x <- merge(x, Q1 = lag(x$Q, -1), all = c(TRUE, FALSE))
 head1 <- function(z) z[1]
-q1class <- cut(ave(coredata(x$Q1), coredata(e), FUN = head1),
-               c(0, 0.2, 0.3, Inf))
+q1class <- cut(
+  ave(coredata(x$Q1), coredata(e), FUN = head1),
+  c(0, 0.2, 0.3, Inf)
+)
 q1class <- zoo(q1class, time(x))
 
 ## combined classification
-combin <- factor(paste("M", unclass(qclass), "_A", unclass(q1class), sep =""))
+combin <- factor(paste("M", unclass(qclass), "_A", unclass(q1class), sep = ""))
 combin <- zoo(combin, time(x))
 
 ## check results
@@ -224,8 +232,6 @@ head(data.frame(x, event = unclass(e), qclass, q1class, combin), 50)
 ## number of events in each class
 each.e <- !duplicated(e)
 table(coredata(combin[each.e]))
-
-
 }
 \seealso{
 \code{\link{cut.Date}}, \code{\link{tapply}},

@@ -46,45 +46,58 @@ Loss switches off at some threshold, as a piece-wise continuous function.
 }
 \examples{
 
-U  <- ts(c(1, rep(0, 10),1,rep(0, 20)))
+U <- ts(c(1, rep(0, 10), 1, rep(0, 20)))
 
 ## Without a loss, equivalent to expuh
 ##  Loss threshold has no effect
-all.equal(leakyExpStore.sim(U,5,loss=0,thres=0),expuh.sim(U, tau_s = 5))
+all.equal(leakyExpStore.sim(U, 5, loss = 0, thres = 0), expuh.sim(U, tau_s = 5))
 
 ## With losses stopping when flow stops, equivalent to expuh with a loss
-all.equal(leakyExpStore.sim(U,5,loss=0.1,thres=0),
-  expuh.sim(U, tau_s = 5,loss=0.1))
+all.equal(
+  leakyExpStore.sim(U, 5, loss = 0.1, thres = 0),
+  expuh.sim(U, tau_s = 5, loss = 0.1)
+)
 
 ## Plot of unit hydrographs
-xyplot(cbind("U"=U,
-"loss=0"=expuh.sim(U,tau_s=5),
-"loss=0.1 & thres=0"=expuh.sim(U,tau_s=5,loss=0.1),
-"loss=0.1 & thres=-0.3"=leakyExpStore.sim(U,5,loss=0.1,thres=-0.3),
-"loss=0.1 & thres=-Inf"=leakyExpStore.sim(U,5,loss=0.1,thres=-Inf)
-),superpose=TRUE)
+xyplot(cbind(
+  "U" = U,
+  "loss=0" = expuh.sim(U, tau_s = 5),
+  "loss=0.1 & thres=0" = expuh.sim(U, tau_s = 5, loss = 0.1),
+  "loss=0.1 & thres=-0.3" = leakyExpStore.sim(U, 5, loss = 0.1, thres = -0.3),
+  "loss=0.1 & thres=-Inf" = leakyExpStore.sim(U, 5, loss = 0.1, thres = -Inf)
+), superpose = TRUE)
 
 ## Time series plot of value of store
 xyplot(cbind(
-"thres=0"=leakyExpStore.sim(U,5,loss=0.1,thres=0,
-  return_components=TRUE)[,"G"],
-"thres=-0.3"=leakyExpStore.sim(U,5,loss=0.1,thres=-0.3,
-  return_components=TRUE)[,"G"],
-"thres=-Inf"=leakyExpStore.sim(U,5,loss=0.1,thres=-Inf,
-  return_components=TRUE)[,"G"]
-),superpose=TRUE)
+  "thres=0" = leakyExpStore.sim(U, 5,
+    loss = 0.1, thres = 0,
+    return_components = TRUE
+  )[, "G"],
+  "thres=-0.3" = leakyExpStore.sim(U, 5,
+    loss = 0.1, thres = -0.3,
+    return_components = TRUE
+  )[, "G"],
+  "thres=-Inf" = leakyExpStore.sim(U, 5,
+    loss = 0.1, thres = -Inf,
+    return_components = TRUE
+  )[, "G"]
+), superpose = TRUE)
 
 ## Time series of loss
 xyplot(cbind(
-"thres=0"=leakyExpStore.sim(U,5,loss=0.1,thres=0,
-  return_components=TRUE)[,"L"],
-"thres=-0.3"=leakyExpStore.sim(U,5,loss=0.1,thres=-0.3,
-  return_components=TRUE)[,"L"],
-"thres=-Inf"=leakyExpStore.sim(U,5,loss=0.1,thres=-Inf,
-  return_components=TRUE)[,"L"]
-),superpose=TRUE)
-
-
+  "thres=0" = leakyExpStore.sim(U, 5,
+    loss = 0.1, thres = 0,
+    return_components = TRUE
+  )[, "L"],
+  "thres=-0.3" = leakyExpStore.sim(U, 5,
+    loss = 0.1, thres = -0.3,
+    return_components = TRUE
+  )[, "L"],
+  "thres=-Inf" = leakyExpStore.sim(U, 5,
+    loss = 0.1, thres = -Inf,
+    return_components = TRUE
+  )[, "L"]
+), superpose = TRUE)
 }
 \seealso{
 \code{\link{expuh3s.sim}}

@@ -110,11 +110,9 @@ hmadstat("rel.bias")(Q = 1:10, X = 2:11)
 ## OF = NSE – 5*|ln(1+Bias)|^2.5
 
 hydromad.stats("viney" = function(Q, X, ...) {
-    hmadstat("r.squared")(Q, X, ...) -
-      5*(abs(log(1+hmadstat("rel.bias")(Q,X)))^2.5)
+  hmadstat("r.squared")(Q, X, ...) -
+    5 * (abs(log(1 + hmadstat("rel.bias")(Q, X)))^2.5)
 })
-
-
 }
 \seealso{
 \code{\link{buildTsObjective}}, \code{\link{nseStat}},

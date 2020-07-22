@@ -90,10 +90,11 @@ poweroid(H = 1:10, alpha = 2, beta = 1)
 ## Take four different shapes: beta = 4 / 2 / 1 / 0.5
 ## Calculate geometry, given Volume values from 0 to 100.
 shapedat <- list(
-  `beta=4 (quartoid)` = poweroid(V = (0:1000)/10, beta = 4, alpha = 0.0078125),
-  `beta=2 (paraboloid)` = poweroid(V = (0:1000)/10, beta = 2, alpha = 0.125),
-  `beta=1 (cone)` = poweroid(V = (0:1000)/10, beta = 1, alpha = 0.5),
-  `beta=1/2 (funnel)` = poweroid(V = (0:1000)/10, beta = 0.5, alpha = 1))
+  `beta=4 (quartoid)` = poweroid(V = (0:1000) / 10, beta = 4, alpha = 0.0078125),
+  `beta=2 (paraboloid)` = poweroid(V = (0:1000) / 10, beta = 2, alpha = 0.125),
+  `beta=1 (cone)` = poweroid(V = (0:1000) / 10, beta = 1, alpha = 0.5),
+  `beta=1/2 (funnel)` = poweroid(V = (0:1000) / 10, beta = 0.5, alpha = 1)
+)
 
 ## Plot cross sections, all with V = 100 and intersecting at r = 4:
 
@@ -102,52 +103,63 @@ shapedf <- do.call(make.groups, shapedat)
 xyplot(c(H, H) ~ c(-r, r), shapedf,
   groups = rep(which, 2), type = "a", lwd = 2,
   xlab = "radius", ylab = "height",
-  auto.key = list(lines=TRUE, points=FALSE))
+  auto.key = list(lines = TRUE, points = FALSE)
+)
 
 ## Compare general form of depth distributions:
 
 depthdat <- lapply(shapedat, transform,
-  H = (1 - H / max(H)), A = 100 * A / max(A))
+  H = (1 - H / max(H)), A = 100 * A / max(A)
+)
 depthdf <- do.call(make.groups, depthdat)
 
-xyplot(H ~ A | which, depthdf, as.table = TRUE,
+xyplot(H ~ A | which, depthdf,
+  as.table = TRUE,
   xlab = "cumulative area (percent)", ylab = "depth / max(depth)",
   panel = function(x, y, ...) {
     panel.grid(h = -1, v = -1)
-    panel.polygon(c(x, 0), c(y, 0), col = grey(0.75),
-                  border = "transparent")
+    panel.polygon(c(x, 0), c(y, 0),
+      col = grey(0.75),
+      border = "transparent"
+    )
     panel.xyplot(x, y, ...)
   },
-  type = "l", par.settings = simpleTheme(lwd = 2))
+  type = "l", par.settings = simpleTheme(lwd = 2)
+)
 
 ## Compare effect of different alpha, with a fixed Volume V = 100
 ## beta is constant at 0.8
 
 scaledat <- list(
-  `alpha = 2` = poweroid(V = (0:1000)/10, beta = 0.8, alpha = 2),
-  `alpha = 1` = poweroid(V = (0:1000)/10, beta = 0.8, alpha = 1),
-  `alpha = 1/2` = poweroid(V = (0:1000)/10, beta = 0.8, alpha = 0.5),
-  `alpha = 1/4` = poweroid(V = (0:1000)/10, beta = 0.8, alpha = 0.25))
+  `alpha = 2` = poweroid(V = (0:1000) / 10, beta = 0.8, alpha = 2),
+  `alpha = 1` = poweroid(V = (0:1000) / 10, beta = 0.8, alpha = 1),
+  `alpha = 1/2` = poweroid(V = (0:1000) / 10, beta = 0.8, alpha = 0.5),
+  `alpha = 1/4` = poweroid(V = (0:1000) / 10, beta = 0.8, alpha = 0.25)
+)
 
 scaledf <- do.call(make.groups, scaledat)
 
 xyplot(c(H, H) ~ c(-r, r), scaledf,
   groups = rep(which, 2), type = "a", lwd = 2,
   xlab = "radius", ylab = "height",
-  auto.key = list(lines=TRUE, points=FALSE))
+  auto.key = list(lines = TRUE, points = FALSE)
+)
 
 depthdat <- lapply(scaledat, transform, H = max(H) - H)
 depthdf <- do.call(make.groups, depthdat)
 
-xyplot(H ~ A, groups = which, depthdf,
+xyplot(H ~ A,
+  groups = which, depthdf,
   xlab = "cumulative area", ylab = "depth",
   panel = function(...) {
-    panel.superpose(..., panel.groups = function(x, y, ...)
-      panel.polygon(c(x, 0), c(y, 0), col = grey(0.25), alpha = 0.25))
+    panel.superpose(..., panel.groups = function(x, y, ...) {
+      panel.polygon(c(x, 0), c(y, 0), col = grey(0.25), alpha = 0.25)
+    })
     panel.xyplot(...)
   },
   type = "l", par.settings = simpleTheme(lwd = 2),
-  auto.key = list(lines = TRUE, points = FALSE))
+  auto.key = list(lines = TRUE, points = FALSE)
+)
 
 ## USE CASE 2: Derive alpha given beta.
 
@@ -165,13 +177,11 @@ poweroid(V = c(100, 1000, 10000), alpha = 4.83, beta = 1.9)
 # --> A:  11.95  38.91 126.70
 
 ## try fitting again, based on relative error this time:
-poweroid(V = c(100, 1000, 10000), A = c(5, 52, 127), rel.error=TRUE)
+poweroid(V = c(100, 1000, 10000), A = c(5, 52, 127), rel.error = TRUE)
 # --> alpha = 26.6, beta = 1.14
 ## simulate with these parameters to see how well they fit A:
 poweroid(V = c(100, 1000, 10000), alpha = 26.6, beta = 1.14)
 # --> A:   6.72  29.11 126.20
-
-
 }
 \references{
 \url{http://mathworld.wolfram.com/Paraboloid.html}

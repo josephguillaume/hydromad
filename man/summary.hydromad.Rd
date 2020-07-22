@@ -55,28 +55,28 @@ new statistics.
 
 
 data(HydroTestData)
-mod0 <- hydromad(HydroTestData, sma = "scalar",
-                 routing = "expuh", tau_s = 10)
+mod0 <- hydromad(HydroTestData,
+  sma = "scalar",
+  routing = "expuh", tau_s = 10
+)
 mod0
 
 summary(mod0)
 
 summary(mod0, breaks = "months")
-#summary(mod0, breaks = 3)
+# summary(mod0, breaks = 3)
 
 allstats <- names(hydromad.stats())
 ## Ignore r.sq.vartd because it requires event to be specified
-allstats<-setdiff(allstats,"r.sq.vartd")
+allstats <- setdiff(allstats, "r.sq.vartd")
 summary(mod0, stats = allstats)
 
 objFunVal(mod0, hmadstat("r.sq.log"))
 
-hydromad_stats<- hydromad.stats()
-#Ignore r.sq.vartd because it requires event to be specified
-hydromad_stats$r.sq.vartd<-NULL
+hydromad_stats <- hydromad.stats()
+# Ignore r.sq.vartd because it requires event to be specified
+hydromad_stats$r.sq.vartd <- NULL
 str(objFunVal(mod0, hydromad_stats))
-
-
 }
 \seealso{
 \code{\link{hydromad.stats}}, \code{\link{objFunVal}} for a way to

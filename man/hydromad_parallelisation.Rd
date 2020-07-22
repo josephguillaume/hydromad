@@ -37,7 +37,7 @@ specifying a list of options to the function to be parallelised, with the
 argument \code{parallel}, e.g.:
 
 \code{evalPars(pars,model,parallel=list(method="foreach",
-packages=c("hydromad","fuse"), async=TRUE))} 
+packages=c("hydromad","fuse"), async=TRUE))}
 
 The available options are described below.
 }
@@ -49,7 +49,7 @@ to each function that is parallelised and documented in its respective help
 page. A summary of the most common methods is given here.
 \code{method="clusterApply"} uses either the built-in \code{parallel}
 package or the \code{snow} package. Setting up the cluster requires code
-like: 
+like:
 
 \code{library(parallel)}\cr \code{cl <- makeCluster(2, type="SOCK")}
 
@@ -68,16 +68,16 @@ has the advantage of flexibility.
 }
 
 \section{Export}{
- 
+
 
 If the model being run depends on functions
 or variables not defined in the hydromad package,
 they may need to be explicitly exported. The names of the variables to be
 exported are specified as a character vector, e.g.:
 
-\code{export=c("mySMA.sim","myNewObjectiveFunction")} 
+\code{export=c("mySMA.sim","myNewObjectiveFunction")}
 
-Examples: 
+Examples:
 \itemize{
 \item if you have created your own soil moisture accounting function
 \code{mySMA.sim} \item if your objective function or a model you have made

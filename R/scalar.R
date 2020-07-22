@@ -53,7 +53,7 @@ scalar.ranges <- function() {
   list(scale = NA_real_)
 }
 
-
+#' @importFrom stats coef
 #' @export
 absorbScale.hydromad.scalar <- function(object, gain, parname = "scale", ...) {
   if (gain <= 0) {

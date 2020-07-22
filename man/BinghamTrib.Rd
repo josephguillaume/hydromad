@@ -53,7 +53,6 @@ Bureau of Meteorology station number: 9534 Station name: DONNYBROOK Latitude
 data(BinghamTrib)
 summary(BinghamTrib)
 xyplot(BinghamTrib)
-
 }
 \seealso{
 \code{\link{SalmonBrook}}

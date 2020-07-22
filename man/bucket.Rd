@@ -64,29 +64,35 @@ mod0 <- hydromad(HydroTestData, sma = "bucket", routing = "expuh")
 mod0
 
 ## simulate with some arbitrary parameter values
-mod1 <- update(mod0, Sb = 10, fc = 0.5, M = 0.5, etmult = 0.05,
-                     a.ei = 0.05, a.ss = 0.01, tau_s = 10)
+mod1 <- update(mod0,
+  Sb = 10, fc = 0.5, M = 0.5, etmult = 0.05,
+  a.ei = 0.05, a.ss = 0.01, tau_s = 10
+)
 ## plot results with state variables
 testQ <- predict(mod1, return_state = TRUE)
-xyplot(cbind(HydroTestData[,1:2], bucket = testQ))
+xyplot(cbind(HydroTestData[, 1:2], bucket = testQ))
 
 ## show effect of increase/decrease in each parameter
 parRanges <- hydromad.getOption("bucket")
-parsims <- mapply(val = parRanges, nm = names(parRanges),
+parsims <- mapply(
+  val = parRanges, nm = names(parRanges),
   FUN = function(val, nm) {
     lopar <- min(val)
     hipar <- max(val)
     names(lopar) <- names(hipar) <- nm
-    fitted(runlist(decrease = update(mod1, newpars = lopar),
-                   increase = update(mod1, newpars = hipar)))
-  }, SIMPLIFY = FALSE)
+    fitted(runlist(
+      decrease = update(mod1, newpars = lopar),
+      increase = update(mod1, newpars = hipar)
+    ))
+  }, SIMPLIFY = FALSE
+)
 
-xyplot.list(parsims, superpose = TRUE, layout = c(1,NA),
-            strip = FALSE, strip.left = TRUE,
-            main = "Simple parameter perturbation example") +
+xyplot.list(parsims,
+  superpose = TRUE, layout = c(1, NA),
+  strip = FALSE, strip.left = TRUE,
+  main = "Simple parameter perturbation example"
+) +
   layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
-
-
 }
 \references{
 Farmer, D., M. Sivapalan, Farmer, D. (2003). Climate, soil and

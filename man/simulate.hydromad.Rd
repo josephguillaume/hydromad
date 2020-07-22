@@ -58,23 +58,26 @@ none yet.
 \examples{
 
 data(Canning)
-mod0 <- hydromad(Canning[1:500,], sma = "cwi")
+mod0 <- hydromad(Canning[1:500, ], sma = "cwi")
 sim0 <- simulate(mod0, nsim = 5, sampletype = "latin")
 coef(sim0)
 summary(sim0)
 
 ## plot the objective function surface over two parameters
-mod1 <- update(mod0, routing = "armax", rfit = list("ls", order = c(2,1)))
-sim1 <- simulate(mod1, 144, sampletype = "all", FUN = objFunVal,
-          objective = ~ nseStat(Q, X, trans = sqrt))
-levelplot(result ~ tw + f, sim1, cex = 2,
-          panel = panel.levelplot.points,
-          main = "R Squared (of sq.rt. data) over parameter space") +
-latticeExtra::layer(panel.2dsmoother(...),under=TRUE)
+mod1 <- update(mod0, routing = "armax", rfit = list("ls", order = c(2, 1)))
+sim1 <- simulate(mod1, 144,
+  sampletype = "all", FUN = objFunVal,
+  objective = ~ nseStat(Q, X, trans = sqrt)
+)
+levelplot(result ~ tw + f, sim1,
+  cex = 2,
+  panel = panel.levelplot.points,
+  main = "R Squared (of sq.rt. data) over parameter space"
+) +
+  latticeExtra::layer(panel.2dsmoother(...), under = TRUE)
 
 ## dotty plots (list any number of parameters in formula)
 xyplot(result ~ tw + f, sim1, outer = TRUE)
-
 }
 \seealso{
 \code{\link{parameterSets}}, \code{\link{fitBySampling}}

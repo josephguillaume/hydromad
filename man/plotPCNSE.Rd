@@ -29,8 +29,7 @@ Plot performance of model realisations, identifying non-dominated models
 \examples{
 
 data(YeAl97)
-plotPCNSE(subset(YeAl97,Catchment=="Salmon"),objectives="E")
-
+plotPCNSE(subset(YeAl97, Catchment == "Salmon"), objectives = "E")
 }
 \seealso{
 \code{areModelsDominated} for raw data,

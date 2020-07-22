@@ -91,19 +91,22 @@ period.
 \examples{
 
 data(Cotter)
-modx <- hydromad(Cotter, sma = "cwi", routing = "expuh",
-                 tau_s = c(2,100), v_s = c(0,1))
-periods=list(P1=as.Date(c("1966-05-01","1976-04-30")),
-             P2=as.Date(c("1976-05-1","1986-04-30")))
+modx <- hydromad(Cotter,
+  sma = "cwi", routing = "expuh",
+  tau_s = c(2, 100), v_s = c(0, 1)
+)
+periods <- list(
+  P1 = as.Date(c("1966-05-01", "1976-04-30")),
+  P2 = as.Date(c("1976-05-1", "1986-04-30"))
+)
 ## Estimate parameters using single fitByOptim run
 ## from single initial parameter set
-runs=crossValidate(modx,periods=periods,fitBy=fitByOptim,samples=1)
+runs <- crossValidate(modx, periods = periods, fitBy = fitByOptim, samples = 1)
 summary(runs)
 ## Cross-validation statistics can then be analysed with other methods
 paretoTimeAnalysis_areModelsDominated(summary(runs))
-cast(melt(summary(runs),id.vars=c("calib.period","sim.period")),calib.period~variable+sim.period)
+cast(melt(summary(runs), id.vars = c("calib.period", "sim.period")), calib.period ~ variable + sim.period)
 paretoTimeAnalysis(runs)
-
 }
 \seealso{
 \code{\link{paretoTimeAnalysis}}

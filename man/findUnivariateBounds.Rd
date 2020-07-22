@@ -54,23 +54,23 @@ x <- Cotter[1:1000]
 
 ## IHACRES CWI model with exponential unit hydrograph
 ## an unfitted model, with ranges of possible parameter values
-modx <- hydromad(x, sma = "cwi", routing = "expuh",
-                 tau_s = c(2,100), v_s = c(0,1))
+modx <- hydromad(x,
+  sma = "cwi", routing = "expuh",
+  tau_s = c(2, 100), v_s = c(0, 1)
+)
 
 ## Best fit, used as initial feasible solution
 fitx <- fitByOptim(modx)
 
 ## Identify bounds
-thres <- objFunVal(fitx)-0.05 ## Look for models within 0.05 of best fit
-bounds <- findUnivariateBounds(modx,fitx,thres)
+thres <- objFunVal(fitx) - 0.05 ## Look for models within 0.05 of best fit
+bounds <- findUnivariateBounds(modx, fitx, thres)
 
 ## Create model object with the new bounds
-modx2 <- update(modx,newpars=bounds)
+modx2 <- update(modx, newpars = bounds)
 
 bounds
 modx2
-
-
 }
 \seealso{
 \code{\link{runRSM}} which requires narrowed bounds

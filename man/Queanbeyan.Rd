@@ -42,6 +42,5 @@ Latitude -35.305; Longitude 149.201; Altitude 578.4 m.  } }
 data(Queanbeyan)
 summary(Queanbeyan)
 xyplot(Queanbeyan)
-
 }
 \keyword{datasets}

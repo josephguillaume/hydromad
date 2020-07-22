@@ -70,6 +70,7 @@ cwi.ranges <- function() {
   )
 }
 
+#' @importFrom stats coef
 #' @export
 absorbScale.hydromad.cwi <- function(object, gain, ...) {
   parname <- "scale"

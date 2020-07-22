@@ -55,7 +55,6 @@ Bureau of Meteorology station number: 9534 Station name: DONNYBROOK Latitude
 data(SalmonBrook)
 summary(SalmonBrook)
 xyplot(SalmonBrook)
-
 }
 \references{
 Ye, W., B. C. Bates, N. R. Viney, M. Sivapalan and A. J. Jakeman

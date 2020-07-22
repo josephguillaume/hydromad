@@ -55,7 +55,7 @@ Replicable results can be obtained by using \code{\link{set.seed}}.
 }
 \examples{
 
-pars <- list(a = 1, b = 0:1, c = c(1,10), d = c(-2,-4,-8))
+pars <- list(a = 1, b = 0:1, c = c(1, 10), d = c(-2, -4, -8))
 
 set.seed(10)
 hydromad::parameterSets(pars, 10, method = "random")
@@ -65,7 +65,6 @@ hydromad::parameterSets(pars, 10, method = "latin")
 hydromad::parameterSets(pars, 10, method = "all.combinations")
 
 hydromad::parameterSets(pars, 20, method = "all.combinations")
-
 }
 \seealso{
 \code{\link{sample}}, \code{\link{quantile}},

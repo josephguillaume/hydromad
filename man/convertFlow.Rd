@@ -73,16 +73,15 @@ of a year, i.e. 365.25 days (one \emph{annum}). Similarly, the time step
 
 flowML <- c(0, 1, 100, 10)
 ## from megalitres per day to gigalitres per year
-convertFlow(flowML, from="ML / day", to="GL / yr")
+convertFlow(flowML, from = "ML / day", to = "GL / yr")
 ## from ML/step to mm/step averaged over 50 km^2
-convertFlow(flowML, from="ML", to="mm", area=50)
+convertFlow(flowML, from = "ML", to = "mm", area = 50)
 ## from ML/day to cubic metres per second
-(flowCM <- convertFlow(flowML, from="ML/day", to="m^3/sec"))
+(flowCM <- convertFlow(flowML, from = "ML/day", to = "m^3/sec"))
 ## from cubic metres per second to mm/minute averaged over 0.1 km^2
-convertFlow(flowCM, from="cumecs", to="mm/15min", area=0.1)
+convertFlow(flowCM, from = "cumecs", to = "mm/15min", area = 0.1)
 ## 100 mm in inches
-convertFlow(100, to="in")
-
+convertFlow(100, to = "in")
 }
 \seealso{
 \code{\link{difftime}}

@@ -86,8 +86,10 @@ Normally compiled C code is used for simulation, but if
 str(hydromad.options("cmd"))
 
 data(Canning)
-x <- cmd.sim(Canning[1:1000,], d = 200, f = 0.7, e = 0.166,
-             return_state = TRUE)
+x <- cmd.sim(Canning[1:1000, ],
+  d = 200, f = 0.7, e = 0.166,
+  return_state = TRUE
+)
 xyplot(x)
 
 data(HydroTestData)
@@ -99,24 +101,31 @@ mod1 <- update(mod0, d = 200, f = 0.5, e = 0.1, tau_s = 10)
 
 ## plot results with state variables
 testQ <- predict(mod1, return_state = TRUE)
-xyplot(cbind(HydroTestData[,1:2], cmd = testQ))
+xyplot(cbind(HydroTestData[, 1:2], cmd = testQ))
 
 ## show effect of increase/decrease in each parameter
-parlist <- list(d = c(50, 550), f = c(0.01, 3),
-                e = c(0.01, 1.5))
-parsims <- mapply(val = parlist, nm = names(parlist),
+parlist <- list(
+  d = c(50, 550), f = c(0.01, 3),
+  e = c(0.01, 1.5)
+)
+parsims <- mapply(
+  val = parlist, nm = names(parlist),
   FUN = function(val, nm) {
     lopar <- min(val)
     hipar <- max(val)
     names(lopar) <- names(hipar) <- nm
-    fitted(runlist(decrease = update(mod1, newpars = lopar),
-                   increase = update(mod1, newpars = hipar)))
-  }, SIMPLIFY = FALSE)
+    fitted(runlist(
+      decrease = update(mod1, newpars = lopar),
+      increase = update(mod1, newpars = hipar)
+    ))
+  }, SIMPLIFY = FALSE
+)
 
-xyplot.list(parsims, superpose = TRUE, layout = c(1,NA),
-            main = "Simple parameter perturbation example") +
+xyplot.list(parsims,
+  superpose = TRUE, layout = c(1, NA),
+  main = "Simple parameter perturbation example"
+) +
   layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
-
 }
 \references{
 Croke, B.F.W. and A.J. Jakeman (2004), A Catchment Moisture

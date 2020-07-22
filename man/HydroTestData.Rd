@@ -30,6 +30,5 @@ to temperature, then filtered with a second-order autoregressive
 data(HydroTestData)
 summary(HydroTestData)
 xyplot(HydroTestData)
-
 }
 \keyword{datasets}

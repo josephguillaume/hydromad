@@ -29,11 +29,10 @@ Parameters may not be in feasible parameter set
 \examples{
 
 
- X <- matrix(c(1,4,2,5,1,2,2,3),ncol=2)
- Y <- rotatedSampling(X,1e3)
- plot(X[,1],X[,2],col="red",cex=2)
- points(Y[,1],Y[,2],pch=".")
-
+X <- matrix(c(1, 4, 2, 5, 1, 2, 2, 3), ncol = 2)
+Y <- rotatedSampling(X, 1e3)
+plot(X[, 1], X[, 2], col = "red", cex = 2)
+points(Y[, 1], Y[, 2], pch = ".")
 }
 \references{
 Karel, K. (1990). Membership-set estimation using random

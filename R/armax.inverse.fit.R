@@ -23,6 +23,8 @@
 #' \code{hydromad(..., routing = "expuh", rfit = list("inverse", order =
 #' c(2,1)))}.
 #'
+#' @importFrom stats as.ts coef
+#'
 #' @name armax.inverse.fit
 #' @aliases expuh.inverse.fit
 #' @param DATA a \code{\link{ts}}-like object with named columns: \describe{

@@ -51,9 +51,10 @@ summary(foo)
 str(foo$fit.result)
 
 ## plot objective function value convergence over time
-xyplot(optimtrace(foo), type = "b",
-  xlab = "function evaluations", ylab = "objective fn. value")
-
+xyplot(optimtrace(foo),
+  type = "b",
+  xlab = "function evaluations", ylab = "objective fn. value"
+)
 }
 \seealso{
 \code{\link[DEoptim]{DEoptim}}, \code{\link{objFunVal}}

@@ -41,6 +41,5 @@ above Colwells".  Latitude -37.412; Longitude 145.558.  } \item{Temperature
 data(Murrindindi)
 summary(Murrindindi)
 xyplot(Murrindindi)
-
 }
 \keyword{datasets}

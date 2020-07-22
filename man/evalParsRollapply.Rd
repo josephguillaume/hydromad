@@ -92,48 +92,51 @@ data(Cotter)
 obs <- Cotter[1:1000]
 
 ## Define rainfall-runoff model structure
-object <- hydromad(obs, sma = "cwi", routing = "expuh",
-                   tau_q=c(0,2),tau_s = c(2,100), v_s = c(0,1))
+object <- hydromad(obs,
+  sma = "cwi", routing = "expuh",
+  tau_q = c(0, 2), tau_s = c(2, 100), v_s = c(0, 1)
+)
 
 ## Set the random seed to obtain replicable results
 set.seed(19)
 
 # Draw 10 Latin Hypercube random samples
-par.matrix<-parameterSets(getFreeParsRanges(object),samples=10)
+par.matrix <- parameterSets(getFreeParsRanges(object), samples = 10)
 # Calculate rolling time series of r.squared for each parameter set,
 #   keeping results in memory
-runs <- evalParsRollapply(par.matrix,object,
-  objective=hmadstat("r.squared"),filehash.name=NULL)
-
-
+runs <- evalParsRollapply(par.matrix, object,
+  objective = hmadstat("r.squared"), filehash.name = NULL
+)
 \dontrun{
 ## Setup parallelisation on three cores
 library(parallel)
-hydromad.options("parallel"=list("evalParsTS"="clusterApply"))
+hydromad.options("parallel" = list("evalParsTS" = "clusterApply"))
 cl <- makeCluster(3)
-clusterEvalQ(cl,library(hydromad))
+clusterEvalQ(cl, library(hydromad))
 
-par.matrix<-parameterSets(getFreeParsRanges(object),samples=1000)
+par.matrix <- parameterSets(getFreeParsRanges(object), samples = 1000)
 # Calculate rolling time series of r.squared for each parameter set,
 #  storing result in tempfile()
 # Takes about 2 minutes
-runs <- evalParsRollapply(par.matrix,object,
-  objective=hmadstat("r.squared"))
+runs <- evalParsRollapply(par.matrix, object,
+  objective = hmadstat("r.squared")
+)
 
 # Excerpt of results
 runs
 # Path of backing file - about 7MB
 filename(runs)
-# ff object can be used like a regular matrix, e.g. plotting the 
+# ff object can be used like a regular matrix, e.g. plotting the
 #  rolling time series of R.squared for the first parameter set
-plot(runs[1,])
+plot(runs[1, ])
 
 ## Do the same with foreach
 library(doParallel)
 registerDoParallel(cl)
-hydromad.options("parallel"=list("evalParsTS"="foreach"))
-runs <- evalParsRollapply(par.matrix,object,
-  objective=hmadstat("r.squared"),filehash.name=NULL)
+hydromad.options("parallel" = list("evalParsTS" = "foreach"))
+runs <- evalParsRollapply(par.matrix, object,
+  objective = hmadstat("r.squared"), filehash.name = NULL
+)
 ## runs is a matrix
 }
 

@@ -37,6 +37,5 @@ Evapotranspiration (E)}{ Origin Unknown.} }
 data(Canning)
 summary(Canning)
 xyplot(Canning)
-
 }
 \keyword{datasets}

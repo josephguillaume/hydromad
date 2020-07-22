@@ -28,17 +28,18 @@ Creates a runlist of model instances with separate data periods
 \examples{
 
 data(Cotter)
-modx <- hydromad(Cotter, sma = "cwi", routing = "expuh",
-                 tau_s = c(2,100), v_s = c(0,1))
-start.dates=as.Date(c("1966-05-01","1976-05-1"))
-end.dates=as.Date(c("1976-04-30","1986-04-30"))
-rl=splitData(modx,start.dates,end.dates)
+modx <- hydromad(Cotter,
+  sma = "cwi", routing = "expuh",
+  tau_s = c(2, 100), v_s = c(0, 1)
+)
+start.dates <- as.Date(c("1966-05-01", "1976-05-1"))
+end.dates <- as.Date(c("1976-04-30", "1986-04-30"))
+rl <- splitData(modx, start.dates, end.dates)
 str(rl)
 ## Fit the first period
 fitx <- fitByOptim(rl[[1]])
 ## Evaluate the resulting model on all periods
-rl.first=update(rl,newpars=coef(fitx))
-
+rl.first <- update(rl, newpars = coef(fitx))
 }
 \seealso{
 \code{\link{crossValidate}}

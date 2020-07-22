@@ -74,7 +74,6 @@ statistics.
 
 dat <- data.frame(Q = rnorm(10), X = rnorm(10))
 objFunVal(dat, hmadstat("RMSE"))
-
 }
 \seealso{
 \code{\link{hydromad.stats}}, \code{hydromad.object}

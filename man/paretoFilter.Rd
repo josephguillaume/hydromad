@@ -21,8 +21,10 @@ Filter a matrix of values to identify pareto-optimal solutions
 
 ## Performance measures from 4 models in the Salmon catchment,
 ##  see YeAl97
-mat <- matrix(c(0.865,0.892,-0.847,0.795,
-0.774,0.905,0.819,0.930),nrow=4)
+mat <- matrix(c(
+  0.865, 0.892, -0.847, 0.795,
+  0.774, 0.905, 0.819, 0.930
+), nrow = 4)
 mat
 ## Identify dominated rows of the matrix, interpreting
 ##   higher values to be better
@@ -30,7 +32,6 @@ mat
 ## FALSE: The 1st and 3rd rows are both inferior to the 2nd row,
 ##   and are therefore dominated
 paretoFilter(-mat)
-
 }
 \seealso{
 \code{\link{paretoTimeAnalysis_areModelsDominated}} which uses this

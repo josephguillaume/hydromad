@@ -43,29 +43,32 @@ x <- Cotter[1:1000]
 
 ## IHACRES CWI model with exponential unit hydrograph
 ## an unfitted model, with ranges of possible parameter values
-modx <- hydromad(x, sma = "cwi", routing = "expuh",
-                 tau_s = c(2,100), v_s = c(0,1))
+modx <- hydromad(x,
+  sma = "cwi", routing = "expuh",
+  tau_s = c(2, 100), v_s = c(0, 1)
+)
 
 ## Uncomment to parallelise the fitBy runs
-#library(parallel)
-#cl <- makeCluster(getOption("cl.cores", 2))
-#clusterEvalQ(cl,library(hydromad))
-#hydromad.options(parallel="clusterApply")
+# library(parallel)
+# cl <- makeCluster(getOption("cl.cores", 2))
+# clusterEvalQ(cl,library(hydromad))
+# hydromad.options(parallel="clusterApply")
 
 
 ## Optimisation of multiple weights for r.sq.log and r.squared
-weights<-cbind(c(0,0.33,0.5,0.67,1),1-c(0,0.33,0.5,0.67,1))
+weights <- cbind(c(0, 0.33, 0.5, 0.67, 1), 1 - c(0, 0.33, 0.5, 0.67, 1))
 
 ## Estimate parameters using single fitByOptim run
 ## from single initial parameter set
-front <- paretoObjectivesVaryWeights(modx,objective=list(hmadstat("r.sq.log"),hmadstat("r.squared")),
-  weights=weights,fitBy=fitByOptim,samples=1)
+front <- paretoObjectivesVaryWeights(modx,
+  objective = list(hmadstat("r.sq.log"), hmadstat("r.squared")),
+  weights = weights, fitBy = fitByOptim, samples = 1
+)
 
 summary(front)
 ## Plot objectives
-stats <- t(sapply(front,objFunVal,objective=list(hmadstat("r.sq.log"),hmadstat("r.squared"))))
+stats <- t(sapply(front, objFunVal, objective = list(hmadstat("r.sq.log"), hmadstat("r.squared"))))
 plot(stats)
-
 }
 \seealso{
 \code{\link{paretoObjectivesNsga2}}

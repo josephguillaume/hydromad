@@ -55,12 +55,13 @@ data(Wye)
 xyplot(Wye)
 
 ## note: first three months of rainfall data are daily averages
-xyplot(window(Wye, start = as.POSIXct("1987-01-01"),
-                     end = as.POSIXct("1987-09-01")))
+xyplot(window(Wye,
+  start = as.POSIXct("1987-01-01"),
+  end = as.POSIXct("1987-09-01")
+))
 
 ## auto- and cross-correlation
-acf(coredata(Wye[,2:1]))
-
+acf(coredata(Wye[, 2:1]))
 }
 \references{
 Littlewood, I.G. and Croke, B.F.W. (2008). Data time-step

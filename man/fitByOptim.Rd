@@ -84,30 +84,38 @@ summary(foo)
 str(foo$fit.result)
 
 ## plot objective function value convergence over time
-xyplot(optimtrace(foo), type = "b",
-  xlab = "function evaluations", ylab = "objective fn. value")
+xyplot(optimtrace(foo),
+  type = "b",
+  xlab = "function evaluations", ylab = "objective fn. value"
+)
 
 ## repeat optimisation with single random starting points
 fooreps <-
   replicate(4,
-      fitByOptim(modx, samples = 1, sampletype = "random",
-                 objective = hmadstat("r.squared"),
-                 method = "Nelder-Mead"),
-      simplify = FALSE)
+    fitByOptim(modx,
+      samples = 1, sampletype = "random",
+      objective = hmadstat("r.squared"),
+      method = "Nelder-Mead"
+    ),
+    simplify = FALSE
+  )
 names(fooreps) <- paste("rep.", seq_along(fooreps))
 ## extract and plot the optimisation traces
 traces <- lapply(fooreps, optimtrace)
 tracesraw <- lapply(fooreps, optimtrace, raw = TRUE)
-xyplot(do.call("merge", traces), superpose = TRUE,
-    sub = 'method = "Nelder-Mead"',
-    xlab = "Fn. evaluations", ylab = "Objective value",
-    auto.key = list(corner = c(1,0))) +
-xyplot(do.call("merge", tracesraw), superpose = TRUE,
-    type = "p", cex = 0.5)
+xyplot(do.call("merge", traces),
+  superpose = TRUE,
+  sub = 'method = "Nelder-Mead"',
+  xlab = "Fn. evaluations", ylab = "Objective value",
+  auto.key = list(corner = c(1, 0))
+) +
+  xyplot(do.call("merge", tracesraw),
+    superpose = TRUE,
+    type = "p", cex = 0.5
+  )
 
 ## if you try it again with method = "PORT" you will find that all
 ## replicates converge to the optimum regardless of starting point.
-
 }
 \seealso{
 \code{\link{fitBySampling}}, \code{\link{optim}},

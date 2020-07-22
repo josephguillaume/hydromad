@@ -71,26 +71,32 @@ Invert transfer function models to estimate input series.
 
 ## baseflow filtering using two-store unit hydrograph
 data(Murrindindi)
-x <- Murrindindi[1:1000,]
+x <- Murrindindi[1:1000, ]
 
 ## case 1 (preferred): streamflow + rainfall data constrained
 ## such that effective rainfall is less than observed rainfall
-foo <- hydromad(x, sma = "armax.inverse", routing = "armax",
-                rfit = list("inverse", order = c(2,1)))
+foo <- hydromad(x,
+  sma = "armax.inverse", routing = "armax",
+  rfit = list("inverse", order = c(2, 1))
+)
 foo
 xsq <- predict(foo, return_components = TRUE)
 xyplot(cbind(observed = x$Q, slow_component = xsq$Xs), superpose = TRUE)
 
 ## case 2: using streamflow data only, constrained
 ## to have effective rainfall only when flow is rising
-foo <- hydromad(x$Q, sma = "armax.inverse", routing = "armax",
-                rfit = list("inverse", order = c(2,1), rises.only = TRUE))
+foo <- hydromad(x$Q,
+  sma = "armax.inverse", routing = "armax",
+  rfit = list("inverse", order = c(2, 1), rises.only = TRUE)
+)
 xsq <- predict(foo, return_components = TRUE)
 xyplot(cbind(observed = x$Q, slow_component = xsq$Xs), superpose = TRUE)
 
 ## case 3: using streamflow data only, unconstrained
-foo <- hydromad(x$Q, sma = "armax.inverse", routing = "armax",
-                rfit = list("inverse", order = c(2,1)))
+foo <- hydromad(x$Q,
+  sma = "armax.inverse", routing = "armax",
+  rfit = list("inverse", order = c(2, 1))
+)
 xsq <- predict(foo, return_components = TRUE)
 xyplot(cbind(observed = x$Q, slow_component = xsq$Xs), superpose = TRUE)
 }

@@ -11,6 +11,9 @@
 #' @aliases tfParsConvert
 #'
 #' @param pars Placeholder
+#'
+#' @importFrom stats median
+#' @importFrom utils head
 
 
 tfParsCheck <-

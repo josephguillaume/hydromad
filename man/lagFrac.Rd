@@ -19,10 +19,9 @@ Delays P by a non-integer number of timesteps using a filter
 }
 \examples{
 
-L<-0.6
-P <- c(2,0,5,1,6,10,0,0,0)
-V1<-lagFrac(P,L)
-
+L <- 0.6
+P <- c(2, 0, 5, 1, 6, 10, 0, 0, 0)
+V1 <- lagFrac(P, L)
 }
 \seealso{
 \code{\link{estimateDelayFrac}}

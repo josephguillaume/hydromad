@@ -48,20 +48,19 @@ run slower.
 
 data(Murrindindi)
 x <- Murrindindi[1:100]
-x <- merge(x,X=lag(x$Q,2))
+x <- merge(x, X = lag(x$Q, 2))
 
 event <- eventseq(x$P, thresh = 5, inthresh = 3.5, indur = 7, continue = TRUE)
 
-nseStat(x$Q,x$X)
-nseVarTd(x$Q,x$X,event,lag.max=3)
+nseStat(x$Q, x$X)
+nseVarTd(x$Q, x$X, event, lag.max = 3)
 
 ## Avoiding passing lag.max
 hydromad.getOption("max.delay") ## Current setting - default is 10
-hydromad.options(max.delay=3)
+hydromad.options(max.delay = 3)
 
-nseVarTd(x$Q,x$X,event)
-hmadstat("r.sq.vartd")(x$Q,x$X,event=event)
-
+nseVarTd(x$Q, x$X, event)
+hmadstat("r.sq.vartd")(x$Q, x$X, event = event)
 }
 \seealso{
 \code{\link{hydromad.stats}},\code{\link{nseStat}},\code{\link{objFunVal}}

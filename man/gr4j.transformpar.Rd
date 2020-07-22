@@ -21,9 +21,8 @@ Apply or reverse transformation of GR4J parameters
 }
 \examples{
 
-gr4j.transformpar(c(hydromad.getOption("gr4j"),hydromad.getOption("gr4jrouting")))
-gr4j.transformpar(c(x1=150,x2=2,x3=50,x4=2),back=F)
-
+gr4j.transformpar(c(hydromad.getOption("gr4j"), hydromad.getOption("gr4jrouting")))
+gr4j.transformpar(c(x1 = 150, x2 = 2, x3 = 50, x4 = 2), back = F)
 }
 \seealso{
 \code{\link{gr4j}}

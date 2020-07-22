@@ -79,14 +79,14 @@ equation above] can be taken as a single parameter recession model.
 }
 \examples{
 
-U  <- ts(c(1, rep(0, 99)))
-xyplot(cbind("a = 5" = powuh.sim(U, a = 5),
-             "& b = 2" = powuh.sim(U, a = 5, b = 2),
-             "& c = 2" = powuh.sim(U, a = 5, c = 2)),
-       superpose = TRUE)
-
-
-
+U <- ts(c(1, rep(0, 99)))
+xyplot(cbind(
+  "a = 5" = powuh.sim(U, a = 5),
+  "& b = 2" = powuh.sim(U, a = 5, b = 2),
+  "& c = 2" = powuh.sim(U, a = 5, c = 2)
+),
+superpose = TRUE
+)
 }
 \references{
 Croke, B.F.W. (2006). A technique for deriving an average event

@@ -93,7 +93,6 @@ regression between the two series.
 data(Canning)
 foo <- rollccf(Canning)
 xyplot(foo)
-
 }
 \seealso{
 \code{\link{ccf}}, \code{\link{rollapply}}

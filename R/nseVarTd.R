@@ -38,6 +38,9 @@
 #' This can not be overridden. } Also note that large numbers of events will
 #' run slower.
 #'
+#' @importFrom zoo zoo is.zoo index
+#' @importFrom stats lag
+#'
 #' @aliases nseVarTd adjVarTd
 #' @param obs observed data vector
 #' @param mod model-predicted data vector corresponding to \code{obs}.

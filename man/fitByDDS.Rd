@@ -52,17 +52,16 @@ modx
 
 ## run with cut-down settings (for a speedy example only!)
 foo <- fitByDDS(modx, control = list(
-   max_number_function_calls=100,
-   logfile=NULL,
-           projectfile=NULL,
-           load_projectfile="no"
+  max_number_function_calls = 100,
+  logfile = NULL,
+  projectfile = NULL,
+  load_projectfile = "no"
 ))
 
 summary(foo)
 
 ## return value from DDS:
 str(foo$fit.result)
-
 }
 \references{
 Tolson, B. A., and C. A. Shoemaker (2007) Dynamically

@@ -95,24 +95,28 @@ x <- Cotter[1:1000]
 
 ## IHACRES CWI model with exponential unit hydrograph
 ## an unfitted model, with ranges of possible parameter values
-modx <- hydromad(x, sma = "cwi", routing = "expuh",
-                 tau_s = c(2,100), v_s = c(0,1))
+modx <- hydromad(x,
+  sma = "cwi", routing = "expuh",
+  tau_s = c(2, 100), v_s = c(0, 1)
+)
 
 ################################################################################
-## Find bounds around best guess 
+## Find bounds around best guess
 
 ## Best fit, used as initial feasible solution
-##fitx=fitBySCE(modx,control=list(ncomplex=20))
+## fitx=fitBySCE(modx,control=list(ncomplex=20))
 ## Stored solution
-fitx <- hydromad(x, sma = "cwi", routing = "expuh",
-    tw = 99.9999996914052, f = 4.82636111146549, scale = 0.00129007217632751, 
-    l = 0, p = 1, t_ref = 20, tau_s = 25.2327996372133, v_s = 0.925195113458179)
+fitx <- hydromad(x,
+  sma = "cwi", routing = "expuh",
+  tw = 99.9999996914052, f = 4.82636111146549, scale = 0.00129007217632751,
+  l = 0, p = 1, t_ref = 20, tau_s = 25.2327996372133, v_s = 0.925195113458179
+)
 
 ## Identify bounds
-thres <- objFunVal(fitx)-0.05 ## Look for models within 0.05 of best fit
-bounds <- findUnivariateBounds(modx,fitx,thres)
+thres <- objFunVal(fitx) - 0.05 ## Look for models within 0.05 of best fit
+bounds <- findUnivariateBounds(modx, fitx, thres)
 ## If fit of RSM is poor, probably need to narrow bounds further to concentrate on quadratic region
-modx <- update(modx,newpars=bounds)
+modx <- update(modx, newpars = bounds)
 
 ################################################################################
 ## Evaluate designs with 4 variables, because there are 4 free parameters
@@ -125,11 +129,11 @@ ccd.pick(4)
 
 ################################################################################
 ## Run RSM with n0.c=10 and n0.s=5
-set.seed(10) #make replicable
-evals.rsm <- runRSM(modx,n0=c(10,5))
+set.seed(10) # make replicable
+evals.rsm <- runRSM(modx, n0 = c(10, 5))
 
-##evaluate fit
-summary.lm(evals.rsm) 
+## evaluate fit
+summary.lm(evals.rsm)
 ## Residual standard error of 0.008575
 ##  and R2=0.9235 could be ok,
 ##  but has room for improvement.
@@ -138,17 +142,15 @@ summary.lm(evals.rsm)
 summary(evals.rsm)
 
 ## Evaluate on an independent sample
-evalRSM(modx,evals.rsm,n=100)
+evalRSM(modx, evals.rsm, n = 100)
 
 ## Plot eigen plots
-eigen.plot(evals.rsm,fixed.axis=TRUE)
+eigen.plot(evals.rsm, fixed.axis = TRUE)
 ## Wide/tall ellipses indicate relatively lower identifiability
 ## Rotated ellipses indicate correlation between pairs of parameters
 dev.new()
-eigen.plot(evals.rsm,fixed.axis=FALSE)
+eigen.plot(evals.rsm, fixed.axis = FALSE)
 ## Rotation of ellipses is more visible with fixed axes
-
-
 }
 \references{
 Shin, Mun-Ju, Joseph H.A. Guillaume, Barry F.W. Croke, and

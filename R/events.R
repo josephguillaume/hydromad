@@ -481,6 +481,8 @@ preInterEventDuration <- function(x) {
   c(vals[1], diff(vals))
 }
 
+#' @rdname events
+#' @export
 eventinfo <-
   function(X, events,
            FUN = mean, ...) {

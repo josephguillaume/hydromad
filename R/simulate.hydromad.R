@@ -12,6 +12,8 @@
 #'
 #' none yet.
 #'
+#' @importFrom stats simulate
+#'
 #' @param object a \code{hydromad} object (produced by the
 #' \code{\link{hydromad}()} function) that is not fully specified (i.e. so some
 #' parameter values are given as ranges).

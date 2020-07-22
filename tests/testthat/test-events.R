@@ -15,18 +15,18 @@ evpq <- eventseq(dat$P,
 )
 
 test_that("eventseq seems to work", {
-  expect_that(evp, is_a("zoo"))
-  expect_that(evq, is_a("zoo"))
-  expect_that(evq.ts, is_a("zoo"))
-  expect_that(evpq, is_a("zoo"))
-  expect_that(coredata(evp), is_a("factor"))
-  expect_that(coredata(evpq), is_a("factor"))
-  expect_that(index(evp), equals(index(dat)))
-  expect_that(index(evq.ts), equals(index(as.ts(dat))))
-  expect_that(c(unclass(evq)), equals(c(unclass(evq.ts))))
-  expect_that(nlevels(evp), equals(39))
-  expect_that(nlevels(evq), equals(14))
-  expect_that(sum(is.na(coredata(evp))), equals(524))
+  expect_is(evp, "zoo")
+  expect_is(evq, "zoo")
+  expect_is(evq.ts, "zoo")
+  expect_is(evpq, "zoo")
+  expect_is(coredata(evp), "factor")
+  expect_is(coredata(evpq), "factor")
+  expect_equal(index(evp), index(dat))
+  expect_equal(index(evq.ts), index(as.ts(dat)))
+  expect_equal(c(unclass(evq)), c(unclass(evq.ts)))
+  expect_equal(nlevels(evp), 39)
+  expect_equal(nlevels(evq), 14)
+  expect_equal(sum(is.na(coredata(evp))), 524)
 })
 
 test_that("findThresh seems to work", {
@@ -34,72 +34,72 @@ test_that("findThresh seems to work", {
   x <- rnorm(100)
   t1 <- findThresh(x, n = 20)
   t2 <- findThresh(x, n = 5, mingap = 2)
-  expect_that(abs(nlevels(eventseq(x, t1)) - 20) <= 2, is_true())
-  expect_that(nlevels(eventseq(x, t2, mingap = 2)) - 5, equals(0))
+  expect_lte(abs(nlevels(eventseq(x, t1)) - 20), 2)
+  expect_equal(nlevels(eventseq(x, t2, mingap = 2)) - 5, 0)
 })
 
 test_that("eventapply seems to work with single series", {
   ## NOTE need to handle functions returning vectors as well as scalars.
   ## (1) scalar result:
   psums <- eventapply(dat$P, evp)
-  expect_that(psums, is_a("zoo"))
-  expect_that(index(psums), is_a("Date"))
-  expect_that(NCOL(psums), equals(1))
-  expect_that(NROW(psums), equals(nlevels(evp)))
+  expect_is(psums, "zoo")
+  expect_is(index(psums), "Date")
+  expect_equal(NCOL(psums), 1)
+  expect_equal(NROW(psums), nlevels(evp))
   ## factor events are not sync'd (cbinded) with the data series
   ## but here we know that they are already synchronised.
-  expect_that(
+  expect_identical(
     as.vector(psums),
-    is_identical_to(as.vector(eventapply(dat$P, coredata(evp))))
+    as.vector(eventapply(dat$P, coredata(evp)))
   )
   ## (2) vector (>1) result:
   p2num <- eventapply(dat$P, evp,
     FUN = function(x) c(mean = mean(x), sd = sd(x))
   )
-  expect_that(colnames(p2num), equals(c("mean", "sd")))
-  expect_that(NROW(p2num), equals(nlevels(evp)))
+  expect_equal(colnames(p2num), c("mean", "sd"))
+  expect_equal(NROW(p2num), nlevels(evp))
   ## variable length result, with simplify = FALSE
   pvari <- eventapply(dat$P, evp, FUN = coredata, simplify = FALSE)
-  expect_that(pvari, is_a("list"))
-  expect_that(length(pvari), equals(nlevels(evp)))
-  expect_that(names(pvari), equals(format(unname(index(psums)))))
+  expect_output(str(class(pvari)), "list")
+  expect_equal(length(pvari), nlevels(evp))
+  expect_equal(names(pvari), format(unname(index(psums))))
 })
 
 test_that("eventapply seems to work with multiple series", {
   ## (1) scalar result with by.column = FALSE
   durs <- eventapply(dat, evp, FUN = nrow, by.column = FALSE)
-  expect_that(durs, is_a("zoo"))
-  expect_that(NCOL(durs), equals(1))
-  expect_that(NROW(durs), equals(nlevels(evp)))
+  expect_is(durs, "zoo")
+  expect_equal(NCOL(durs), 1)
+  expect_equal(NROW(durs), nlevels(evp))
   ## (2) scalar result with by.column = TRUE (the default)
   sums <- eventapply(dat, evp, FUN = sum)
-  expect_that(sums, is_a("zoo"))
-  expect_that(NCOL(sums), equals(NCOL(dat)))
-  expect_that(colnames(sums), equals(colnames(dat)))
+  expect_is(sums, "zoo")
+  expect_equal(NCOL(sums), NCOL(dat))
+  expect_equal(colnames(sums), colnames(dat))
   ## (3) vector result with by.column = FALSE
   ## should be exactly the same in this case!
   sums2 <- eventapply(dat, evp, FUN = colSums, by.column = FALSE)
-  expect_that(sums, equals(sums2))
+  expect_equal(sums, sums2)
   ## (4) vector result with by.column = TRUE
   each2num <- eventapply(dat, evp,
     FUN = function(x) c(mean = mean(x), sd = sd(x))
   )
-  expect_that(
+  expect_equal(
     colnames(each2num),
-    equals(c("P.mean", "P.sd", "Q.mean", "Q.sd", "E.mean", "E.sd"))
+    c("P.mean", "P.sd", "Q.mean", "Q.sd", "E.mean", "E.sd")
   )
-  expect_that(index(each2num), equals(index(sums)))
+  expect_equal(index(each2num), index(sums))
 })
 
 test_that("eventinfo looks ok", {
   info <- eventinfo(dat$P, evp)
-  expect_that(info, is_a("data.frame"))
-  expect_that(
+  expect_output(str(class(info)), "data.frame")
+  expect_identical(
     colnames(info),
-    is_identical_to(c(
+    c(
       "Time", "Month", "Year",
       "Value", "Duration", "PreDuration"
-    ))
+    )
   )
-  expect_that(nrow(info), equals(nlevels(evp)))
+  expect_equal(nrow(info), nlevels(evp))
 })

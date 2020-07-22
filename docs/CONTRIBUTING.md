@@ -7,7 +7,7 @@
 This document outlines how to contribute changes to hydromad.
 
 When contributing to this repository, please first discuss the change you wish to make via issue,
-email, or any other method with the owners of this repository before attempting to make a change. 
+email, or any other method with the owners of this repository before attempting to make a change.
 
 Please note we have a code of conduct that we request you adhere to in all your interactions with this project (see below).
 

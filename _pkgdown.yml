@@ -1,0 +1,109 @@
+destination: web/docs
+home:
+  title: hydromad R package
+  links:
+    - text: Report a bug at
+      href: http://github.com/josephguillaume/hydromad/issues'
+development:
+  mode: devel
+news:
+  releases:
+    - text: 'hydromad 0.9-26'
+      href: 'http://github.com/josephguillaume/hydromad'
+reference:
+  - title: 'Modelling framework'
+  - contents:
+    - hydromad
+    - update.hydromad
+    - fitted.hydromad
+    - observed.hydromad
+    - residuals.hydromad
+    - coef.hydromad
+    - vcov.hydromad
+    - isValidModel
+    - predict.hydromad
+    - simulate.hydromad
+    - runlist
+    - hydromad.options
+  - title: 'Assessment'
+  - contents:
+    - summary.hydromad
+    - hydromad.stats
+    - nseStat
+    - nseVarTd
+    - xyplot.hydromad
+    - xyplot.runlist
+    - qqmath.hydromad
+    # - areModelsDominated
+    # - paretoCatchments.hydromad
+  - title: 'Calibration'
+  - contents:
+    - buildTsObjective
+    - objFunVal
+    - fitBySampling
+    - fitByOptim
+    - fitBySCE
+    - fitByDE
+    - fitByDream
+    - fitByCMAES
+    - fitByDDS
+    - fitByNsga2
+    - optimtrace
+    - defineFeasibleSet
+  - title: 'Discrete events'
+  - contents:
+    - eventseq
+    - event.xyplot
+    - event.xyplot.hydromad
+    # - eventsExplorer
+  - title: 'Soil moisture accounting'
+  - contents:
+    - cmd
+    - cwi
+    - gr4j
+    - awbm
+    - bucket
+    - sacramento
+    - snow
+    - scalar
+    - intensity
+    - runoffratio
+    # - vdbm
+  - title: 'Routing'
+  - contents:
+    - armax
+    - expuh
+    - lambda
+    - powuh
+    - leakyExpStore
+    - expuh3s
+  - title: 'Routing fitting'
+  - contents:
+    - armax.ls.fit
+    - armax.sriv.fit
+    - armax.inverse.fit
+    - armax.inverse.sim
+    - tryModelOrders
+    - estimateDelay
+    - estimateDelayFrac
+    - deconvolution.uh
+  - title: 'Utilities'
+  - contents:
+    - convertFlow
+    - rollccf
+    - parameterSets
+    - evalPars
+    - rotatedSampling
+    - gr4j.transformpar
+    - observed
+    - SCEoptim
+  - title: 'Datasets'
+  - contents:
+    - BinghamTrib
+    - Canning
+    - Cotter
+    - Murrindindi
+    - Queanbeyan
+    - SalmonBrook
+    - Wye
+    - HydroTestData

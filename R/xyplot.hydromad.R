@@ -19,6 +19,7 @@ plot.hydromad <-
 #' Plot methods...
 #'
 #' @importFrom lattice qqmath xyplot
+#' @importFrom stats tsdiag
 #'
 #' @aliases xyplot.hydromad xyplot.hydromad.runlist qqmath.hydromad
 #' tsdiag.hydromad

@@ -27,6 +27,8 @@
 #' @param return_state Placeholder
 
 #' @useDynLib hydromad _hydromad_simhyd_sim
+#' @useDynLib hydromad
+#' @importFrom Rcpp sourceCpp
 #' @export
 simhyd.sim <-
   function(DATA,
@@ -191,7 +193,6 @@ simhydrouting.sim <- function(U, DELAY = 1, X_m = 0.2,
   X
 }
 
-
 #' @export
 simhyd.ranges <- function() {
   list(
@@ -205,7 +206,6 @@ simhyd.ranges <- function() {
     etmult = c(0.01, 1)
   )
 }
-
 
 #' @export
 simhydrouting.ranges <- function() {

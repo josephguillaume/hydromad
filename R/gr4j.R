@@ -140,6 +140,7 @@
 #'
 #' # Parameters in original parameter space
 #' gr4j.transformpar(coef(fit1), back = T)
+#' @useDynLib hydromad sma_gr4j
 #' @export
 gr4j.sim <-
   function(DATA,
@@ -228,6 +229,7 @@ gr4j.ranges <- function() {
 
 
 #' @rdname gr4j
+#' @useDynLib hydromad routing_gr4j
 #' @export
 gr4jrouting.sim <-
   function(U, x2, x3, x4, R_0 = 0, split = 0.9,

@@ -16,6 +16,7 @@
 #' Generate objective functions with temporal aggregation, data transformation
 #' and an optional reference model.
 #'
+#' @importFrom car powerTransform bcPower
 #'
 #' @aliases buildTsObjective buildObjectiveFun buildTsLikelihood
 #' @param Q observed data, typically a \code{\link{zoo}} object.

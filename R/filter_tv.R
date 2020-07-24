@@ -46,6 +46,7 @@
 #' ## treatment of missing values
 #' x[15:20] <- NA
 #' plot.ts(filter_tv(x, a), log = "y")
+#' @useDynLib hydromad ar1_tv
 #' @export
 filter_tv <-
   function(x, a, init = 0) {

@@ -26,6 +26,7 @@
 #' @param SMSt0 Placeholder
 #' @param return_state Placeholder
 
+#' @useDynLib hydromad _hydromad_simhyd_sim
 #' @export
 simhyd.sim <-
   function(DATA,

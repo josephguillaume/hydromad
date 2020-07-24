@@ -22,5 +22,5 @@ Suggests: DEoptim, mgcv, chron, testthat, mco, cmaes, ppso, sensitivity,ggplot2,
 LinkingTo: Rcpp
 License: GPL (>= 2)
 URL: http://hydromad.catchment.org/
-RoxygenNote: 7.1.0.9000
+RoxygenNote: 7.1.1
 Encoding: UTF-8

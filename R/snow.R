@@ -92,6 +92,7 @@
 #'   main = "Simple parameter perturbation example"
 #' ) +
 #'   latticeExtra::layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
+#' @useDynLib hydromad sma_snow
 #' @export
 snow.sim <-
   function(DATA, Tmax, Tmin, kd, kf, rcap, Tmelt = Tmin,

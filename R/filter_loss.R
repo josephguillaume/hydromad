@@ -13,6 +13,7 @@
 #' @param loss Placeholder
 #' @param init Placeholder
 #'
+#' @useDynLib hydromad filter_constloss
 #' @export
 filter_loss <-
   function(x, a, loss, init = 0) {

@@ -76,6 +76,7 @@
 #'   main = "Simple parameter perturbation example"
 #' ) +
 #'   layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
+#' @useDynLib hydromad sma_bucket
 #' @export
 bucket.sim <-
   function(DATA,

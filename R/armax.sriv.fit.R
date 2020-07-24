@@ -119,6 +119,7 @@ armax.sriv.fit <-
   }
 
 
+#' @useDynLib hydromad sriv_system
 do_srivfit <-
   function(DATA,
            init.model,

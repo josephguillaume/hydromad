@@ -63,6 +63,7 @@
 #' )
 #' xsq <- predict(foo, return_components = TRUE)
 #' xyplot(cbind(observed = x$Q, slow_component = xsq$Xs), superpose = TRUE)
+#' @useDynLib hydromad inverse_filter
 #' @export
 armax.inverse.sim <-
   function(DATA,

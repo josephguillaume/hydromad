@@ -6,6 +6,7 @@
 #' Estimation) method.
 #'
 #' @importFrom stats update
+#' @importFrom Hmisc wtd.quantile
 #'
 #' @aliases defineFeasibleSet defineFeasibleSet.hydromad
 #' defineFeasibleSet.default
@@ -168,10 +169,10 @@ defineFeasibleSet.hydromad <-
       result <- x$fit.result
       ## extract last half of Sequences (assumed to have converged)
       mcmc <- window(result)
-      logp <- as.mcmc(window(result$hist.logp, start = start(mcmc)))
+      logp <- coda::as.mcmc(window(result$hist.logp, start = start(mcmc)))
       ## thin the sequences to remove autocorrelation (more efficient samples)
       if (is.na(thin)) {
-        effsz <- effectiveSize(mcmc)
+        effsz <- coda::effectiveSize(mcmc)
         thin <- 2 * ceiling(max(nrow(mcmc[[1]]) / effsz))
       }
       mcmc <- window(mcmc, thin = thin)

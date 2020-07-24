@@ -17,6 +17,8 @@
 #' This error can usually be ignored, though it suggests that the \code{fitx}
 #' parameter estimation could perhaps be improved.
 #'
+#' @importFrom stats uniroot
+#'
 #' @param modx a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined
 #' by \emph{ranges} of values rather than exact values.

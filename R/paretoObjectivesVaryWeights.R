@@ -3,6 +3,7 @@
 #' Estimate multi-objective Pareto front using multiple weighted single
 #' objective optimisations
 #'
+#' @importFrom parallel clusterApply parApply clusterExport
 #'
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined

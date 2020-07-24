@@ -17,6 +17,8 @@
 #' \code{\link{fitByOptim1}} handles a single free parameter using
 #' \code{\link{optimize}}; it is called by \code{fitByOptim}, with a warning,
 #' in that case.
+#' 
+#' @importFrom stats optim
 #'
 #' @aliases fitByOptim fitByOptim1
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It

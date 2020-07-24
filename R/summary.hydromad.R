@@ -20,6 +20,7 @@ summary.hydromad.runlist <-
 #' Definitions of statistics are looked up by name in
 #' \code{\link{hydromad.stats}()}, and you can also use that function to add
 #' new statistics.
+#' 
 #'
 #' @aliases summary.hydromad print.summary.hydromad
 #' print.summaryWithBreaks.hydromad summary.hydromad.runlist

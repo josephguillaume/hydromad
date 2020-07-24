@@ -9,6 +9,10 @@
 #'
 #' Visualise systematic model errors against covariates.
 #'
+#' @importFrom lattice panel.xyplot trellis.par.get current.panel.limits
+#' panel.superpose panel.polygon
+#' @importFrom latticeExtra panel.smoother
+#'
 #' @name event.xyplot.hydromad
 #' @aliases event.xyplot.hydromad.runlist
 #' @param x a \code{hydromad} or \code{hydromad.runlist} object.

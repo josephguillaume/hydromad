@@ -10,10 +10,12 @@
 #' @name tfUtils
 #' @aliases tfParsConvert
 #'
+#'
 #' @param pars Placeholder
 #'
 #' @importFrom stats median
 #' @importFrom utils head
+#' @importFrom polynom poly.calc
 
 
 tfParsCheck <-

@@ -165,7 +165,7 @@ runRSM <- function(modx, ..., objective = hydromad.getOption("objective")) {
   )
 
   cat(sprintf("Running %d model evaluations\n", nrow(evals)))
-  evals$Y <- evalPars(decode.data(evals)[, names(bounds)], modx, objective = objective)
+  evals$Y <- evalPars(rsm::decode.data(evals)[, names(bounds)], modx, objective = objective)
 
   ################################################################################
   ## Estimate quadratic response surface
@@ -181,9 +181,9 @@ evalRSM <- function(modx, rsm.object, n = 100,
                     objective = hydromad.getOption("objective"),
                     method = "latin.hypercube") {
   indep.sample <- parameterSets(getFreeParsRanges(modx), samples = n, method = method)
-  indep.sample.coded <- coded.data(indep.sample, formulas = codings(rsm.object))
+  indep.sample.coded <- rsm::coded.data(indep.sample, formulas = rsm::codings(rsm.object))
   cat(sprintf("Running %d model evaluations\n", nrow(indep.sample)))
-  indep.sample.coded$Y <- evalPars(decode.data(indep.sample), modx, objective = objective)
+  indep.sample.coded$Y <- evalPars(rsm::decode.data(indep.sample), modx, objective = objective)
   f <- predict(rsm.object, newdata = indep.sample.coded)
   r <- indep.sample.coded$Y - f
   ans <- list(

@@ -16,6 +16,7 @@
 #' \code{$fit.result}. The result can also be used to define a
 #' \link[=defineFeasibleSet]{feasible parameter set}.
 #'
+#' @importFrom stats cov
 #'
 #' @param MODEL a model specification created by \code{\link{hydromad}}. It
 #' should not be fully specified, i.e one or more parameters should be defined

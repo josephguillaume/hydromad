@@ -34,6 +34,9 @@
 #' regression between the two series.
 #' 
 #' @importFrom stats na.contiguous ccf
+#' @importFrom lattice simpleTheme strip.default simpleKey
+#' @importFrom latticeExtra xyplot.list
+#' @importFrom zoo as.zoo rollapply
 #'
 #' @aliases rollccf xyplot.rollccf
 #' @param DATA a named list, data frame, time series or zoo object containing

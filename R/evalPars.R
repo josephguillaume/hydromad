@@ -70,8 +70,8 @@ evalPars <- function(par.matrix, object, objective = hydromad.getOption("objecti
     "foreach" = {
       opts <- hydromad.options()
       export <- parallel$export
-      objs <- foreach(
-        p = iter(par.matrix, by = "row"),
+      objs <- foreach::foreach(
+        p = iterators::iter(par.matrix, by = "row"),
         .packages = parallel$packages,
         .inorder = TRUE,
         .export = parallel$export,

@@ -6,6 +6,9 @@
 #' Placeholder title for absorbScale
 #'
 #' Description here.
+#' 
+#' @importFrom zoo as.zooreg
+#' @importFrom stats predict
 #'
 #' @aliases absorbScale
 #'

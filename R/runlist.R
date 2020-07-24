@@ -11,6 +11,8 @@
 #'
 #' Note that the \code{coef} method just calls \code{summary(..., FUN = coef)}.
 #'
+#' @importFrom parallel parLapply
+#'
 #' @aliases runlist as.runlist [.runlist c.runlist coef.runlist summary.runlist
 #' print.summary.runlist residuals.runlist fitted.runlist
 #' @param \dots for \code{runlist}, a named list of model objects, specified

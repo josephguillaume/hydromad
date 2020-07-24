@@ -18,8 +18,10 @@ plot.hydromad <-
 #'
 #' Plot methods...
 #'
-#' @importFrom lattice qqmath xyplot
-#' @importFrom stats tsdiag
+#' @importFrom lattice qqmath xyplot make.groups
+#' @importFrom stats tsdiag ppoints
+#' @importFrom latticeExtra as.layer xyplot.list
+#' @importFrom zoo coredata
 #'
 #' @aliases xyplot.hydromad xyplot.hydromad.runlist qqmath.hydromad
 #' tsdiag.hydromad
@@ -201,7 +203,7 @@ qqmath.hydromad <-
       mod = fitted(x, all = all)
     )
     ## keep only common (corresponding) values
-    coredata(tsdat)[complete.cases(tsdat) == FALSE, ] <- NA
+    zoo::coredata(tsdat)[complete.cases(tsdat) == FALSE, ] <- NA
     dat <- make.groups(observed = tsdat[, "obs"], modelled = tsdat[, "mod"])
     foo <- qqmath(~data,
       groups = which, data = dat,

@@ -3,6 +3,7 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+#' @importFrom stats predict
 
 ## NOTE - currently all the tf() stuff converts data to ts
 

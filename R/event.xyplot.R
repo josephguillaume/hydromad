@@ -10,6 +10,8 @@
 #'
 #' Scatterplots with variables aggregated in event windows.
 #'
+#' @importFrom stats terms model.frame model.response as.formula
+#' @importFrom utils stack
 #'
 #' @name event.xyplot
 #' @aliases event.xyplot.formula

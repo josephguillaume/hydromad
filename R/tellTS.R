@@ -9,6 +9,7 @@
 #' (see \link[sensitivity]{tell}) on a time series of results, as produced for
 #' example by \link{evalParsRollapply}. See examples for more details.
 #'
+#' @importFrom parallel clusterEvalQ
 #'
 #' @aliases tellTS tellTS.default tellTS.sobol2002 tellTS.sobol2007
 #' tellTS.morris
@@ -154,14 +155,14 @@ tellTS.default <- function(x, ts.matrix, fun,
       clusterExport(cl, c("ts.matrix", "x", "fun"), envir = environment())
       results <- parLapply(cl, indices, function(i) {
         y <- ts.matrix[, i]
-        tell(x, y, ...)
+        sensitivity::tell(x, y, ...)
         return(fun(i, x))
       })
     },
     {
       results <- lapply(indices, function(i) {
         y <- ts.matrix[, i]
-        tell(x, y, ...)
+        sensitivity::tell(x, y, ...)
         return(fun(i, x))
       })
     }

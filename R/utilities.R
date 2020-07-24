@@ -14,7 +14,7 @@
 #' The default method should work for any object with methods for
 #' \code{residuals} and \code{fitted}.
 #'
-#' @importFrom stats arima
+#' @importFrom stats arima ts.union fivenum
 #'
 #' @name utilities
 #' @aliases observed observed.default numericSummary

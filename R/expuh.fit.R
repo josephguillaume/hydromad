@@ -59,6 +59,8 @@
 #' series: \var{X = s * q * 3}.  In this case \code{v_q} defaults to 1. The
 #' total volume will be 1 if \code{v_s} and \code{v_3} are also 1.  } }
 #'
+#' @importFrom stats optim
+#'
 #' @name expuh
 #' @aliases ssg.expuh normalise.expuh expuh.ls.fit expuh.sim
 #' @param DATA Placeholder

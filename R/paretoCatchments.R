@@ -1,3 +1,7 @@
+#' @importFrom utils write.csv
+#' @importFrom stats aggregate
+#' @importFrom reshape rename
+#'
 #' @export
 paretoTimeAnalysis.data.frame <- function(stat, show.models = NA, objectives = "r.squared",
                                           pars, ...) {

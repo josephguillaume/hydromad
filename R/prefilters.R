@@ -11,6 +11,8 @@
 #' @name prefilters
 #' @aliases makePrefilter defaultPrefilters
 #'
+#' @importFrom stats ar
+#'
 #' @param DATA Placeholder
 #' @param order Placeholder
 #' @param pureAR Placeholder

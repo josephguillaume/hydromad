@@ -28,6 +28,9 @@
 #' ranges of parameters that do not have fixed parameter values. In particular,
 #' it is used in conjunction with \code{\link{evalPars}} to perform sensitivity
 #' analyses.
+#' 
+#' @importFrom zoo coredata
+#' @importFrom utils str
 #'
 #' @name hydromad.object
 #' @aliases update.hydromad fitted.hydromad observed.hydromad
@@ -251,8 +254,8 @@ print.hydromad <-
       sep = ""
     )
     rx <- x$data
-    cat("Start = ", index2char(index(rx)[1], frequency(rx)),
-      ", End = ", index2char(index(rx)[NROW(rx)], frequency(rx)),
+    cat("Start = ", zoo::index2char(index(rx)[1], frequency(rx)),
+      ", End = ", zoo::index2char(index(rx)[NROW(rx)], frequency(rx)),
       "\n",
       sep = ""
     )

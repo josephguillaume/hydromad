@@ -7,6 +7,8 @@
 #'
 #' Identify discrete events from time series and apply functions to them.
 #'
+#' @importFrom zoo is.regular rollmax
+#'
 #' @name events
 #' @aliases eventseq eventapply eventinfo findThresh
 #' @param x,X a \code{\link{ts}} or \code{\link{zoo}} object.  May be

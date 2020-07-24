@@ -100,9 +100,9 @@ crossValidate <- function(MODEL, periods,
 
   switch(parallel$method,
     "foreach" = {
-      if (trace) message(sprintf("Running crossvalidate in parallel using foreach: %s", getDoParName()))
+      if (trace) message(sprintf("Running crossvalidate in parallel using foreach: %s", foreach::getDoParName()))
       opts <- hydromad.options()
-      runs <- foreach(
+      runs <- foreach::foreach(
         n = names(cv.set),
         .packages = parallel$packages,
         .inorder = FALSE,

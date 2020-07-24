@@ -28,6 +28,8 @@
 #' See \code{\link{hydromad.stats}} for examples of how to specify other fit
 #' statistics.
 #'
+#' @importFrom parallel parSapply
+#'
 #' @aliases objFunVal objFunVal.hydromad objFunVal.default objFunVal.runlist
 #' @param x object from which to calculate stats. For the \code{hydromad}
 #' method, this should be a fitted \code{hydromad} model object, i.e. it must

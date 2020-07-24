@@ -126,7 +126,7 @@ evalParsRollapply <- function(par.matrix, object,
                               parallel = hydromad.getOption("parallel")[["evalParsTS"]],
                               filehash.name = tempfile()) {
   fun <- function(thisMod, width, objective) {
-    rollapply(cbind(Q = observed(thisMod), X = fitted(thisMod)),
+    zoo::rollapply(cbind(Q = observed(thisMod), X = fitted(thisMod)),
       width = width, by.column = FALSE,
       FUN = objFunVal, objective = objective
     )
@@ -188,7 +188,7 @@ evalParsTS <- function(par.matrix, object,
       opts <- hydromad.options()
       export <- parallel$export
       results <- foreach::foreach(
-        p = iter(par.matrix, by = "row"),
+        p = iterators::iter(par.matrix, by = "row"),
         .packages = parallel$packages,
         .inorder = TRUE,
         .export = export,

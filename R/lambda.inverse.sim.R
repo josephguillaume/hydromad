@@ -160,3 +160,6 @@ lambda.inverse.sim <-
     }
     U
   }
+
+#' @import utils
+utils::globalVariables(c('inverse_filter_lambda'))

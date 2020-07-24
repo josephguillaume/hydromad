@@ -166,3 +166,6 @@ summary.crossvalidation <- function(object, ...) {
   s$Catchment <- sapply(object, function(x) x$name.Catchment)
   s
 }
+
+#' @import utils
+utils::globalVariables(c('%dopar%'))

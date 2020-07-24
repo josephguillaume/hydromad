@@ -123,3 +123,6 @@ event.xyplot.formula <-
     foo$call <- sys.call(sys.parent())
     foo
   }
+
+#' @import utils
+utils::globalVariables(c('ind'))

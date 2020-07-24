@@ -201,3 +201,6 @@ objFunVal.runlist <- function(x, objective = list(hydromad.getOption("objective"
   }
   stop("Objective is not a list of length 2 or a function")
 }
+
+#' @import utils
+utils::globalVariables(c('cl'))

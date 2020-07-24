@@ -295,3 +295,6 @@ sacramento.ranges <- function() {
     pfree = c(0, 0.6)
   )
 }
+
+#' @import utils
+utils::globalVariables(c('sma_sac_state'))

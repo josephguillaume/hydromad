@@ -81,6 +81,7 @@ paretoFilter <- function(x, ...) {
 #'
 #' data(YeAl97)
 #' plotPCNSE(subset(YeAl97, Catchment == "Salmon"), objectives = "E")
+
 #' @export
 plotPCNSE <- function(res, objectives = "r.squared", return.data = FALSE) {
   if (!require("ggplot2")) stop("package ggplot2 is required for plotPCNSE")
@@ -132,3 +133,7 @@ plotPCNSE <- function(res, objectives = "r.squared", return.data = FALSE) {
     ggplot2::scale_linetype_discrete(name = "Model structure") +
     ggplot2::coord_cartesian(ylim = c(0.4, 1)) ## FIXME
 }
+
+
+#' @import utils
+utils::globalVariables(c('sim.period', 'value', 'model', 'dominated', 'Model.str'))

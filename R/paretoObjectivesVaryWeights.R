@@ -82,3 +82,6 @@ paretoObjectivesVaryWeights <- function(MODEL, objective = hydromad.getOption("o
   front <- as.runlist(front)
   return(front)
 }
+
+#' @import utils
+utils::globalVariables(c('cl'))

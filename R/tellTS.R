@@ -10,6 +10,7 @@
 #' example by \link{evalParsRollapply}. See examples for more details.
 #'
 #' @importFrom parallel clusterEvalQ
+#' @importFrom stats sd
 #'
 #' @aliases tellTS tellTS.default tellTS.sobol2002 tellTS.sobol2007
 #' tellTS.morris
@@ -223,3 +224,7 @@ tellTS.morris <- function(x, ts.matrix, fun,
     ...
   )
 }
+
+
+#' @import utils
+utils::globalVariables(c('cl'))

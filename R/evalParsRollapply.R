@@ -239,3 +239,6 @@ evalParsTS <- function(par.matrix, object,
   ## ff matrix of ts
   results
 }
+
+#' @import utils
+utils::globalVariables(c('cl', 'p'))

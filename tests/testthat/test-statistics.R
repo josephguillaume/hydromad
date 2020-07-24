@@ -16,7 +16,7 @@ test_that("basic summary() works", {
   s <- summary(mod, with.hydrostats = TRUE)
   expect_is(s, "summary.hydromad")
   expect_true(is.finite(s$rel.bias))
-  #expect_equal(as.character(print(s)), "Time steps:") # is this test important?
+  # expect_equal(as.character(print(s)), "Time steps:") # is this test important?
   s.breaks <- summary(mod, breaks = "12 months")
   expect_is(s.breaks, "zoo")
 })

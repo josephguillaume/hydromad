@@ -48,11 +48,11 @@ Q_n3s2 <- expuh.sim(U, pars = n3s2)
 Q_n3s3 <- expuh.sim(U, pars = n3s3)
 
 test_that("Least squares (armax) fitting works for all orders with exact inputs", {
-  ## note 
+  ## note
   ## tmp <- ts.intersect(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s3), order = c(3,0), delay = 0)), Q_n3s3)
   ## summary(tmp[,1] - tmp[,2])
   ## xyplot(ts(tmp), superpose = TRUE)
-  #hydromad.getOption("warmup") == 100
+  # hydromad.getOption("warmup") == 100
   skip("Skipped least squares (armax) fitting for exact inputs")
   expect_equal(fitted(armax.ls.fit(cbind(U = U, Q = Q_n0m0), order = c(0, 0))), ts_equals2(Q_n0m0, fitted(armax.ls.fit(cbind(U = U, Q = Q_n0m0)))), 1e-5)
   expect_equal(fitted(armax.ls.fit(cbind(U = U, Q = Q_n1m0), order = c(1, 0))), ts_equals2(Q_n1m0, fitted(armax.ls.fit(cbind(U = U, Q = Q_n1m0)))), 1e-5)
@@ -67,8 +67,8 @@ test_that("Least squares (armax) fitting works for all orders with exact inputs"
 })
 
 test_that("SRIV (armax) fitting works for all orders with exact inputs", {
-  ## note 
-  #hydromad.getOption("warmup") == 100
+  ## note
+  # hydromad.getOption("warmup") == 100
   skip("SRIV (armax) fitting for exact inputs")
   expect_equal(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n0m0), order = c(0, 0))), ts_equals2(Q_n0m0, fitted(armax.sriv.fit(cbind(U = U, Q = Q_n0m0)))), 1e-5)
   expect_equal(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n1m0), order = c(1, 0))), ts_equals2(Q_n1m0, fitted(armax.sriv.fit(cbind(U = U, Q = Q_n1m0)))), 1e-5)
@@ -80,9 +80,9 @@ test_that("SRIV (armax) fitting works for all orders with exact inputs", {
   expect_equal(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s1), order = c(3, 1))), ts_equals2(Q_n3s1, fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s1)))), 1e-5)
   expect_equal(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s2), order = c(3, 2))), ts_equals2(Q_n3s2, fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s2)))), 1e-5)
   expect_equal(fitted(armax.sriv.fit(cbinU = U, Q = Q_n3s3), order = c(3, 0), delay = 0), ts_equals2(Q_n3s3, fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s3)))), 1e-5)
-## tmp <- ts.intersect(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s3), order = c(3,0), delay = 0)), Q_n3s3)
-## summary(tmp[,1] - tmp[,2])
-## xyplot(ts(tmp), superpose = TRUE)
+  ## tmp <- ts.intersect(fitted(armax.sriv.fit(cbind(U = U, Q = Q_n3s3), order = c(3,0), delay = 0)), Q_n3s3)
+  ## summary(tmp[,1] - tmp[,2])
+  ## xyplot(ts(tmp), superpose = TRUE)
 })
 
 test_that("Inverse (armax) fitting works for all orders with exact inputs", {

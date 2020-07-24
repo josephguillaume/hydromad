@@ -14,8 +14,8 @@
 #'
 #' @importFrom lattice qqmath xyplot make.groups
 #' @importFrom latticeExtra xyplot.list
-#' 
-#' 
+#'
+#'
 #' @aliases xyplot.runlist qqmath.runlist
 #' @param x a \code{runlist} object, which is a list of fitted model objects.
 #' @param data ignored.

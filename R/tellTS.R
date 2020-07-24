@@ -227,4 +227,4 @@ tellTS.morris <- function(x, ts.matrix, fun,
 
 
 #' @import utils
-utils::globalVariables(c('cl'))
+utils::globalVariables(c("cl"))

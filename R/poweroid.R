@@ -45,7 +45,7 @@
 #'
 #' The examples below demonstrate the different shapes and depth distributions
 #' that are possible.
-#' 
+#'
 #' @importFrom stats weighted.mean nlminb optimize
 #'
 #' @param alpha scale parameter.

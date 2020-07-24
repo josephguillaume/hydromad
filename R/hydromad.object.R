@@ -28,7 +28,7 @@
 #' ranges of parameters that do not have fixed parameter values. In particular,
 #' it is used in conjunction with \code{\link{evalPars}} to perform sensitivity
 #' analyses.
-#' 
+#'
 #' @importFrom zoo coredata
 #' @importFrom utils str
 #'

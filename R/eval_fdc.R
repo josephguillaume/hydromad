@@ -3,9 +3,9 @@
 #' Description placeholder.
 #'
 #' @name eval_fdc
-#' 
+#'
 #' @importFrom stats qnorm pnorm
-#' 
+#'
 #' @aliases fdc.sample, fdc.allpoints
 #' @param Q Placeholder
 #'

@@ -128,4 +128,4 @@ getFreeParsRanges <- function(object) {
 }
 
 #' @import utils
-utils::globalVariables(c('cl', 'p'))
+utils::globalVariables(c("cl", "p"))

@@ -27,8 +27,8 @@
 #'
 #' @importFrom stats na.pass var tsp arima ts.intersect residuals
 #' @importFrom graphics frame mtext par
-#' 
-#' 
+#'
+#'
 #' @aliases armax.sriv.fit expuh.sriv.fit
 #' @param DATA a \code{\link{ts}}-like object with named columns: \describe{
 #' \item{list("U")}{ observed input time series. } \item{list("Q")}{ observed

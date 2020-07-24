@@ -57,7 +57,7 @@ paretoFilter <- function(x, ...) {
 #' Plot performance of model realisations, identifying non-dominated models
 #'
 #' @importFrom reshape melt cast
-#' 
+#'
 # @importFrom ggplot2 geom_point geom_text scale_y_continuous scale_x_discrete
 # scale_linetype_discrete scale_colour_discrete coord_cartesian ggplot
 # aes geom_line
@@ -81,7 +81,6 @@ paretoFilter <- function(x, ...) {
 #'
 #' data(YeAl97)
 #' plotPCNSE(subset(YeAl97, Catchment == "Salmon"), objectives = "E")
-
 #' @export
 plotPCNSE <- function(res, objectives = "r.squared", return.data = FALSE) {
   if (!require("ggplot2")) stop("package ggplot2 is required for plotPCNSE")
@@ -136,4 +135,4 @@ plotPCNSE <- function(res, objectives = "r.squared", return.data = FALSE) {
 
 
 #' @import utils
-utils::globalVariables(c('sim.period', 'value', 'model', 'dominated', 'Model.str'))
+utils::globalVariables(c("sim.period", "value", "model", "dominated", "Model.str"))

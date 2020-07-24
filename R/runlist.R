@@ -230,4 +230,4 @@ isValidModel.runlist <- function(object, ...) {
 }
 
 #' @import utils
-utils::globalVariables(c('cl'))
+utils::globalVariables(c("cl"))

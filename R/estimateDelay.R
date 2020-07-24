@@ -12,7 +12,7 @@
 #' (rises in) the corresponding output time series.
 #'
 #' The estimated delay is the one maximising the cross-correlation function.
-#' 
+#'
 #' @importFrom stats na.exclude ccf frequency
 #'
 #' @param DATA a \code{\link{ts}}-like object with named components: \describe{

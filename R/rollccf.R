@@ -32,7 +32,7 @@
 #' This is a fairly straightforward application of \code{\link{rollapply}} with
 #' the \code{\link{ccf}} function. It may be better to do a time-varying
 #' regression between the two series.
-#' 
+#'
 #' @importFrom stats na.contiguous ccf
 #' @importFrom lattice simpleTheme strip.default simpleKey
 #' @importFrom latticeExtra xyplot.list

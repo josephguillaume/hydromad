@@ -125,4 +125,4 @@ event.xyplot.formula <-
   }
 
 #' @import utils
-utils::globalVariables(c('ind'))
+utils::globalVariables(c("ind"))

@@ -297,4 +297,4 @@ sacramento.ranges <- function() {
 }
 
 #' @import utils
-utils::globalVariables(c('sma_sac_state'))
+utils::globalVariables(c("sma_sac_state"))

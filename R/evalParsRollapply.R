@@ -241,4 +241,4 @@ evalParsTS <- function(par.matrix, object,
 }
 
 #' @import utils
-utils::globalVariables(c('cl', 'p'))
+utils::globalVariables(c("cl", "p"))

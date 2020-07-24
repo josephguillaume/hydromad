@@ -1,9 +1,9 @@
 #' Eigenplot
 #'
 #' Plot pair-wise eigen values of quadratic response surface model
-#' 
+#'
 #' @importFrom graphics par frame mtext plot arrows
-#' 
+#'
 #'
 #' @param obj \code{rsm} object, as produced by \code{\link{evalRSM}}
 #' @param fixed.axis Whether to use the same dimensions for each pair of

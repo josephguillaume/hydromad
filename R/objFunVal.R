@@ -203,4 +203,4 @@ objFunVal.runlist <- function(x, objective = list(hydromad.getOption("objective"
 }
 
 #' @import utils
-utils::globalVariables(c('cl'))
+utils::globalVariables(c("cl"))

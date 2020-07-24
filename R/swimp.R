@@ -167,4 +167,4 @@ swimp <-
   }
 
 #' @import utils
-utils::globalVariables(c('swimp_core'))
+utils::globalVariables(c("swimp_core"))

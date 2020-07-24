@@ -19,8 +19,10 @@ ts_equals <- function(expected, actual, start = NULL, end = NULL, trim = FALSE) 
 ts_equals2 <- function(expected, actual, start = NULL, end = NULL, trim = FALSE) {
   windowts <-
     window(ts.intersect(as.ts(expected), as.ts(actual)),
-           start = start, end = end)
-  if (trim)
+      start = start, end = end
+    )
+  if (trim) {
     windowts <- na.trim(windowts)
+  }
   windowts[, 1]
 }

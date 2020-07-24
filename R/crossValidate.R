@@ -83,7 +83,8 @@
 #' summary(runs)
 #' ## Cross-validation statistics can then be analysed with other methods
 #' paretoTimeAnalysis_areModelsDominated(summary(runs))
-#' cast(melt(summary(runs), id.vars = c("calib.period", "sim.period")), calib.period ~ variable + sim.period)
+#' cast(melt(summary(runs), id.vars = c("calib.period", "sim.period")), 
+#'      calib.period ~ variable + sim.period)
 #' paretoTimeAnalysis(runs)
 #' @export
 crossValidate <- function(MODEL, periods,

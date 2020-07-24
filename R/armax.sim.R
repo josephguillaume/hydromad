@@ -3,6 +3,9 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+
+#' @importFrom stats filter na.pass
+#' 
 #' @export
 armax.sim <-
   function(U, a_1 = 0, a_2 = 0, a_3 = 0,

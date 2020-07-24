@@ -22,6 +22,8 @@
 #'
 #' \code{hydromad(..., routing = "expuh", rfit = list("ls", order = c(2,1)))}.
 #'
+#' @importFrom stats na.pass na.omit ts.intersect lm.wfit lm.fit residuals var
+#'
 #' @name armax.ls.fit
 #' @param DATA a \code{\link{ts}}-like object with named columns: \describe{
 #' \item{list("U")}{ observed input time series. } \item{list("Q")}{ observed

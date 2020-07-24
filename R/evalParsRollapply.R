@@ -26,6 +26,9 @@
 #' range of options but only works if the final results matrix is small enough
 #' to fit in memory.
 #'
+#' @importFrom stats update
+#' @importFrom parallel clusterCall
+#'
 #' @aliases evalParsTS evalParsRollapply
 #' @param par.matrix Named matrix or data.frame of parameter values, with each
 #' row corresponding to a model realisation to evaluate

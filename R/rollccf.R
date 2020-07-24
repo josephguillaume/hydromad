@@ -32,6 +32,8 @@
 #' This is a fairly straightforward application of \code{\link{rollapply}} with
 #' the \code{\link{ccf}} function. It may be better to do a time-varying
 #' regression between the two series.
+#' 
+#' @importFrom stats na.contiguous ccf
 #'
 #' @aliases rollccf xyplot.rollccf
 #' @param DATA a named list, data frame, time series or zoo object containing

@@ -5,6 +5,7 @@
 #' quantiles according to the GLUE (Generalised Likelihood Uncertainty
 #' Estimation) method.
 #'
+#' @importFrom stats update
 #'
 #' @aliases defineFeasibleSet defineFeasibleSet.hydromad
 #' defineFeasibleSet.default

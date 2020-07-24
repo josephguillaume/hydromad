@@ -14,6 +14,8 @@
 #' The default method should work for any object with methods for
 #' \code{residuals} and \code{fitted}.
 #'
+#' @importFrom stats arima
+#'
 #' @name utilities
 #' @aliases observed observed.default numericSummary
 #' @param object a model object for which to return the observed values.

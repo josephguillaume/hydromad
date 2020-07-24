@@ -1,32 +1,9 @@
-eigen.plot.single <- function(e, max.value = NA) {
-  stopifnot(!is.null(e$values))
-  stopifnot(!is.null(e$vectors))
-  evs <- sqrt(abs(e$values))
-  evecs <- e$vectors
-  a <- evs[1]
-  b <- evs[2]
-  x0 <- 0
-  y0 <- 0
-  alpha <- atan(evecs[, 1][2] / evecs[, 1][1])
-  theta <- seq(0, 2 * pi, length = (1000))
-  x <- x0 + a * cos(theta) * cos(alpha) - b * sin(theta) * sin(alpha)
-  y <- y0 + a * cos(theta) * sin(alpha) + b * sin(theta) * cos(alpha)
-  ## plot(x, y, type = "l", asp = 1, ann = FALSE, axes=FALSE, xlim = c(-0.14, 0.14), ylim = c(-0.14, 0.14))
-  if (!is.na(max.value)) {
-    plot(x, y, type = "l", asp = 1, ann = FALSE, axes = FALSE, xlim = c(-max.value, max.value), ylim = c(-max.value, max.value))
-  } else {
-    plot(x, y, type = "l", asp = 1, ann = FALSE, axes = FALSE)
-  }
-  arrows(x0 = 0, y0 = 0, x1 = a * evecs[, 1][1], y1 = a * evecs[, 1][2], length = 0)
-  arrows(x0 = 0, y0 = 0, x1 = b * evecs[, 2][1], y1 = b * evecs[, 2][2], length = 0)
-}
-
-
-
 #' Eigenplot
 #'
 #' Plot pair-wise eigen values of quadratic response surface model
-#'
+#' 
+#' @importFrom graphics par frame mtext plot arrows
+#' 
 #'
 #' @param obj \code{rsm} object, as produced by \code{\link{evalRSM}}
 #' @param fixed.axis Whether to use the same dimensions for each pair of
@@ -81,4 +58,27 @@ eigen.plot <- function(obj, fixed.axis = TRUE) {
     }
   }
   invisible(eg)
+}
+
+eigen.plot.single <- function(e, max.value = NA) {
+  stopifnot(!is.null(e$values))
+  stopifnot(!is.null(e$vectors))
+  evs <- sqrt(abs(e$values))
+  evecs <- e$vectors
+  a <- evs[1]
+  b <- evs[2]
+  x0 <- 0
+  y0 <- 0
+  alpha <- atan(evecs[, 1][2] / evecs[, 1][1])
+  theta <- seq(0, 2 * pi, length = (1000))
+  x <- x0 + a * cos(theta) * cos(alpha) - b * sin(theta) * sin(alpha)
+  y <- y0 + a * cos(theta) * sin(alpha) + b * sin(theta) * cos(alpha)
+  ## plot(x, y, type = "l", asp = 1, ann = FALSE, axes=FALSE, xlim = c(-0.14, 0.14), ylim = c(-0.14, 0.14))
+  if (!is.na(max.value)) {
+    plot(x, y, type = "l", asp = 1, ann = FALSE, axes = FALSE, xlim = c(-max.value, max.value), ylim = c(-max.value, max.value))
+  } else {
+    plot(x, y, type = "l", asp = 1, ann = FALSE, axes = FALSE)
+  }
+  arrows(x0 = 0, y0 = 0, x1 = a * evecs[, 1][1], y1 = a * evecs[, 1][2], length = 0)
+  arrows(x0 = 0, y0 = 0, x1 = b * evecs[, 2][1], y1 = b * evecs[, 2][2], length = 0)
 }

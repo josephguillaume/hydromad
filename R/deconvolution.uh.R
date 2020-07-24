@@ -5,6 +5,9 @@
 #' Estimates the unit hydrograph by fourier transform deconvolution of the
 #' ratio of the cross correlation and auto-correlation functions.
 #'
+#' @importFrom stats ccf na.pass acf dnorm fft
+#' @importFrom graphics plot
+#'
 #' @param P Rainfall or effective rainfall time series
 #' @param Q Flow time series
 #' @param FWHM Full Width Half Maximum to use for Gaussian apodisation function

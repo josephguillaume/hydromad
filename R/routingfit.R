@@ -3,6 +3,8 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+#' @importFrom stats vcov
+
 doRoutingFit <-
   function(object, inverseFitOnly = FALSE) {
     ## run 'rfit' with appropriate DATA

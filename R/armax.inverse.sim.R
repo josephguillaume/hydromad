@@ -5,6 +5,7 @@
 #' @importFrom stats as.ts is.ts window start end ARMAtoMA
 #' @importFrom utils modifyList
 #' @importFrom latticeExtra simpleSmoothTs
+#' @importFrom zoo na.locf
 #'
 #' @aliases armax.inverse.sim expuh.inverse.sim
 #' @param DATA time-series-like object with columns \code{Q} (streamflow) and

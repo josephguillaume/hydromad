@@ -8,6 +8,8 @@
 #' \code{\link{estimateDelay}} may be preferred if there's no good reason to
 #' have a fractional lag/redistribution of the input across days.
 #'
+#' @importFrom stats optimise
+#'
 #' @param DATA a \code{\link{ts}}-like object with named components: \describe{
 #' \item{list("U")}{ input (forcing) time series. } \item{list("Q")}{ output
 #' (response) time series. } }

@@ -17,6 +17,7 @@
 #' and an optional reference model.
 #'
 #' @importFrom car powerTransform bcPower
+#' @importFrom stats dnorm na.omit
 #'
 #' @aliases buildTsObjective buildObjectiveFun buildTsLikelihood
 #' @param Q observed data, typically a \code{\link{zoo}} object.

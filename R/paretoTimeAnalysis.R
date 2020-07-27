@@ -59,7 +59,7 @@
 #' paretoTimeAnalysis_areModelsDominated(subset(YeAl97, Catchment == "Salmon"), objectives = "E")
 #'
 #' ## For all catchments, performance analysis
-#' paretoTimeAnalysis.data.frame(YeAl97, objectives = "E")
+#' paretoTimeAnalysis(YeAl97, objectives = "E")
 
 #' @export
 paretoTimeAnalysis <- function(...) UseMethod("paretoTimeAnalysis")

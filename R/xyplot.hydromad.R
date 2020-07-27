@@ -3,17 +3,6 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
-
-plot.hydromad <-
-  function(x, y, ...) {
-    stop(
-      "There is no 'plot' method for 'hydromad' objects.",
-      "Try 'xyplot', or 'plot(fitted(...))'"
-    )
-  }
-
-
-
 #' Plot methods for Hydromad model objects
 #'
 #' Plot methods...
@@ -23,7 +12,8 @@ plot.hydromad <-
 #' @importFrom latticeExtra as.layer xyplot.list
 #' @importFrom zoo coredata
 #'
-#' @aliases xyplot.hydromad xyplot.hydromad.runlist qqmath.hydromad
+#' @name xyplot.hydromad
+#' @aliases xyplot.hydromad.runlist qqmath.hydromad plot.hydromad
 #' tsdiag.hydromad
 #' @param x an object of class \code{hydromad}.
 #' @param data ignored.
@@ -81,6 +71,7 @@ plot.hydromad <-
 #'   scales = list(y = list(log = TRUE)), distribution = qnorm,
 #'   type = c("g", "l")
 #' )
+#' @export
 xyplot.hydromad <-
   function(x, data = NULL, ..., scales = list(),
            feasible.bounds = FALSE,
@@ -220,3 +211,13 @@ qqmath.hydromad <-
 tsdiag.hydromad <- function(object, gof.lag, ...) {
   stats:::tsdiag.Arima(object$uh, gof.lag = gof.lag, ...)
 }
+
+
+#' @export plot.hydromad
+plot.hydromad <-
+  function(x, y, ...) {
+    stop(
+      "There is no 'plot' method for 'hydromad' objects.",
+      "Try 'xyplot', or 'plot(fitted(...))'"
+    )
+  }

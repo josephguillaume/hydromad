@@ -4,6 +4,7 @@
 \alias{xyplot.hydromad}
 \alias{xyplot.hydromad.runlist}
 \alias{qqmath.hydromad}
+\alias{plot.hydromad}
 \alias{tsdiag.hydromad}
 \title{Plot methods for Hydromad model objects}
 \usage{

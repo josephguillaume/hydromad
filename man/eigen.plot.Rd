@@ -2,6 +2,7 @@
 % Please edit documentation in R/eigenplot.R
 \name{eigen.plot}
 \alias{eigen.plot}
+\alias{eigen.plot.single}
 \title{Eigenplot}
 \usage{
 eigen.plot(obj, fixed.axis = TRUE)

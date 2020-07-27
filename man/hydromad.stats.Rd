@@ -4,7 +4,6 @@
 \alias{hydromad.stats}
 \alias{hmadstat}
 \alias{buildCachedObjectiveFun}
-\alias{.defaultHydromadStats}
 \title{Statistics for use in hydromad}
 \usage{
 hydromad.stats(...)
@@ -15,8 +14,6 @@ buildCachedObjectiveFun(
   DATA = observed(model, select = TRUE),
   Q = DATA[, "Q"]
 )
-
-.defaultHydromadStats()
 
 hmadstat(name, DATA = NULL, Q = DATA[, "Q"])
 }

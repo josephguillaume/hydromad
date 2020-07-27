@@ -96,7 +96,6 @@
 #' \code{\link{objFunVal.runlist}}, \code{\link{paretoObjectivesVaryWeights}}
 #' @references Placeholder
 #' @keywords utilities
-#' @export
 hydromad.parallel <- function(settings) {
   output <- list(
     method = "none",

@@ -3,6 +3,7 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+#' @export
 coef.hydromad <-
   function(object, which = c("both", "sma", "routing"), ...,
            feasible.set = FALSE, etc = FALSE, warn = TRUE) {

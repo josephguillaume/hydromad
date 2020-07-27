@@ -5,14 +5,13 @@
 \alias{objFunVal.hydromad}
 \alias{objFunVal.default}
 \alias{objFunVal.runlist}
-\alias{objFunVal.tf}
 \title{Calculate objective function value for a fitted model.}
 \usage{
 objFunVal(x, objective, ...)
 
 \method{objFunVal}{default}(x, objective = hydromad.getOption("objective"), ..., nan.ok = FALSE)
 
-\method{objFunVal}{tf}(
+\method{objFunVal}{hydromad}(
   x,
   objective = hydromad.getOption("objective"),
   ...,

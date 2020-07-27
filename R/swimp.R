@@ -52,6 +52,7 @@
 #' flood <- swimp(Q, alpha = alpha, beta = 1, E.mm = 10)
 #' head(flood, 20)
 #' xyplot(flood)
+#' @useDynLib hydromad swimp_core
 #' @export
 swimp <-
   function(flow.ML,

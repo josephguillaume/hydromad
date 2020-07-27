@@ -27,7 +27,7 @@
 #' model.
 #'
 #' @name lambda
-#' @aliases lambda.sim lambda.inverse.sim lambda.inverse.fit
+#' @aliases lambda.sim lambda.inverse.sim lambda.inverse.fit normalise.lambda ssg.lambda
 #' @param U input time series.
 #' @param delay lag (dead time) between input and response, in time steps.
 #' @param tau_s,tau_q time constants for the exponential components.
@@ -103,12 +103,12 @@ lambda.sim <-
     }
   }
 
-
+#' @export
 ssg.lambda <- function(theta) {
   return(1)
 }
 
-
+#' @export
 normalise.lambda <- function(theta) {
   return(theta)
 }

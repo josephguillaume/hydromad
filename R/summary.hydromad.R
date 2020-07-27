@@ -3,16 +3,6 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
-
-summary.hydromad.runlist <-
-  function(object, with.hydrostats = FALSE, ...) {
-    summary.runlist(object, ...,
-      with.hydrostats = with.hydrostats
-    )
-  }
-
-
-
 #' Assess and summarise performance of Hydromad models
 #'
 #' Assess and summarise performance of Hydromad models.
@@ -236,4 +226,13 @@ print.summaryWithBreaks.hydromad <-
   function(x, digits = max(3, getOption("digits") - 3), ...) {
     ## just simplify the printed output by rounding
     NextMethod("print")
+  }
+
+
+#' @export
+summary.hydromad.runlist <-
+  function(object, with.hydrostats = FALSE, ...) {
+    summary.runlist(object, ...,
+      with.hydrostats = with.hydrostats
+    )
   }

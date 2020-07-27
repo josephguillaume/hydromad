@@ -3,10 +3,9 @@
 \name{event.xyplot.hydromad}
 \alias{event.xyplot.hydromad}
 \alias{event.xyplot.hydromad.runlist}
-\alias{panel.groups.funs}
 \title{Visualise systematic model errors against covariates}
 \usage{
-\method{event.xyplot}{hydromad.runlist}(
+\method{event.xyplot}{hydromad}(
   x,
   events,
   formula = ~log2(e(Q, mean) + 0.01) + log2(e(lag(Q, -2), first) + 0.01) + log2(e(U,
@@ -22,7 +21,21 @@
   data = NULL
 )
 
-panel.groups.funs(x, y, ...)
+\method{event.xyplot}{hydromad.runlist}(
+  x,
+  events,
+  formula = ~log2(e(Q, mean) + 0.01) + log2(e(lag(Q, -2), first) + 0.01) + log2(e(U,
+    max) + 0.01) + e(E, mean),
+  extract = residuals,
+  with.U = TRUE,
+  ...,
+  panel = panel.superpose,
+  panel.groups = panel.groups.funs,
+  abline = list(h = 0),
+  pch = ".",
+  ylab = "residual flow sums in event windows (mm)",
+  data = NULL
+)
 }
 \arguments{
 \item{x}{a \code{hydromad} or \code{hydromad.runlist} object.}
@@ -50,8 +63,6 @@ to \code{\link{xyplot}} and the panel function.}
 \item{panel, panel.groups, abline, pch, ylab}{passed to \code{\link{xyplot}}.}
 
 \item{data}{ignored.}
-
-\item{y}{code passed to panel.groups.funs}
 }
 \value{
 this function returns a trellis object which can be \code{plot}ted.

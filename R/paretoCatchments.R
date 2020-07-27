@@ -150,4 +150,5 @@ getDominatedLong <- function(res.dom) {
   resm2
 }
 
+#' @export
 paretoTimeAnalysis.matrix <- paretoTimeAnalysis.data.frame

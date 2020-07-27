@@ -33,7 +33,6 @@
 #' to \code{\link{xyplot}} and the panel function.
 #' @param panel,panel.groups,abline,pch,ylab passed to \code{\link{xyplot}}.
 #' @param data ignored.
-#' @param y code passed to panel.groups.funs
 #' @return this function returns a trellis object which can be \code{plot}ted.
 #' @author Felix Andrews \email{felix@@nfrac.org}
 #' @seealso \code{\link{event.xyplot}}, \code{\link{xyplot}},
@@ -61,8 +60,7 @@
 #' dimnames(foo)[[1]] <- c("sqrt. peak rain (mm/day)", "mean 20-day ante. rain")
 #' foo
 #' @export
-event.xyplot.hydromad.runlist <-
-  event.xyplot.hydromad <-
+event.xyplot.hydromad <-
   function(x, events,
            formula =
              ~ log2(e(Q, mean) + .01) +
@@ -102,9 +100,10 @@ event.xyplot.hydromad.runlist <-
     foo
   }
 
-
 #' @rdname event.xyplot.hydromad
 #' @export
+event.xyplot.hydromad.runlist <- event.xyplot.hydromad
+
 panel.groups.funs <- function(x, y, ...) {
   panel.xyplot(x, y, ...)
   if (!requireNamespace("mgcv")) stop("package mgcv is required for event.xyplot")

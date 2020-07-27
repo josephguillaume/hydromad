@@ -4,6 +4,8 @@
 #'
 #' @importFrom graphics par frame mtext plot arrows
 #'
+#' @name eigen.plot
+#' @aliases eigen.plot.single
 #'
 #' @param obj \code{rsm} object, as produced by \code{\link{evalRSM}}
 #' @param fixed.axis Whether to use the same dimensions for each pair of
@@ -60,6 +62,7 @@ eigen.plot <- function(obj, fixed.axis = TRUE) {
   invisible(eg)
 }
 
+#' @export
 eigen.plot.single <- function(e, max.value = NA) {
   stopifnot(!is.null(e$values))
   stopifnot(!is.null(e$vectors))

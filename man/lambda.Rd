@@ -5,6 +5,8 @@
 \alias{lambda.sim}
 \alias{lambda.inverse.sim}
 \alias{lambda.inverse.fit}
+\alias{normalise.lambda}
+\alias{ssg.lambda}
 \title{Transfer function with two exponential components and variable partitioning}
 \usage{
 lambda.sim(

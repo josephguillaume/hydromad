@@ -70,6 +70,8 @@ as.runlist <- function(x, ...) {
   do.call("runlist", as.list(x))
 }
 
+
+#' @export
 "[.runlist" <- function(x, i, ...) {
   structure(NextMethod("["), class = class(x))
 }

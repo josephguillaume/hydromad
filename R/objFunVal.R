@@ -116,8 +116,7 @@ objFunVal.default <-
 ## TODO: could this just merge the data and call the default method? slow?
 #' @rdname objFunVal
 #' @export
-objFunVal.tf <-
-  objFunVal.hydromad <-
+objFunVal.hydromad <-
   function(x, objective = hydromad.getOption("objective"),
            ..., all = FALSE, nan.ok = FALSE) {
     model <- x
@@ -182,6 +181,8 @@ objFunVal.tf <-
     }
   }
 
+
+objFunVal.tf <- objFunVal.hydromad
 
 #' @rdname objFunVal
 #' @export

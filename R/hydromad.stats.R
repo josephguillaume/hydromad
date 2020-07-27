@@ -216,8 +216,6 @@ buildCachedObjectiveFun <-
   }
 
 
-#' @rdname hydromad.stats
-#' @export
 .defaultHydromadStats <- function() {
   ## keep R CMD check happy:
   . <- function(x) x

@@ -159,6 +159,8 @@ crossValidate <- function(MODEL, periods,
   return(runs)
 }
 
+
+#' @export
 summary.crossvalidation <- function(object, ...) {
   s <- NextMethod(object, ...)
   s$sim.period <- sapply(object, function(x) x$name.sim.period)

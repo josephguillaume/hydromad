@@ -3,7 +3,7 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
-
+#' @useDynLib hydromad inverse_filter_lambda
 #' @export
 lambda.inverse.sim <-
   function(Q, P = NULL,

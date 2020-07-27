@@ -22,7 +22,7 @@
 #' @examples
 #'
 #' data(Murrindindi)
-#' h <- deconvolution.uh(Murrindindi$P, Murrindindi$Q, do.plot = T)
+#' h <- deconvolution.uh(Murrindindi$P, Murrindindi$Q, do.plot = TRUE)
 #' head(h)
 #' @export
 deconvolution.uh <- function(P, Q, FWHM = length(P), do.plot = FALSE) {

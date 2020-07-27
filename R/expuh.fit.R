@@ -93,7 +93,7 @@
 #' ),
 #' superpose = TRUE
 #' ) +
-#'   layer(panel.refline(h = 0))
+#'   latticeExtra::layer(panel.refline(h = 0))
 #'
 #' U <- ts(c(1, rep(0, 30)))
 #' xyplot(cbind(
@@ -103,6 +103,7 @@
 #' ),
 #' superpose = TRUE
 #' )
+
 #' @export
 expuh.ls.fit <-
   function(DATA,
@@ -136,7 +137,6 @@ expuh.ls.fit <-
   }
 
 
-
 #' @export
 expuh.sriv.fit <-
   function(DATA,
@@ -168,7 +168,6 @@ expuh.sriv.fit <-
     model$coefficients <- coef(model, "tau,v")
     model
   }
-
 
 
 #' @export

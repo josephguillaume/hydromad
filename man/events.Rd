@@ -181,16 +181,15 @@ eventapply(x, evq, FUN = mean)
 eventinfo(x$Q, evq)
 
 evplot <- xyplot(x) +
-  layer_(panel.xblocks(evp, col = c("grey90", "grey80"), border = "grey80")) +
-  layer(panel.xblocks(evq, block.y = 0, vjust = 1, col = 1))
+  latticeExtra::layer(panel.xblocks(evq, block.y = 0, vjust = 1, col = 1)) +
+  latticeExtra::layer(panel.xblocks(evp, col = c("grey90", "grey80"), border = "grey80"))
 
 evplot
 
 update(evplot,
   type = "s",
-  xlim = as.Date(c("1990-07-01", "1990-08-31"))
-) +
-  layer(panel.abline(h = c(5, 1), lty = 2), packets = 1)
+  xlim = as.Date(c("1990-07-01", "1990-08-31"))) +
+  latticeExtra::layer(panel.abline(h = c(5, 1), lty = 2), packets = 1)
 
 ## example of requesting a threshold giving about 'n' events
 set.seed(0)

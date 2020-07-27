@@ -57,9 +57,8 @@
 #'
 #' xyplot.list(parsims,
 #'   superpose = TRUE, layout = c(1, NA),
-#'   main = "Simple parameter perturbation example"
-#' ) +
-#'   layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
+#'   main = "Simple parameter perturbation example") +
+#'   latticeExtra::layer(panel.lines(fitted(mod1), col = "grey", lwd = 2))
 #' @export
 dbm.sim <-
   function(DATA, power, qlag = 0, scale = 1, return_state = FALSE) {

@@ -65,6 +65,7 @@ ev <- eventseq(Canning$P,
   thresh = 20, inthresh = 1, indur = 3,
   continue = FALSE
 )
+
 event.xyplot(e(Q, sum) / e(P, sum) ~ e(P, sum) + e(P, max) + e(lag(Q, -1), first),
   data = Canning, events = ev,
   scales = list(y = list(log = TRUE)),

@@ -101,7 +101,7 @@ xyplot(cbind(
 ),
 superpose = TRUE
 ) +
-  layer(panel.refline(h = 0))
+  latticeExtra::layer(panel.refline(h = 0))
 
 U <- ts(c(1, rep(0, 30)))
 xyplot(cbind(

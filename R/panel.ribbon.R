@@ -29,7 +29,7 @@
 #' @examples
 #'
 #' xyplot(sunspot.year, aspect = "xy", cut = 3) +
-#'   layer_(panel.ribbon(x, y = y * 0.9, y2 = y * 1.1, ..., col = "grey"))
+#'   latticeExtra::layer(panel.ribbon(x, y = y * 0.9, y2 = y * 1.1, ..., col = "grey", under = TRUE))
 #'
 #' ## missing values are handled by splitting the series
 #' tmp <- window(sunspot.year, start = 1900)

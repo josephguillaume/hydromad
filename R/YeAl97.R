@@ -8,7 +8,7 @@
 #' @name YeAl97
 #' @docType data
 #' @format A data frame with 36 observations on the following 7 variables.
-#' \describe{ \item{"Catchment"}{a character vector, either Canning,
+#' \describe{ \item{Catchment}{a character vector, either Canning,
 #' Salmon or Stones} \item{calib.period}{a character vector, either
 #' "First 5Y" or "Second 5Y"} \item{sim.period}{a character vector,
 #' either "First 5Y" or "Second 5Y"} \item{Model.str}{a factor with

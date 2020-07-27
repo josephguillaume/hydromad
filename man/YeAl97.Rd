@@ -6,13 +6,13 @@
 \title{Model performance statistics from Ye et al. 1997}
 \format{
 A data frame with 36 observations on the following 7 variables.
-\describe{ \item{list("Catchment")}{a character vector, either Canning,
-Salmon or Stones} \item{list("calib.period")}{a character vector, either
-"First 5Y" or "Second 5Y"} \item{list("sim.period")}{a character vector,
-either "First 5Y" or "Second 5Y"} \item{list("Model.str")}{a factor with
-levels \code{GSFB} \code{IHACRES} \code{LASCAM}} \item{list("A")}{a numeric
-vector, absolute mean deviation} \item{list("B")}{a numeric vector, bias}
-\item{list("E")}{a numeric vector, efficiency} }
+\describe{ \item{"Catchment"}{a character vector, either Canning,
+Salmon or Stones} \item{"calib.period"}{a character vector, either
+"First 5Y" or "Second 5Y"} \item{"sim.period"}{a character vector,
+either "First 5Y" or "Second 5Y"} \item{"Model.str"}{a factor with
+levels \code{GSFB} \code{IHACRES} \code{LASCAM}} \item{"A"}{a numeric
+vector, absolute mean deviation} \item{"B"}{a numeric vector, bias}
+\item{"E"}{a numeric vector, efficiency} }
 }
 \source{
 Ye, W., B.C. Bates, N.R. Viney, M. Sivapalan and A.J. Jakeman

@@ -6,9 +6,10 @@
 #' are then produced to help assess how performance of model realisations and
 #' model structures varies across simulation periods.
 #'
-#'
-#' @aliases paretoTimeAnalysis paretoTimeAnalysis_performance
-#' paretoTimeAnalysis_areModelsDominated
+#' @name paretoTimeAnalysis
+#' @aliases paretoTimeAnalysis_performance
+#' paretoTimeAnalysis_areModelsDominated paretoTimeAnalysis.data.frame
+#' paretoTimeAnalysis.matrix
 #' @param \dots arguments to \code{paretoTimeAnalysis.crossvalidation} or
 #' \code{paretoTimeAnalysis.data.frame}
 #' @param rl a crossvalidation \code{runlist}: a list of fitted model objects
@@ -59,6 +60,7 @@
 #'
 #' ## For all catchments, performance analysis
 #' paretoTimeAnalysis.data.frame(YeAl97, objectives = "E")
+
 #' @export
 paretoTimeAnalysis <- function(...) UseMethod("paretoTimeAnalysis")
 

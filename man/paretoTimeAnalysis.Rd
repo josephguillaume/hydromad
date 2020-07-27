@@ -4,6 +4,8 @@
 \alias{paretoTimeAnalysis}
 \alias{paretoTimeAnalysis_performance}
 \alias{paretoTimeAnalysis_areModelsDominated}
+\alias{paretoTimeAnalysis.data.frame}
+\alias{paretoTimeAnalysis.matrix}
 \alias{paretoTimeAnalysis.crossvalidation}
 \title{Analysis using Pareto-filtering of model performance across simulation
 periods}

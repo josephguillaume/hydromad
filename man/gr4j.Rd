@@ -169,7 +169,7 @@ summary(fit1)
 xyplot(fit1)
 
 # Parameters in original parameter space
-gr4j.transformpar(coef(fit1), back = T)
+gr4j.transformpar(coef(fit1), back = TRUE)
 }
 \references{
 Perrin, C., C. Michel, et al. (2003). "Improvement of a

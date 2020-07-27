@@ -139,7 +139,7 @@
 #' xyplot(fit1)
 #'
 #' # Parameters in original parameter space
-#' gr4j.transformpar(coef(fit1), back = T)
+#' gr4j.transformpar(coef(fit1), back = TRUE)
 #' @useDynLib hydromad sma_gr4j
 #' @export
 gr4j.sim <-
@@ -363,9 +363,9 @@ gr4jrouting.ranges <- function() {
 #' @examples
 #'
 #' gr4j.transformpar(c(hydromad.getOption("gr4j"), hydromad.getOption("gr4jrouting")))
-#' gr4j.transformpar(c(x1 = 150, x2 = 2, x3 = 50, x4 = 2), back = F)
+#' gr4j.transformpar(c(x1 = 150, x2 = 2, x3 = 50, x4 = 2), back = FALSE)
 #' @export
-gr4j.transformpar <- function(pars, back = F) {
+gr4j.transformpar <- function(pars, back = FALSE) {
   pars <- modifyList(list(x1 = NA, x2 = NA, x3 = NA, x4 = NA), as.list(pars))
   newpars <- pars
   if (back) {

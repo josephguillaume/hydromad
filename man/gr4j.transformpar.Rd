@@ -4,7 +4,7 @@
 \alias{gr4j.transformpar}
 \title{Transform GR4J parameters}
 \usage{
-gr4j.transformpar(pars, back = F)
+gr4j.transformpar(pars, back = FALSE)
 }
 \arguments{
 \item{pars}{named vector or list of parameters, e.g. as provided by
@@ -22,7 +22,7 @@ Apply or reverse transformation of GR4J parameters
 \examples{
 
 gr4j.transformpar(c(hydromad.getOption("gr4j"), hydromad.getOption("gr4jrouting")))
-gr4j.transformpar(c(x1 = 150, x2 = 2, x3 = 50, x4 = 2), back = F)
+gr4j.transformpar(c(x1 = 150, x2 = 2, x3 = 50, x4 = 2), back = FALSE)
 }
 \seealso{
 \code{\link{gr4j}}

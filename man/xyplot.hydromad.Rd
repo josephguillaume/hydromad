@@ -50,6 +50,8 @@
 )
 
 \method{tsdiag}{hydromad}(object, gof.lag, ...)
+
+\method{plot}{hydromad}(x, y, ...)
 }
 \arguments{
 \item{x}{an object of class \code{hydromad}.}
@@ -89,6 +91,8 @@ simulation bounds if \code{feasible.bounds = TRUE}.}
 
 \item{object, gof.lag}{passed to the \code{arima} method of
 \code{\link{tsdiag}}.}
+
+\item{y}{Placeholder for plot.hydromad}
 }
 \value{
 the trellis functions return a trellis object.

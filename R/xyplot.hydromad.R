@@ -38,6 +38,7 @@
 #' @param f.value,tails.n arguments to \code{\link{panel.qqmath}}.
 #' @param object,gof.lag passed to the \code{arima} method of
 #' \code{\link{tsdiag}}.
+#' @param y Placeholder for plot.hydromad
 #' @return the trellis functions return a trellis object.
 #' @author Felix Andrews \email{felix@@nfrac.org}
 #' @seealso \code{hydromad.object}, \code{\link{xyplot}},
@@ -213,7 +214,8 @@ tsdiag.hydromad <- function(object, gof.lag, ...) {
 }
 
 
-#' @export plot.hydromad
+#' @rdname xyplot.hydromad
+#' @export 
 plot.hydromad <-
   function(x, y, ...) {
     stop(

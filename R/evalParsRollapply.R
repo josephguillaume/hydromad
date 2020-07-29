@@ -28,6 +28,7 @@
 #'
 #' @importFrom stats update
 #' @importFrom parallel clusterCall
+#' @importFrom iterators iter
 #'
 #' @aliases evalParsTS evalParsRollapply
 #' @param par.matrix Named matrix or data.frame of parameter values, with each
@@ -188,7 +189,7 @@ evalParsTS <- function(par.matrix, object,
       opts <- hydromad.options()
       export <- parallel$export
       results <- foreach::foreach(
-        p = iterators::iter(par.matrix, by = "row"),
+        p = iter(par.matrix, by = "row"),
         .packages = parallel$packages,
         .inorder = TRUE,
         .export = export,

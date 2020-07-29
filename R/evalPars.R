@@ -20,6 +20,8 @@
 #' \code{"clusterApply"} has a slightly lower overhead. \code{"foreach"} allows
 #' a broader range of options.
 #'
+#' @importFrom iterators iter
+#'
 #' @name evalPars
 #' @aliases getFreeParsRanges
 #' @param par.matrix Named matrix or data.frame of parameter values, with each
@@ -71,7 +73,7 @@ evalPars <- function(par.matrix, object, objective = hydromad.getOption("objecti
       opts <- hydromad.options()
       export <- parallel$export
       objs <- foreach::foreach(
-        p = iterators::iter(par.matrix, by = "row"),
+        p = iter(par.matrix, by = "row"),
         .packages = parallel$packages,
         .inorder = TRUE,
         .export = parallel$export,

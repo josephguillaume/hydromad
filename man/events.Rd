@@ -188,7 +188,8 @@ evplot
 
 update(evplot,
   type = "s",
-  xlim = as.Date(c("1990-07-01", "1990-08-31"))) +
+  xlim = as.Date(c("1990-07-01", "1990-08-31"))
+) +
   latticeExtra::layer(panel.abline(h = c(5, 1), lty = 2), packets = 1)
 
 ## example of requesting a threshold giving about 'n' events

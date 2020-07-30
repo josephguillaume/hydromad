@@ -42,7 +42,9 @@ missing, this will be estimated from the cross correlation function.}
 
 \item{na.action}{placeholder}
 
-\item{trace}{placeholder
+\item{trace}{placeholder}
+
+\item{\dots}{passed on to \code{armax.ls.fit}.
 (i.e. negative or imaginary poles) are detected.}
 }
 \value{

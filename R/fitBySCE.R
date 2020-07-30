@@ -52,7 +52,8 @@
 #' xyplot(optimtrace(foo, raw = TRUE),
 #'   screens = 1, type = "p",
 #'   jitter.x = TRUE, ylim = c(0.7, NA), xlim = c(0, NA),
-#'   xlab = "function evaluations", ylab = "objective fn. value") +
+#'   xlab = "function evaluations", ylab = "objective fn. value"
+#' ) +
 #'   latticeExtra::layer(panel.average(..., horiz = FALSE, fun = max, lwd = 2))
 #' @export
 fitBySCE <-

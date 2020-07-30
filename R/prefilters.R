@@ -7,7 +7,7 @@
 #' Prefilter
 #'
 #' Description goes here.
-#' 
+#'
 #' @importFrom stats ar
 #'
 #' @name prefilters

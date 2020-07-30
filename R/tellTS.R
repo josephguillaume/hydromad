@@ -123,8 +123,10 @@
 #'
 #' ## Time series plot facetted by variable showing bootstrapped confidence interval
 #' ggplot2::ggplot(data = TSI) +
-#'   ggplot2::geom_ribbon(aes(x = ts.id, ymin = get("min. c.i."), 
-#'                            ymax = get("max. c.i.")), fill = "grey") +
+#'   ggplot2::geom_ribbon(aes(
+#'     x = ts.id, ymin = get("min. c.i."),
+#'     ymax = get("max. c.i.")
+#'   ), fill = "grey") +
 #'   ggplot2::geom_line(aes(x = ts.id, y = original)) +
 #'   ggplot2::facet_wrap(~variable)
 #' }

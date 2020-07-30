@@ -103,7 +103,6 @@
 #' ),
 #' superpose = TRUE
 #' )
-
 #' @export
 expuh.ls.fit <-
   function(DATA,

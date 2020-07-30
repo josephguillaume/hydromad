@@ -215,7 +215,7 @@ tsdiag.hydromad <- function(object, gof.lag, ...) {
 
 
 #' @rdname xyplot.hydromad
-#' @export 
+#' @export
 plot.hydromad <-
   function(x, y, ...) {
     stop(

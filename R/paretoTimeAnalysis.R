@@ -60,7 +60,6 @@
 #'
 #' ## For all catchments, performance analysis
 #' paretoTimeAnalysis(YeAl97, objectives = "E")
-
 #' @export
 paretoTimeAnalysis <- function(...) UseMethod("paretoTimeAnalysis")
 

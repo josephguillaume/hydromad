@@ -304,7 +304,7 @@ print.hydromad <-
     if (!is.null(x$rfit)) {
       cat(
         "Routing fit spec.:",
-        toString(deparse(x$rfit, control = c(), width = 500),
+        toString(deparse(x$rfit, control = c(), width.cutoff = 500),
           width = getOption("width")
         ), "\n"
       )
@@ -320,7 +320,7 @@ print.hydromad <-
     if (length(x$info.rfit) > 0) {
       cat(
         "\nRouting fit info: ",
-        toString(deparse(x$info.rfit, control = c(), width = 500),
+        toString(deparse(x$info.rfit, control = c(), width.cutoff = 500),
           width = getOption("width")
         ), "\n"
       )

@@ -177,8 +177,14 @@ evalParsTS <- function(par.matrix, object,
     }
   } else {
     ## Use disk
-    if (!require("parallel")) stop("package parallel is required for evalParsTS if filehash.name is not NULL and parallel$method is not 'foreach'")
-    if (!require("ff")) stop("package ff is required for evalParsTS if filehash.name is not NULL and parallel$method is not 'foreach'")
+    if (!requireNamespace("parallel", quietly = TRUE)) {
+      stop("Package \"parallel\" needed for evalParsTS if filehash.name is not NULL and parallel$method is not  \"foreach\". Please install it.", 
+           call. = FALSE) 
+      }
+    if (!requireNamespace("ff", quietly = TRUE)) {
+      stop("Package \"ff\" needed for evalParsTS to work if filehash.name is not NULL and parallel$method is not \"foreach\". Please install it.",
+           call. = FALSE)
+      }
     results <- ff::ff(vmode = "double", dim = c(nrow(par.matrix), length.out), filename = filehash.name)
   }
 

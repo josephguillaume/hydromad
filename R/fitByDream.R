@@ -43,7 +43,7 @@
 #' @examples
 #'
 #'
-#' if (require("dream", quietly = TRUE)) {
+#' if (requireNamespace("dream", quietly = TRUE)) {
 #'   data(Cotter)
 #'   x <- Cotter[1:1000]
 #'

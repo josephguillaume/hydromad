@@ -52,7 +52,7 @@ likelihood model, but the full MCMC results are also available as component
 \examples{
 
 
-if (require("dream", quietly = TRUE)) {
+if (requireNamespace("dream", quietly = TRUE)) {
   data(Cotter)
   x <- Cotter[1:1000]
 

@@ -9,7 +9,7 @@
 #' (see \link[sensitivity]{tell}) on a time series of results, as produced for
 #' example by \link{evalParsRollapply}. See examples for more details.
 #'
-#' @importFrom parallel clusterEvalQ
+# @importFrom parallel clusterEvalQ
 #' @importFrom stats sd
 #'
 #' @aliases tellTS tellTS.default tellTS.sobol2002 tellTS.sobol2007
@@ -88,10 +88,10 @@
 #'
 #' ## Plot time series of mean absolute elementary effects
 #' library(ggplot2)
-#' qplot(x = ts.id, y = mu.star, colour = variable, data = sens, geom = "line")
+#' ggplot2::qplot(x = ts.id, y = mu.star, colour = variable, data = sens, geom = "line")
 #'
 #' ## And of standard deviation of elementary effects
-#' qplot(x = ts.id, y = sigma, colour = variable, data = sens, geom = "line")
+#' ggplot2::qplot(x = ts.id, y = sigma, colour = variable, data = sens, geom = "line")
 #'
 #' ######################################################################
 #' \dontrun{
@@ -119,13 +119,14 @@
 #'
 #' ## Plot time series of sensitivities
 #' library(ggplot2)
-#' qplot(x = ts.id, y = original, colour = variable, data = TSI, geom = "line")
+#' ggplot2::qplot(x = ts.id, y = original, colour = variable, data = TSI, geom = "line")
 #'
 #' ## Time series plot facetted by variable showing bootstrapped confidence interval
-#' ggplot(data = TSI) +
-#'   geom_ribbon(aes(x = ts.id, ymin = get("min. c.i."), ymax = get("max. c.i.")), fill = "grey") +
-#'   geom_line(aes(x = ts.id, y = original)) +
-#'   facet_wrap(~variable)
+#' ggplot2::ggplot(data = TSI) +
+#'   ggplot2::geom_ribbon(aes(x = ts.id, ymin = get("min. c.i."), 
+#'                            ymax = get("max. c.i.")), fill = "grey") +
+#'   ggplot2::geom_line(aes(x = ts.id, y = original)) +
+#'   ggplot2::facet_wrap(~variable)
 #' }
 #'
 #' @export
@@ -151,10 +152,10 @@ tellTS.default <- function(x, ts.matrix, fun,
   ))
   switch(parallel,
     "clusterApply" = {
-      clusterEvalQ(cl, library(sensitivity))
-      clusterEvalQ(cl, library(ff))
-      clusterExport(cl, c("ts.matrix", "x", "fun"), envir = environment())
-      results <- parLapply(cl, indices, function(i) {
+      parallel::clusterEvalQ(cl, requireNamespace("sensitivity"))
+      parallel::clusterEvalQ(cl, requireNamespace("ff"))
+      parallel::clusterExport(cl, c("ts.matrix", "x", "fun"), envir = environment())
+      results <- parallel::parLapply(cl, indices, function(i) {
         y <- ts.matrix[, i]
         sensitivity::tell(x, y, ...)
         return(fun(i, x))

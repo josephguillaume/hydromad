@@ -11,6 +11,7 @@
 #' \code{\link{hydromad.stats}()}, and you can also use that function to add
 #' new statistics.
 #'
+#' @importFrom zoo time<- coredata<-
 #'
 #' @aliases summary.hydromad print.summary.hydromad
 #' print.summaryWithBreaks.hydromad summary.hydromad.runlist

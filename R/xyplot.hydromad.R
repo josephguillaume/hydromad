@@ -210,7 +210,7 @@ qqmath.hydromad <-
 #' @rdname xyplot.hydromad
 #' @export
 tsdiag.hydromad <- function(object, gof.lag, ...) {
-  stats:::tsdiag.Arima(object$uh, gof.lag = gof.lag, ...)
+  stats::tsdiag.Arima(object$uh, gof.lag = gof.lag, ...)
 }
 
 

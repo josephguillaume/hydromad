@@ -3,6 +3,8 @@
 # based on version 15.3.07 of John Norton's MatLab code
 # R port Copyright (c) 2007 Felix Andrews <felix@nfrac.org>
 
+#' @importFrom stats tsdiag
+
 # Function  arguments:
 # y: output vector
 # u: input vector or matrix with observations corresponding to y
@@ -369,5 +371,5 @@ vcov.ltv <- function(object, ...) {
 }
 
 tsdiag.ltv <- function(object, gof.lag = 10, ...) {
-  stats:::tsdiag.Arima(object, gof.lag, ...)
+  stats::tsdiag.Arima(object, gof.lag, ...)
 }

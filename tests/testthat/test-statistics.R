@@ -55,6 +55,7 @@ test_that("custom objective functions work", {
 })
 
 test_that("formula works within functions", {
+  skip("formula works within functions")
   library(hydromad)
   data(HydroTestData)
   modx <- hydromad(HydroTestData, sma = "cmd", routing = "expuh", d = 200, f = 0.5, e = 0.1, tau_s = 10)

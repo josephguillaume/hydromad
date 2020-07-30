@@ -39,7 +39,7 @@
 #' @param initX placeholder
 #' @param na.action placeholder
 #' @param trace placeholder
-#' @param \dots passed on to \code{armax.ls.fit}.
+# @param \dots passed on to \code{armax.ls.fit}.
 #' (i.e. negative or imaginary poles) are detected.
 #' @return a \code{tf} object, which is a list with components
 #' \item{coefficients}{ the fitted parameter values.} \item{fitted.values}{ the

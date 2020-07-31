@@ -8,6 +8,7 @@
 #define EPS 1.e-5 /* Minimum parameter value */
 
 void fland1(struct SMA *sma, struct FSUM1 *fsum1) {
+  
   /* THIS SUBROUTINE EXECUTES THE SAC-SMA OPERATION FOR ONE
    * TIME PERIOD.
    ********************************************************

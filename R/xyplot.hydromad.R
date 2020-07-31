@@ -3,8 +3,6 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
-#' @importFrom stats tsdiag
-
 plot.hydromad <-
   function(x, y, ...) {
     stop(
@@ -143,6 +141,5 @@ qqmath.hydromad <-
 tsdiag.hydromad <- function(object, gof.lag, ...) {
   requireNamespace(stats, quietly = TRUE)
   getS3method("tsdiag", "Arima")
-  class(object) <- "Arima"
-  stats::tsdiag(object$uh, gof.lag = gof.lag, ...)
+  tsdiag.Arima(object$uh, gof.lag = gof.lag, ...)
 }

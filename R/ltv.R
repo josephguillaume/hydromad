@@ -39,9 +39,6 @@
 
 # TODO: doc!
 
-
-#' @importFrom stats tsdiag
-
 # library(dlm)
 #
 # QXX <- ts.intersect(Q, lag(Q, -1), lag(Q, -2), lag(U, -1), lag(U, -2))
@@ -373,6 +370,5 @@ vcov.ltv <- function(object, ...) {
 tsdiag.ltv <- function(object, gof.lag = 10, ...) {
   requireNamespace(stats, quietly = TRUE)
   getS3method("tsdiag", "Arima")
-  class(object) <- "Arima"
-  stats::tsdiag(object, gof.lag, ...)
+  tsdiag.Arima(object, gof.lag, ...)
 }

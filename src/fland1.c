@@ -1,9 +1,9 @@
 #include "sacramento.h"
+#include <R.h>
+#include <R_ext/Print.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <R_ext/Print.h>
-#include <R.h>
 
 #define EPS 1.e-5 /* Minimum parameter value */
 

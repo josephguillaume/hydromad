@@ -139,7 +139,6 @@ qqmath.hydromad <-
   }
 
 tsdiag.hydromad <- function(object, gof.lag, ...) {
-  requireNamespace(stats, quietly = TRUE)
-  getS3method("tsdiag", "Arima")
+  tsdiag.Arima <- getS3method("tsdiag", "Arima")
   tsdiag.Arima(object$uh, gof.lag = gof.lag, ...)
 }

@@ -368,7 +368,6 @@ vcov.ltv <- function(object, ...) {
 }
 
 tsdiag.ltv <- function(object, gof.lag = 10, ...) {
-  requireNamespace(stats, quietly = TRUE)
-  getS3method("tsdiag", "Arima")
+  tsdiag.Arima <- getS3method("tsdiag", "Arima")
   tsdiag.Arima(object, gof.lag, ...)
 }

@@ -24,7 +24,7 @@ evalPars <- function(par.matrix, object, objective = hydromad.getOption("objecti
       ) %dopar% {
         # Work-around for hydromad functions to have access to .export
         pos <- 1
-        envir = as.environment(pos)
+        envir <- as.environment(pos)
         for (e in export) assign(e, get(e), envir = envir)
         # Work-around to use same opts as in user's environment
         hydromad.options(opts)

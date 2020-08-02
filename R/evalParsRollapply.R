@@ -54,7 +54,9 @@ evalParsTS <- function(par.matrix, object,
         .options.redis = list(async = parallel$async)
       ) %dopar% {
         # Work-around for hydromad functions to have access to .export
-        for (e in export) assign(e, get(e), envir = .GlobalEnv)
+        pos <- 1
+        envir = as.environment(pos)
+        for (e in export) assign(e, get(e), envir = envir)
         # Work-around to use same opts as in user's environment
         hydromad.options(opts)
         thisMod <- update(object, newpars = p)

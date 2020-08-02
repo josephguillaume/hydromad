@@ -5,10 +5,6 @@ context("Smoke tests")
 
 data(Cotter)
 ts90s <- window(Cotter$Q, start = "1990-01-01", end = "1999-12-31")
-arima_fit <- arima(ts90s)
-class(arima_fit) <- "Arima"
-tsdiag(arima_fit)
-
 
 ## Test that tsdiag.hydromad returns correct class
 test_that("can plot arima models with tsdiag", {

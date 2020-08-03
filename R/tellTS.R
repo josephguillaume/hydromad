@@ -130,7 +130,7 @@
 #'   ggplot2::geom_line(aes(x = ts.id, y = original)) +
 #'   ggplot2::facet_wrap(~variable)
 #' }
-
+#'
 #' @export
 tellTS <- function(x, ts.matrix, fun,
                    indices,

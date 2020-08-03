@@ -72,7 +72,6 @@
 #'   scales = list(y = list(log = TRUE)), distribution = qnorm,
 #'   type = c("g", "l")
 #' )
-
 #' @export
 plot.hydromad <-
   function(x, y, ...) {

@@ -2,12 +2,14 @@
 % Please edit documentation in R/xyplot.hydromad.R
 \name{xyplot.hydromad}
 \alias{xyplot.hydromad}
+\alias{plot.hydromad}
 \alias{xyplot.hydromad.runlist}
 \alias{qqmath.hydromad}
-\alias{plot.hydromad}
 \alias{tsdiag.hydromad}
 \title{Plot methods for Hydromad model objects}
 \usage{
+\method{plot}{hydromad}(x, y, ...)
+
 \method{xyplot}{hydromad}(
   x,
   data = NULL,
@@ -56,10 +58,12 @@
 \arguments{
 \item{x}{an object of class \code{hydromad}.}
 
-\item{data}{ignored.}
+\item{y}{Placeholder for plot.hydromad}
 
 \item{\dots}{further arguments passed on to \code{\link{xyplot.zoo}} or
 \code{\link{qqmath}}.}
+
+\item{data}{ignored.}
 
 \item{scales}{Placeholder}
 
@@ -91,8 +95,6 @@ simulation bounds if \code{feasible.bounds = TRUE}.}
 
 \item{object, gof.lag}{passed to the \code{arima} method of
 \code{\link{tsdiag}}.}
-
-\item{y}{Placeholder for plot.hydromad}
 }
 \value{
 the trellis functions return a trellis object.

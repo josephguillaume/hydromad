@@ -82,6 +82,9 @@ plot.hydromad <-
     )
   }
 
+
+#' @rdname xyplot.hydromad
+#' @export
 xyplot.hydromad <-
   function(x, data = NULL, ..., scales = list(),
            feasible.bounds = FALSE,

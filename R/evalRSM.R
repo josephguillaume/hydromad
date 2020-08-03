@@ -124,27 +124,27 @@
 #' ################################################################################
 #' ## Run RSM with n0.c=10 and n0.s=5
 #' set.seed(10) # make replicable
-#' evals.rsm <- runRSM(modx, n0 = c(10, 5))
-#'
-#' ## evaluate fit
-#' summary.lm(evals.rsm)
-#' ## Residual standard error of 0.008575
-#' ##  and R2=0.9235 could be ok,
-#' ##  but has room for improvement.
-#'
-#' ## Standard results from ?rsm
-#' summary(evals.rsm)
-#'
-#' ## Evaluate on an independent sample
-#' evalRSM(modx, evals.rsm, n = 100)
-#'
-#' ## Plot eigen plots
-#' eigen.plot(evals.rsm, fixed.axis = TRUE)
-#' ## Wide/tall ellipses indicate relatively lower identifiability
-#' ## Rotated ellipses indicate correlation between pairs of parameters
-#' dev.new()
-#' eigen.plot(evals.rsm, fixed.axis = FALSE)
-#' ## Rotation of ellipses is more visible with fixed axes
+# evals.rsm <- runRSM(modx, n0 = c(10, 5))
+#
+# ## evaluate fit
+# summary.lm(evals.rsm)
+# ## Residual standard error of 0.008575
+# ##  and R2=0.9235 could be ok,
+# ##  but has room for improvement.
+#
+# ## Standard results from ?rsm
+# summary(evals.rsm)
+#
+# ## Evaluate on an independent sample
+# evalRSM(modx, evals.rsm, n = 100)
+#
+# ## Plot eigen plots
+# eigen.plot(evals.rsm, fixed.axis = TRUE)
+# ## Wide/tall ellipses indicate relatively lower identifiability
+# ## Rotated ellipses indicate correlation between pairs of parameters
+# dev.new()
+# eigen.plot(evals.rsm, fixed.axis = FALSE)
+# ## Rotation of ellipses is more visible with fixed axes
 #' @export
 runRSM <- function(modx, ..., objective = hydromad.getOption("objective")) {
   if (!requireNamespace("rsm")) stop("package rsm is required for runRSM")

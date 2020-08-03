@@ -15,7 +15,7 @@ update.hydromad <-
         stop("elements of 'newpars' must be named")
       }
       ccall <- match.call()
-      ccall[[1]] <- quote(hydromad:::update.hydromad)
+      ccall[[1]] <- quote(update)
       ccall <- as.call(modifyList(
         as.list(ccall),
         as.list(newpars)

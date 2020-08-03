@@ -72,7 +72,16 @@
 #'   scales = list(y = list(log = TRUE)), distribution = qnorm,
 #'   type = c("g", "l")
 #' )
+
 #' @export
+plot.hydromad <-
+  function(x, y, ...) {
+    stop(
+      "There is no 'plot' method for 'hydromad' objects.",
+      "Try 'xyplot', or 'plot(fitted(...))'"
+    )
+  }
+
 xyplot.hydromad <-
   function(x, data = NULL, ..., scales = list(),
            feasible.bounds = FALSE,
@@ -210,7 +219,8 @@ qqmath.hydromad <-
 #' @rdname xyplot.hydromad
 #' @export
 tsdiag.hydromad <- function(object, gof.lag, ...) {
-  stats::tsdiag.Arima(object$uh, gof.lag = gof.lag, ...)
+  tsdiag.Arima <- getS3method("tsdiag", "Arima")
+  tsdiag.Arima(object$uh, gof.lag = gof.lag, ...)
 }
 
 

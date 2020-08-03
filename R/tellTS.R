@@ -130,7 +130,7 @@
 #'   ggplot2::geom_line(aes(x = ts.id, y = original)) +
 #'   ggplot2::facet_wrap(~variable)
 #' }
-#'
+
 #' @export
 tellTS <- function(x, ts.matrix, fun,
                    indices,
@@ -138,7 +138,6 @@ tellTS <- function(x, ts.matrix, fun,
                    ...) {
   UseMethod("tellTS")
 }
-
 
 #' @export
 tellTS.default <- function(x, ts.matrix, fun,
@@ -197,10 +196,8 @@ tellTS.sobol2002 <- function(x, ts.matrix, fun,
   )
 }
 
-
 #' @export
 tellTS.sobol2007 <- tellTS.sobol2002
-
 
 #' @export
 tellTS.morris <- function(x, ts.matrix, fun,
@@ -227,7 +224,6 @@ tellTS.morris <- function(x, ts.matrix, fun,
     ...
   )
 }
-
 
 #' @import utils
 utils::globalVariables(c("cl"))

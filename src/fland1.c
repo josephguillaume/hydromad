@@ -1,4 +1,6 @@
 #include "sacramento.h"
+#include <R.h>
+#include <R_ext/Print.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -163,11 +165,11 @@ L225: /* This is a C label */
    *    ARE FOR ONE DAY */
 
   if (sma->uzk > 1.)
-    printf("uzk = %f\n", sma->uzk);
+    Rprintf("uzk = %f\n", sma->uzk);
   if (sma->lzpk > 1.)
-    printf("lzpk = %f\n", sma->lzpk);
+    Rprintf("lzpk = %f\n", sma->lzpk);
   if (sma->lzsk > 1.)
-    printf("lzsk = %f\n", sma->lzsk);
+    Rprintf("lzsk = %f\n", sma->lzsk);
   duz = 1.0 - pow((1.0 - sma->uzk), dinc);
   dlzp = 1.0 - pow((1.0 - sma->lzpk), dinc);
   dlzs = 1.0 - pow((1.0 - sma->lzsk), dinc);
@@ -221,10 +223,10 @@ L225: /* This is a C label */
     defr = 1.0 - (sma->lztwc + sma->lzfpc + sma->lzfsc) /
                      (sma->lztwm + sma->lzfpm + sma->lzfsm);
     if (defr < 0.) {
-      printf("defr = %f\n", defr);
-      printf("%f  %f  %f\n", sma->lztwc, sma->lzfpc, sma->lzfsc);
-      printf("%f  %f  %f\n", sma->lztwm, sma->lzfpm, sma->lzfsm);
-      exit(1);
+      Rprintf("defr = %f\n", defr);
+      Rprintf("%f  %f  %f\n", sma->lztwc, sma->lzfpc, sma->lzfsc);
+      Rprintf("%f  %f  %f\n", sma->lztwm, sma->lzfpm, sma->lzfsm);
+      error("error: lower zone moisture deficiency ratio is < 0.");
     }
     // uzdefr = 1.0 - (sma->uztwc + sma->uzfwc) / (sma->uztwm + sma->uzfwm);
     perc *= (1.0 + zp * pow(defr, sma->rexp));

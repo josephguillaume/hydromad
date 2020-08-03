@@ -58,13 +58,10 @@ paretoObjectivesVaryWeights <- function(MODEL, objective = hydromad.getOption("o
   objective <- buildCachedObjectiveFun(objective, MODEL)
   switch(hydromad.getOption("parallel")[["paretoObjectivesVaryWeights"]],
     "clusterApply" = {
-      if (!requireNamespace("parallel", quietly = TRUE)) {
-        stop('package parallel is required for paretoObjectivesVaryWeights if hydromad.getOption("parallel")[["paretoObjectivesVaryWeights"]]=="clusterApply"',
-          call. = FALSE
-        )
-      }
+      if (!requireNamespace("parallel")) stop('package parallel is required for paretoObjectivesVaryWeights if hydromad.getOption("parallel")[["paretoObjectivesVaryWeights"]]=="clusterApply"')
       clusterExport(cl, c("objective", "fitBy", "MODEL"), envir = environment())
-      front <- parApply(
+      parallel::clusterExport(cl, c("objective", "fitBy", "MODEL"), envir = environment())
+      front <- parallel::parApply(
         cl, weights, 1,
         ## fit model using weighted sum of objectives
         function(w) {

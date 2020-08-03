@@ -83,11 +83,7 @@ paretoFilter <- function(x, ...) {
 #' plotPCNSE(subset(YeAl97, Catchment == "Salmon"), objectives = "E")
 #' @export
 plotPCNSE <- function(res, objectives = "r.squared", return.data = FALSE) {
-  if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("Package \"ggplot2\" needed for plotPCNSE to work. Please install it.",
-      call. = FALSE
-    )
-  }
+  if (!requireNamespace("ggplot2")) stop("package ggplot2 is required for plotPCNSE")
   res <- as.data.frame(res)
   stopifnot(!"Catchment" %in% names(res) | length(unique(res$Catchment)) == 1)
   resm <- melt(res,

@@ -3,6 +3,10 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+## Bucket-type Soil Moisture Accounting models.
+## Bai et. al. (2009), Environmental Modelling and Software.
+## Model S2.
+
 #' Single-bucket Soil Moisture Accounting models
 #'
 #' Single-bucket Soil Moisture Accounting models with saturated/unsaturated

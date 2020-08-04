@@ -1,3 +1,7 @@
+##
+## Copyright (c) Felix Andrews <felix@nfrac.org>
+##
+
 #' Australian Water Balance Model (AWBM)
 #'
 #' Australian Water Balance Model (AWBM): simple 3 bucket model.

@@ -3,6 +3,8 @@
 ## Copyright (c) Felix Andrews <felix@nfrac.org>
 ##
 
+## TODO: keep attributes of Q
+
 #' @useDynLib hydromad inverse_filter_lambda
 #' @export
 lambda.inverse.sim <-

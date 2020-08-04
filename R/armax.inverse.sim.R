@@ -1,3 +1,8 @@
+## hydromad: Hydrological Modelling and Analysis of Data
+##
+## Copyright (c) Felix Andrews <felix@nfrac.org>
+##
+
 #' Invert transfer function models to estimate input series.
 #'
 #' Invert transfer function models to estimate input series.

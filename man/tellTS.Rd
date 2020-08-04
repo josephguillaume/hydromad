@@ -96,10 +96,10 @@ sens <- tellTS(incomplete, runs, parallel = "none")
 
 ## Plot time series of mean absolute elementary effects
 library(ggplot2)
-ggplot2::qplot(x = ts.id, y = mu.star, colour = variable, data = sens, geom = "line")
+qplot(x = ts.id, y = mu.star, colour = variable, data = sens, geom = "line")
 
 ## And of standard deviation of elementary effects
-ggplot2::qplot(x = ts.id, y = sigma, colour = variable, data = sens, geom = "line")
+qplot(x = ts.id, y = sigma, colour = variable, data = sens, geom = "line")
 
 ######################################################################
 \dontrun{
@@ -127,16 +127,16 @@ system.time(TSI <- tellTS(incomplete, runs))
 
 ## Plot time series of sensitivities
 library(ggplot2)
-ggplot2::qplot(x = ts.id, y = original, colour = variable, data = TSI, geom = "line")
+qplot(x = ts.id, y = original, colour = variable, data = TSI, geom = "line")
 
 ## Time series plot facetted by variable showing bootstrapped confidence interval
-ggplot2::ggplot(data = TSI) +
-  ggplot2::geom_ribbon(aes(
+ggplot(data = TSI) +
+  geom_ribbon(aes(
     x = ts.id, ymin = get("min. c.i."),
     ymax = get("max. c.i.")
   ), fill = "grey") +
-  ggplot2::geom_line(aes(x = ts.id, y = original)) +
-  ggplot2::facet_wrap(~variable)
+  geom_line(aes(x = ts.id, y = original)) +
+  facet_wrap(~variable)
 }
 
 }

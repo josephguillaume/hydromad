@@ -206,7 +206,7 @@ qqmath.hydromad <-
       mod = fitted(x, all = all)
     )
     ## keep only common (corresponding) values
-    zoo::coredata(tsdat)[complete.cases(tsdat) == FALSE, ] <- NA
+    coredata(tsdat)[complete.cases(tsdat) == FALSE, ] <- NA
     dat <- make.groups(observed = tsdat[, "obs"], modelled = tsdat[, "mod"])
     foo <- qqmath(~data,
       groups = which, data = dat,

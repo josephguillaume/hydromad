@@ -1,3 +1,8 @@
+## hydromad: Hydrological Modelling and Analysis of Data
+##
+## Copyright (c) Felix Andrews <felix@nfrac.org>
+##
+
 #' Single-bucket Soil Moisture Accounting models
 #'
 #' Single-bucket Soil Moisture Accounting models with saturated/unsaturated

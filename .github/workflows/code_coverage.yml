@@ -37,9 +37,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-
-      - name: Install dependencies
-        run: |
           remotes::install_cran("rcmdcheck")
           remotes::install_cran("Rcpp")
           remotes::install_cran("coda")
@@ -51,5 +48,9 @@ jobs:
         shell: Rscript {0}
 
       - name: Test coverage
-        run: covr::codecov()
+        run: covr::codecov(type = c("tests"))
+        shell: Rscript {0}
+
+      - name: Example coverage
+        run: covr::codecov(type = c("examples"))
         shell: Rscript {0}

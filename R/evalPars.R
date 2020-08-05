@@ -20,8 +20,6 @@
 #' \code{"clusterApply"} has a slightly lower overhead. \code{"foreach"} allows
 #' a broader range of options.
 #'
-#' @importFrom iterators iter
-#'
 #' @name evalPars
 #' @aliases getFreeParsRanges
 #' @param par.matrix Named matrix or data.frame of parameter values, with each

@@ -52,8 +52,6 @@
 )
 
 \method{tsdiag}{hydromad}(object, gof.lag, ...)
-
-\method{plot}{hydromad}(x, y, ...)
 }
 \arguments{
 \item{x}{an object of class \code{hydromad}.}

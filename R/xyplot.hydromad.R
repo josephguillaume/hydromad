@@ -224,14 +224,3 @@ tsdiag.hydromad <- function(object, gof.lag, ...) {
   tsdiag.Arima <- getS3method("tsdiag", "Arima")
   tsdiag.Arima(object$uh, gof.lag = gof.lag, ...)
 }
-
-
-#' @rdname xyplot.hydromad
-#' @export
-plot.hydromad <-
-  function(x, y, ...) {
-    stop(
-      "There is no 'plot' method for 'hydromad' objects.",
-      "Try 'xyplot', or 'plot(fitted(...))'"
-    )
-  }

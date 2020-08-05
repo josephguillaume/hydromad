@@ -47,7 +47,7 @@ jobs:
           Rcpp::compileAttributes()
         shell: Rscript {0}
 
-      - name: Test coverage
+      - name: Test and example coverage
         run: |
           covr::codecov(type = c("tests", "examples"))
         shell: Rscript {0}

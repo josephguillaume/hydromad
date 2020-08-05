@@ -78,5 +78,6 @@ test_that("formula works within functions", {
   # Formula is less than 10% slower
   time.fun <- system.time(replicate(1e3, objFunVal(modx, hmadstat("r.squared"))))
   time.formula <- system.time(replicate(1e3, objFunVal(modx, ~ hmadstat("r.squared")(Q, X, ...))))
+  skip_on_ci()
   expect_lt((time.formula[3] - time.fun[3]) / time.fun[3], 0.1)
 })

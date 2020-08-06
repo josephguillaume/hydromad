@@ -1,11 +1,6 @@
 on:
-  push:
-    branches:
-      - master
-      - workflow-tweaks
-  pull_request:
-    branches:
-      - master
+  issue_comment:
+    types: [created]
 
 name: roxygenise
 

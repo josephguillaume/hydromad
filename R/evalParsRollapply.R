@@ -188,7 +188,7 @@ evalParsTS <- function(par.matrix, object,
       opts <- hydromad.options()
       export <- parallel$export
       results <- foreach::foreach(
-        p = iter(par.matrix, by = "row"),
+        p = iterators::iter(par.matrix, by = "row"),
         .packages = parallel$packages,
         .inorder = TRUE,
         .export = export,

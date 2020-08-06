@@ -7,7 +7,6 @@
 #'
 #' @importFrom stats update
 #' @importFrom Hmisc wtd.quantile
-#' @importFrom coda effectiveSize as.mcmc
 #'
 #' @aliases defineFeasibleSet defineFeasibleSet.hydromad
 #' defineFeasibleSet.default

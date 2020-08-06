@@ -28,7 +28,6 @@
 #'
 #' @importFrom stats update
 #' @importFrom parallel clusterCall
-#' @importFrom iterators iter
 #'
 #' @aliases evalParsTS evalParsRollapply
 #' @param par.matrix Named matrix or data.frame of parameter values, with each

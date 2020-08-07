@@ -126,7 +126,7 @@ evalParsRollapply <- function(par.matrix, object,
                               parallel = hydromad.getOption("parallel")[["evalParsTS"]],
                               filehash.name = tempfile()) {
   fun <- function(thisMod, width, objective) {
-    zoo::rollapply(cbind(Q = observed(thisMod), X = fitted(thisMod)),
+    rollapply(cbind(Q = observed(thisMod), X = fitted(thisMod)),
       width = width, by.column = FALSE,
       FUN = objFunVal, objective = objective
     )

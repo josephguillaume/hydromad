@@ -165,7 +165,7 @@ isFullySpecified <- function(object, ...) {
 #' it is used in conjunction with \code{\link{evalPars}} to perform sensitivity
 #' analyses.
 #'
-#' @importFrom zoo coredata
+#' @importFrom zoo coredata index2char
 #' @importFrom utils str
 #'
 #' @name hydromad.object
@@ -385,8 +385,8 @@ print.hydromad <-
         sep = ""
     )
     rx <- x$data
-    cat("Start = ", zoo::index2char(index(rx)[1], frequency(rx)),
-        ", End = ", zoo::index2char(index(rx)[NROW(rx)], frequency(rx)),
+    cat("Start = ", index2char(index(rx)[1], frequency(rx)),
+        ", End = ", index2char(index(rx)[NROW(rx)], frequency(rx)),
         "\n",
         sep = ""
     )

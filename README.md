@@ -117,7 +117,3 @@ License
 
 This project is licensed under the terms of [GPL
 (&gt;=2)](https://github.com/josephguillaume/hydromad/blob/master/DESCRIPTION)
-
-Acknowledgements
--------
-This research was supported by the Sydney Informatics Hub, a Core Research Facility of the University of Sydney.

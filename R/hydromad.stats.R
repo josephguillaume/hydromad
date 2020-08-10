@@ -28,42 +28,51 @@
 #' The default set of available statistics can be listed with
 #' \code{str(hydromad.stats())}, and consists of:
 #'
-#' \describe{ \item{abs.err}{ the mean absolute error.  } \item{RMSE}{ Root
-#' Mean Squared Error.  } \item{bias}{ bias in data units, \eqn{\sum ( X - Q )}
-#' } \item{rel.bias}{ bias as a fraction of the total observed flow, \eqn{\sum
+#' \describe{ \item{abs.err}{ the mean absolute error. }
+#' \item{RMSE}{ Root Mean Squared Error.  }
+#' \item{bias}{ bias in data units, \eqn{\sum ( X - Q )} }
+#' \item{rel.bias}{ bias as a fraction of the total observed flow, \eqn{\sum
 #' ( X - Q ) / \sum Q} (excluding any time steps with missing values).  }
-#' \item{r.squared}{ R Squared (Nash-Sutcliffe Efficiency), \eqn{1 - \sum (Q -
-#' X)^2 / \sum (Q - \bar{Q})^2} } \item{r.sq.sqrt}{ R Squared using square-root
+#' \item{r.squared}{ R Squared (Nash-Sutcliffe Efficiency), \eqn{1 - \sum (Q-
+#' X)^2 / \sum (Q - \bar{Q})^2} }
+#' \item{r.sq.sqrt}{ R Squared using square-root
 #' transformed data (less weight on peak flows), \eqn{1 - \frac{\sum |\sqrt{Q}
-#' - \sqrt{X}|^2 }{ \sum |\sqrt{Q} - \bar{\sqrt{Q}}|^2 }} } \item{r.sq.log}{ R
-#' Squared using log transformed data, with an offset: \eqn{1 - \frac{\sum
-#' |\log{(Q+\epsilon)} - \log{(X+\epsilon)}|^2 } {\sum |\log{(Q+\epsilon)} -
-#' \bar{\log{(Q+\epsilon)}}|^2 }}.  Here \eqn{\epsilon} is the 10 percentile
-#' (i.e. lowest decile) of the non-zero values of Q.  } \item{r.sq.boxcox}{ R
-#' Squared using a Box-Cox transform. The power lambda is chosen to fit Q to a
-#' normal distribution. When lambda = 0 it is a log transform; otherwise it is
-#' \eqn{y_* = \frac{(y+\epsilon)^\lambda - 1}{\lambda}} Here \eqn{\epsilon} is
-#' the 10 percentile (i.e. lowest decile) of the non-zero values of Q.  }
+#' - \sqrt{X}|^2 }{ \sum |\sqrt{Q} - \bar{\sqrt{Q}}|^2 }} }
+#' \item{r.sq.log}{ R Squared using log transformed data, with an offset:
+#' \eqn{1 - \frac{\sum | \log{(Q+\epsilon)} - \log{(X+\epsilon)}|^2 }
+#' {\sum |\log{(Q+\epsilon)} - \bar{\log{(Q+\epsilon)}}|^2 }}.
+#' Here \eqn{\epsilon} is the 10 percentile (i.e. lowest decile) of the non-
+#' zero values of Q. }
+#' \item{r.sq.boxcox}{ R Squared using a Box-Cox transform. The power lambda is
+#' chosen to fit Q to a normal distribution. When lambda = 0 it is a log
+#' transform; otherwise it is \eqn{y_* = \frac{(y+\epsilon)^\lambda - 1}
+#' {\lambda}} Here \eqn{\epsilon} is the 10 percentile (i.e. lowest decile) of
+#' the non-zero values of Q. }
 #' \item{r.sq.diff}{ R Squared using differences between successive time steps,
-#' i.e. rises and falls.  } \item{r.sq.monthly}{ R Squared with data aggregated
-#' into calendar months.  } \item{r.sq.smooth5}{ R Squared using data smoothed
-#' with a triangular kernel of width 5 time steps: \code{c(1,2,3,2,1)/9}.  }
+#' i.e. rises and falls. }
+#' \item{r.sq.monthly}{ R Squared with data aggregated into calendar months. }
+#' \item{r.sq.smooth5}{ R Squared using data smoothed with a triangular kernel
+#' of width 5 time steps: \code{c(1,2,3,2,1)/9}. }
 #' \item{r.sq.seasonal}{ R Squared where the reference model is the mean in
-#' each calendar month, rather than the default which is the overall mean.  }
+#' each calendar month, rather than the default which is the overall mean. }
 #' \item{r.sq.vartd}{ \code{\link{nseVarTd}} R Squared where the modelled peaks
 #' have been coalesced to observed peaks, minimising timing error. Note that
 #' this statistic requires \code{event} to be specified using
 #' \code{\link{eventseq}} }
-#'
 #' \item{persistence}{ R Squared where the reference model predicts each time
 #' step as the previous observed value. This statistic therefore represents a
-#' model's performance compared to a \emph{naive} one-time-step forecast.  }
-#'
-#' \item{X0}{ correlation of modelled flow with the model residuals.  }
+#' model's performance compared to a \emph{naive} one-time-step forecast. }
+#' \item{X0}{ correlation of modelled flow with the model residuals. }
 #' \item{X1}{ correlation of modelled flow with the model residuals from the
-#' previous time step.  } \item{ARPE}{ Average Relative Parameter Error.
-#' Requires that a variance-covariance matrix was estimated during calibration.
-#' } }
+#' previous time step. }
+#' \item{ARPE}{ Average Relative Parameter Error. Requires that a variance-
+#' covariance matrix was estimated during calibration.}
+#' \item{KGE}{ Kling-Gupta Efficiency. \eqn{KGE = 1 - \sqrt{(r - 1)^2 + (\alpha
+#' - 1)^2 + (\Beta - 1)^2}}, where r is the linear correlation between
+#' observations and simulations, α a measure of the flow variability error, and
+#' β a bias term. Equivalently, it can be expressed as: \code{1 -
+#' sqrt( cor(X, Q)^2 + (sd(X)/sd(Q) - 1)^2 + (mean(X)/mean(Q) - 1)^2 )}. }
+#' }
 #'
 #' @importFrom zoo coredata rollmean
 #' @importFrom stats complete.cases quantile time ave fitted lag cor
@@ -92,6 +101,10 @@
 #' @param model Placeholder
 #' @seealso \code{\link{buildTsObjective}}, \code{\link{nseStat}},
 #' \code{\link{objFunVal}}, \code{\link{summary.hydromad}}
+#' @references Gupta, H.V., Kling, H., Yilmaz, K.K., & Martinez, G.F. (2009).
+#' Decomposition of the mean squared error and NSE performance criteria:
+#' Implications for improving hydrological modelling. Journal of Hydrology,
+#' 377(1), 80–91. https://doi.org/10.1016/j.jhydrol.2009.08.003
 #' @keywords programming
 #' @examples
 #'
@@ -119,32 +132,32 @@ hydromad.stats <- function(...) {
   ## lattice.options("foo", "bar") and
   ## lattice.options(foo=1, bar=2). But it could also be
   ## lattice.options(foo=1, "bar"), which makes some juggling necessary
-
+  
   new <- list(...)
   if (is.null(names(new)) && length(new) == 1 && is.list(new[[1]])) new <- new[[1]]
   old <- .HydromadEnv$stats
-
+  
   ## if no args supplied, returns full options list
   if (length(new) == 0) {
     return(old)
   }
-
+  
   nm <- names(new)
   if (is.null(nm)) {
     return(old[unlist(new)])
   } ## typically getting options, not setting
   isNamed <- nm != "" ## typically all named when setting, but could have mix
   if (any(!isNamed)) nm[!isNamed] <- unlist(new[!isNamed])
-
+  
   ## so now everything has non-"" names, but only the isNamed ones should be set
   ## everything should be returned, however
-
+  
   retVal <- old[nm]
   names(retVal) <- nm
   nm <- nm[isNamed]
-
+  
   newfuns <- new[nm]
-
+  
   ## ensure that everything being assigned is of the required type:
   ## functions of (Q, X, ...)
   if (!all(sapply(newfuns, is.function))) {
@@ -157,21 +170,21 @@ hydromad.stats <- function(...) {
   for (x in newfuns) {
     assign(".", base::force, environment(x))
   }
-
+  
   ## this used to be
-
+  
   ## modified <- updateList(retVal[nm], new[nm])
   ## .LatticeEnv$lattice.options[names(modified)] <- modified
-
+  
   ## but then calling lattice.options(foo = NULL) had no effect
   ## because foo would be missing from modified.  So, we now do:
-
+  
   updateList <- function(x, val) {
     if (is.null(x)) x <- list()
     utils::modifyList(x, val)
   }
   .HydromadEnv$stats <- updateList(old, newfuns)
-
+  
   ## return changed entries invisibly
   invisible(retVal)
 }
@@ -195,10 +208,10 @@ buildCachedObjectiveFun <-
           warning("left hand side of formula ignored")
         }
         try(objective[[2]] <-
-          eval(substitute(bquote(x), list(x = objective[[2]]))))
+              eval(substitute(bquote(x), list(x = objective[[2]]))))
       } else if (is.function(objective)) {
         try(body(objective) <-
-          eval(substitute(bquote(x), list(x = body(objective)))))
+              eval(substitute(bquote(x), list(x = body(objective)))))
       } else {
         stop(
           "'objective' should be a function or formula, not a ",
@@ -219,7 +232,7 @@ buildCachedObjectiveFun <-
 .defaultHydromadStats <- function() {
   ## keep R CMD check happy:
   . <- function(x) x
-
+  
   ## default set of stats
   list(
     "bias" = function(Q, X, ...) mean(X - Q, na.rm = TRUE),
@@ -246,7 +259,7 @@ buildCachedObjectiveFun <-
     "r.sq.rank" = function(Q, X, ...) {
       nseStat(Q, X, ..., trans = function(x) {
         rank(round(log10(zapsmall(x, digits = 3)), digits = 2),
-          na.last = "keep"
+             na.last = "keep"
         )
       })
     },
@@ -272,15 +285,15 @@ buildCachedObjectiveFun <-
     },
     "r.sq.seasonal" = function(Q, X, ...) {
       nseStat(Q, X,
-        ref = .(ave(Q, months(time(Q)), FUN = function(x) mean(x, na.rm = TRUE))),
-        ...
+              ref = .(ave(Q, months(time(Q)), FUN = function(x) mean(x, na.rm = TRUE))),
+              ...
       )
     },
     "r.sq.vs.tf" = function(Q, X, ..., DATA) {
       ref <-
         .(fitted(hydromad(DATA,
-          sma = "scalar", routing = "armax",
-          rfit = list("sriv", order = c(2, 1))
+                          sma = "scalar", routing = "armax",
+                          rfit = list("sriv", order = c(2, 1))
         )))
       nseStat(Q, X, ref = ref, ...)
     },
@@ -288,8 +301,8 @@ buildCachedObjectiveFun <-
       objfun <- .({
         ref <-
           fitted(hydromad(DATA,
-            sma = "scalar", routing = "armax",
-            rfit = list("sriv", order = c(2, 1))
+                          sma = "scalar", routing = "armax",
+                          rfit = list("sriv", order = c(2, 1))
           ))
         buildTsObjective(Q, ref = ref, boxcox = TRUE)
       })
@@ -305,12 +318,12 @@ buildCachedObjectiveFun <-
       })
       objfun(Q, X, ...)
     },
-
+    
     "e.rain5" = function(Q, X, ..., DATA) {
       objfun <- .({
         ev <- eventseq(DATA$P,
-          thresh = 5, inthresh = 1,
-          indur = 4, continue = TRUE
+                       thresh = 5, inthresh = 1,
+                       indur = 4, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum)
       })
@@ -319,8 +332,8 @@ buildCachedObjectiveFun <-
     "e.rain5.log" = function(Q, X, ..., DATA) {
       objfun <- .({
         ev <- eventseq(DATA$P,
-          thresh = 5, inthresh = 1,
-          indur = 4, continue = TRUE
+                       thresh = 5, inthresh = 1,
+                       indur = 4, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = 0)
       })
@@ -329,22 +342,22 @@ buildCachedObjectiveFun <-
     "e.rain5.bc" = function(Q, X, ..., DATA) {
       objfun <- .({
         ev <- eventseq(DATA$P,
-          thresh = 5, inthresh = 1,
-          indur = 4, continue = TRUE
+                       thresh = 5, inthresh = 1,
+                       indur = 4, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = TRUE)
       })
       objfun(Q, X, ...)
     },
-
+    
     # = flowq90_indur4_mindur5_mingap5
-
+    
     "e.q90" = function(Q, X, ...) {
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-          thresh = q90, indur = 4,
-          mindur = 5, mingap = 5, continue = TRUE
+                       thresh = q90, indur = 4,
+                       mindur = 5, mingap = 5, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum)
       })
@@ -354,8 +367,8 @@ buildCachedObjectiveFun <-
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-          thresh = q90, indur = 4,
-          mindur = 5, mingap = 5, continue = TRUE
+                       thresh = q90, indur = 4,
+                       mindur = 5, mingap = 5, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = 0)
       })
@@ -365,20 +378,20 @@ buildCachedObjectiveFun <-
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-          thresh = q90, indur = 4,
-          mindur = 5, mingap = 5, continue = TRUE
+                       thresh = q90, indur = 4,
+                       mindur = 5, mingap = 5, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = TRUE)
       })
       objfun(Q, X, ...)
     },
-
+    
     "e.q90.all" = function(Q, X, ...) {
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-          thresh = q90, indur = 4,
-          mindur = 5, mingap = 5, all = TRUE
+                       thresh = q90, indur = 4,
+                       mindur = 5, mingap = 5, all = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum)
       })
@@ -388,8 +401,8 @@ buildCachedObjectiveFun <-
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-          thresh = q90, indur = 4,
-          mindur = 5, mingap = 5, all = TRUE
+                       thresh = q90, indur = 4,
+                       mindur = 5, mingap = 5, all = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = 0)
       })
@@ -399,20 +412,20 @@ buildCachedObjectiveFun <-
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-          thresh = q90, indur = 4,
-          mindur = 5, mingap = 5, all = TRUE
+                       thresh = q90, indur = 4,
+                       mindur = 5, mingap = 5, all = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = TRUE)
       })
       objfun(Q, X, ...)
     },
-
+    
     "e.q90.min" = function(Q, X, ...) {
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-          thresh = q90, indur = 4,
-          mindur = 5, mingap = 5, continue = TRUE
+                       thresh = q90, indur = 4,
+                       mindur = 5, mingap = 5, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = min, na.rm = TRUE)
       })
@@ -422,17 +435,17 @@ buildCachedObjectiveFun <-
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-          thresh = q90, indur = 4,
-          mindur = 5, mingap = 5, continue = TRUE
+                       thresh = q90, indur = 4,
+                       mindur = 5, mingap = 5, continue = TRUE
         )
         buildTsObjective(Q,
-          groups = ev, FUN = min, na.rm = TRUE,
-          boxcox = 0
+                         groups = ev, FUN = min, na.rm = TRUE,
+                         boxcox = 0
         )
       })
       objfun(Q, X, ...)
     },
-
+    
     "ar1" = function(Q, X, ...) {
       cor(head(Q - X, -1), tail(Q - X, -1), use = "complete")
     },
@@ -441,6 +454,13 @@ buildCachedObjectiveFun <-
     "U1" = function(Q, X, ..., U) cor(head(Q - X, -1), tail(U, -1), use = "complete"),
     "r.sq.vartd" = function(Q, X, ..., event) {
       nseVarTd(Q, X, event, ...)
+    },
+    "KGE" = function(Q, X, ...) {
+      1 - sqrt(
+        (cor(X, Q, use = "complete") - 1)^2 +
+          (mean(X, na.rm = TRUE) / mean(Q, na.rm = TRUE) - 1)^2 +
+          (sd(X, na.rm = TRUE) / sd(Q, na.rm = TRUE) - 1)^2
+      )
     }
   )
 }

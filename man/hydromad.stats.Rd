@@ -53,42 +53,51 @@ allow the user to change or add named statistics.  Its usage is similar to
 The default set of available statistics can be listed with
 \code{str(hydromad.stats())}, and consists of:
 
-\describe{ \item{abs.err}{ the mean absolute error.  } \item{RMSE}{ Root
-Mean Squared Error.  } \item{bias}{ bias in data units, \eqn{\sum ( X - Q )}
-} \item{rel.bias}{ bias as a fraction of the total observed flow, \eqn{\sum
+\describe{ \item{abs.err}{ the mean absolute error. }
+\item{RMSE}{ Root Mean Squared Error.  }
+\item{bias}{ bias in data units, \eqn{\sum ( X - Q )} }
+\item{rel.bias}{ bias as a fraction of the total observed flow, \eqn{\sum
 ( X - Q ) / \sum Q} (excluding any time steps with missing values).  }
-\item{r.squared}{ R Squared (Nash-Sutcliffe Efficiency), \eqn{1 - \sum (Q -
-X)^2 / \sum (Q - \bar{Q})^2} } \item{r.sq.sqrt}{ R Squared using square-root
+\item{r.squared}{ R Squared (Nash-Sutcliffe Efficiency), \eqn{1 - \sum (Q-
+X)^2 / \sum (Q - \bar{Q})^2} }
+\item{r.sq.sqrt}{ R Squared using square-root
 transformed data (less weight on peak flows), \eqn{1 - \frac{\sum |\sqrt{Q}
-- \sqrt{X}|^2 }{ \sum |\sqrt{Q} - \bar{\sqrt{Q}}|^2 }} } \item{r.sq.log}{ R
-Squared using log transformed data, with an offset: \eqn{1 - \frac{\sum
-|\log{(Q+\epsilon)} - \log{(X+\epsilon)}|^2 } {\sum |\log{(Q+\epsilon)} -
-\bar{\log{(Q+\epsilon)}}|^2 }}.  Here \eqn{\epsilon} is the 10 percentile
-(i.e. lowest decile) of the non-zero values of Q.  } \item{r.sq.boxcox}{ R
-Squared using a Box-Cox transform. The power lambda is chosen to fit Q to a
-normal distribution. When lambda = 0 it is a log transform; otherwise it is
-\eqn{y_* = \frac{(y+\epsilon)^\lambda - 1}{\lambda}} Here \eqn{\epsilon} is
-the 10 percentile (i.e. lowest decile) of the non-zero values of Q.  }
+- \sqrt{X}|^2 }{ \sum |\sqrt{Q} - \bar{\sqrt{Q}}|^2 }} }
+\item{r.sq.log}{ R Squared using log transformed data, with an offset:
+\eqn{1 - \frac{\sum | \log{(Q+\epsilon)} - \log{(X+\epsilon)}|^2 }
+{\sum |\log{(Q+\epsilon)} - \bar{\log{(Q+\epsilon)}}|^2 }}.
+Here \eqn{\epsilon} is the 10 percentile (i.e. lowest decile) of the non-
+zero values of Q. }
+\item{r.sq.boxcox}{ R Squared using a Box-Cox transform. The power lambda is
+chosen to fit Q to a normal distribution. When lambda = 0 it is a log
+transform; otherwise it is \eqn{y_* = \frac{(y+\epsilon)^\lambda - 1}
+{\lambda}} Here \eqn{\epsilon} is the 10 percentile (i.e. lowest decile) of
+the non-zero values of Q. }
 \item{r.sq.diff}{ R Squared using differences between successive time steps,
-i.e. rises and falls.  } \item{r.sq.monthly}{ R Squared with data aggregated
-into calendar months.  } \item{r.sq.smooth5}{ R Squared using data smoothed
-with a triangular kernel of width 5 time steps: \code{c(1,2,3,2,1)/9}.  }
+i.e. rises and falls. }
+\item{r.sq.monthly}{ R Squared with data aggregated into calendar months. }
+\item{r.sq.smooth5}{ R Squared using data smoothed with a triangular kernel
+of width 5 time steps: \code{c(1,2,3,2,1)/9}. }
 \item{r.sq.seasonal}{ R Squared where the reference model is the mean in
-each calendar month, rather than the default which is the overall mean.  }
+each calendar month, rather than the default which is the overall mean. }
 \item{r.sq.vartd}{ \code{\link{nseVarTd}} R Squared where the modelled peaks
 have been coalesced to observed peaks, minimising timing error. Note that
 this statistic requires \code{event} to be specified using
 \code{\link{eventseq}} }
-
 \item{persistence}{ R Squared where the reference model predicts each time
 step as the previous observed value. This statistic therefore represents a
-model's performance compared to a \emph{naive} one-time-step forecast.  }
-
-\item{X0}{ correlation of modelled flow with the model residuals.  }
+model's performance compared to a \emph{naive} one-time-step forecast. }
+\item{X0}{ correlation of modelled flow with the model residuals. }
 \item{X1}{ correlation of modelled flow with the model residuals from the
-previous time step.  } \item{ARPE}{ Average Relative Parameter Error.
-Requires that a variance-covariance matrix was estimated during calibration.
-} }
+previous time step. }
+\item{ARPE}{ Average Relative Parameter Error. Requires that a variance-
+covariance matrix was estimated during calibration.}
+\item{KGE}{ Kling-Gupta Efficiency. \eqn{KGE = 1 - \sqrt{(r - 1)^2 + (\alpha
+- 1)^2 + (\Beta - 1)^2}}, where r is the linear correlation between
+observations and simulations, α a measure of the flow variability error, and
+β a bias term. Equivalently, it can be expressed as: \code{1 -
+sqrt( cor(X, Q)^2 + (sd(X)/sd(Q) - 1)^2 + (mean(X)/mean(Q) - 1)^2 )}. }
+}
 }
 \examples{
 
@@ -110,6 +119,12 @@ hydromad.stats("viney" = function(Q, X, ...) {
   hmadstat("r.squared")(Q, X, ...) -
     5 * (abs(log(1 + hmadstat("rel.bias")(Q, X)))^2.5)
 })
+}
+\references{
+Gupta, H.V., Kling, H., Yilmaz, K.K., & Martinez, G.F. (2009).
+Decomposition of the mean squared error and NSE performance criteria:
+Implications for improving hydrological modelling. Journal of Hydrology,
+377(1), 80–91. https://doi.org/10.1016/j.jhydrol.2009.08.003
 }
 \seealso{
 \code{\link{buildTsObjective}}, \code{\link{nseStat}},

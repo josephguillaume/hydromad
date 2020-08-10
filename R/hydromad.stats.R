@@ -132,32 +132,32 @@ hydromad.stats <- function(...) {
   ## lattice.options("foo", "bar") and
   ## lattice.options(foo=1, bar=2). But it could also be
   ## lattice.options(foo=1, "bar"), which makes some juggling necessary
-  
+
   new <- list(...)
   if (is.null(names(new)) && length(new) == 1 && is.list(new[[1]])) new <- new[[1]]
   old <- .HydromadEnv$stats
-  
+
   ## if no args supplied, returns full options list
   if (length(new) == 0) {
     return(old)
   }
-  
+
   nm <- names(new)
   if (is.null(nm)) {
     return(old[unlist(new)])
   } ## typically getting options, not setting
   isNamed <- nm != "" ## typically all named when setting, but could have mix
   if (any(!isNamed)) nm[!isNamed] <- unlist(new[!isNamed])
-  
+
   ## so now everything has non-"" names, but only the isNamed ones should be set
   ## everything should be returned, however
-  
+
   retVal <- old[nm]
   names(retVal) <- nm
   nm <- nm[isNamed]
-  
+
   newfuns <- new[nm]
-  
+
   ## ensure that everything being assigned is of the required type:
   ## functions of (Q, X, ...)
   if (!all(sapply(newfuns, is.function))) {
@@ -170,21 +170,21 @@ hydromad.stats <- function(...) {
   for (x in newfuns) {
     assign(".", base::force, environment(x))
   }
-  
+
   ## this used to be
-  
+
   ## modified <- updateList(retVal[nm], new[nm])
   ## .LatticeEnv$lattice.options[names(modified)] <- modified
-  
+
   ## but then calling lattice.options(foo = NULL) had no effect
   ## because foo would be missing from modified.  So, we now do:
-  
+
   updateList <- function(x, val) {
     if (is.null(x)) x <- list()
     utils::modifyList(x, val)
   }
   .HydromadEnv$stats <- updateList(old, newfuns)
-  
+
   ## return changed entries invisibly
   invisible(retVal)
 }
@@ -208,10 +208,10 @@ buildCachedObjectiveFun <-
           warning("left hand side of formula ignored")
         }
         try(objective[[2]] <-
-              eval(substitute(bquote(x), list(x = objective[[2]]))))
+          eval(substitute(bquote(x), list(x = objective[[2]]))))
       } else if (is.function(objective)) {
         try(body(objective) <-
-              eval(substitute(bquote(x), list(x = body(objective)))))
+          eval(substitute(bquote(x), list(x = body(objective)))))
       } else {
         stop(
           "'objective' should be a function or formula, not a ",
@@ -232,7 +232,7 @@ buildCachedObjectiveFun <-
 .defaultHydromadStats <- function() {
   ## keep R CMD check happy:
   . <- function(x) x
-  
+
   ## default set of stats
   list(
     "bias" = function(Q, X, ...) mean(X - Q, na.rm = TRUE),
@@ -259,7 +259,7 @@ buildCachedObjectiveFun <-
     "r.sq.rank" = function(Q, X, ...) {
       nseStat(Q, X, ..., trans = function(x) {
         rank(round(log10(zapsmall(x, digits = 3)), digits = 2),
-             na.last = "keep"
+          na.last = "keep"
         )
       })
     },
@@ -285,15 +285,15 @@ buildCachedObjectiveFun <-
     },
     "r.sq.seasonal" = function(Q, X, ...) {
       nseStat(Q, X,
-              ref = .(ave(Q, months(time(Q)), FUN = function(x) mean(x, na.rm = TRUE))),
-              ...
+        ref = .(ave(Q, months(time(Q)), FUN = function(x) mean(x, na.rm = TRUE))),
+        ...
       )
     },
     "r.sq.vs.tf" = function(Q, X, ..., DATA) {
       ref <-
         .(fitted(hydromad(DATA,
-                          sma = "scalar", routing = "armax",
-                          rfit = list("sriv", order = c(2, 1))
+          sma = "scalar", routing = "armax",
+          rfit = list("sriv", order = c(2, 1))
         )))
       nseStat(Q, X, ref = ref, ...)
     },
@@ -301,8 +301,8 @@ buildCachedObjectiveFun <-
       objfun <- .({
         ref <-
           fitted(hydromad(DATA,
-                          sma = "scalar", routing = "armax",
-                          rfit = list("sriv", order = c(2, 1))
+            sma = "scalar", routing = "armax",
+            rfit = list("sriv", order = c(2, 1))
           ))
         buildTsObjective(Q, ref = ref, boxcox = TRUE)
       })
@@ -318,12 +318,12 @@ buildCachedObjectiveFun <-
       })
       objfun(Q, X, ...)
     },
-    
+
     "e.rain5" = function(Q, X, ..., DATA) {
       objfun <- .({
         ev <- eventseq(DATA$P,
-                       thresh = 5, inthresh = 1,
-                       indur = 4, continue = TRUE
+          thresh = 5, inthresh = 1,
+          indur = 4, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum)
       })
@@ -332,8 +332,8 @@ buildCachedObjectiveFun <-
     "e.rain5.log" = function(Q, X, ..., DATA) {
       objfun <- .({
         ev <- eventseq(DATA$P,
-                       thresh = 5, inthresh = 1,
-                       indur = 4, continue = TRUE
+          thresh = 5, inthresh = 1,
+          indur = 4, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = 0)
       })
@@ -342,22 +342,22 @@ buildCachedObjectiveFun <-
     "e.rain5.bc" = function(Q, X, ..., DATA) {
       objfun <- .({
         ev <- eventseq(DATA$P,
-                       thresh = 5, inthresh = 1,
-                       indur = 4, continue = TRUE
+          thresh = 5, inthresh = 1,
+          indur = 4, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = TRUE)
       })
       objfun(Q, X, ...)
     },
-    
+
     # = flowq90_indur4_mindur5_mingap5
-    
+
     "e.q90" = function(Q, X, ...) {
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-                       thresh = q90, indur = 4,
-                       mindur = 5, mingap = 5, continue = TRUE
+          thresh = q90, indur = 4,
+          mindur = 5, mingap = 5, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum)
       })
@@ -367,8 +367,8 @@ buildCachedObjectiveFun <-
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-                       thresh = q90, indur = 4,
-                       mindur = 5, mingap = 5, continue = TRUE
+          thresh = q90, indur = 4,
+          mindur = 5, mingap = 5, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = 0)
       })
@@ -378,20 +378,20 @@ buildCachedObjectiveFun <-
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-                       thresh = q90, indur = 4,
-                       mindur = 5, mingap = 5, continue = TRUE
+          thresh = q90, indur = 4,
+          mindur = 5, mingap = 5, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = TRUE)
       })
       objfun(Q, X, ...)
     },
-    
+
     "e.q90.all" = function(Q, X, ...) {
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-                       thresh = q90, indur = 4,
-                       mindur = 5, mingap = 5, all = TRUE
+          thresh = q90, indur = 4,
+          mindur = 5, mingap = 5, all = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum)
       })
@@ -401,8 +401,8 @@ buildCachedObjectiveFun <-
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-                       thresh = q90, indur = 4,
-                       mindur = 5, mingap = 5, all = TRUE
+          thresh = q90, indur = 4,
+          mindur = 5, mingap = 5, all = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = 0)
       })
@@ -412,20 +412,20 @@ buildCachedObjectiveFun <-
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-                       thresh = q90, indur = 4,
-                       mindur = 5, mingap = 5, all = TRUE
+          thresh = q90, indur = 4,
+          mindur = 5, mingap = 5, all = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = sum, boxcox = TRUE)
       })
       objfun(Q, X, ...)
     },
-    
+
     "e.q90.min" = function(Q, X, ...) {
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-                       thresh = q90, indur = 4,
-                       mindur = 5, mingap = 5, continue = TRUE
+          thresh = q90, indur = 4,
+          mindur = 5, mingap = 5, continue = TRUE
         )
         buildTsObjective(Q, groups = ev, FUN = min, na.rm = TRUE)
       })
@@ -435,17 +435,17 @@ buildCachedObjectiveFun <-
       objfun <- .({
         q90 <- quantile(coredata(Q), 0.9, na.rm = TRUE)
         ev <- eventseq(Q,
-                       thresh = q90, indur = 4,
-                       mindur = 5, mingap = 5, continue = TRUE
+          thresh = q90, indur = 4,
+          mindur = 5, mingap = 5, continue = TRUE
         )
         buildTsObjective(Q,
-                         groups = ev, FUN = min, na.rm = TRUE,
-                         boxcox = 0
+          groups = ev, FUN = min, na.rm = TRUE,
+          boxcox = 0
         )
       })
       objfun(Q, X, ...)
     },
-    
+
     "ar1" = function(Q, X, ...) {
       cor(head(Q - X, -1), tail(Q - X, -1), use = "complete")
     },

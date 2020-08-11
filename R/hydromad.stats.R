@@ -456,10 +456,11 @@ buildCachedObjectiveFun <-
       nseVarTd(Q, X, event, ...)
     },
     "KGE" = function(Q, X, ...) {
+      ok <- complete.cases(coredata(X), coredata(Q))
       1 - sqrt(
         (cor(X, Q, use = "complete") - 1)^2 +
-          (mean(X, na.rm = TRUE) / mean(Q, na.rm = TRUE) - 1)^2 +
-          (sd(X, na.rm = TRUE) / sd(Q, na.rm = TRUE) - 1)^2
+          (mean(X[ok]) / mean(Q[ok]) - 1)^2 +
+          (sd(X[ok]) / sd(Q[ok]) - 1)^2
       )
     }
   )

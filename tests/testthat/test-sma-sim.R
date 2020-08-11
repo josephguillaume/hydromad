@@ -109,7 +109,7 @@ test_that("snow simulation is the same in R and C", {
 
 test_that("simhyd simulation is the same in R and C", {
   set.seed(0)
-  mod0 <- hydromad(DATA, sma = "simhyd")
+  mod0 <- hydromad(DATA, sma = "simhyd", )
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
     expect_true(all(Csim >= 0))
@@ -123,6 +123,20 @@ test_that("simhyd simulation is the same in R and C", {
 test_that("sacramento simulation is the same in R and C", {
   set.seed(0)
   mod0 <- hydromad(DATA, sma = "sacramento")
+  for (mod in simulate(mod0, 5)) {
+    Csim <- predict(mod)
+    expect_true(all(Csim >= 0))
+    hydromad.options(pure.R.code = TRUE)
+    pureRsim <- predict(mod)
+    hydromad.options(pure.R.code = FALSE)
+    expect_equal(Csim, pureRsim)
+  }
+})
+
+test_that("hbv simulation is the same in R and C", {
+  set.seed(0)
+  DATA <- cbind(P=P, E=E, T=E-15)
+  mod0 <- hydromad(DATA, sma = "hbv", routing='hbvrouting')
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
     expect_true(all(Csim >= 0))

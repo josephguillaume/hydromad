@@ -89,7 +89,7 @@ DataFrame hbv_sim(
       // Use snowfall correction factor
       snow = P[t] * sfcf;
       // Add snow and refreezing water to snow pack
-      sp[t] = sp[t-1] + P[t] + refr;
+      sp[t] = sp[t-1] + snow + refr;
       infil = P[t] - snow;
     } else {
       // Calculate and remove snowmelt

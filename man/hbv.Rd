@@ -27,12 +27,7 @@ hbv.sim(
   return_state = FALSE
 )
 
-hbvrouting.sim(
-  U,
-  maxbas,
-  epsilon = hydromad.getOption("sim.epsilon"),
-  return_components = FALSE
-)
+hbvrouting.sim(U, maxbas, epsilon = hydromad.getOption("sim.epsilon"))
 
 hbv.ranges()
 
@@ -72,7 +67,11 @@ evapotranspiration.}
 
 \item{return_state}{Whether to return the state variables.}
 
+\item{U}{Effective rainfall series}
+
 \item{maxbas}{Routing, length of triangular weighting function.}
+
+\item{epsilon}{Values smaller than this in the output will be set to zero.}
 }
 \description{
 An implementation of the HBV rainfall-runoff model.
@@ -88,8 +87,7 @@ The timeseries of simulated streamflow (U). If return state is set
 to true, the state variables of the model are also returned. These include:
 snowpack (sp), water content of snowpack (wc), soil moisture (sm), actual
 evapotranspiration (ETa), upper groundwater storage (uz), lower groundwater
-storage (lz). Note, there are no other components to return with
-\code{hbvrouting}.
+storage (lz).
 }
 \examples{
 # Using example dataset Corin with daily P, Q, potential ET and average T

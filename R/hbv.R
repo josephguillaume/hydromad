@@ -40,8 +40,10 @@
 #' @param k2 Recession coefficient (lower groundwater storage).
 #' @param uzl Threshold for quick runoff for k0 outflow (mm).
 #' @param perc Maximum percolation from upper to lower groundwater storage.
-#' @param maxbas Routing, length of triangular weighting function.
 #' @param return_state Whether to return the state variables.
+#' @param U Effective rainfall series
+#' @param maxbas Routing, length of triangular weighting function.
+#' @param epsilon Values smaller than this in the output will be set to zero.
 #' @details This implementation of this HBV model closely follows the
 #' description of HBV light by Seibert and Vis, 2009. Daily average temperature
 #' data is required for the snow routine. Daily potential evapotranspiration
@@ -51,8 +53,7 @@
 #' to true, the state variables of the model are also returned. These include:
 #' snowpack (sp), water content of snowpack (wc), soil moisture (sm), actual
 #' evapotranspiration (ETa), upper groundwater storage (uz), lower groundwater
-#' storage (lz). Note, there are no other components to return with
-#' `hbvrouting`.
+#' storage (lz).
 #' @references
 #' Seibert, J. and Vis, M. (2012). Teaching hydrological modeling with a
 #' user-friendly catchment-runoff-model software package. Hydrology and Earth
@@ -329,8 +330,7 @@ hbv.sim <- function(DATA,
 #' @export
 hbvrouting.sim <- function(U,
                            maxbas,
-                           epsilon = hydromad.getOption("sim.epsilon"),
-                           return_components = FALSE) {
+                           epsilon = hydromad.getOption("sim.epsilon")) {
   # Routing
   # maxbas: routing, length of triangular weighting function
 
@@ -348,7 +348,7 @@ hbvrouting.sim <- function(U,
 
   if (maxbas > 1) {
     for (i in 1:maxbas) {
-      wi[i] <- integrate(ci, i - 1, min(i, maxbas))$value[1]
+      wi[i] <- stats::integrate(ci, i - 1, min(i, maxbas))$value[1]
     }
   } else {
     wi <- 1

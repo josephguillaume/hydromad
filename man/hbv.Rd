@@ -5,6 +5,8 @@
 \alias{hbv.sim}
 \alias{hbvrouting}
 \alias{hbvrouting.sim}
+\alias{hbv.ranges}
+\alias{hbvrouting.ranges}
 \title{HBV rainfall-runoff model}
 \usage{
 hbv.sim(
@@ -31,6 +33,10 @@ hbvrouting.sim(
   epsilon = hydromad.getOption("sim.epsilon"),
   return_components = FALSE
 )
+
+hbv.ranges()
+
+hbvrouting.ranges()
 }
 \arguments{
 \item{DATA}{A time-series like object with columns P (precipitation in mm),
@@ -90,8 +96,8 @@ storage (lz). Note, there are no other components to return with
 data(Corin)
 
 # See default par ranges with hbv.ranges() or hydromad.getOption('hbv')
-hydromad.getOption('hbv')
-hydromad.getOption('hbvrouting')
+hydromad.getOption("hbv")
+hydromad.getOption("hbvrouting")
 
 # Create model
 mod <- hydromad(
@@ -107,7 +113,6 @@ fit <- fitByOptim(mod, objective = hmadstat("KGE"))
 summary(fit)
 objFunVal(fit)
 xyplot(fit)
-
 }
 \references{
 Seibert, J. and Vis, M. (2012). Teaching hydrological modeling with a

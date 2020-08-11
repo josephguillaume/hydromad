@@ -380,6 +380,7 @@ hbvrouting.sim <- function(U,
 # Suggested parameter ranges
 # Guided by https://doi.org/10.2166/nh.1998.15
 # and https://doi.org/10.5194/hess-16-3315-2012
+#' @rdname hbv
 #' @export
 hbv.ranges <- function() {
   list(
@@ -399,6 +400,7 @@ hbv.ranges <- function() {
   )
 }
 
+#' @rdname hbv
 #' @export
 hbvrouting.ranges <- function() {
   list(

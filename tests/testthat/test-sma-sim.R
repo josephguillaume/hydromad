@@ -135,8 +135,8 @@ test_that("sacramento simulation is the same in R and C", {
 
 test_that("hbv simulation is the same in R and C", {
   set.seed(0)
-  DATA <- cbind(P=P, E=E, T=E-15)
-  mod0 <- hydromad(DATA, sma = "hbv", routing='hbvrouting')
+  hbvDATA <- cbind(P = P, E = E, T = E - 15)
+  mod0 <- hydromad(hbvDATA, sma = "hbv", routing = "hbvrouting")
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
     expect_true(all(Csim >= 0))

@@ -57,11 +57,11 @@
 #' Seibert, J. and Vis, M. (2012). Teaching hydrological modeling with a
 #' user-friendly catchment-runoff-model software package. Hydrology and Earth
 #' System Sciences, 16, 3315–3325, 2012.
-#' 
+#'
 #' Bergström, S.: The HBV Model: Its Structure and Applications, Swedish
 #' Meteorological and Hydrological Institute (SMHI), Hydrology, Norrköping,
 #' 35 pp., 1992.
-#' 
+#'
 #' Bergström, S.: The HBV model (Chapter 13), in: Computer Models of
 #' Watershed Hydrology, edited by: Singh, V. P., Water Resources Publications,
 #' Highlands Ranch, Colorado, USA, 443–476, 1995.
@@ -71,10 +71,10 @@
 #' @examples
 #' # Using example dataset Corin with daily P, Q, potential ET and average T
 #' data(Corin)
-#' 
+#'
 #' # See default par ranges with hbv.ranges() or hydromad.getOption('hbv')
-#' hydromad.getOption('hbv')
-#' hydromad.getOption('hbvrouting')
+#' hydromad.getOption("hbv")
+#' hydromad.getOption("hbvrouting")
 #'
 #' # Create model
 #' mod <- hydromad(
@@ -90,7 +90,6 @@
 #' summary(fit)
 #' objFunVal(fit)
 #' xyplot(fit)
-#' 
 #' @keywords models
 #' @useDynLib hydromad
 #' @importFrom Rcpp sourceCpp

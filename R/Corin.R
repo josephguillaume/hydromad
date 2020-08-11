@@ -14,7 +14,7 @@
 #' * `Q` (streamflow, mm/day)
 #' * `E` (potential evapotranspiration, mm/day)
 #' * `T` (daily average temperature, ºC)
-#' @details 
+#' @details
 #' * Daily rainfall at Cotter Hut (ID: 570946).
 #' * Daily mean streamflow at Cotter River at Gingera (ID: 410730).
 #' * Daily Morton's potential ET calculated using Corin Dam (ID: 570947) weather

@@ -23,12 +23,22 @@ with_parameters_test_that(
     set.seed(0)
     n_iter <- 5
     for (mod in simulate(mod, n_iter)) {
-      Csim <- predict(mod)
-      expect_true(all(Csim >= 0))
-      hydromad.options(pure.R.code = TRUE)
-      pureRsim <- predict(mod)
-      hydromad.options(pure.R.code = FALSE)
-      expect_equal(Csim, pureRsim)
+      if (test_name == "sma = \"gr4j\"") {
+        Csim <- na.trim(predict(mod))
+        expect_true(all(Csim >= 0))
+        hydromad.options(pure.R.code = TRUE)
+        pureRsim <- na.trim(predict(mod))
+        hydromad.options(pure.R.code = FALSE)
+        expect_equal(Csim, pureRsim)
+      }
+      else {
+        Csim <- predict(mod)
+        expect_true(all(Csim >= 0))
+        hydromad.options(pure.R.code = TRUE)
+        pureRsim <- predict(mod)
+        hydromad.options(pure.R.code = FALSE)
+        expect_equal(Csim, pureRsim)
+      }
     }
   },
   cases(

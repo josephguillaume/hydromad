@@ -109,7 +109,7 @@ test_that("snow simulation is the same in R and C", {
 
 test_that("simhyd simulation is the same in R and C", {
   set.seed(0)
-  mod0 <- hydromad(DATA, sma = "simhyd", )
+  mod0 <- hydromad(DATA, sma = "simhyd")
   for (mod in simulate(mod0, 5)) {
     Csim <- predict(mod)
     expect_true(all(Csim >= 0))

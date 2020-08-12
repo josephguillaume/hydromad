@@ -54,7 +54,7 @@ with_parameters_test_that(
     `sma = "awbm"` = list(mod = hydromad(DATA, sma = "awbm")),
     `sma = "simhyd"` = list(mod = hydromad(DATA, sma = "simhyd")),
     `sma = "sacramento"` = list(mod = hydromad(DATA, sma = "sacramento")),
-    `sma = "snow"` = list(mod = hydromad(DATA, sma = "snow"))
+    `sma = "snow"` = list(mod = hydromad(DATAE, sma = "snow"))
   )
 )
 

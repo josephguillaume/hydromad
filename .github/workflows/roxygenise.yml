@@ -41,7 +41,7 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add man/\* NAMESPACE
+          git add man/\* NAMESPACE R/RcppExports.R src/RcppExports.cpp
           git commit -m 'Document'
       - uses: r-lib/actions/pr-push@master
         with:

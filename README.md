@@ -4,7 +4,10 @@ hydromad
 ========
 
 <!-- badges: start -->
-<!-- [![R build status](https://github.com/WillemVervoort/hydromad/workflows/R-CMD-check/badge.svg)](https://github.com/WillemVervoort/hydromad/actions) -->
+
+[![R build
+status](https://github.com/josephguillaume/hydromad/workflows/R-CMD-check/badge.svg)](https://github.com/josephguillaume/hydromad/actions)
+[![codecov](https://codecov.io/gh/josephguillaume/hydromad/branch/master/graph/badge.svg)](https://codecov.io/gh/josephguillaume/hydromad)
 <!-- badges: end -->
 
 The goal of hydromad is to provide a modelling framework for
@@ -91,13 +94,10 @@ This is a basic example of defining a model in hydromad:
     ## an unfitted model, with ranges of possible parameter values
     modx <- hydromad(Cotter[1:1000], sma = "cwi", routing = "expuh",
                      tau_s = c(2, 100), v_s = c(0, 1))
-    #> Warning in zoo(rval[i], index(x)[i]): some methods for "zoo" objects do not work
-    #> if the index entries in 'order.by' are not unique
-    #> Warning in as.zooreg.zoo(newdata): 'x' does not have an underlying regularity
     modx
     #> 
     #> Hydromad model with "cwi" SMA and "expuh" routing:
-    #> Start = 1, End = 1000
+    #> Start = 1966-05-01, End = 1969-01-24
     #> 
     #> SMA Parameters:
     #>       lower upper     
@@ -117,3 +117,9 @@ License
 
 This project is licensed under the terms of [GPL
 (&gt;=2)](https://github.com/josephguillaume/hydromad/blob/master/DESCRIPTION)
+
+Acknowledgements
+----------------
+
+This research was supported by the Sydney Informatics Hub, a Core
+Research Facility of the University of Sydney.

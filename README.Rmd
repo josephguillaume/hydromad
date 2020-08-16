@@ -16,7 +16,8 @@ knitr::opts_chunk$set(
 # hydromad
 
 <!-- badges: start -->
-<!-- [![R build status](https://github.com/WillemVervoort/hydromad/workflows/R-CMD-check/badge.svg)](https://github.com/WillemVervoort/hydromad/actions) -->
+[![R build status](https://github.com/josephguillaume/hydromad/workflows/R-CMD-check/badge.svg)](https://github.com/josephguillaume/hydromad/actions)
+[![codecov](https://codecov.io/gh/josephguillaume/hydromad/branch/master/graph/badge.svg)](https://codecov.io/gh/josephguillaume/hydromad)
 <!-- badges: end -->
 
 The goal of hydromad is to provide a modelling framework for environmental hydrology: water balance accounting and flow routing in spatially aggregated catchments. 
@@ -91,3 +92,8 @@ modx
 ## License
 
 This project is licensed under the terms of [GPL (>=2)](https://github.com/josephguillaume/hydromad/blob/master/DESCRIPTION)
+
+
+## Acknowledgements
+
+This research was supported by the Sydney Informatics Hub, a Core Research Facility of the University of Sydney.

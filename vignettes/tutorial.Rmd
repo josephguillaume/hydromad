@@ -1,16 +1,19 @@
 ---
-title: "Hydromad Tutorial"
-author: "Felix Andrews"
-date: "`r Sys.Date()`"
-output: 
+title: "Tutorial"
+output:
   bookdown::html_document2:
-    toc: true
+    base_format: rmarkdown::html_vignette
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(hydromad)
-library(grid)
+require(hydromad)
+require(grid)
 set.seed(0)
 ```
 
@@ -585,7 +588,6 @@ usable form:
 Let's first view the content of one of the input files.
 Set the working directory to where the data file is:
 ```{r view-files, echo=TRUE, eval=FALSE}
-setwd(system.file("doc", package = "hydromad"))
 file.show("pq_cotter.csv")
 ```
 ```{r view-files-script, echo=FALSE}

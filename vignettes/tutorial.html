@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Tutorial</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Tutorial</h1>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="#input-data"><span class="toc-section-number">2</span> Input data</a></li>
+<li><a href="#data-checking"><span class="toc-section-number">3</span> Data checking</a></li>
+<li><a href="#model-specification"><span class="toc-section-number">4</span> Model Specification</a><ul>
+<li><a href="#calibration"><span class="toc-section-number">4.1</span> Calibration</a></li>
+</ul></li>
+<li><a href="#model-output"><span class="toc-section-number">5</span> Model Output</a></li>
+<li><a href="#model-simulation"><span class="toc-section-number">6</span> Model Simulation</a><ul>
+<li><a href="#model-and-calibration-options"><span class="toc-section-number">6.1</span> Model and Calibration Options</a><ul>
+<li><a href="#model-structure-and-parameter-ranges"><span class="toc-section-number">6.1.1</span> Model Structure and Parameter Ranges</a></li>
+<li><a href="#optimisation-settings"><span class="toc-section-number">6.1.2</span> Optimisation settings</a></li>
+<li><a href="#unit-hydrograph-transfer-functions"><span class="toc-section-number">6.1.3</span> Unit Hydrograph Transfer Functions</a></li>
+<li><a href="#unit-hydrograph-inverse-fitting-methods"><span class="toc-section-number">6.1.4</span> Unit Hydrograph Inverse Fitting Methods</a></li>
+<li><a href="#other-options"><span class="toc-section-number">6.1.5</span> Other Options</a></li>
+</ul></li>
+<li><a href="#what-next"><span class="toc-section-number">6.2</span> What Next?</a></li>
+</ul></li>
+<li><a href="#appendix"><span class="toc-section-number">7</span> Appendix</a><ul>
+<li><a href="#reading-in-data"><span class="toc-section-number">7.1</span> Reading in data</a></li>
+</ul></li>
+<li><a href="#computational-details"><span class="toc-section-number">8</span> Computational details</a></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>The <strong>hydromad</strong> package is designed for hydrological modelling and
+associated data analysis. It is focussed on a <em>top-down</em>,
+spatially lumped, empirical approach to environmental hydrology. In
+practice the emphasis is on models of rainfall runoff in catchments
+(watersheds). Such models predict streamflow from time series of
+areal rainfall and temperature or potential evapo-transpiration. They
+can be calibrated to time series of observed data.</p>
+<p>As <em>spatially lumped</em> models, they do not explicitly represent
+spatial variation over the catchment area. In particular, the standard
+formulations do not attempt to model effects of changes in land
+cover. These models are usually calibrated to a period of observed
+streamflow, and the parameters defining the modelled relationship
+between rainfall, evaporation and flow are assumed to be
+<em>stationary</em> in this period.</p>
+<p>The modelling framework in the <strong>hydromad</strong> package is based on a
+two-component structure: (1) a <em>soil moisture accounting</em> (SMA)
+module; and (2) a <em>routing</em> or <em>unit hydrograph</em> module
+(Figure <a href="#fig:model-framework">1.1</a>). The SMA model converts rainfall
+and temperature into <em>effective rainfall</em> — the amount of
+rainfall which eventually reaches the catchment outlet as streamflow
+(i.e. that which is not lost as evaporation etc). The routing module
+converts effective rainfall into streamflow, which amounts to defining
+the peak response and shape of the recession curve. It is usually a
+linear transfer function, which can be as simple as a single
+exponential recession (i.e. constant decay rate), although variants
+with non-linearities are also available.</p>
+<div class="figure" style="text-align: center"><span id="fig:model-framework"></span>
+<img src="data:image/png;base64,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" alt="The modelling framework in the **hydromad** package." />
+<p class="caption">
+Figure 1.1: The modelling framework in the <strong>hydromad</strong> package.
+</p>
+</div>
+<p>The <strong>hydromad</strong> package is intended for:</p>
+<ul>
+<li>defining and fitting spatially-lumped hydrological models to
+observed data;</li>
+<li>simulating these models, including model state variables and
+component flow separation.</li>
+<li>evaluating and comparing these models: summarising performance
+by different measures and over time, using graphical displays
+(hydrograph, flow duration curve, residuals, etc) and statistics;</li>
+<li>integration with other types of data analysis and model analysis
+in <code>R</code>, including sensitivity and uncertainty analyis.</li>
+</ul>
+<p>This tutorial describes how to get started with the <strong>hydromad</strong>
+<code>R</code> package. It covers the basics of reading data in from
+files, converting it into the appropriate format, and fitting and
+analysing a simple model.</p>
+<p>Once you have <code>R</code> running (See <a href="http://hydromad.catchment.org/">http://www.r-project.org/</a>) and have
+installed the <strong>hydromad</strong> package (See <a href="http://hydromad.catchment.org/">http://hydromad.catchment.org/</a>),
+you can load it:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(hydromad)</span></code></pre></div>
+</div>
+<div id="input-data" class="section level1">
+<h1><span class="header-section-number">2</span> Input data</h1>
+<p>The example we will look at is the Cotter River catchment at Gingera
+(gauge 410730) in the Australian Capital Territory, Australia. This is
+a 148 km<span class="math inline">\(^2\)</span> catchment managed for urban water supply. Areal rainfall
+was estimated from several rain gauges operated by the Bureau of
+Meteorology and EcoWise. The temperature records come from Canberra
+Airport.</p>
+<p>The Cotter data is built in to the <strong>hydromad</strong> package, and can be
+loaded into the workspace with:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">data</span>(Cotter)</span></code></pre></div>
+<p>See Appendix <a href="#reading-in-data">7.1</a> for a demonstration of reading
+in the time series data from files.</p>
+</div>
+<div id="data-checking" class="section level1">
+<h1><span class="header-section-number">3</span> Data checking</h1>
+<p>In a real data analysis problem, data checking is a central
+issue. However, as this document aims to introduce the core modelling
+functions, only a simple check will be demonstrated here. The most
+obvious thing to do is to plot the time series, as shown in Figure
+<a href="#fig:dataplot">3.1</a>.</p>
+<p><em>To plot the raw (daily) time series:</em></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">xyplot</span>(Cotter)</span></code></pre></div>
+<p><em>To plot a section of the time series:</em></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">xyplot</span>(<span class="kw">window</span>(Cotter, <span class="dt">start =</span> <span class="st">&quot;1974-01-01&quot;</span>, <span class="dt">end =</span> <span class="st">&quot;1975-01-01&quot;</span>))</span></code></pre></div>
+<p><em>And to plot the timeseries aggregated to a monthly timestep:</em></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>monthlyPQE &lt;-<span class="st"> </span><span class="kw">aggregate</span>(Cotter, as.yearmon, mean)</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">xyplot</span>(monthlyPQE,</span>
+<span id="cb5-3"><a href="#cb5-3"></a>       <span class="dt">screens =</span> <span class="kw">c</span>(<span class="st">&quot;Streamflow (mm/day)&quot;</span>, <span class="st">&quot;Areal rain (mm/day)&quot;</span>, <span class="st">&quot;Temperature (deg. C)&quot;</span>),</span>
+<span id="cb5-4"><a href="#cb5-4"></a>       <span class="dt">xlab =</span> <span class="ot">NULL</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:dataplot"></span>
+<img src="data:image/png;base64,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" alt="Input data, averaged over months" />
+<p class="caption">
+Figure 3.1: Input data, averaged over months
+</p>
+</div>
+<p>Table <a href="#tab:datasummary">7.1</a> shows the mean and quartiles of each input
+data series. One measure that is of key interest in hydrology is the
+<em>runoff ratio</em>, the proportion of the rainfall which flows out of
+the catchment. In a simple case this is just <code>sum(Q) / sum(P)</code>,
+but as we have missing values, we should only compare the common
+observations:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>ok &lt;-<span class="st"> </span><span class="kw">complete.cases</span>(Cotter[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">with</span>(Cotter, <span class="kw">sum</span>(Q[ok]) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(P[ok]))</span></code></pre></div>
+<pre><code>## [1] 0.279101</code></pre>
+<p>This figure is within the range we would expect, so is looks like we
+probably have the right data series and units.</p>
+<p>To estimate the delay time between rainfall and a consequent
+streamflow response, we can look at the cross-correlation
+function. The <strong>hydromad</strong> function <code>estimateDelay</code> picks out
+the lag time corresponding to the maximum correlation between rainfall
+and <em>rises in</em> streamflow. In the Cotter this is 0 days. For more
+detail there is a function <code>rollccf</code> which calculates the
+cross-correlation in a moving window through the data, shown in Figure
+<a href="#fig:rollccf-plot">3.2</a>. When the cross-correlation value drops down
+towards zero, there is little connection between rainfall and
+streamflow, and you should start to worry about the data. If the lag 1
+value jumps above the lag 0 value, this indicates that the delay time
+has changed.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>x &lt;-<span class="st"> </span><span class="kw">rollccf</span>(Cotter)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">xyplot.rollccf</span>(x, <span class="dt">xlim =</span> <span class="kw">extendrange</span>(<span class="kw">as.Date</span>(<span class="kw">c</span>(<span class="st">&quot;1980-01-01&quot;</span>,<span class="st">&quot;1990-01-01&quot;</span>))))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:rollccf-plot"></span>
+<img src="data:image/png;base64,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" alt="Cross-correlation between rainfall and streamflow rises, in two rolling windows of width 90 days and 365 days." />
+<p class="caption">
+Figure 3.2: Cross-correlation between rainfall and streamflow rises, in two rolling windows of width 90 days and 365 days.
+</p>
+</div>
+</div>
+<div id="model-specification" class="section level1">
+<h1><span class="header-section-number">4</span> Model Specification</h1>
+<p>A <strong>hydromad</strong> object encapsulates the chosen model form, parameter
+values (or ranges of values), as well as results. The model form is
+divided into two components: SMA (Soil Moisture Accounting) and
+routing. Additionally, a specification can be given for fitting the
+routing component (<code>rfit</code>). If given, this is applied
+automatically to fit the routing component after the SMA parameters
+have been specified.</p>
+<p>Let us define some data periods. We will fit a model to one, the
+calibration period, and then simulate it on the other periods to
+cross-check model performance.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>ts70s &lt;-<span class="st"> </span><span class="kw">window</span>(Cotter, <span class="dt">start =</span> <span class="st">&quot;1970-01-01&quot;</span>, <span class="dt">end =</span> <span class="st">&quot;1979-12-31&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>ts80s &lt;-<span class="st"> </span><span class="kw">window</span>(Cotter, <span class="dt">start =</span> <span class="st">&quot;1980-01-01&quot;</span>, <span class="dt">end =</span> <span class="st">&quot;1989-12-31&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>ts90s &lt;-<span class="st"> </span><span class="kw">window</span>(Cotter, <span class="dt">start =</span> <span class="st">&quot;1990-01-01&quot;</span>, <span class="dt">end =</span> <span class="st">&quot;1999-12-31&quot;</span>)</span></code></pre></div>
+<p>When we first set up the model, most of the parameters are not
+uniquely specified, but rather have a range of possible values. These
+defaults are taken from <code>hydromad.options()</code>, and they can be
+over-ridden by arguments to the <strong>hydromad</strong> function.</p>
+<p>A nice simple starting point is the classic IHACRES model of
+Jakeman and Hornberger (1993), which is a Soil Moisture Accounting
+model referred to here as <code>&quot;cwi&quot;</code> (Catchment Wetness Index).</p>
+<p>The routing component typically used in IHACRES is a Unit
+Hydrograph composed of exponential components, a structure referred to
+here as <code>&quot;expuh&quot;</code>. Up to three time constants can be specified,
+referred to as <code>tau_s</code> (slow component <span class="math inline">\(\tau_s\)</span>), <code>tau_q</code> (quick
+component <span class="math inline">\(\tau_q\)</span>) and <code>tau_3</code>. The partitioning of flow
+between the stores is set by <code>v_s</code> (fractional volume in the slow
+component <span class="math inline">\(v_s\)</span>), and by default the quick flow component is assigned
+the remainder.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>When a model structure is specified, default parameter ranges for
+the given SMA model are applied, and others can be specified:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>cotterMod &lt;-<span class="st"> </span><span class="kw">hydromad</span>(ts90s, <span class="dt">sma =</span> <span class="st">&quot;cwi&quot;</span>, <span class="dt">routing =</span> <span class="st">&quot;expuh&quot;</span>,</span>
+<span id="cb10-2"><a href="#cb10-2"></a>                      <span class="dt">tau_s =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">100</span>), <span class="dt">tau_q =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>), <span class="dt">v_s =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="kw">print</span>(cotterMod)</span></code></pre></div>
+<pre><code>## 
+## Hydromad model with &quot;cwi&quot; SMA and &quot;expuh&quot; routing:
+## Start = 1990-01-01, End = 1999-12-31
+## 
+## SMA Parameters:
+##       lower upper     
+## tw        0   100     
+## f         0     8     
+## scale    NA    NA     
+## l         0     0 (==)
+## p         1     1 (==)
+## t_ref    20    20 (==)
+## Routing Parameters:
+##       lower upper  
+## tau_s     5   100  
+## tau_q     0     5  
+## v_s       0     1</code></pre>
+<p>With this model specification, we can choose to calibrate the model in
+various ways, or to simulate from the specified parameter space, or to
+run sensitivity or uncertainty analysis.</p>
+<div id="calibration" class="section level2">
+<h2><span class="header-section-number">4.1</span> Calibration</h2>
+<p>Currently implemented calibration methods include simple sampling
+schemes (<code>fitBySampling</code>), general optimisation methods with
+multistart or presampling (<code>fitByOptim</code>) and the more
+sophisticated Shuffled Complex Evolution (<code>fitBySCE</code>) and
+Differential Evolution (<code>fitByDE</code>) methods. All attempt to
+maximise a given objective function.</p>
+<p>The objective function can be specified as the <code>objective</code>
+argument to these functions, or by setting
+<code>hydromad.options(objective = )</code>. It is given as an R function
+which may refer to the values <code>Q</code> and <code>X</code>, representing
+observed and modelled flow, respectively. For more advanced use it may
+also refer to <code>U</code> (modelled effective rainfall), or the full
+input <code>DATA</code> matrix.</p>
+<p>The <code>nseStat</code> function implements a generalisation of the
+familiar <span class="math inline">\(R^2\)</span> coefficient of efficiency (Nash and Sutcliffe, 1970):</p>
+<p><span class="math display">\[
+  \mathrm{nseStat}(Q,X) = \frac{ \sum |Q_* - X_*|^2 }{ \sum |Q_* - Z_*|^2 }
+\]</span>
+where <span class="math inline">\(Q\)</span> and <span class="math inline">\(X\)</span> are the observed and modelled values; <span class="math inline">\(Z\)</span> is the
+result from a reference model, which is the baseline for
+comparison. <span class="math inline">\(Z\)</span> defaults to the mean of observed data
+<span class="math inline">\(\mathrm{E}(Q_*)\)</span>, corresponding to the typical <span class="math inline">\(R^2\)</span> statistic.
+Subscript <span class="math inline">\(*\)</span> denotes transformed data, and the transform can be
+specified. See <code>?nseStat</code> and <code>?hydromad.stats</code> for examples.</p>
+<p>Here we use the default, which is a weighted sum of the <span class="math inline">\(R^2\)</span> of
+square-root transformed data, and (with less weight) the
+<span class="math inline">\(R^2\)</span> of monthly-aggregated data.</p>
+<p>For this simple example, the model will be calibrated using the
+<code>fitByOptim</code> function, which performs parameter sampling over the
+pre-specified ranges, selecting the best of these, and then runs an
+optimisation algorithm from that starting point.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>cotterMod &lt;-<span class="st"> </span><span class="kw">update</span>(cotterMod, <span class="dt">routing =</span> <span class="st">&quot;armax&quot;</span>, <span class="dt">rfit =</span> <span class="kw">list</span>(<span class="st">&quot;sriv&quot;</span>, <span class="dt">order =</span> <span class="kw">c</span>(<span class="dt">n=</span><span class="dv">2</span>, <span class="dt">m=</span><span class="dv">1</span>)))</span>
+<span id="cb12-2"><a href="#cb12-2"></a>cotterFit &lt;-<span class="st"> </span><span class="kw">fitByOptim</span>(cotterMod, <span class="dt">samples =</span> <span class="dv">100</span>, <span class="dt">method =</span> <span class="st">&quot;PORT&quot;</span>)</span></code></pre></div>
+<p>See the help pages <code>help(&quot;hydromad&quot;)</code> and
+<code>help(&quot;fitByOptim&quot;)</code> for details of some of the options
+available.</p>
+</div>
+</div>
+<div id="model-output" class="section level1">
+<h1><span class="header-section-number">5</span> Model Output</h1>
+<p>Now that we have an object representing a calibrated model, what can
+we do with it? There are many standard <code>R</code> functions which
+have methods for `hydromad} objects, which allow one to:</p>
+<ul>
+<li><strong>view model info</strong> using <code>print()</code>, <code>summary()</code>, and
+<code>objFunVal()</code></li>
+<li><strong>extract parameter values</strong> using <code>coef()</code>.</li>
+<li><strong>access data</strong> with <code>fitted()</code>, <code>residuals()</code>, and
+<code>observed()</code>. (These exclude the warm-up period by default.)</li>
+<li><strong>run with new data</strong> using <code>update()</code> or <code>predict()</code>.</li>
+<li><strong>simulate from parameter ranges</strong> using <code>simulate()</code>.</li>
+<li><strong>generate plots</strong> using <code>xyplot()</code>, <code>qqmath()</code>, etc.</li>
+</ul>
+<p>For details, see the examples below, the user manual, and the help
+page of each function.\footnote{Note that to get help for generic
+functions it is necessary to specify the method for <strong>hydromad</strong>
+objects: e.g. <code>?predict.hydromad</code> or <code>?xyplot.hydromad</code>.
+The help pages are also available from the web site
+<a href="http://hydromad.catchment.org/" class="uri">http://hydromad.catchment.org/</a>.</p>
+<p>Most basically, one can extract the modelled streamflow time series
+with the function <code>fitted()</code>, and this can of course be used with
+any of <code>R</code>’s library of analysis functions. A quick way to
+view the modelled and observed streamflow time series together is to
+call <code>xyplot()</code> on the model object, as in Figure
+<a href="#fig:obs-mod-plot">5.1</a>. Examples below also show the output from calling the
+functions <code>print()</code> and <code>summary()</code> on the model object.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">xyplot</span>(cotterFit, <span class="dt">with.P =</span> <span class="ot">TRUE</span>, <span class="dt">xlim =</span> <span class="kw">as.Date</span>(<span class="kw">c</span>(<span class="st">&quot;1994-01-01&quot;</span>, <span class="st">&quot;1997-01-01&quot;</span>)))</span></code></pre></div>
+<div class="figure"><span id="fig:obs-mod-plot"></span>
+<img src="data:image/png;base64,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" alt="Observed vs modelled streamflow in part of the calibration period." />
+<p class="caption">
+Figure 5.1: Observed vs modelled streamflow in part of the calibration period.
+</p>
+</div>
+<p><em>To display information and parameters of a model:</em></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">print</span>(cotterFit)</span></code></pre></div>
+<pre><code>## 
+## Hydromad model with &quot;cwi&quot; SMA and &quot;armax&quot; routing:
+## Start = 1990-01-01, End = 1999-12-31
+## 
+## SMA Parameters:
+##        tw          f      scale          l          p      t_ref  
+## 29.375601   1.910412   0.001694   0.000000   1.000000  20.000000  
+## Routing Parameters:
+##     a_1      a_2      b_0      b_1    delay  
+##  1.5236  -0.5388   0.1567  -0.1415   0.0000  
+## TF Structure: S + Q (two stores in parallel)
+##     Poles:0.558, 0.9656 
+## 
+## Fit: ($fit.result)
+## fitByOptim(MODEL = cotterMod, method = &quot;PORT&quot;, samples = 100)
+##      148 function evaluations in 11.72 seconds 
+## 
+## Routing fit info:  list(TRUE, 6)</code></pre>
+<p>Note one can get hold of the parameter values using <code>coef(cotterFit)</code>
+or <code>coef(cotterFit, which = &quot;routing&quot;)</code> (for the unit hydrograph only).</p>
+<p><em>To display basic performance statistics for a model:</em></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">summary</span>(cotterFit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## hydromad(DATA = ts90s, tau_s = c(5, 100), tau_q = c(0, 5), v_s = c(0, 
+##     1), sma = &quot;cwi&quot;, routing = &quot;armax&quot;, rfit = list(&quot;sriv&quot;, order = c(n = 2, 
+##     m = 1)), tw = 29.3756, f = 1.91041, scale = 0.00169352)
+## 
+## Time steps: 3552 (33 missing).
+## Runoff ratio (Q/P): (0.8179 / 3.208) = 0.2549
+## rel bias: -0.03332
+## r squared: 0.7733
+## r sq sqrt: 0.8356
+## r sq log: 0.8511
+## 
+## For definitions see ?hydromad.stats</code></pre>
+<p>Calculating basic performance statistics for a model. The <code>summary</code> function
+actually returns a list, containing the values of various performance statistics.</p>
+</div>
+<div id="model-simulation" class="section level1">
+<h1><span class="header-section-number">6</span> Model Simulation</h1>
+<p>We can simulate this model on the other periods using the `<code>update</code> function:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>sim70s &lt;-<span class="st"> </span><span class="kw">update</span>(cotterFit, <span class="dt">newdata =</span> ts70s)</span>
+<span id="cb18-2"><a href="#cb18-2"></a>sim80s &lt;-<span class="st"> </span><span class="kw">update</span>(cotterFit, <span class="dt">newdata =</span> ts80s)</span>
+<span id="cb18-3"><a href="#cb18-3"></a>simAll &lt;-<span class="st"> </span><span class="kw">update</span>(cotterFit, <span class="dt">newdata =</span> Cotter)</span></code></pre></div>
+<p>For <em>verification</em> purposes, we would like to calculate
+performance statistics for the whole dataset but excluding the
+calibration period. The easiest way to do this is to set the observed
+streamflow data in the calibration period to `NA} (missing), and
+then run the simulation:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>tsVerif &lt;-<span class="st"> </span>Cotter</span>
+<span id="cb19-2"><a href="#cb19-2"></a>tsVerif<span class="op">$</span>Q[<span class="kw">time</span>(ts90s)] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>simVerif &lt;-<span class="st"> </span><span class="kw">update</span>(cotterFit, <span class="dt">newdata =</span> tsVerif)</span></code></pre></div>
+<p>It is convenient to group these models together into a `runlist},
+which is just a list of fitted models:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>allMods &lt;-<span class="st"> </span><span class="kw">runlist</span>(<span class="dt">calibration =</span> cotterFit, sim70s, sim80s, simVerif)</span></code></pre></div>
+<p>The predicted time series (hydrograph) and cumulative distribution
+(flow duration curve) can be generated as in Figures
+<a href="#fig:obs-mod-plots">6.1</a> and <a href="#fig:fdc-plot">6.3</a>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">xyplot</span>(allMods[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">y =</span> <span class="kw">list</span>(<span class="dt">log =</span> <span class="ot">TRUE</span>)))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:obs-mod-plots"></span>
+<img src="data:image/png;base64,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" alt="Observed vs modelled streamflow in validation periods." />
+<p class="caption">
+Figure 6.1: Observed vs modelled streamflow in validation periods.
+</p>
+</div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">summary</span>(allMods)</span></code></pre></div>
+<table>
+<caption><span id="tab:mod-cal-stats">Table 6.1: </span>Performance statistics for a set of models.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">rel.bias</th>
+<th align="right">r.squared</th>
+<th align="right">r.sq.sqrt</th>
+<th align="right">r.sq.log</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>calibration</td>
+<td align="right">-0.0333250</td>
+<td align="right">0.7733191</td>
+<td align="right">0.8356001</td>
+<td align="right">0.8510677</td>
+</tr>
+<tr class="even">
+<td>sim70s</td>
+<td align="right">-0.3257136</td>
+<td align="right">0.6845705</td>
+<td align="right">0.6760293</td>
+<td align="right">0.6073955</td>
+</tr>
+<tr class="odd">
+<td>sim80s</td>
+<td align="right">-0.1266045</td>
+<td align="right">0.7316578</td>
+<td align="right">0.8276084</td>
+<td align="right">0.8618921</td>
+</tr>
+<tr class="even">
+<td>simVerif</td>
+<td align="right">-0.2082338</td>
+<td align="right">0.6936848</td>
+<td align="right">0.7530950</td>
+<td align="right">0.7547957</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">summary</span>(simAll, <span class="dt">breaks =</span> <span class="st">&quot;5 years&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:mod-1990s-summary-table">Table 6.2: </span>Viewing a break-down the performance of a model over 5-year blocks.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">timesteps</th>
+<th align="right">missing</th>
+<th align="right">mean.P</th>
+<th align="right">mean.Q</th>
+<th align="right">runoff</th>
+<th align="right">rel.bias</th>
+<th align="right">r.squared</th>
+<th align="right">r.sq.sqrt</th>
+<th align="right">r.sq.log</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1966-01-01</td>
+<td align="right">1606</td>
+<td align="right">0</td>
+<td align="right">2.674010</td>
+<td align="right">0.8529382</td>
+<td align="right">0.3189735</td>
+<td align="right">-0.31862651</td>
+<td align="right">0.5330439</td>
+<td align="right">0.6320866</td>
+<td align="right">0.6800759</td>
+</tr>
+<tr class="even">
+<td>1971-01-01</td>
+<td align="right">1826</td>
+<td align="right">0</td>
+<td align="right">3.173708</td>
+<td align="right">1.1636603</td>
+<td align="right">0.3666564</td>
+<td align="right">-0.33326425</td>
+<td align="right">0.7184569</td>
+<td align="right">0.6990369</td>
+<td align="right">0.6183045</td>
+</tr>
+<tr class="odd">
+<td>1976-01-01</td>
+<td align="right">1827</td>
+<td align="right">0</td>
+<td align="right">2.670914</td>
+<td align="right">0.7185062</td>
+<td align="right">0.2690114</td>
+<td align="right">-0.22798134</td>
+<td align="right">0.6641994</td>
+<td align="right">0.7161989</td>
+<td align="right">0.6812305</td>
+</tr>
+<tr class="even">
+<td>1981-01-01</td>
+<td align="right">1826</td>
+<td align="right">0</td>
+<td align="right">2.914743</td>
+<td align="right">0.7902770</td>
+<td align="right">0.2711310</td>
+<td align="right">-0.11380146</td>
+<td align="right">0.7752617</td>
+<td align="right">0.8424471</td>
+<td align="right">0.8612803</td>
+</tr>
+<tr class="odd">
+<td>1986-01-01</td>
+<td align="right">1826</td>
+<td align="right">33</td>
+<td align="right">3.153246</td>
+<td align="right">0.9562480</td>
+<td align="right">0.3032583</td>
+<td align="right">-0.15957706</td>
+<td align="right">0.6940335</td>
+<td align="right">0.8041118</td>
+<td align="right">0.8534375</td>
+</tr>
+<tr class="even">
+<td>1991-01-01</td>
+<td align="right">1826</td>
+<td align="right">0</td>
+<td align="right">3.356369</td>
+<td align="right">0.9152752</td>
+<td align="right">0.2726980</td>
+<td align="right">-0.09288033</td>
+<td align="right">0.7750195</td>
+<td align="right">0.8412340</td>
+<td align="right">0.8532998</td>
+</tr>
+<tr class="odd">
+<td>1996-01-01</td>
+<td align="right">1827</td>
+<td align="right">0</td>
+<td align="right">3.037909</td>
+<td align="right">0.6267362</td>
+<td align="right">0.2063051</td>
+<td align="right">0.14456434</td>
+<td align="right">0.7568327</td>
+<td align="right">0.8128098</td>
+<td align="right">0.8381425</td>
+</tr>
+<tr class="even">
+<td>2001-01-01</td>
+<td align="right">893</td>
+<td align="right">0</td>
+<td align="right">2.472430</td>
+<td align="right">0.3951501</td>
+<td align="right">0.1598226</td>
+<td align="right">0.16407821</td>
+<td align="right">0.5196441</td>
+<td align="right">0.6693232</td>
+<td align="right">0.6949319</td>
+</tr>
+<tr class="odd">
+<td>2001-01-01</td>
+<td align="right">893</td>
+<td align="right">0</td>
+<td align="right">2.472430</td>
+<td align="right">0.3951501</td>
+<td align="right">0.1598226</td>
+<td align="right">0.16407821</td>
+<td align="right">0.5196441</td>
+<td align="right">0.6693232</td>
+<td align="right">0.6949319</td>
+</tr>
+</tbody>
+</table>
+<p><em>To plot performance statistics over time:</em></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>twoYrStats &lt;-<span class="st"> </span><span class="kw">summary</span>(simAll, <span class="dt">breaks =</span> <span class="st">&quot;2 years&quot;</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>statSeries &lt;-<span class="st"> </span>twoYrStats[,<span class="kw">c</span>(<span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;r.sq.sqrt&quot;</span>, <span class="st">&quot;rel.bias&quot;</span>, <span class="st">&quot;runoff&quot;</span>)]</span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="co">## cut off crazy R Squared values below 0 (for plotting)</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>statSeries[,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">pmax</span>(statSeries[,<span class="dv">1</span>], <span class="dv">0</span>)</span>
+<span id="cb24-5"><a href="#cb24-5"></a>statSeries[,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">pmax</span>(statSeries[,<span class="dv">2</span>], <span class="dv">0</span>)</span>
+<span id="cb24-6"><a href="#cb24-6"></a><span class="kw">c</span>(<span class="kw">xyplot</span>(statSeries, <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb24-7"><a href="#cb24-7"></a>         <span class="dt">ylab =</span> <span class="st">&quot;statistic&quot;</span>, <span class="dt">xlab =</span> <span class="ot">NULL</span>),</span>
+<span id="cb24-8"><a href="#cb24-8"></a>  <span class="st">`</span><span class="dt">observed streamflow</span><span class="st">`</span> =<span class="st"> </span><span class="kw">xyplot</span>(<span class="kw">observed</span>(simAll)),</span>
+<span id="cb24-9"><a href="#cb24-9"></a>  <span class="dt">layout =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">5</span>), <span class="dt">x.same =</span> <span class="ot">TRUE</span>) <span class="op">+</span></span>
+<span id="cb24-10"><a href="#cb24-10"></a><span class="st">    </span><span class="kw">layer_</span>(<span class="kw">panel.refline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">v =</span> <span class="kw">time</span>(statSeries)))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:r2-breaks-plot"></span>
+<img src="data:image/png;base64,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" alt="Performance statistics plotted over time in regular 2 year blocks. The runoff coefficient and observed streamflow data are also shown." />
+<p class="caption">
+Figure 6.2: Performance statistics plotted over time in regular 2 year blocks. The runoff coefficient and observed streamflow data are also shown.
+</p>
+</div>
+<p><em>To plot the flow duration curve for modelled vs observed data in the calibration period:</em></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">qqmath</span>(cotterFit, <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">y =</span> <span class="kw">list</span>(<span class="dt">log =</span> <span class="ot">TRUE</span>)), <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;l&quot;</span>,<span class="st">&quot;g&quot;</span>))</span></code></pre></div>
+<p><em>To plot a flow duration curve for each of the simulated models:</em></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw">qqmath</span>(allMods, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;l&quot;</span>,<span class="st">&quot;g&quot;</span>), </span>
+<span id="cb26-2"><a href="#cb26-2"></a>       <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">y =</span> <span class="kw">list</span>(<span class="dt">log =</span> <span class="ot">TRUE</span>)),</span>
+<span id="cb26-3"><a href="#cb26-3"></a>       <span class="dt">xlab =</span> <span class="st">&quot;Standard normal variate&quot;</span>,</span>
+<span id="cb26-4"><a href="#cb26-4"></a>       <span class="dt">ylab =</span> <span class="st">&quot;Flow (mm/day)&quot;</span>, </span>
+<span id="cb26-5"><a href="#cb26-5"></a>       <span class="dt">f.value =</span> <span class="kw">ppoints</span>(<span class="dv">100</span>), <span class="dt">tails.n =</span> <span class="dv">50</span>,</span>
+<span id="cb26-6"><a href="#cb26-6"></a>       <span class="dt">as.table =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:fdc-plot"></span>
+<img src="data:image/png;base64,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" alt="Log-normal Daily Flow Duration Curve for models in simulation." />
+<p class="caption">
+Figure 6.3: Log-normal Daily Flow Duration Curve for models in simulation.
+</p>
+</div>
+<!-- Up to line 553 - Model and Calibration Options -->
+<div id="model-and-calibration-options" class="section level2">
+<h2><span class="header-section-number">6.1</span> Model and Calibration Options</h2>
+<p>There are several extensions to the basic model used so far. With
+different types of data, such as very dry or wet catchments, sub-daily
+time steps, poor areal rainfall estimates, cases of baseflow loss to
+groundwater, etc, different models or calibration methods will need to
+be used.</p>
+<div id="model-structure-and-parameter-ranges" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> Model Structure and Parameter Ranges</h3>
+<p>We have used an <code>ihacres()</code> CWI model in this tutorial, which is a
+simple metric type model. Other SMA models are included in the
+package, or one can define a new model. See the user manual for details.</p>
+<p>Ranges of parameters to search when calibrating the effective rainfall
+model can be specified as arguments to the <strong>hydromad</strong> or
+<code>update()</code> functions. Alternatively, parameters can be fixed to a
+given value by specifying a single number.</p>
+<p>The default ranges can be seen, and set, using the function
+<code>hydromad.options()</code>.</p>
+<p>The example, in the CWI model, the threshold parameter <code>l</code> (used
+for intermittent or ephemeral rivers), defaults to a fixed value of
+0. To allow calibration of this parameter, specify a numerical
+range. Similarly, the evapo-transpiration coefficient <code>e</code>
+defaults to the range <span class="math inline">\([0.01,1.5]\)</span>; to fix it to a given value, just
+specify it:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">hydromad</span>(ts90s, <span class="dt">sma =</span> <span class="st">&quot;cwi&quot;</span>, <span class="dt">l =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">200</span>), <span class="dt">e =</span> <span class="fl">0.166</span>)</span></code></pre></div>
+</div>
+<div id="optimisation-settings" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Optimisation settings</h3>
+<p>Each of the fitting functions has several options, and the help pages
+should be consulted for details. An important option is the choice of
+objective function; see the discussion above about how to specify it.</p>
+<p>In the simple cases of using <code>fitBySampling</code> or
+<code>fitByOptim</code>, the argument <code>samples</code> specifies how many
+random parameter sets will be sampled (from the predefined parameter
+ranges), and argument <code>sampletype</code> chooses “Uniform Random”, “Latin
+Hypercube”, or “all combinations” (a regular grid of values). The one
+model with best objective function value is chosen. In the case of
+<code>fitByOptim</code> this is then improved locally with an optimisation
+algorithm.</p>
+</div>
+<div id="unit-hydrograph-transfer-functions" class="section level3">
+<h3><span class="header-section-number">6.1.3</span> Unit Hydrograph Transfer Functions</h3>
+<p>A typical unit hydrograph model, at least in  models, is a
+linear <em>transfer function</em>, i.e. an ARMAX-like (Autoregressive,
+Moving Average, with eXogenous inputs). This can often, but not
+always, be formulated mathematically as a set of exponentially receding
+stores, which may be in a parallel and/or series
+configuration. ARMAX-type models are specified by the number of
+auto-regressive terms <span class="math inline">\(n\)</span> and the number of moving average terms
+<span class="math inline">\(m\)</span>. For example, a model with one store is <span class="math inline">\((n=1,m=0)\)</span>; two stores in
+parallel is <span class="math inline">\((n=2, m=1)\)</span>; two stores and an instantaneous store in parallel
+is <span class="math inline">\((n=2, m=2)\)</span>. Three stores in parallel is <span class="math inline">\((n=3,m=2)\)</span>.</p>
+<p>When using <code>armax</code> or <code>expuh</code> routing, specialised methods
+are available to estimate for calibration, such as the <code>SRIV</code> (Simple
+Refined Instrumental Variable) algorithm. These are specified using
+the <code>rfit</code> argument.</p>
+<p>The order of the transfer function may be varied, as well as the delay
+time. If there is any ambiguity in choosing the best delay time, each
+possibility should be tried.</p>
+<p>To test different model structures systematically, a convenience
+function <code>tryModelOrders</code> is provided. An example is given in
+Table <a href="#tab:try-model-orders-table">6.3</a>. In this case a simple
+SMA is used with fixed parameters.</p>
+<p>For more information on these issues see, for example,
+Jakeman et. al. (1990) and Young (2003).</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>ihSpec &lt;-<span class="st"> </span><span class="kw">hydromad</span>(ts90s, <span class="dt">sma =</span> <span class="st">&quot;cwi&quot;</span>, <span class="dt">tw =</span> <span class="dv">10</span>, <span class="dt">f =</span> <span class="dv">1</span>, </span>
+<span id="cb28-2"><a href="#cb28-2"></a>                   <span class="dt">routing =</span> <span class="st">&quot;armax&quot;</span>)</span>
+<span id="cb28-3"><a href="#cb28-3"></a>osumm &lt;-<span class="st"> </span><span class="kw">tryModelOrders</span>(<span class="kw">update</span>(ihSpec, <span class="dt">rfit =</span> <span class="st">&quot;sriv&quot;</span>),</span>
+<span id="cb28-4"><a href="#cb28-4"></a>                        <span class="dt">n =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">m =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">delay =</span> <span class="dv">0</span>)</span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="kw">summary</span>(osumm)</span></code></pre></div>
+<table>
+<caption><span id="tab:try-model-orders-table">Table 6.3: </span>Fit and information statistics from fitting different unit hydrograph transfer functions with SRIV algorithm. ARPE is the Average Relative Parameter Error estimated by SRIV. The effective rainfall input was generated by an <code>ihacres</code> CWI model
+with fixed parameters.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">ARPE</th>
+<th align="right">r.squared</th>
+<th align="right">r.sq.log</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(n=0, m=0, d=0)</td>
+<td align="right">0.000</td>
+<td align="right">-5.432</td>
+<td align="right">-2.421</td>
+</tr>
+<tr class="even">
+<td>(n=1, m=0, d=0)</td>
+<td align="right">0.000</td>
+<td align="right">0.545</td>
+<td align="right">0.705</td>
+</tr>
+<tr class="odd">
+<td>(n=1, m=1, d=0)</td>
+<td align="right">0.000</td>
+<td align="right">0.671</td>
+<td align="right">0.774</td>
+</tr>
+<tr class="even">
+<td>(n=2, m=0, d=0)</td>
+<td align="right">0.015</td>
+<td align="right">0.344</td>
+<td align="right">0.550</td>
+</tr>
+<tr class="odd">
+<td>(n=2, m=1, d=0)</td>
+<td align="right">0.001</td>
+<td align="right">0.694</td>
+<td align="right">0.782</td>
+</tr>
+<tr class="even">
+<td>(n=2, m=2, d=0)</td>
+<td align="right">0.005</td>
+<td align="right">0.698</td>
+<td align="right">0.782</td>
+</tr>
+<tr class="odd">
+<td>(n=3, m=0, d=0)</td>
+<td align="right">0.678</td>
+<td align="right">0.605</td>
+<td align="right">0.720</td>
+</tr>
+<tr class="even">
+<td>(n=3, m=1, d=0)</td>
+<td align="right">0.023</td>
+<td align="right">0.697</td>
+<td align="right">0.782</td>
+</tr>
+<tr class="odd">
+<td>(n=3, m=2, d=0)</td>
+<td align="right">28.994</td>
+<td align="right">0.698</td>
+<td align="right">0.782</td>
+</tr>
+<tr class="even">
+<td>(n=3, m=3, d=0)</td>
+<td align="right">0.001</td>
+<td align="right">0.705</td>
+<td align="right">0.784</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="unit-hydrograph-inverse-fitting-methods" class="section level3">
+<h3><span class="header-section-number">6.1.4</span> Unit Hydrograph Inverse Fitting Methods</h3>
+<p>Unit Hydrograph routing models are typically fitted using least
+squares or SRIV algorithms, but this depends on the modelled effective
+rainfall, and so must be continuously re-fitted while calibrating the
+SMA model. One alternative is to fit the unit hydrograph to the
+observed streamflow data directly – though usually
+constrained by rainfall – and then use that as a fixed component
+while calibrating the SMA model. This can be done using an inverse
+filtering method with <code>rfit = list(&quot;inverse&quot;, ...)</code>. (There are many options here also).</p>
+<p>Other such inverse fitting methods are possible, e.g. average event
+unit hydrograph estimation, but are not currently implemented in this
+package.</p>
+</div>
+<div id="other-options" class="section level3">
+<h3><span class="header-section-number">6.1.5</span> Other Options</h3>
+<p>If model calibration is failing, you can set <code>hydromad.options(trace = TRUE)</code> and/or
+<code>hydromad.options(catch.errors = FALSE)</code> to track down what is
+happening.</p>
+<p>It is sometimes useful to look at the model state variables, available
+as <code>predict(mod, return_state = TRUE)</code> (for the SMA model), or
+<code>predict(mod, return_components = TRUE)</code> (for the routing
+model), to see if they look sensible.</p>
+<p>Some other things to try are</p>
+<ul>
+<li>using different calibration periods;<br />
+</li>
+<li>changing the warmup period length;<br />
+</li>
+<li>changing the optimisation method and/or settings.</li>
+</ul>
+</div>
+</div>
+<div id="what-next" class="section level2">
+<h2><span class="header-section-number">6.2</span> What Next?</h2>
+<p>This document has described only a basic model fitting process.</p>
+<!--An overview of the available models and options is given in the user
+manual, which can be accessed as `vignette("hydromad")`.-->
+<p>Help pages are available for most functions, and these are also
+available online at <a href="http://hydromad.catchment.org/">http://hydromad.catchment.org/</a>. There is also a set of demos: see <code>demo(package = &quot;hydromad&quot;)</code> for a list.</p>
+<p>Please discuss any problems or suggestions with the package maintainer.</p>
+</div>
+</div>
+<div id="appendix" class="section level1">
+<h1><span class="header-section-number">7</span> Appendix</h1>
+<div id="reading-in-data" class="section level2">
+<h2><span class="header-section-number">7.1</span> Reading in data</h2>
+<p>The required input data files for this tutorial are included with the
+<strong>hydromad</strong> package, in the <code>doc</code> directory. Note that the
+processed data is available directly in <code>R</code> – just type
+<code>data(Cotter)</code> – but this section shows how to read it in from
+text files as an exercise.</p>
+<p>A few simple steps are required to import and convert the data into a
+usable form:<br />
+- extracting dates from the files,<br />
+- converting streamflow from ML/day to mm/day,<br />
+- handling missing data values,<br />
+- and aligning the three time series in a common time period.</p>
+<p>Let’s first view the content of one of the input files.
+Set the working directory to where the data file is:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">file.show</span>(<span class="st">&quot;pq_cotter.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## -99,49.8405,3/01/1964
+## -99,48.5998,4/01/1964
+## -99,46.3199,5/01/1964
+## -99,44.5028,6/01/1964
+## -99,41.9241,7/01/1964
+## ...</code></pre>
+<p>There is no header in the file, but we know that the columns represent
+rainfall (P), streamflow (Q) and date of observation. The temperature
+file is similar. Knowing the format and columns we can use
+<code>read.table</code> to import the data:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co">## rain and flow data</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>pqdat &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;pq_cotter.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>,</span>
+<span id="cb31-3"><a href="#cb31-3"></a>                    <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;P&quot;</span>, <span class="st">&quot;Q&quot;</span>, <span class="st">&quot;Date&quot;</span>), <span class="dt">as.is =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="co">## temperature data</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>tdat &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;t_cotter.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>,</span>
+<span id="cb31-6"><a href="#cb31-6"></a>                   <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;T&quot;</span>, <span class="st">&quot;Date&quot;</span>), <span class="dt">as.is =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>and view the structure of the resulting data frames:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">str</span>(pqdat)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    15339 obs. of  3 variables:
+##  $ P   : num  -99 -99 -99 -99 -99 -99 -99 -99 -99 -99 ...
+##  $ Q   : num  49.8 48.6 46.3 44.5 41.9 ...
+##  $ Date: chr  &quot;3/01/1964&quot; &quot;4/01/1964&quot; &quot;5/01/1964&quot; &quot;6/01/1964&quot; ...</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="kw">str</span>(tdat)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    15467 obs. of  2 variables:
+##  $ T   : num  28.8 29.4 32.8 35.7 37.2 22.9 25.5 23.8 23.7 24.9 ...
+##  $ Date: chr  &quot;3/01/1964&quot; &quot;4/01/1964&quot; &quot;5/01/1964&quot; &quot;6/01/1964&quot; ...</code></pre>
+<p>So far, the <code>Date</code> columns are only text; <code>R</code> does not
+know they are dates. We need to specify the date format, where
+<code>\%d</code> is day, <code>\%m</code> is month number, <code>\%b</code> is month
+name, <code>\%Y</code> is four-digit year and <code>\%y</code> is two-digit year
+(see <code>?strptime</code>).</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>pqdat<span class="op">$</span>Date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(pqdat<span class="op">$</span>Date, <span class="st">&quot;%d/%m/%Y&quot;</span>)</span>
+<span id="cb36-2"><a href="#cb36-2"></a>tdat<span class="op">$</span>Date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(tdat<span class="op">$</span>Date, <span class="st">&quot;%d/%m/%Y&quot;</span>)</span></code></pre></div>
+<p>If the day, month and year were in separate columns of the file, with
+names <code>&quot;day&quot;</code>, <code>&quot;mon&quot;</code> and <code>&quot;yr&quot;</code> then you could do
+something like:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>pqdat<span class="op">$</span>Date &lt;-<span class="st"> </span><span class="kw">with</span>(pqdat, <span class="kw">as.Date</span>(<span class="kw">ISOdate</span>(yr, mon, day)))</span></code></pre></div>
+<p>If you have sub-daily time steps, a good choice is to use the <code>chron()</code> function from the <a href="https://cran.r-project.org/web/packages/chron/">chron</a> package to represent the
+time index.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Negative values (-99) in the <em>pq</em> input file represent missing
+data; in <code>R</code> they should be set to the special value
+<code>NA</code>. Also, some dates in the temperature file are blank, and
+need to be removed.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>pqdat<span class="op">$</span>P[pqdat<span class="op">$</span>P <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>pqdat<span class="op">$</span>Q[pqdat<span class="op">$</span>Q <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>tdat &lt;-<span class="st"> </span><span class="kw">subset</span>(tdat, <span class="op">!</span><span class="kw">is.na</span>(Date))</span></code></pre></div>
+<p>The <strong>hydromad</strong> model fitting functions require that rainfall and
+streamflow are given in the same units, typically mm / day. The
+streamflow data in our input file is measured in ML / day, so we need
+to convert it, supplying the catchment area of 148 km<span class="math inline">\(^2\)</span>.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>pqdat<span class="op">$</span>Q &lt;-<span class="st"> </span><span class="kw">convertFlow</span>(pqdat<span class="op">$</span>Q, <span class="dt">from =</span> <span class="st">&quot;ML&quot;</span>, <span class="dt">area.km2 =</span> <span class="dv">148</span>)</span></code></pre></div>
+<p>For simple applications, when the data series are already
+synchronised, this data frame (or matrix) format may be enough.
+However, there are benefits in working with actual <em>time series</em>
+objects: because they handle observation times, they allow powerful
+merging, treatment of missing values, rolling averages and other
+functions. While <code>R</code> has a built-in structure for regular
+time series (<code>ts</code>), these do not handle specific dates or times,
+only index numbers. It is recommended to work with <code>zoo</code> objects
+(using the <a href="https://cran.r-project.org/web/packages/zoo/">zoo</a> package).^[<a href="https://cran.r-project.org/web/packages/zoo/">zoo</a> objects are a
+generalisation of <code>ts</code> objects and in many cases can be used in
+the same way; see <code>vignette(&quot;zoo&quot;)</code>.}</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">library</span>(zoo)</span>
+<span id="cb40-2"><a href="#cb40-2"></a>tsPQ &lt;-<span class="st"> </span><span class="kw">zoo</span>(pqdat[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], pqdat<span class="op">$</span>Date, <span class="dt">frequency =</span> <span class="dv">1</span>)</span>
+<span id="cb40-3"><a href="#cb40-3"></a>tsT &lt;-<span class="st"> </span><span class="kw">zoo</span>(tdat[,<span class="dv">1</span>], tdat<span class="op">$</span>Date, <span class="dt">frequency =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>We can now merge the time series together into a final dataset. Note
+that the <strong>hydromad</strong> package expects temperature or
+evapo-transpiration data to be called <code>E</code>, not
+<code>T</code>. <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>Cotter &lt;-<span class="st"> </span><span class="kw">merge</span>(tsPQ, <span class="dt">E =</span> tsT, <span class="dt">all =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>Print the first few rows (the <em>head</em>) of the time series, to
+check that everything looks OK:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="kw">head</span>(Cotter, <span class="dv">6</span>)</span></code></pre></div>
+<pre><code>##             P         Q    E
+## 1964-01-03 NA 0.3367601 28.8
+## 1964-01-04 NA 0.3283770 29.4
+## 1964-01-05 NA 0.3129723 32.8
+## 1964-01-06 NA 0.3006946 35.7
+## 1964-01-07 NA 0.2832709 37.2
+## 1964-01-08 NA 0.2909014 22.9</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="kw">range</span>(<span class="kw">time</span>(Cotter))</span></code></pre></div>
+<pre><code>## [1] &quot;1964-01-03&quot; &quot;2005-12-31&quot;</code></pre>
+<p>This shows that the rainfall data has missing values at the
+beginning. At the other end of the series, Streamflow data is missing.
+This will not cause a problem, but let us tidy it up anyway:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>Cotter &lt;-<span class="st"> </span><span class="kw">na.trim</span>(Cotter)</span></code></pre></div>
+<p>The final dataset extends from 1966-05-01 to
+2003-06-12, and is shown in Figure <a href="#fig:dataplot">3.1</a> and
+Table <a href="#tab:datasummary">7.1</a>:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="kw">summary</span>(Cotter)</span></code></pre></div>
+<table>
+<caption><span id="tab:datasummary">Table 7.1: </span>Data summary.
+P = precipitation (mm/day), E = temperature (deg. C), Q = streamflow (mm/day).</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">P</th>
+<th align="right">Q</th>
+<th align="right">E</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Min.</td>
+<td align="right">0.000000</td>
+<td align="right">0.0050657</td>
+<td align="right">2.80000</td>
+</tr>
+<tr class="even">
+<td>1st Qu.</td>
+<td align="right">0.000000</td>
+<td align="right">0.2273834</td>
+<td align="right">14.00000</td>
+</tr>
+<tr class="odd">
+<td>Median</td>
+<td align="right">0.000000</td>
+<td align="right">0.4836848</td>
+<td align="right">19.20000</td>
+</tr>
+<tr class="even">
+<td>Mean</td>
+<td align="right">2.965781</td>
+<td align="right">0.8268533</td>
+<td align="right">19.69359</td>
+</tr>
+<tr class="odd">
+<td>3rd Qu.</td>
+<td align="right">1.650000</td>
+<td align="right">1.0391858</td>
+<td align="right">24.60000</td>
+</tr>
+<tr class="even">
+<td>Max.</td>
+<td align="right">141.390000</td>
+<td align="right">28.4952703</td>
+<td align="right">42.20000</td>
+</tr>
+<tr class="odd">
+<td>NA’s</td>
+<td align="right">0.000000</td>
+<td align="right">33.0000000</td>
+<td align="right">0.00000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="computational-details" class="section level1">
+<h1><span class="header-section-number">8</span> Computational details</h1>
+<p>The results in this paper were obtained using <code>R</code>
+4.0.1 with the packages
+<strong>hydromad</strong> 0.9–26,
+<code>zoo</code> 1.8–8 and
+<code>latticeExtra</code> 0.6–29.
+<code>R</code> itself and all packages used are (or will be) available from
+CRAN at <a href="http://CRAN.R-project.org/">http://CRAN.R-project.org/</a>.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>for more complex structures <code>v_3</code> and/or
+<code>v_q</code> may be specified. See the help page for details.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>There is a time class built into <code>R</code>,
+called <code>POSIXct</code>, but this represents time zones which can
+sometimes lead to complications.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>This avoids name conflicts since in <code>R</code>,<code>T</code> is a shorthand for <code>TRUE</code>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

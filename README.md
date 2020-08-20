@@ -4,7 +4,10 @@ hydromad
 ========
 
 <!-- badges: start -->
-<!-- [![R build status](https://github.com/WillemVervoort/hydromad/workflows/R-CMD-check/badge.svg)](https://github.com/WillemVervoort/hydromad/actions) -->
+
+[![R build
+status](https://github.com/josephguillaume/hydromad/workflows/R-CMD-check/badge.svg)](https://github.com/josephguillaume/hydromad/actions)
+[![codecov](https://codecov.io/gh/josephguillaume/hydromad/branch/master/graph/badge.svg)](https://codecov.io/gh/josephguillaume/hydromad)
 <!-- badges: end -->
 
 The goal of hydromad is to provide a modelling framework for

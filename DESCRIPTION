@@ -23,7 +23,26 @@ Imports:
     stats,
     utils,
     Rcpp (>= 0.12.17)
-Suggests: DEoptim, mgcv, chron, testthat, mco, cmaes, ppso, sensitivity,ggplot2,rsm,parallel,foreach,doRedis,ff,dream, knitr, coda, iterators
+Suggests: 
+    DEoptim,
+    mgcv,
+    chron,
+    testthat,
+    mco,
+    cmaes,
+    ppso,
+    sensitivity,
+    ggplot2,
+    rsm,
+    parallel,
+    foreach,
+    doRedis,
+    ff,
+    dream,
+    knitr,
+    coda,
+    iterators,
+    patrick (>= 0.0.1)
 LinkingTo: Rcpp
 License: GPL (>= 2)
 URL: http://hydromad.catchment.org/, https://github.com/josephguillaume/hydromad

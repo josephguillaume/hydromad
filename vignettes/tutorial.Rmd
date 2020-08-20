@@ -183,7 +183,7 @@ has changed.
 
 ```{r rollccf-plot, fig.height=7, fig.cap="Cross-correlation between rainfall and streamflow rises, in two rolling windows of width 90 days and 365 days.", fig.align="center"}
 x <- rollccf(Cotter)
-xyplot.rollccf(x, xlim = extendrange(as.Date(c("1980-01-01","1990-01-01"))))
+xyplot(x, xlim = extendrange(as.Date(c("1980-01-01","1990-01-01"))))
 ```
 
 # Model Specification

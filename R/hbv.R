@@ -6,18 +6,6 @@
 # friendly catchment runoff-model software package. Hydrology and Earth System
 # Sciences, 16, 3315–3325, 2012.
 #
-# HBV references:
-# Bergström, S. and Forsman, A.: Development of a Conceptual Deterministic
-# Rainfall-Runoff Model, Nordic Hydrology, 4(3), 147–170, 1973.
-#
-# Bergström, S.: The HBV Model: Its Structure and Applications,Swedish
-# Meteorological and Hydrological Institute (SMHI), Hydrology, Norrköping, 35
-# pp., 1992.
-#
-# Bergström, S.: The HBV model (Chapter 13), in: Computer Models of Watershed
-# Hydrology, edited by: Singh, V. P., Water Resources Publications, Highlands
-# Ranch, Colorado, USA, 443–476, 1995.
-
 #' @name hbv
 #' @md
 #' @aliases hbv.sim hbvrouting hbvrouting.sim
@@ -54,18 +42,25 @@
 #' snowpack (sp), water content of snowpack (wc), soil moisture (sm), actual
 #' evapotranspiration (ETa), upper groundwater storage (uz), lower groundwater
 #' storage (lz).
+#' Default parameter ranges are guided by Seibert (1997) and Seibert and Vis
+#' (2012) and (see the references section), however parameter ranges for your
+#' catchment may require either a more restricted or wider range.
 #' @references
+#' 
+#' Bergström, S. and Forsman, A.: Development of a Conceptual Deterministic
+#' Rainfall-Runoff Model, Nordic Hydrology, 4(3), 147–170, 1973.
+#'
+#' Bergström, S.: The HBV Model: Its Structure and Applications,Swedish
+#' Meteorological and Hydrological Institute (SMHI), Hydrology, Norrköping, 35
+#' pp., 1992.
+#' 
+#' Seibert, J. (1997). Estimation of Parameter Uncertainty in the HBV Model.
+#' Hydrology Research, 28(4–5), 247–262.
+#' 
 #' Seibert, J. and Vis, M. (2012). Teaching hydrological modeling with a
 #' user-friendly catchment-runoff-model software package. Hydrology and Earth
 #' System Sciences, 16, 3315–3325, 2012.
-#'
-#' Bergström, S.: The HBV Model: Its Structure and Applications, Swedish
-#' Meteorological and Hydrological Institute (SMHI), Hydrology, Norrköping,
-#' 35 pp., 1992.
-#'
-#' Bergström, S.: The HBV model (Chapter 13), in: Computer Models of
-#' Watershed Hydrology, edited by: Singh, V. P., Water Resources Publications,
-#' Highlands Ranch, Colorado, USA, 443–476, 1995.
+#' 
 #' @author Alexander Buzacott (abuz5257@uni.sydney.edu.au)
 #' @seealso `hydromad(sma='hbv', routing='hbvrouting')` to work with
 #' models as objects (recommended).

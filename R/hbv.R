@@ -23,15 +23,18 @@
 #' @param lp Threshold for reduction of evaporation. Limit for potential
 #' evapotranspiration.
 #' @param beta Shape coefficient in soil routine.
+#' @param return_state Whether to return the state variables.
+#'
+#' @param U Effective rainfall series
 #' @param k0 Recession coefficient (quick runoff).
 #' @param k1 Recession coefficient (upper groundwater storage).
 #' @param k2 Recession coefficient (lower groundwater storage).
 #' @param uzl Threshold for quick runoff for k0 outflow (mm).
 #' @param perc Maximum percolation from upper to lower groundwater storage.
-#' @param return_state Whether to return the state variables.
-#' @param U Effective rainfall series
 #' @param maxbas Routing, length of triangular weighting function.
 #' @param epsilon Values smaller than this in the output will be set to zero.
+#' @param return_components Whether to return state variables of the routing
+#' routine.
 #' @details This implementation of this HBV model closely follows the
 #' description of HBV light by Seibert and Vis, 2009. Daily average temperature
 #' data is required for the snow routine. Daily potential evapotranspiration
@@ -39,28 +42,33 @@
 #' mean PET and daily temperature is not included.
 #' @details The timeseries of simulated streamflow (U). If return state is set
 #' to true, the state variables of the model are also returned. These include:
-#' snowpack (sp), water content of snowpack (wc), soil moisture (sm), actual
-#' evapotranspiration (ETa), upper groundwater storage (uz), lower groundwater
-#' storage (lz).
+#' actual evapotranspiration (ETa) snow depth (SD), liquid depth of snowpack
+#' (LD), soil moisture (SM).
+#'
+#' For hbv_routing, if return components is to true, the state variables of
+#' the routing model are returned: upper groundwater storage (UZ), lower
+#' groundwater storage (LZ).
+#'
 #' Default parameter ranges are guided by Seibert (1997) and Seibert and Vis
 #' (2012) and (see the references section), however parameter ranges for your
 #' catchment may require either a more restricted or wider range.
+#'
 #' @references
-#' 
+#'
 #' Bergström, S. and Forsman, A.: Development of a Conceptual Deterministic
 #' Rainfall-Runoff Model, Nordic Hydrology, 4(3), 147–170, 1973.
 #'
 #' Bergström, S.: The HBV Model: Its Structure and Applications,Swedish
 #' Meteorological and Hydrological Institute (SMHI), Hydrology, Norrköping, 35
 #' pp., 1992.
-#' 
+#'
 #' Seibert, J. (1997). Estimation of Parameter Uncertainty in the HBV Model.
 #' Hydrology Research, 28(4–5), 247–262.
-#' 
+#'
 #' Seibert, J. and Vis, M. (2012). Teaching hydrological modeling with a
 #' user-friendly catchment-runoff-model software package. Hydrology and Earth
 #' System Sciences, 16, 3315–3325, 2012.
-#' 
+#'
 #' @author Alexander Buzacott (abuz5257@uni.sydney.edu.au)
 #' @seealso `hydromad(sma='hbv', routing='hbvrouting')` to work with
 #' models as objects (recommended).
@@ -95,7 +103,6 @@
 hbv.sim <- function(DATA,
                     tt, cfmax, sfcf, cwh, cfr,
                     fc, lp, beta,
-                    k0, k1, k2, uzl, perc,
                     return_state = FALSE) {
   # DATA: zoo series with P, Q, E and T
   # Snow routine
@@ -110,13 +117,6 @@ hbv.sim <- function(DATA,
   # lp: limit for potential evapotranspiration
   # beta: parameter in soil routine
 
-  # Groundwater routine
-  # k0: recession coefficient
-  # k1: recession coefficient
-  # k2: recession coefficient
-  # uzl: upper zone layer threshold
-  # perc: percolation from upper to lower response box
-
   # Check DATA has been entered
   stopifnot(c("P", "E", "T") %in% colnames(DATA))
 
@@ -130,11 +130,6 @@ hbv.sim <- function(DATA,
   stopifnot(lp >= 0)
   stopifnot(beta >= 0)
   stopifnot(cwh >= 0)
-  stopifnot(k0 >= 0)
-  stopifnot(k1 >= 0)
-  stopifnot(k2 >= 0)
-  stopifnot(uzl >= 0)
-  stopifnot(perc >= 0)
 
   inAttr <- attributes(DATA[, 1])
   DATA <- as.ts(DATA)
@@ -157,8 +152,7 @@ hbv.sim <- function(DATA,
     ans <- hbv_sim(
       P, E, Tavg,
       tt, cfmax, sfcf, cwh, cfr,
-      fc, lp, beta,
-      k0, k1, k2, uzl, perc
+      fc, lp, beta
     )
     U <- ans$U
     if (return_state == TRUE) {
@@ -166,17 +160,13 @@ hbv.sim <- function(DATA,
       sm <- ans$sm
       sp <- ans$sp
       wc <- ans$wc
-      uz <- ans$uz
-      lz <- ans$lz
     }
   } else { # Run R Model
     # Set up vectors
     sm <- rep(0, nrow(DATA)) # Soil water storage
     sp <- rep(0, nrow(DATA)) # Snow store
     wc <- rep(0, nrow(DATA)) # Depth of liquid in snow store
-    uz <- rep(0, nrow(DATA)) # Shallow soil storage
-    lz <- rep(0, nrow(DATA)) # Deep soil storage
-    Qsim <- rep(0, nrow(DATA)) # Flow from reservoirs
+    ep <- rep(0, nrow(DATA)) # Effective precipitation
     ETa <- rep(0, nrow(DATA)) # Actual ET
 
     # Run model, starting at day 2
@@ -248,34 +238,9 @@ hbv.sim <- function(DATA,
         sm[t] <- 0
       }
 
-      # ------------------------------------------------------------------------
-      # Discharge
-      # ------------------------------------------------------------------------
-      Q0 <- 0
-      Q1 <- 0
-      Q2 <- 0
-
-      # Add runoff and recharge to upper zone of storage
-      uz[t] <- uz[t - 1] + runoff + recharge
-
-      # Percolation of of water from upper to lower zone
-      actPERC <- min(uz[t], perc)
-      uz[t] <- uz[t] - actPERC
-      lz[t] <- lz[t - 1] + actPERC
-
-      # Calculate runoff from storage
-      Q0 <- k0 * max(uz[t] - uzl, 0)
-      uz[t] <- uz[t] - Q0
-
-      Q1 <- k1 * uz[t]
-      uz[t] <- uz[t] - Q1
-
-      Q2 <- k2 * lz[t]
-      lz[t] <- lz[t] - Q2
-
-      Qsim[t] <- Q0 + Q1 + Q2
+      ep[t] <- runoff + recharge
     } # R loop done
-    U <- Qsim
+    U <- ep
   } # Close ifelse
   # Model run finished
 
@@ -307,9 +272,7 @@ hbv.sim <- function(DATA,
       ETa = ETa,
       SD = sp,
       LD = wc,
-      SM = sm,
-      UZ = uz,
-      LZ = lz
+      SM = sm
     )
   }
 
@@ -324,16 +287,32 @@ hbv.sim <- function(DATA,
 #' @useDynLib hydromad _hydromad_hbvrouting_sim
 #' @export
 hbvrouting.sim <- function(U,
+                           k0, k1, k2, uzl, perc,
                            maxbas,
-                           epsilon = hydromad.getOption("sim.epsilon")) {
+                           epsilon = hydromad.getOption("sim.epsilon"),
+                           return_components = FALSE) {
+  # U: effective rainfall series
+  # Groundwater routine
+  # k0: recession coefficient
+  # k1: recession coefficient
+  # k2: recession coefficient
+  # uzl: upper zone layer threshold
+  # perc: percolation from upper to lower response box
   # Routing
   # maxbas: routing, length of triangular weighting function
+
+  stopifnot(k0 >= 0)
+  stopifnot(k1 >= 0)
+  stopifnot(k2 >= 0)
+  stopifnot(uzl >= 0)
+  stopifnot(perc >= 0)
 
   inAttr <- attributes(U)
   U <- as.ts(U)
   bad <- is.na(U)
   U[bad] <- 0
 
+  # Calculate maxbas weights
   ci <- function(u) {
     (2 / maxbas) - abs(u - (maxbas / 2)) * (4 / (maxbas^2))
   }
@@ -351,15 +330,55 @@ hbvrouting.sim <- function(U,
 
   COMPILED <- (hydromad.getOption("pure.R.code") == FALSE)
   if (COMPILED) {
-    X <- hbvrouting_sim(U, wi, n_maxbas)
+    ans <- hbvrouting_sim(
+      U,
+      k0, k1, k2, uzl, perc,
+      wi, n_maxbas
+    )
+    X <- ans$X
+    if (return_components == TRUE) {
+      uz <- ans$uz
+      lz <- ans$lz
+    }
   } else { # R version
     X <- rep(0, length(U))
-    for (t in seq_len(length(X))) { # While t < maxbas, X[t] = U[t]
+    Qsim <- rep(0, length(U))
+    uz <- rep(0, length(U)) # Shallow gw storage
+    lz <- rep(0, length(U)) # Deep gw storage
+
+    for (t in seq(2, length(X))) {
+      # -----------------------------------------------------------------------
+      # Discharge
+      # -----------------------------------------------------------------------
+      Q0 <- 0
+      Q1 <- 0
+      Q2 <- 0
+
+      # Add runoff and recharge to upper zone of storage
+      uz[t] <- uz[t - 1] + U[t]
+
+      # Percolation of of water from upper to lower zone
+      actPERC <- min(uz[t], perc)
+      uz[t] <- uz[t] - actPERC
+      lz[t] <- lz[t - 1] + actPERC
+
+      # Calculate runoff from storage
+      Q0 <- k0 * max(uz[t] - uzl, 0)
+      uz[t] <- uz[t] - Q0
+
+      Q1 <- k1 * uz[t]
+      uz[t] <- uz[t] - Q1
+
+      Q2 <- k2 * lz[t]
+      lz[t] <- lz[t] - Q2
+
+      Qsim[t] <- Q0 + Q1 + Q2
+
       if (t < n_maxbas) {
-        X[t] <- U[t]
+        X[t] <- Qsim[t]
       } else {
         # Else use triangular weighting function
-        X[t] <- sum(wi * (U[(t - n_maxbas + 1):t]))
+        X[t] <- sum(wi * (Qsim[(t - n_maxbas + 1):t]))
       }
     }
   }
@@ -369,7 +388,24 @@ hbvrouting.sim <- function(U,
   X[bad] <- NA
   attributes(X) <- inAttr
 
-  return(X)
+  if (return_components == TRUE) {
+    # Return state variables
+    uz[bad] <- NA
+    lz[bad] <- NA
+
+    attributes(uz) <- inAttr
+    attributes(lz) <- inAttr
+
+    ans <- cbind(
+      U = X,
+      UZ = uz,
+      LZ = lz
+    )
+  } else {
+    ans <- X
+  }
+
+  return(ans)
 }
 
 # Suggested parameter ranges
@@ -386,12 +422,7 @@ hbv.ranges <- function() {
     cfr = c(0, 0.1),
     fc = c(50, 500),
     lp = c(0.3, 1),
-    beta = c(1, 6),
-    k0 = c(0.05, 0.5),
-    k1 = c(0.01, 0.3),
-    k2 = c(0.001, 0.1),
-    uzl = c(0, 100),
-    perc = c(0, 3)
+    beta = c(1, 6)
   )
 }
 
@@ -399,6 +430,11 @@ hbv.ranges <- function() {
 #' @export
 hbvrouting.ranges <- function() {
   list(
+    k0 = c(0.05, 0.5),
+    k1 = c(0.01, 0.3),
+    k2 = c(0.001, 0.1),
+    uzl = c(0, 100),
+    perc = c(0, 3),
     maxbas = c(1, 7)
   )
 }

@@ -9,25 +9,19 @@
 \alias{hbvrouting.ranges}
 \title{HBV rainfall-runoff model}
 \usage{
-hbv.sim(
-  DATA,
-  tt,
-  cfmax,
-  sfcf,
-  cwh,
-  cfr,
-  fc,
-  lp,
-  beta,
+hbv.sim(DATA, tt, cfmax, sfcf, cwh, cfr, fc, lp, beta, return_state = FALSE)
+
+hbvrouting.sim(
+  U,
   k0,
   k1,
   k2,
   uzl,
   perc,
-  return_state = FALSE
+  maxbas,
+  epsilon = hydromad.getOption("sim.epsilon"),
+  return_components = FALSE
 )
-
-hbvrouting.sim(U, maxbas, epsilon = hydromad.getOption("sim.epsilon"))
 
 hbv.ranges()
 
@@ -55,6 +49,10 @@ evapotranspiration.}
 
 \item{beta}{Shape coefficient in soil routine.}
 
+\item{return_state}{Whether to return the state variables.}
+
+\item{U}{Effective rainfall series}
+
 \item{k0}{Recession coefficient (quick runoff).}
 
 \item{k1}{Recession coefficient (upper groundwater storage).}
@@ -65,13 +63,12 @@ evapotranspiration.}
 
 \item{perc}{Maximum percolation from upper to lower groundwater storage.}
 
-\item{return_state}{Whether to return the state variables.}
-
-\item{U}{Effective rainfall series}
-
 \item{maxbas}{Routing, length of triangular weighting function.}
 
 \item{epsilon}{Values smaller than this in the output will be set to zero.}
+
+\item{return_components}{Whether to return state variables of the routing
+routine.}
 }
 \description{
 An implementation of the HBV rainfall-runoff model.
@@ -85,9 +82,16 @@ mean PET and daily temperature is not included.
 
 The timeseries of simulated streamflow (U). If return state is set
 to true, the state variables of the model are also returned. These include:
-snowpack (sp), water content of snowpack (wc), soil moisture (sm), actual
-evapotranspiration (ETa), upper groundwater storage (uz), lower groundwater
-storage (lz).
+actual evapotranspiration (ETa) snow depth (SD), liquid depth of snowpack
+(LD), soil moisture (SM).
+
+For hbv_routing, if return components is to true, the state variables of
+the routing model are returned: upper groundwater storage (UZ), lower
+groundwater storage (LZ).
+
+Default parameter ranges are guided by Seibert (1997) and Seibert and Vis
+(2012) and (see the references section), however parameter ranges for your
+catchment may require either a more restricted or wider range.
 }
 \examples{
 # Using example dataset Corin with daily P, Q, potential ET and average T
@@ -113,17 +117,19 @@ objFunVal(fit)
 xyplot(fit)
 }
 \references{
+Bergström, S. and Forsman, A.: Development of a Conceptual Deterministic
+Rainfall-Runoff Model, Nordic Hydrology, 4(3), 147–170, 1973.
+
+Bergström, S.: The HBV Model: Its Structure and Applications,Swedish
+Meteorological and Hydrological Institute (SMHI), Hydrology, Norrköping, 35
+pp., 1992.
+
+Seibert, J. (1997). Estimation of Parameter Uncertainty in the HBV Model.
+Hydrology Research, 28(4–5), 247–262.
+
 Seibert, J. and Vis, M. (2012). Teaching hydrological modeling with a
 user-friendly catchment-runoff-model software package. Hydrology and Earth
 System Sciences, 16, 3315–3325, 2012.
-
-Bergström, S.: The HBV Model: Its Structure and Applications, Swedish
-Meteorological and Hydrological Institute (SMHI), Hydrology, Norrköping,
-35 pp., 1992.
-
-Bergström, S.: The HBV model (Chapter 13), in: Computer Models of
-Watershed Hydrology, edited by: Singh, V. P., Water Resources Publications,
-Highlands Ranch, Colorado, USA, 443–476, 1995.
 }
 \seealso{
 \code{hydromad(sma='hbv', routing='hbvrouting')} to work with

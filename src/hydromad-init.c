@@ -65,8 +65,8 @@ static const R_CMethodDef CEntries[] = {
 
 static const R_CallMethodDef CallEntries[] = {
     {"_hydromad_simhyd_sim", (DL_FUNC)&_hydromad_simhyd_sim, 11},
-    {"_hydromad_hbv_sim", (DL_FUNC)&_hydromad_hbv_sim, 16},
-    {"_hydromad_hbvrouting_sim", (DL_FUNC)&_hydromad_hbvrouting_sim, 3},
+    {"_hydromad_hbv_sim", (DL_FUNC)&_hydromad_hbv_sim, 11},
+    {"_hydromad_hbvrouting_sim", (DL_FUNC)&_hydromad_hbvrouting_sim, 8},
     {NULL, NULL, 0}};
 
 void R_init_hydromad(DllInfo *dll) {

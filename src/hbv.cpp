@@ -23,8 +23,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 DataFrame hbv_sim(NumericVector P, NumericVector E, NumericVector Tavg,
                   double tt, double cfmax, double sfcf, double cwh, double cfr,
-                  double fc, double lp, double beta, double k0, double k1,
-                  double k2, double uzl, double perc) {
+                  double fc, double lp, double beta) {
   // Length of time series
   int nDays = P.size();
 
@@ -35,10 +34,8 @@ DataFrame hbv_sim(NumericVector P, NumericVector E, NumericVector Tavg,
   NumericVector sm = rep(0.0, nDays);
   NumericVector sp = rep(0.0, nDays);
   NumericVector wc = rep(0.0, nDays);
-  NumericVector uz = rep(0.0, nDays);
-  NumericVector lz = rep(0.0, nDays);
-  NumericVector Qsim = rep(0.0, nDays);
   NumericVector ETa = rep(0.0, nDays);
+  NumericVector ep = rep(0.0, nDays);
 
   // Snow routine variables
   double infil;
@@ -52,12 +49,6 @@ DataFrame hbv_sim(NumericVector P, NumericVector E, NumericVector Tavg,
   double AET;
   double runoff;
   double smw;
-
-  // Routing variables
-  double actPERC;
-  double Q0;
-  double Q1;
-  double Q2;
 
   // Run model, starting at day 2
   for (int t = 1; t < nDays; t++) {
@@ -127,7 +118,35 @@ DataFrame hbv_sim(NumericVector P, NumericVector E, NumericVector Tavg,
       ETa[t] = sm[t];
       sm[t] = 0.0;
     }
+    ep[t] = runoff + recharge;
+  }
 
+  // Return
+  return DataFrame::create(Named("U") = ep, Named("ETa") = ETa,
+                           Named("sm") = sm, Named("sp") = sp,
+                           Named("wc") = wc);
+}
+
+// [[Rcpp::export]]
+DataFrame hbvrouting_sim(NumericVector U, double k0, double k1, double k2,
+                         double uzl, double perc, NumericVector wi,
+                         int n_maxbas) {
+  // Length of timeseries
+  int nDays = U.size();
+
+  // Set up vectors
+  NumericVector uz = rep(0.0, nDays);
+  NumericVector lz = rep(0.0, nDays);
+  NumericVector Qsim = rep(0.0, nDays);
+  NumericVector X = rep(0.0, nDays);
+
+  // Routing variables
+  double actPERC;
+  double Q0;
+  double Q1;
+  double Q2;
+
+  for (int t = 1; t < nDays; t++) {
     // -----------------------------------------------------------------------
     // Discharge
     // -----------------------------------------------------------------------
@@ -135,7 +154,7 @@ DataFrame hbv_sim(NumericVector P, NumericVector E, NumericVector Tavg,
     Q1 = 0.0;
     Q2 = 0.0;
 
-    uz[t] = uz[t - 1] + runoff + recharge;
+    uz[t] = uz[t - 1] + U[t];
 
     // Percolation of water from upper to lower storage
     actPERC = std::min(uz[t], perc);
@@ -153,26 +172,13 @@ DataFrame hbv_sim(NumericVector P, NumericVector E, NumericVector Tavg,
     lz[t] -= Q2;
 
     Qsim[t] = Q0 + Q1 + Q2; // Total Q
-  }
 
-  // Return
-  return DataFrame::create(Named("U") = Qsim, Named("ETa") = ETa,
-                           Named("sm") = sm, Named("sp") = sp, Named("wc") = wc,
-                           Named("uz") = uz, Named("lz") = lz);
-}
-
-// [[Rcpp::export]]
-NumericVector hbvrouting_sim(NumericVector U, NumericVector wi, int n_maxbas) {
-  int nDays = U.size();
-  NumericVector X = rep(0.0, nDays);
-
-  for (int t = 0; t < nDays; t++) {
     if (t < (n_maxbas - 1)) {
-      X[t] = U[t];
+      X[t] = Qsim[t];
     } else {
-      X[t] = sum(wi * (U[Range(t - n_maxbas + 1, t)]));
+      X[t] = sum(wi * (Qsim[Range(t - n_maxbas + 1, t)]));
     }
   }
 
-  return X;
+  return DataFrame::create(Named("X") = X, Named("uz") = uz, Named("lz") = lz);
 }

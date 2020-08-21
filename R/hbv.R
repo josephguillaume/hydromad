@@ -257,15 +257,11 @@ hbv.sim <- function(DATA,
     wc[bad] <- NA
     sm[bad] <- NA
     ETa[bad] <- NA
-    uz[bad] <- NA
-    lz[bad] <- NA
 
     attributes(sp) <- inAttr
     attributes(wc) <- inAttr
     attributes(sm) <- inAttr
     attributes(ETa) <- inAttr
-    attributes(uz) <- inAttr
-    attributes(lz) <- inAttr
 
     ans <- cbind(
       U = U,
@@ -397,7 +393,7 @@ hbvrouting.sim <- function(U,
     attributes(lz) <- inAttr
 
     ans <- cbind(
-      U = X,
+      X = X,
       UZ = uz,
       LZ = lz
     )

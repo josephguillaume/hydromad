@@ -42,9 +42,10 @@ extern SEXP _hydromad_simhyd_sim(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
                                  SEXP, SEXP, SEXP);
 
 extern SEXP _hydromad_hbv_sim(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
-                              SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+                              SEXP, SEXP, SEXP, SEXP);
 
-extern SEXP _hydromad_hbvrouting_sim(SEXP, SEXP, SEXP);
+extern SEXP _hydromad_hbvrouting_sim(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                                     SEXP, SEXP);
 
 static const R_CMethodDef CEntries[] = {
     {"ar1_tv", (DL_FUNC)&ar1_tv, 5},
@@ -65,8 +66,8 @@ static const R_CMethodDef CEntries[] = {
 
 static const R_CallMethodDef CallEntries[] = {
     {"_hydromad_simhyd_sim", (DL_FUNC)&_hydromad_simhyd_sim, 11},
-    {"_hydromad_hbv_sim", (DL_FUNC)&_hydromad_hbv_sim, 11},
-    {"_hydromad_hbvrouting_sim", (DL_FUNC)&_hydromad_hbvrouting_sim, 8},
+    {"_hydromad_hbv_sim", (DL_FUNC)&_hydromad_hbv_sim, 12},
+    {"_hydromad_hbvrouting_sim", (DL_FUNC)&_hydromad_hbvrouting_sim, 9},
     {NULL, NULL, 0}};
 
 void R_init_hydromad(DllInfo *dll) {

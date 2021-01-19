@@ -17,8 +17,8 @@
 #' @param cfmax Degree-day factor for snow melt (mm/(ºC.day)).
 #' @param sfcf Snowfall correction factor. Amount of precipitation below
 #' threshold temperature that should be rainfall instead of snow.
-#' @param cwh Liquid water holding capacity of the snowpack.
 #' @param cfr Refreezing coefficient for water in the snowpack.
+#' @param cwh Liquid water holding capacity of the snowpack.
 #' @param fc Maximum amount of soil moisture storage (mm).
 #' @param lp Threshold for reduction of evaporation. Limit for potential
 #' evapotranspiration.
@@ -26,11 +26,11 @@
 #' @param return_state Whether to return the state variables.
 #'
 #' @param U Effective rainfall series
+#' @param perc Maximum percolation from upper to lower groundwater storage.
+#' @param uzl Threshold for quick runoff for k0 outflow (mm).
 #' @param k0 Recession coefficient (quick runoff).
 #' @param k1 Recession coefficient (upper groundwater storage).
 #' @param k2 Recession coefficient (lower groundwater storage).
-#' @param uzl Threshold for quick runoff for k0 outflow (mm).
-#' @param perc Maximum percolation from upper to lower groundwater storage.
 #' @param maxbas Routing, length of triangular weighting function.
 #' @param epsilon Values smaller than this in the output will be set to zero.
 #' @param return_components Whether to return state variables of the routing
@@ -42,12 +42,11 @@
 #' mean PET and daily temperature is not included.
 #' @details The timeseries of simulated streamflow (U). If return state is set
 #' to true, the state variables of the model are also returned. These include:
-#' actual evapotranspiration (ETa) snow depth (SD), liquid depth of snowpack
-#' (LD), soil moisture (SM).
+#' snow depth (Snow), actual evapotranspiration (AET) , soil moisture (SM).
 #'
 #' For hbv_routing, if return components is to true, the state variables of
-#' the routing model are returned: upper groundwater storage (UZ), lower
-#' groundwater storage (LZ).
+#' the routing model are returned: upper groundwater storage (SUZ), lower
+#' groundwater storage (SLZ).
 #'
 #' Default parameter ranges are guided by Seibert (1997) and Seibert and Vis
 #' (2012) and (see the references section), however parameter ranges for your
@@ -95,15 +94,13 @@
 #' objFunVal(fit)
 #' xyplot(fit)
 #' @keywords models
-#' @useDynLib hydromad
-#' @importFrom Rcpp sourceCpp
-#' @useDynLib hydromad _hydromad_hbv_sim
 #' @export
 
 hbv.sim <- function(DATA,
-                    tt, cfmax, sfcf, cwh, cfr,
+                    tt, cfmax, sfcf, cfr, cwh,
                     fc, lp, beta,
-                    return_state = FALSE) {
+                    return_state = FALSE,
+                    initialise_sm = FALSE) {
   # DATA: zoo series with P, Q, E and T
   # Snow routine
   # tt: temperature limit for rain/snow (ºC)
@@ -135,7 +132,7 @@ hbv.sim <- function(DATA,
   DATA <- as.ts(DATA)
 
   P <- DATA[, "P"]
-  # Not needed Q <- DATA[, "Q"]
+  # Q <- DATA[, "Q"]
   E <- DATA[, "E"]
   Tavg <- DATA[, "T"]
 
@@ -146,104 +143,123 @@ hbv.sim <- function(DATA,
   Tavg[bad] <- 0
 
   # Check for C++
-  COMPILED <- (hydromad.getOption("pure.R.code") == FALSE)
+  COMPILED <- hydromad.getOption("pure.R.code") == FALSE
   if (COMPILED) {
     # Run C++
     ans <- hbv_sim(
       P, E, Tavg,
-      tt, cfmax, sfcf, cwh, cfr,
-      fc, lp, beta
+      tt, cfmax, sfcf, cfr, cwh,
+      fc, lp, beta, initialise_sm
     )
     U <- ans$U
     if (return_state == TRUE) {
-      ETa <- ans$ETa
+      AET <- ans$AET
       sm <- ans$sm
       sp <- ans$sp
-      wc <- ans$wc
     }
   } else { # Run R Model
     # Set up vectors
     sm <- rep(0, nrow(DATA)) # Soil water storage
     sp <- rep(0, nrow(DATA)) # Snow store
-    wc <- rep(0, nrow(DATA)) # Depth of liquid in snow store
-    ep <- rep(0, nrow(DATA)) # Effective precipitation
-    ETa <- rep(0, nrow(DATA)) # Actual ET
+    infil <- rep(0, nrow(DATA)) # infiltration to soil
+    AET <- rep(0, nrow(DATA)) # Actual ET
+    recharge <- rep(0, nrow(DATA)) # Effective precipitation -> water to routing
 
-    # Run model, starting at day 2
-    for (t in 2:nrow(DATA)) {
+    # Set up variables
+    refr <- 0
+    wc_ <- 0
+    sp_ <- 0
+    sm_ <- ifelse(initialise_sm, fc * lp, 0)
+
+    # Run model
+    for (t in seq(1, nrow(DATA))) {
       # ------------------------------------------------------------------------
       # Snow routine
       # ------------------------------------------------------------------------
-      infil <- 0
-
-      # Determine if P is snow or rain
-      if (Tavg[t] < tt) {
-        # Refreezing of liquid in snow pack
-        refr <- min(c(cfr * cfmax * (Tavg[t] - tt), wc[t - 1]))
-        wc[t] <- wc[t - 1] - refr
-        # Use snowfall correction factor
-        snow <- P[t] * sfcf
-        # Add snow to snow pack + refreezing water
-        sp[t] <- sp[t - 1] + snow + refr
-        infil <- P[t] - snow
-      } else {
-        # Calculate and remove snow melt
-        melt <- min(cfmax * (Tavg[t] - tt), sp[t - 1])
-        sp[t] <- sp[t - 1] - melt
-        # Add water to liquid in snow pack
-        wc[t] <- wc[t - 1] + melt
-        # Calculate maximum liquid water holding capacity of snow pack
-        maxwc <- max(sp[t] * cwh, 0)
-        if (wc[t] > maxwc) {
-          # Add liquid excess water to effective P
-          infil <- P[t] + wc[t] - maxwc
-          wc[t] <- maxwc
+      infil_ <- 0
+      sp_tm1 <- sp_
+      # Determine if snow or rain falls
+      if (P[t] > 0) {
+        if (Tavg[t] > tt) {
+          # Precipitation gets added to wc store
+          wc_ <- wc_ + P[t]
         } else {
-          # Retain liquid water in snow pack and just add P
-          infil <- P[t]
+          # Snow and apply snowfall correction factor
+          sp_ <- sp_ + P[t] * sfcf
         }
       }
+      if (Tavg[t] > tt) {
+        # Melt snow
+        melt <- cfmax * (Tavg[t] - tt)
+        # If melt is greater than snow depth
+        if (melt > sp_) {
+          # All water is added to infiltration
+          infil_ <- sp_ + wc_
+          wc_ <- 0
+          sp_ <- 0
+        } else {
+          # Remove melt from snow pack
+          sp_ <- sp_ - melt
+          wc_ <- wc_ + melt
+          # Calculate maximum liquid water holding capacity of snow pack
+          maxwc <- sp_ * cwh
+          if (wc_ > maxwc) {
+            infil_ <- wc_ - maxwc
+            wc_ <- maxwc
+          }
+        }
+      } else {
+        # Refreeze water in liquid snow store
+        refr <- min(cfr * cfmax * (tt - Tavg[t]), wc_)
+        sp_ <- sp_ + refr
+        wc_ <- wc_ - refr
+      }
+      sp[t] <- sp_ + wc_
+      # infil[t] <- infil_
+
       # ------------------------------------------------------------------------
       # Soil routine
       # ------------------------------------------------------------------------
-      recharge <- 0
-      AET <- 0
-      runoff <- 0
-
-      # Calculate current soil wetness
-      smw <- max(min((sm[t - 1] / fc)^beta, 1), 0)
-
-      # Calculate recharge and take away from infil
-      recharge <- infil * smw
-      infil <- infil - recharge
-
-      # Add remaining infiltration to soil
-      sm[t] <- sm[t - 1] + infil
-
-      # Check if field capacity is exceeded
-      if (sm[t] > fc) {
-        runoff <- sm[t] - fc
-        sm[t] <- fc
+      # Divide portion of infiltration that goes to soil/gw
+      sm_tm1 <- sm_
+      if (infil_ > 0) {
+        if (infil_ < 1) {
+          infil_s <- infil_
+        } else {
+          infil_r <- round(infil_)
+          infil_s <- infil_ - infil_r
+          i <- 1
+          while (i <= infil_r) {
+            rm <- (sm_ / fc)^beta
+            if (rm > 1) rm <- 1
+            sm_ <- sm_ + 1 - rm
+            recharge[t] <- recharge[t] + rm
+            i <- i + 1
+          }
+        }
+        rm <- (sm_ / fc)^beta
+        if (rm > 1) rm <- 1
+        sm_ <- sm_ + (1 - rm) * infil_s
+        recharge[t] <- recharge[t] + rm * infil_s
       }
-
-      # Calculate actual ET
-      AET <- E[t] * min(sm[t] / (fc * lp), 1)
-      if (AET < 0) AET <- 0
-      # Remove AET from soil if there is water
-      if (sm[t] > AET) {
-        ETa[t] <- AET
-        sm[t] <- sm[t] - AET
-      } else {
-        ETa[t] <- sm[t]
-        sm[t] <- 0
+      # Only AET if there is no snow cover
+      if (sp_tm1 == 0) {
+        sm_et <- (sm_ + sm_tm1) / 2
+        # Calculate actual ET
+        AET[t] <- E[t] * min(sm_et / (fc * lp), 1)
+        if (AET[t] < 0) AET[t] <- 0
+        # Remove AET from soil if there is water
+        if (sm_ > AET[t]) {
+          sm_ <- sm_ - AET[t]
+        } else {
+          AET[t] <- sm_
+          sm_ <- 0
+        }
       }
-
-      ep[t] <- runoff + recharge
+      sm[t] <- sm_
     } # R loop done
-    U <- ep
-  } # Close ifelse
-  # Model run finished
-
+    U <- recharge
+  }
   # Put back missing values
   U[bad] <- NA
 
@@ -254,24 +270,20 @@ hbv.sim <- function(DATA,
   if (return_state == TRUE) {
     # Return state variables
     sp[bad] <- NA
-    wc[bad] <- NA
     sm[bad] <- NA
-    ETa[bad] <- NA
+    AET[bad] <- NA
 
     attributes(sp) <- inAttr
-    attributes(wc) <- inAttr
     attributes(sm) <- inAttr
-    attributes(ETa) <- inAttr
+    attributes(AET) <- inAttr
 
     ans <- cbind(
       U = U,
-      ETa = ETa,
-      SD = sp,
-      LD = wc,
-      SM = sm
+      Snow = sp,
+      SM = sm,
+      AET = AET
     )
   }
-
   return(ans)
 }
 
@@ -280,11 +292,11 @@ hbv.sim <- function(DATA,
 # with a minor adjustment to handle non-integer maxbas
 
 #' @rdname hbv
-#' @useDynLib hydromad _hydromad_hbvrouting_sim
 #' @export
 hbvrouting.sim <- function(U,
                            k0, k1, k2, uzl, perc,
                            maxbas,
+                           initial_lz = 0,
                            epsilon = hydromad.getOption("sim.epsilon"),
                            return_components = FALSE) {
   # U: effective rainfall series
@@ -302,6 +314,7 @@ hbvrouting.sim <- function(U,
   stopifnot(k2 >= 0)
   stopifnot(uzl >= 0)
   stopifnot(perc >= 0)
+  stopifnot(maxbas >= 1)
 
   inAttr <- attributes(U)
   U <- as.ts(U)
@@ -317,67 +330,68 @@ hbvrouting.sim <- function(U,
   wi <- rep(0, n_maxbas)
 
   if (maxbas > 1) {
-    for (i in 1:maxbas) {
+    for (i in 1:n_maxbas) {
       wi[i] <- stats::integrate(ci, i - 1, min(i, maxbas))$value[1]
     }
   } else {
     wi <- 1
   }
+  wi <- rev(wi)
 
-  COMPILED <- (hydromad.getOption("pure.R.code") == FALSE)
+  COMPILED <- hydromad.getOption("pure.R.code") == FALSE
   if (COMPILED) {
     ans <- hbvrouting_sim(
       U,
-      k0, k1, k2, uzl, perc,
-      wi, n_maxbas
+      perc, uzl, k0, k1, k2,
+      wi, n_maxbas, initial_lz
     )
-    X <- ans$X
-    if (return_components == TRUE) {
-      uz <- ans$uz
-      lz <- ans$lz
-    }
+    suz <- ans$suz
+    slz <- ans$slz
+    Q0 <- ans$Q0
+    Q1 <- ans$Q1
+    Q2 <- ans$Q2
   } else { # R version
-    X <- rep(0, length(U))
-    Qsim <- rep(0, length(U))
-    uz <- rep(0, length(U)) # Shallow gw storage
-    lz <- rep(0, length(U)) # Deep gw storage
+    # Initialise variables and vectors
+    suz_ <- 0
+    slz_ <- initial_lz
 
-    for (t in seq(2, length(X))) {
+    suz <- rep(0, length(U)) # Shallow gw storage
+    slz <- rep(0, length(U)) # Deep gw storage
+
+    Q0 <- rep(0, length(U))
+    Q1 <- rep(0, length(U))
+    Q2 <- rep(0, length(U))
+
+    for (t in seq(1, length(U))) {
       # -----------------------------------------------------------------------
       # Discharge
       # -----------------------------------------------------------------------
-      Q0 <- 0
-      Q1 <- 0
-      Q2 <- 0
-
       # Add runoff and recharge to upper zone of storage
-      uz[t] <- uz[t - 1] + U[t]
-
+      suz_ <- suz_ + U[t]
       # Percolation of of water from upper to lower zone
-      actPERC <- min(uz[t], perc)
-      uz[t] <- uz[t] - actPERC
-      lz[t] <- lz[t - 1] + actPERC
+      act_perc <- min(suz_, perc)
+      suz_ <- suz_ - act_perc
+      slz_ <- slz_ + act_perc
 
       # Calculate runoff from storage
-      Q0 <- k0 * max(uz[t] - uzl, 0)
-      uz[t] <- uz[t] - Q0
+      Q0[t] <- k0 * max(suz_ - uzl, 0)
 
-      Q1 <- k1 * uz[t]
-      uz[t] <- uz[t] - Q1
+      Q1[t] <- k1 * suz_
+      suz_ <- suz_ - Q1[t] - Q0[t]
 
-      Q2 <- k2 * lz[t]
-      lz[t] <- lz[t] - Q2
+      Q2[t] <- k2 * slz_
+      slz_ <- slz_ - Q2[t]
 
-      Qsim[t] <- Q0 + Q1 + Q2
-
-      if (t < n_maxbas) {
-        X[t] <- Qsim[t]
-      } else {
-        # Else use triangular weighting function
-        X[t] <- sum(wi * (Qsim[(t - n_maxbas + 1):t]))
-      }
+      suz[t] <- suz_
+      slz[t] <- slz_
     }
   }
+  # Triangular weighting function
+  Q0 <- zoo::rollapplyr(Q0, n_maxbas, function(Q) sum(Q * wi), partial = TRUE)
+  Q1 <- zoo::rollapplyr(Q1, n_maxbas, function(Q) sum(Q * wi), partial = TRUE)
+  Q2 <- zoo::rollapplyr(Q2, n_maxbas, function(Q) sum(Q * wi), partial = TRUE)
+
+  X <- Q0 + Q1 + Q2
 
   # Values smaller than epsilon go to 0
   X[abs(X) < epsilon] <- 0
@@ -386,21 +400,30 @@ hbvrouting.sim <- function(U,
 
   if (return_components == TRUE) {
     # Return state variables
-    uz[bad] <- NA
-    lz[bad] <- NA
+    suz[bad] <- NA
+    slz[bad] <- NA
 
-    attributes(uz) <- inAttr
-    attributes(lz) <- inAttr
+    Q0[bad] <- NA
+    Q1[bad] <- NA
+    Q2[bad] <- NA
+
+    attributes(suz) <- inAttr
+    attributes(slz) <- inAttr
+    attributes(Q0) <- inAttr
+    attributes(Q1) <- inAttr
+    attributes(Q2) <- inAttr
 
     ans <- cbind(
       X = X,
-      UZ = uz,
-      LZ = lz
+      SUZ = suz,
+      SLZ = slz,
+      Q0 = Q0,
+      Q1 = Q1,
+      Q2 = Q2
     )
   } else {
     ans <- X
   }
-
   return(ans)
 }
 
@@ -414,8 +437,8 @@ hbv.ranges <- function() {
     tt = c(-2.5, 2.5),
     cfmax = c(1, 10),
     sfcf = c(0.4, 1),
-    cwh = c(0, 0.2),
     cfr = c(0, 0.1),
+    cwh = c(0, 0.2),
     fc = c(50, 500),
     lp = c(0.3, 1),
     beta = c(1, 6)
@@ -426,11 +449,11 @@ hbv.ranges <- function() {
 #' @export
 hbvrouting.ranges <- function() {
   list(
+    perc = c(0, 3),
+    uzl = c(0, 100),
     k0 = c(0.05, 0.5),
     k1 = c(0.01, 0.3),
     k2 = c(0.001, 0.1),
-    uzl = c(0, 100),
-    perc = c(0, 3),
     maxbas = c(1, 7)
   )
 }

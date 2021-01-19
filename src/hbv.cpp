@@ -22,163 +22,179 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 DataFrame hbv_sim(NumericVector P, NumericVector E, NumericVector Tavg,
-                  double tt, double cfmax, double sfcf, double cwh, double cfr,
-                  double fc, double lp, double beta) {
+                  double tt, double cfmax, double sfcf, double cfr, double cwh,
+                  double fc, double lp, double beta, bool initialise_sm) {
   // Length of time series
   int nDays = P.size();
 
   // Storage output vector
   NumericVector U(nDays);
 
-  // Set up vectors
+  // Set up vectors and variables
   NumericVector sm = rep(0.0, nDays);
   NumericVector sp = rep(0.0, nDays);
-  NumericVector wc = rep(0.0, nDays);
-  NumericVector ETa = rep(0.0, nDays);
-  NumericVector ep = rep(0.0, nDays);
+  NumericVector infil = rep(0.0, nDays);
+  NumericVector AET = rep(0.0, nDays);
+  NumericVector recharge = rep(0.0, nDays);
 
   // Snow routine variables
-  double infil;
-  double refr;
-  double maxwc;
+  double refr = 0.0;
+  double wc_ = 0.0;
+  double sp_ = 0.0;
   double melt;
-  double snow;
+
+  double infil_;
+  double sp_tm1;
+  double maxwc;
 
   // Soil variables
-  double recharge;
-  double AET;
-  double runoff;
-  double smw;
+  double sm_ = 0.0;
+  if (initialise_sm)
+    sm_ = fc * lp;
+  double sm_tm1;
+  double infil_r;
+  double infil_s;
+  double rm;
+  double sm_et;
 
-  // Run model, starting at day 2
-  for (int t = 1; t < nDays; t++) {
+  // Run model
+  for (int t = 0; t < nDays; t++) {
     // -----------------------------------------------------------------------
     // Snow routine
     // -----------------------------------------------------------------------
-    infil = 0.0;
-
-    // Determine if snow or rain falls
-    if (Tavg[t] < tt) {
-      // Refreezing of liquid in snow pack
-      refr = std::min(cfr * cfmax * (Tavg[t] - tt), wc[t - 1]);
-      wc[t] = wc[t - 1] - refr;
-      // Use snowfall correction factor
-      snow = P[t] * sfcf;
-      // Add snow and refreezing water to snow pack
-      sp[t] = sp[t - 1] + snow + refr;
-      infil = P[t] - snow;
-    } else {
-      // Calculate and remove snowmelt
-      melt = std::min(cfmax * (Tavg[t] - tt), sp[t - 1]);
-      sp[t] = sp[t - 1] - melt;
-      // Add melting water to liquid in snow pack
-      wc[t] = wc[t - 1] + melt;
-      // Calculate maximum liquid water holding capacity of snow pack
-      maxwc = std::max(sp[t] * cwh, 0.0);
-      if (wc[t] > maxwc) {
-        // Add liquid excess water to effective P
-        infil = P[t] + wc[t] - maxwc;
-        wc[t] = maxwc;
+    infil_ = 0.0;
+    sp_tm1 = sp_;
+    if (P[t] > 0) {
+      // Determine if snow or rain falls
+      if (Tavg[t] > tt) {
+        wc_ += P[t];
       } else {
-        // Retain liquid water in snow pack and just add P
-        infil = P[t];
+        // Snow and apply snowfall correction factor
+        sp_ += P[t] * sfcf;
       }
     }
+
+    if (Tavg[t] > tt) {
+      // Melt snow
+      melt = cfmax * (Tavg[t] - tt);
+      // If melt is greater than snow depth
+      if (melt > sp_) {
+        // All water is added to infiltration
+        infil_ = sp_ + wc_;
+        wc_ = 0;
+        sp_ = 0;
+      } else {
+        // Remove melt from snow pack
+        sp_ -= melt;
+        wc_ += melt;
+        // Calculate maximum liquid water holding capacity of snow pack
+        maxwc = sp_ * cwh;
+        if (wc_ > maxwc) {
+          infil_ = wc_ - maxwc;
+          wc_ = maxwc;
+        }
+      }
+    } else {
+      // Refreeze water in liquid snow store
+      refr = std::min(cfr * cfmax * (tt - Tavg[t]), wc_);
+      sp_ += refr;
+      wc_ -= refr;
+    }
+    sp[t] = sp_ + wc_;
+
     // -----------------------------------------------------------------------
     // Soil routine
     // -----------------------------------------------------------------------
-    recharge = 0.0;
-    AET = 0.0;
-    runoff = 0.0;
-
-    // Calculate current soil wetness
-    smw = std::max(std::min(pow(sm[t - 1] / fc, beta), 1.0), 0.0);
-
-    // Calculate recharge and take away from infil
-    recharge = infil * smw;
-    infil -= recharge;
-
-    // Add remaining infiltration to soil
-    sm[t] = sm[t - 1] + infil;
-
-    // Check if sm exceeds fc
-    if (sm[t] >= fc) {
-      runoff = sm[t] - fc;
-      sm[t] = fc;
+    // Divide portion of infiltration that goes to soil/gw
+    sm_tm1 = sm_;
+    if (infil_ > 0) {
+      if (infil_ < 1) {
+        infil_s = infil_;
+      } else {
+        infil_r = std::round(infil_);
+        infil_s = infil_ - infil_r;
+        int i = 1;
+        while (i <= infil_r) {
+          rm = std::pow(sm_ / fc, beta);
+          if (rm > 1)
+            rm = 1;
+          sm_ += 1 - rm;
+          recharge[t] += rm;
+          i++;
+        }
+      }
+      rm = std::pow(sm_ / fc, beta);
+      if (rm > 1)
+        rm = 1;
+      sm_ += (1 - rm) * infil_s;
+      recharge[t] += rm * infil_s;
     }
-
-    // Calculate actual ET
-    AET = E[t] * std::min(sm[t] / (fc * lp), 1.0);
-    if (AET < 0.0)
-      AET = 0.0;
-    if (sm[t] > AET) {
-      ETa[t] = AET;
-      sm[t] = sm[t] - AET;
-    } else {
-      ETa[t] = sm[t];
-      sm[t] = 0.0;
+    // Only AET if there is snow cover the previous timestep
+    if (sp_tm1 == 0) {
+      sm_et = (sm_ + sm_tm1) / 2;
+      // Calculate actual ET
+      AET[t] = E[t] * std::min(sm_et / (fc * lp), 1.0);
+      if (AET[t] < 0)
+        AET[t] = 0;
+      // Remove AET from soil if there is water
+      if (sm_ > AET[t]) {
+        sm_ -= AET[t];
+      } else {
+        AET[t] = sm_;
+        sm_ = 0;
+      }
     }
-    ep[t] = runoff + recharge;
+    sm[t] = sm_;
   }
 
   // Return
-  return DataFrame::create(Named("U") = ep, Named("ETa") = ETa,
-                           Named("sm") = sm, Named("sp") = sp,
-                           Named("wc") = wc);
+  return DataFrame::create(Named("U") = recharge, Named("sp") = sp,
+                           Named("sm") = sm, Named("AET") = AET);
 }
 
 // [[Rcpp::export]]
-DataFrame hbvrouting_sim(NumericVector U, double k0, double k1, double k2,
-                         double uzl, double perc, NumericVector wi,
-                         int n_maxbas) {
+DataFrame hbvrouting_sim(NumericVector U, double perc, double uzl, double k0,
+                         double k1, double k2, NumericVector wi, int n_maxbas,
+                         double initial_lz) {
   // Length of timeseries
   int nDays = U.size();
 
   // Set up vectors
-  NumericVector uz = rep(0.0, nDays);
-  NumericVector lz = rep(0.0, nDays);
-  NumericVector Qsim = rep(0.0, nDays);
-  NumericVector X = rep(0.0, nDays);
+  NumericVector suz = rep(0.0, nDays);
+  NumericVector slz = rep(0.0, nDays);
+  NumericVector Q0 = rep(0.0, nDays);
+  NumericVector Q1 = rep(0.0, nDays);
+  NumericVector Q2 = rep(0.0, nDays);
 
   // Routing variables
-  double actPERC;
-  double Q0;
-  double Q1;
-  double Q2;
+  double act_perc = 0;
+  double suz_ = 0;
+  double slz_ = initial_lz;
 
-  for (int t = 1; t < nDays; t++) {
+  for (int t = 0; t < nDays; t++) {
     // -----------------------------------------------------------------------
     // Discharge
     // -----------------------------------------------------------------------
-    Q0 = 0.0;
-    Q1 = 0.0;
-    Q2 = 0.0;
+    // Add runoff and recharge to upper zone of storage
+    suz_ += U[t];
+    // Percolation of of water from upper to lower zone
+    act_perc = std::min(suz_, perc);
+    suz_ -= act_perc;
+    slz_ += act_perc;
 
-    uz[t] = uz[t - 1] + U[t];
+    // Calculate runoff from storage
+    Q0[t] = k0 * std::max(suz_ - uzl, 0.0);
+    Q1[t] = k1 * suz_;
+    suz_ -= (Q1[t] + Q0[t]);
 
-    // Percolation of water from upper to lower storage
-    actPERC = std::min(uz[t], perc);
-    uz[t] -= actPERC;
-    lz[t] = lz[t - 1] + actPERC;
+    Q2[t] = k2 * slz_;
+    slz_ -= Q2[t];
 
-    // Quick runoff
-    Q0 = k0 * std::max(uz[t] - uzl, 0.0);
-    uz[t] -= Q0;
-
-    Q1 = k1 * uz[t];
-    uz[t] -= Q1;
-
-    Q2 = k2 * lz[t];
-    lz[t] -= Q2;
-
-    Qsim[t] = Q0 + Q1 + Q2; // Total Q
-
-    if (t < (n_maxbas - 1)) {
-      X[t] = Qsim[t];
-    } else {
-      X[t] = sum(wi * (Qsim[Range(t - n_maxbas + 1, t)]));
-    }
+    suz[t] = suz_;
+    slz[t] = slz_;
   }
 
-  return DataFrame::create(Named("X") = X, Named("uz") = uz, Named("lz") = lz);
+  return DataFrame::create(Named("suz") = suz, Named("slz") = slz,
+                           Named("Q0") = Q0, Named("Q1") = Q1,
+                           Named("Q2") = Q2);
 }

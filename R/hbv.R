@@ -12,7 +12,12 @@
 #' @title HBV rainfall-runoff model
 #' @description An implementation of the HBV rainfall-runoff model.
 #' @param DATA A time-series like object with columns P (precipitation in mm),
-#' E (potential evapotranspiration in mm), T (average air temperature in ºC).
+#' T (average air temperature in ºC) and E (potential
+#' evapotranspiration in mm). If E is not supplied then the PET argument must
+#' be used.
+#' @param PET A vector of length 12 or 365 of average potential
+#' evapotranspiration in mm/model timestep (usually mm/day). Optional if daily
+#' E is supplied in DATA.
 #' @param tt Threshold temperature for snow and snow melt in degrees Celsius.
 #' @param cfmax Degree-day factor for snow melt (mm/(ºC.day)).
 #' @param sfcf Snowfall correction factor. Amount of precipitation below
@@ -23,6 +28,9 @@
 #' @param lp Threshold for reduction of evaporation. Limit for potential
 #' evapotranspiration.
 #' @param beta Shape coefficient in soil routine.
+#' @param cet Potential ET correction factor
+#' @param initialise_sm If true, the soil moisture store is initialised to
+#' equal `fc`*`lp` to match HBVlight behaviour. Defaults to false.
 #' @param return_state Whether to return the state variables.
 #'
 #' @param U Effective rainfall series
@@ -33,23 +41,27 @@
 #' @param k2 Recession coefficient (lower groundwater storage).
 #' @param maxbas Routing, length of triangular weighting function.
 #' @param epsilon Values smaller than this in the output will be set to zero.
-#' @param return_components Whether to return state variables of the routing
+#' @param initial_lz Initial value for the lower store (SLZ). Defaults to 0.
+#' @param return_components Whether to return state variables from the routing
 #' routine.
 #' @details This implementation of this HBV model closely follows the
-#' description of HBV light by Seibert and Vis, 2009. Daily average temperature
+#' description of HBV light by Seibert and Vis, 2012. Daily average temperature
 #' data is required for the snow routine. Daily potential evapotranspiration
 #' (PET) data is required as the routine to calculate daily PET using long term
 #' mean PET and daily temperature is not included.
-#' @details The timeseries of simulated streamflow (U). If return state is set
+#' @return The timeseries of simulated streamflow (U). If return state is set
 #' to true, the state variables of the model are also returned. These include:
-#' snow depth (Snow), actual evapotranspiration (AET) , soil moisture (SM).
+#' snow depth (Snow), soil moisture (SM), potential evapotranspiration (PET)
+#' and actual evapotranspiration (AET), .
 #'
-#' For hbv_routing, if return components is to true, the state variables of
-#' the routing model are returned: upper groundwater storage (SUZ), lower
-#' groundwater storage (SLZ).
+#' For hbv_routing, the routed effective rainfall series (X) is returned. If
+#' return components is to true, the state variables of the routing model are
+#' returned: upper groundwater storage (SUZ), lower groundwater storage (SLZ),
+#' runoff from quick flow (Q0), upper groundwater (Q1) and lower groundwater
+#' (Q2).
 #'
 #' Default parameter ranges are guided by Seibert (1997) and Seibert and Vis
-#' (2012) and (see the references section), however parameter ranges for your
+#' (2012) and (see the references section). Parameter ranges for your
 #' catchment may require either a more restricted or wider range.
 #'
 #' @references
@@ -94,14 +106,18 @@
 #' objFunVal(fit)
 #' xyplot(fit)
 #' @keywords models
+#' @useDynLib hydromad
+#' @importFrom Rcpp sourceCpp
+#' @useDynLib hydromad _hydromad_hbv_sim
 #' @export
 
-hbv.sim <- function(DATA,
+hbv.sim <- function(DATA, PET,
                     tt, cfmax, sfcf, cfr, cwh,
-                    fc, lp, beta,
+                    fc, lp, beta, cet,
                     return_state = FALSE,
                     initialise_sm = FALSE) {
-  # DATA: zoo series with P, Q, E and T
+  # DATA: zoo series with P, Q and T and optionally E
+  # PET: zoo series of potential ET, if not supplied in DATA
   # Snow routine
   # tt: temperature limit for rain/snow (ºC)
   # sfcf: snowfall correction factor
@@ -115,7 +131,7 @@ hbv.sim <- function(DATA,
   # beta: parameter in soil routine
 
   # Check DATA has been entered
-  stopifnot(c("P", "E", "T") %in% colnames(DATA))
+  stopifnot(c("P", "T") %in% colnames(DATA))
 
   # Check valid parameter values have been entered
   stopifnot(is.double(tt))
@@ -127,14 +143,48 @@ hbv.sim <- function(DATA,
   stopifnot(lp >= 0)
   stopifnot(beta >= 0)
   stopifnot(cwh >= 0)
+  stopifnot(is.logical(initialise_sm))
 
   inAttr <- attributes(DATA[, 1])
   DATA <- as.ts(DATA)
 
   P <- DATA[, "P"]
-  # Q <- DATA[, "Q"]
-  E <- DATA[, "E"]
   Tavg <- DATA[, "T"]
+
+  if (missing(PET)) {
+    stopifnot("E" %in% colnames(DATA))
+    E <- DATA[, "E"]
+  } else {
+    stopifnot(length(PET) %in% c(12, 365))
+    # Force to vector in case a zoo series is supplied
+    PET <- as.vector(PET)
+    if (length(PET) == length(Tavg)) {
+      E <- PET
+    } else {
+      # Calculate daily PET from daily temperature and average PET series
+      E <- rep(0, length(Tavg))
+      if (length(PET) == 12) {
+        PET <- rep(PET,
+                   times = c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31))
+      }
+      # Deal with leap years. Feb 29 = Feb 28 for long term ET
+      doy <- as.integer(strftime(inAttr$index, "%j"))
+      year <- as.integer(strftime(inAttr$index, "%Y"))
+      idx <- ((year %% 4 == 0) & ((year %% 100 != 0) | (year %% 400 == 0))) &
+        doy > 59
+      pet_idx <- doy
+      pet_idx[idx] <- pet_idx[idx] - 1
+      for (t in 1:365) {
+        # Mean temperature for doy
+        tm <- mean(Tavg[which(doy == t)], na.rm = TRUE)
+        # Eq7 in Seibert and Vis 2012
+        pet_ <- 1 + cet * (Tavg[which(pet_idx == t)] - tm)
+        pet_[pet_ > 2] <- 2
+        pet_[pet_ < 0] <- 0
+        E[which(pet_idx == t)] <- pet_ * PET[t]
+      }
+    }
+  }
 
   # Skip missing values
   bad <- is.na(P) | is.na(E) | is.na(Tavg)
@@ -161,7 +211,6 @@ hbv.sim <- function(DATA,
     # Set up vectors
     sm <- rep(0, nrow(DATA)) # Soil water storage
     sp <- rep(0, nrow(DATA)) # Snow store
-    infil <- rep(0, nrow(DATA)) # infiltration to soil
     AET <- rep(0, nrow(DATA)) # Actual ET
     recharge <- rep(0, nrow(DATA)) # Effective precipitation -> water to routing
 
@@ -215,7 +264,6 @@ hbv.sim <- function(DATA,
         wc_ <- wc_ - refr
       }
       sp[t] <- sp_ + wc_
-      # infil[t] <- infil_
 
       # ------------------------------------------------------------------------
       # Soil routine
@@ -271,16 +319,19 @@ hbv.sim <- function(DATA,
     # Return state variables
     sp[bad] <- NA
     sm[bad] <- NA
+    E[bad] <- NA
     AET[bad] <- NA
 
     attributes(sp) <- inAttr
     attributes(sm) <- inAttr
+    attributes(E) <- inAttr
     attributes(AET) <- inAttr
 
     ans <- cbind(
       U = U,
       Snow = sp,
       SM = sm,
+      PET = E,
       AET = AET
     )
   }
@@ -292,11 +343,12 @@ hbv.sim <- function(DATA,
 # with a minor adjustment to handle non-integer maxbas
 
 #' @rdname hbv
+#' @useDynLib hydromad _hydromad_hbvrouting_sim
 #' @export
 hbvrouting.sim <- function(U,
                            k0, k1, k2, uzl, perc,
                            maxbas,
-                           initial_lz = 0,
+                           initial_lz = I(0),
                            epsilon = hydromad.getOption("sim.epsilon"),
                            return_components = FALSE) {
   # U: effective rainfall series
@@ -387,9 +439,15 @@ hbvrouting.sim <- function(U,
     }
   }
   # Triangular weighting function
-  Q0 <- zoo::rollapplyr(Q0, n_maxbas, function(Q) sum(Q * wi), partial = TRUE)
-  Q1 <- zoo::rollapplyr(Q1, n_maxbas, function(Q) sum(Q * wi), partial = TRUE)
-  Q2 <- zoo::rollapplyr(Q2, n_maxbas, function(Q) sum(Q * wi), partial = TRUE)
+  Q0 <- zoo::rollapplyr(
+    c(rep(0, n_maxbas - 1), Q0), n_maxbas, function(Q) sum(Q * wi)
+    )
+  Q1 <- zoo::rollapplyr(
+    c(rep(0, n_maxbas - 1), Q1), n_maxbas, function(Q) sum(Q * wi)
+    )
+  Q2 <- zoo::rollapplyr(
+    c(rep(0, n_maxbas - 1), Q2), n_maxbas, function(Q) sum(Q * wi)
+    )
 
   X <- Q0 + Q1 + Q2
 

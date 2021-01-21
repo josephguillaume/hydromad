@@ -9,7 +9,21 @@
 \alias{hbvrouting.ranges}
 \title{HBV rainfall-runoff model}
 \usage{
-hbv.sim(DATA, tt, cfmax, sfcf, cwh, cfr, fc, lp, beta, return_state = FALSE)
+hbv.sim(
+  DATA,
+  PET,
+  tt,
+  cfmax,
+  sfcf,
+  cfr,
+  cwh,
+  fc,
+  lp,
+  beta,
+  cet,
+  return_state = FALSE,
+  initialise_sm = FALSE
+)
 
 hbvrouting.sim(
   U,
@@ -19,6 +33,7 @@ hbvrouting.sim(
   uzl,
   perc,
   maxbas,
+  initial_lz = I(0),
   epsilon = hydromad.getOption("sim.epsilon"),
   return_components = FALSE
 )
@@ -29,7 +44,13 @@ hbvrouting.ranges()
 }
 \arguments{
 \item{DATA}{A time-series like object with columns P (precipitation in mm),
-E (potential evapotranspiration in mm), T (average air temperature in ºC).}
+T (average air temperature in ºC) and E (potential
+evapotranspiration in mm). If E is not supplied then the PET argument must
+be used.}
+
+\item{PET}{A vector of length 12 or 365 of average potential
+evapotranspiration in mm/model timestep (usually mm/day). Optional if daily
+E is supplied in DATA.}
 
 \item{tt}{Threshold temperature for snow and snow melt in degrees Celsius.}
 
@@ -38,9 +59,9 @@ E (potential evapotranspiration in mm), T (average air temperature in ºC).}
 \item{sfcf}{Snowfall correction factor. Amount of precipitation below
 threshold temperature that should be rainfall instead of snow.}
 
-\item{cwh}{Liquid water holding capacity of the snowpack.}
-
 \item{cfr}{Refreezing coefficient for water in the snowpack.}
+
+\item{cwh}{Liquid water holding capacity of the snowpack.}
 
 \item{fc}{Maximum amount of soil moisture storage (mm).}
 
@@ -49,7 +70,12 @@ evapotranspiration.}
 
 \item{beta}{Shape coefficient in soil routine.}
 
+\item{cet}{Potential ET correction factor}
+
 \item{return_state}{Whether to return the state variables.}
+
+\item{initialise_sm}{If true, the soil moisture store is initialised to
+equal \code{fc}*\code{lp} to match HBVlight behaviour. Defaults to false.}
 
 \item{U}{Effective rainfall series}
 
@@ -65,33 +91,38 @@ evapotranspiration.}
 
 \item{maxbas}{Routing, length of triangular weighting function.}
 
+\item{initial_lz}{Initial value for the lower store (SLZ). Defaults to 0.}
+
 \item{epsilon}{Values smaller than this in the output will be set to zero.}
 
-\item{return_components}{Whether to return state variables of the routing
+\item{return_components}{Whether to return state variables from the routing
 routine.}
+}
+\value{
+The timeseries of simulated streamflow (U). If return state is set
+to true, the state variables of the model are also returned. These include:
+snow depth (Snow), soil moisture (SM), potential evapotranspiration (PET)
+and actual evapotranspiration (AET), .
+
+For hbv_routing, the routed effective rainfall series (X) is returned. If
+return components is to true, the state variables of the routing model are
+returned: upper groundwater storage (SUZ), lower groundwater storage (SLZ),
+runoff from quick flow (Q0), upper groundwater (Q1) and lower groundwater
+(Q2).
+
+Default parameter ranges are guided by Seibert (1997) and Seibert and Vis
+(2012) and (see the references section). Parameter ranges for your
+catchment may require either a more restricted or wider range.
 }
 \description{
 An implementation of the HBV rainfall-runoff model.
 }
 \details{
 This implementation of this HBV model closely follows the
-description of HBV light by Seibert and Vis, 2009. Daily average temperature
+description of HBV light by Seibert and Vis, 2012. Daily average temperature
 data is required for the snow routine. Daily potential evapotranspiration
 (PET) data is required as the routine to calculate daily PET using long term
 mean PET and daily temperature is not included.
-
-The timeseries of simulated streamflow (U). If return state is set
-to true, the state variables of the model are also returned. These include:
-actual evapotranspiration (ETa) snow depth (SD), liquid depth of snowpack
-(LD), soil moisture (SM).
-
-For hbv_routing, if return components is to true, the state variables of
-the routing model are returned: upper groundwater storage (UZ), lower
-groundwater storage (LZ).
-
-Default parameter ranges are guided by Seibert (1997) and Seibert and Vis
-(2012) and (see the references section), however parameter ranges for your
-catchment may require either a more restricted or wider range.
 }
 \examples{
 # Using example dataset Corin with daily P, Q, potential ET and average T

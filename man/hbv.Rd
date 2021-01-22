@@ -11,7 +11,6 @@
 \usage{
 hbv.sim(
   DATA,
-  PET,
   tt,
   cfmax,
   sfcf,
@@ -22,7 +21,8 @@ hbv.sim(
   beta,
   cet,
   return_state = FALSE,
-  initialise_sm = FALSE
+  initialise_sm = FALSE,
+  PET
 )
 
 hbvrouting.sim(
@@ -33,7 +33,7 @@ hbvrouting.sim(
   uzl,
   perc,
   maxbas,
-  initial_lz = I(0),
+  initial_slz = I(0),
   epsilon = hydromad.getOption("sim.epsilon"),
   return_components = FALSE
 )
@@ -47,10 +47,6 @@ hbvrouting.ranges()
 T (average air temperature in ºC) and E (potential
 evapotranspiration in mm). If E is not supplied then the PET argument must
 be used.}
-
-\item{PET}{A vector of length 12 or 365 of average potential
-evapotranspiration in mm/model timestep (usually mm/day). Optional if daily
-E is supplied in DATA.}
 
 \item{tt}{Threshold temperature for snow and snow melt in degrees Celsius.}
 
@@ -70,14 +66,20 @@ evapotranspiration.}
 
 \item{beta}{Shape coefficient in soil routine.}
 
-\item{cet}{Potential ET correction factor}
+\item{cet}{Potential ET correction factor. Optional if a full PET series
+is provided.}
 
 \item{return_state}{Whether to return the state variables.}
 
 \item{initialise_sm}{If true, the soil moisture store is initialised to
 equal \code{fc}*\code{lp} to match HBVlight behaviour. Defaults to false.}
 
-\item{U}{Effective rainfall series}
+\item{PET}{A list containing named objects "PET" and optionally "Tmean".
+PET and Tmean must be vectors of length 12 or 365 that represent mean values.
+Optional if \code{E} is supplied in \code{DATA}. If supplied then \code{cet} must be
+parameterised.}
+
+\item{U}{Effective rainfall series/recharge series.}
 
 \item{k0}{Recession coefficient (quick runoff).}
 
@@ -89,9 +91,9 @@ equal \code{fc}*\code{lp} to match HBVlight behaviour. Defaults to false.}
 
 \item{perc}{Maximum percolation from upper to lower groundwater storage.}
 
-\item{maxbas}{Routing, length of triangular weighting function.}
+\item{maxbas}{Routing, length of triangular weighting function (days).}
 
-\item{initial_lz}{Initial value for the lower store (SLZ). Defaults to 0.}
+\item{initial_slz}{Initial value for the lower store (SLZ). Defaults to 0.}
 
 \item{epsilon}{Values smaller than this in the output will be set to zero.}
 
@@ -120,9 +122,14 @@ An implementation of the HBV rainfall-runoff model.
 \details{
 This implementation of this HBV model closely follows the
 description of HBV light by Seibert and Vis, 2012. Daily average temperature
-data is required for the snow routine. Daily potential evapotranspiration
-(PET) data is required as the routine to calculate daily PET using long term
-mean PET and daily temperature is not included.
+data is required for the snow routine. If daily potential evapotranspiration
+(PET) data is not provided in \code{DATA}, then the PET is estimated using the
+HBV method and the \code{PET} and \code{cet} arguments must be specified. The list
+needs to contain a vector named \code{"PET"} containing daily average (or matching
+the timestep of \code{DATA}) values of length 12 (monthly) or 365 (days of year).
+\code{"Tmean"} can also be provided in this list, of length 12 or 365, otherwise
+average monthly values will be calculated from the average temperature
+series in \code{DATA}. See an example below of how to pass average values.
 }
 \examples{
 # Using example dataset Corin with daily P, Q, potential ET and average T
@@ -146,6 +153,19 @@ fit <- fitByOptim(mod, objective = hmadstat("KGE"))
 summary(fit)
 objFunVal(fit)
 xyplot(fit)
+
+# If using average values of PET and Tmean if daily values of PET are not
+# available and E is not in DATA. cet must be specified.
+\dontrun{
+mod <- hydromad(
+  DATA = Corin,
+  sma = "hbv",
+  routing = "hbvrouting",
+  PET = list("PET" = PET, "Tmean" = Tmean),
+  cet = 0.1
+)
+}
+
 }
 \references{
 Bergström, S. and Forsman, A.: Development of a Conceptual Deterministic

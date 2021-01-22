@@ -15,9 +15,10 @@
 #' T (average air temperature in ºC) and E (potential
 #' evapotranspiration in mm). If E is not supplied then the PET argument must
 #' be used.
-#' @param PET A vector of length 12 or 365 of average potential
-#' evapotranspiration in mm/model timestep (usually mm/day). Optional if daily
-#' E is supplied in DATA.
+#' @param PET A list containing named objects "PET" and optionally "Tmean".
+#' PET and Tmean must be vectors of length 12 or 365 that represent mean values.
+#' Optional if `E` is supplied in `DATA`. If supplied then `cet` must be
+#' parameterised.
 #' @param tt Threshold temperature for snow and snow melt in degrees Celsius.
 #' @param cfmax Degree-day factor for snow melt (mm/(ºC.day)).
 #' @param sfcf Snowfall correction factor. Amount of precipitation below
@@ -28,27 +29,33 @@
 #' @param lp Threshold for reduction of evaporation. Limit for potential
 #' evapotranspiration.
 #' @param beta Shape coefficient in soil routine.
-#' @param cet Potential ET correction factor
+#' @param cet Potential ET correction factor. Optional if a full PET series
+#' is provided.
 #' @param initialise_sm If true, the soil moisture store is initialised to
 #' equal `fc`*`lp` to match HBVlight behaviour. Defaults to false.
 #' @param return_state Whether to return the state variables.
 #'
-#' @param U Effective rainfall series
+#' @param U Effective rainfall series/recharge series.
 #' @param perc Maximum percolation from upper to lower groundwater storage.
 #' @param uzl Threshold for quick runoff for k0 outflow (mm).
 #' @param k0 Recession coefficient (quick runoff).
 #' @param k1 Recession coefficient (upper groundwater storage).
 #' @param k2 Recession coefficient (lower groundwater storage).
-#' @param maxbas Routing, length of triangular weighting function.
+#' @param maxbas Routing, length of triangular weighting function (days).
 #' @param epsilon Values smaller than this in the output will be set to zero.
-#' @param initial_lz Initial value for the lower store (SLZ). Defaults to 0.
+#' @param initial_slz Initial value for the lower store (SLZ). Defaults to 0.
 #' @param return_components Whether to return state variables from the routing
 #' routine.
 #' @details This implementation of this HBV model closely follows the
 #' description of HBV light by Seibert and Vis, 2012. Daily average temperature
-#' data is required for the snow routine. Daily potential evapotranspiration
-#' (PET) data is required as the routine to calculate daily PET using long term
-#' mean PET and daily temperature is not included.
+#' data is required for the snow routine. If daily potential evapotranspiration
+#' (PET) data is not provided in `DATA`, then the PET is estimated using the
+#' HBV method and the `PET` and `cet` arguments must be specified. The list
+#' needs to contain a vector named `"PET"` containing daily average (or matching
+#' the timestep of `DATA`) values of length 12 (monthly) or 365 (days of year).
+#' `"Tmean"` can also be provided in this list, of length 12 or 365, otherwise
+#' average monthly values will be calculated from the average temperature
+#' series in `DATA`. See an example below of how to pass average values.
 #' @return The timeseries of simulated streamflow (U). If return state is set
 #' to true, the state variables of the model are also returned. These include:
 #' snow depth (Snow), soil moisture (SM), potential evapotranspiration (PET)
@@ -105,19 +112,33 @@
 #' summary(fit)
 #' objFunVal(fit)
 #' xyplot(fit)
+#'
+#' # If using average values of PET and Tmean if daily values of PET are not
+#' # available and E is not in DATA. cet must be specified.
+#' \dontrun{
+#' mod <- hydromad(
+#'   DATA = Corin,
+#'   sma = "hbv",
+#'   routing = "hbvrouting",
+#'   PET = list("PET" = PET, "Tmean" = Tmean),
+#'   cet = 0.1
+#' )
+#' }
+#'
 #' @keywords models
 #' @useDynLib hydromad
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib hydromad _hydromad_hbv_sim
 #' @export
 
-hbv.sim <- function(DATA, PET,
+hbv.sim <- function(DATA,
                     tt, cfmax, sfcf, cfr, cwh,
                     fc, lp, beta, cet,
                     return_state = FALSE,
-                    initialise_sm = FALSE) {
+                    initialise_sm = FALSE,
+                    PET) {
   # DATA: zoo series with P, Q and T and optionally E
-  # PET: zoo series of potential ET, if not supplied in DATA
+  # PET: list with names PET and optionally Tmean with corresponding vectors
   # Snow routine
   # tt: temperature limit for rain/snow (ºC)
   # sfcf: snowfall correction factor
@@ -133,6 +154,25 @@ hbv.sim <- function(DATA, PET,
   # Check DATA has been entered
   stopifnot(c("P", "T") %in% colnames(DATA))
 
+  # If daily PET isn't provided calculate it
+  if (!"E" %in% colnames(DATA)) {
+    stopifnot("PET" %in% names(PET))
+    if (missing(cet)) stop("missing parameter cet")
+    if ("Tmean" %in% names(PET)) {
+      DATA <- hbv.pet(
+        DATA = DATA,
+        PET = PET$PET,
+        Tmean = PET$Tmean,
+        cet = cet
+      )
+    } else {
+      DATA <- hbv.pet(
+        DATA = DATA,
+        PET = PET$PET,
+        cet = cet
+      )
+    }
+  }
   # Check valid parameter values have been entered
   stopifnot(is.double(tt))
   stopifnot(is.double(sfcf))
@@ -150,41 +190,7 @@ hbv.sim <- function(DATA, PET,
 
   P <- DATA[, "P"]
   Tavg <- DATA[, "T"]
-
-  if (missing(PET)) {
-    stopifnot("E" %in% colnames(DATA))
-    E <- DATA[, "E"]
-  } else {
-    stopifnot(length(PET) %in% c(12, 365))
-    # Force to vector in case a zoo series is supplied
-    PET <- as.vector(PET)
-    if (length(PET) == length(Tavg)) {
-      E <- PET
-    } else {
-      # Calculate daily PET from daily temperature and average PET series
-      E <- rep(0, length(Tavg))
-      if (length(PET) == 12) {
-        PET <- rep(PET,
-                   times = c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31))
-      }
-      # Deal with leap years. Feb 29 = Feb 28 for long term ET
-      doy <- as.integer(strftime(inAttr$index, "%j"))
-      year <- as.integer(strftime(inAttr$index, "%Y"))
-      idx <- ((year %% 4 == 0) & ((year %% 100 != 0) | (year %% 400 == 0))) &
-        doy > 59
-      pet_idx <- doy
-      pet_idx[idx] <- pet_idx[idx] - 1
-      for (t in 1:365) {
-        # Mean temperature for doy
-        tm <- mean(Tavg[which(doy == t)], na.rm = TRUE)
-        # Eq7 in Seibert and Vis 2012
-        pet_ <- 1 + cet * (Tavg[which(pet_idx == t)] - tm)
-        pet_[pet_ > 2] <- 2
-        pet_[pet_ < 0] <- 0
-        E[which(pet_idx == t)] <- pet_ * PET[t]
-      }
-    }
-  }
+  E <- DATA[, "E"]
 
   # Skip missing values
   bad <- is.na(P) | is.na(E) | is.na(Tavg)
@@ -348,7 +354,7 @@ hbv.sim <- function(DATA, PET,
 hbvrouting.sim <- function(U,
                            k0, k1, k2, uzl, perc,
                            maxbas,
-                           initial_lz = I(0),
+                           initial_slz = I(0),
                            epsilon = hydromad.getOption("sim.epsilon"),
                            return_components = FALSE) {
   # U: effective rainfall series
@@ -395,7 +401,7 @@ hbvrouting.sim <- function(U,
     ans <- hbvrouting_sim(
       U,
       perc, uzl, k0, k1, k2,
-      wi, n_maxbas, initial_lz
+      wi, n_maxbas, initial_slz
     )
     suz <- ans$suz
     slz <- ans$slz
@@ -405,7 +411,7 @@ hbvrouting.sim <- function(U,
   } else { # R version
     # Initialise variables and vectors
     suz_ <- 0
-    slz_ <- initial_lz
+    slz_ <- initial_slz
 
     suz <- rep(0, length(U)) # Shallow gw storage
     slz <- rep(0, length(U)) # Deep gw storage
@@ -441,13 +447,13 @@ hbvrouting.sim <- function(U,
   # Triangular weighting function
   Q0 <- zoo::rollapplyr(
     c(rep(0, n_maxbas - 1), Q0), n_maxbas, function(Q) sum(Q * wi)
-    )
+  )
   Q1 <- zoo::rollapplyr(
     c(rep(0, n_maxbas - 1), Q1), n_maxbas, function(Q) sum(Q * wi)
-    )
+  )
   Q2 <- zoo::rollapplyr(
     c(rep(0, n_maxbas - 1), Q2), n_maxbas, function(Q) sum(Q * wi)
-    )
+  )
 
   X <- Q0 + Q1 + Q2
 
@@ -514,4 +520,69 @@ hbvrouting.ranges <- function() {
     k2 = c(0.001, 0.1),
     maxbas = c(1, 7)
   )
+}
+
+# Internal function to calculate potential ET using average PET and
+# and temperature
+#' @useDynLib hydromad _hydromad_hbv_pet
+hbv.pet <- function(DATA, PET, Tmean, cet) {
+  # DATA: the DATA series that goes to hbv.sim
+  # PET: mean PET. Vector of length 12 or 365
+  # Tmean: mean temperature. Vector of length 12 or 365. If left out
+  # average temp is calculated from DATA$T
+  # cet: parameter to adjust PET
+  stopifnot(length(PET) %in% c(12, 365))
+  stopifnot("T" %in% colnames(DATA))
+
+  dates <- index(DATA)
+  Tavg <- DATA$`T`
+
+  if (missing(Tmean)) {
+    # If Tmean isn't provided then calculate mean monthly temperature
+    mon <- as.integer(strftime(dates, "%m"))
+    Tmean <- as.vector(aggregate(Tavg, by = mon, mean, na.rm = TRUE))
+  } else {
+    stopifnot(length(Tmean) %in% c(12, 365))
+  }
+
+  if (length(Tmean) == 12) {
+    # idx correspond to month midpoints From Dec -> Jan-Dec -> Jan
+    idx <- c(1, 32, 62, 91, 122, 152, 183, 213, 244, 275, 305, 336, 366, 397)
+    Tmean <- stats::approxfun(idx, y = c(Tmean[12], Tmean, Tmean[1]))(17:381)
+  }
+
+  if (length(PET) == 12) {
+    idx <- c(1, 32, 62, 91, 122, 152, 183, 213, 244, 275, 305, 336, 366, 397)
+    PET <- stats::approxfun(idx, y = c(PET[12], PET, PET[1]))(17:381)
+  }
+
+  COMPILED <- hydromad.getOption("pure.R.code") == FALSE
+  if (COMPILED) {
+    E <- hbv_pet(
+      dates = dates,
+      Tavg = Tavg,
+      PET = PET,
+      Tmean = Tmean,
+      cet = cet
+    )
+  } else {
+    E <- rep(0, length(Tavg))
+    # Deal with leap years. Feb 29 = Feb 28
+    doy <- as.integer(strftime(dates, "%j"))
+    year <- as.integer(strftime(dates, "%Y"))
+    idx <- ((year %% 4 == 0) & ((year %% 100 != 0) | (year %% 400 == 0))) &
+      doy > 59
+    doy[idx] <- doy[idx] - 1
+    for (t in 1:365) {
+      # Mean temperature for doy
+      # Eq7 in Seibert and Vis 2012
+      idx <- which(doy == t)
+      pet_ <- 1 + cet * (Tavg[idx] - Tmean[t])
+      pet_[pet_ > 2] <- 2
+      pet_[pet_ < 0] <- 0
+      E[idx] <- pet_ * PET[t]
+    }
+  }
+  DATA$E <- E
+  return(DATA)
 }

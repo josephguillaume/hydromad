@@ -36,7 +36,6 @@ Suggests:
     rsm,
     parallel,
     foreach,
-    doRedis,
     ff,
     dream,
     knitr,

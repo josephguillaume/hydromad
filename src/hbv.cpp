@@ -198,3 +198,32 @@ DataFrame hbvrouting_sim(NumericVector U, double perc, double uzl, double k0,
                            Named("Q0") = Q0, Named("Q1") = Q1,
                            Named("Q2") = Q2);
 }
+
+// [[Rcpp::export]]
+NumericVector hbv_pet(DateVector dates, NumericVector Tavg, NumericVector PET,
+                      NumericVector Tmean, double cet) {
+  // Setup variables
+  int nDays = Tavg.size();
+  int doy;
+  int year;
+  double pet_;
+  Date d;
+  NumericVector E(nDays);
+
+  for (int i = 0; i < nDays; i++) {
+    d = dates[i];
+    doy = d.getYearday() - 1;
+    year = d.getYear();
+    if ((year % 4 == 0) & ((year % 100 != 0) | (year % 400 == 0))) {
+      if (doy > 58)
+        doy -= 1;
+    }
+    pet_ = 1.0 + cet * (Tavg[i] - Tmean[doy]);
+    if (pet_ > 2.0)
+      pet_ = 2.0;
+    if (pet_ < 0.0)
+      pet_ = 0.0;
+    E[i] = pet_ * PET[doy];
+  }
+  return E;
+}

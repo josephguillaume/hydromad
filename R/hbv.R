@@ -352,7 +352,8 @@ hbv.sim <- function(DATA,
 #' @useDynLib hydromad _hydromad_hbvrouting_sim
 #' @export
 hbvrouting.sim <- function(U,
-                           k0, k1, k2, uzl, perc,
+                           perc, uzl,
+                           k0, k1, k2,
                            maxbas,
                            initial_slz = I(0),
                            epsilon = hydromad.getOption("sim.epsilon"),

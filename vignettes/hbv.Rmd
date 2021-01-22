@@ -1,0 +1,299 @@
+---
+title: "hydromad HBV model"
+author: "Alexander Buzacott"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{hydromad HBV model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(hydromad)
+library(ggplot2)
+
+load("data/hbv_vignette.Rdata")
+
+# Create own gather function
+gather <- function(df) {
+  cols <- colnames(df)[-1]
+  out <- data.frame()
+  for(col in cols) {
+    tmp <- df[,c("Date", col)]
+    tmp$name <- col
+    colnames(tmp) <- c("Date", "value", "name")
+    out <- rbind(out, tmp)
+  }
+  return(out[,c(1,3,2)])
+}
+```
+
+The HBV model included in `hydromad` implements the basic structure of the HBV-light by Seibert and Vis (2012). This tutorial will demonstrate how to use the `hydromad` HBV model and compare the output to the HBV-light model (v4.0.0.20, obtained from https://www.geo.uzh.ch/en/units/h2k/Services/HBV-Model.html).
+
+## Data requirements
+
+The required data in order to use the model are:
+
+- P: timeseries of precipitation (mm)
+- T: timeseries of average temperature (ºC)
+- Q: timeseries of observed discharge (mm)
+
+In addition potential evapotranspiration (PET) needs to be provided. There are three options:
+
+- A timeseries of the same length as the main data
+- A vector of length 365 with daily average PET for each day of the year
+- A vector of length 12 with average daily PET for each month of the year
+
+A vector of length 12 or 365 of mean temperature can also be provided for use in calculating PET. If it is not provided then mean monthly temperature is calculated from the timeseries of temperature.
+
+## Model parameters
+
+The structure of the model in `hydromad` replicates the HBV-light standard version using UZL and K0 in SUZ-box.
+
+### Snow routine
+
+- `tt` Threshold temperature for snow and snow melt in degrees Celsius.
+- `cfmax` Degree-day factor for snow melt (mm/(ºC.day)).
+- `sfcf` Snowfall correction factor. Amount of precipitation below threshold temperature that should be rainfall instead of snow.
+- `cfr` Refreezing coefficient for water in the snowpack.
+- `cwh` Liquid water holding capacity of the snowpack.
+
+### Soil routine
+
+- `fc` Maximum amount of soil moisture storage (mm).
+- `lp` Threshold for reduction of evaporation. Limit for potential evapotranspiration.
+- `beta` Shape coefficient in soil routine.
+- `cet` Potential ET correction factor. Not required if PET is provided for all timesteps
+
+In addition there is an optional flag `initialise_sm` to set the soil moisture store to equal `fc`*`lp` at the first timestep to
+match HBV-light behaviour. The default is false to match other `hydromad` models.
+
+### Routing routine
+
+- `perc` Maximum percolation from upper to lower groundwater storage.
+- `uzl` Threshold for quick runoff for k0 outflow (mm).
+- `k0` Recession coefficient (quick runoff).
+- `k1` Recession coefficient (upper groundwater storage).
+- `k2` Recession coefficient (lower groundwater storage).
+- `maxbas` Routing, length of triangular weighting function (days).
+
+An additional model setting `initial_slz` can be used to set the initial value for the lower groundwater store (SLZ). This appears to equal the first streamflow timestep value divided by the `k2` parameter in HBV-light but can be set to any value.
+
+## State variables
+
+The following state variables can be returned from the model:
+
+- Soil moisture accounting (`sma="hbv"`) module
+  - `Snow` snow depth (mm)
+  - `SM` soil moisture (mm)
+  - `PET` potential evapotranspiration (mm)
+  - `AET` actual evapotranspiration (mm)
+  - `U` effective precipitation, or recharge, that goes to the routing module
+- Routing (`routing="hbvrouting"`) module
+  - `SUZ` upper groundwater storage (mm)
+  - `SLZ` lower groundwater storage (mm)
+  - `Q0` quick runoff (mm)
+  - `Q1` runoff from the upper groundwater store (mm)
+  - `Q2` runoff from the lower groundwater store (mm)
+  - `X` routed streamflow (mm)
+
+## Example 
+
+This example uses the example dataset from the Corin Catchment, ACT, Australia which is included with `hydromad`. This dataset is a `zoo` object that contains daily estimates of all the required variables.
+
+```{r data}
+data(Corin) 
+head(Corin)
+```
+
+Set up and fit model. If the parameters or parameter ranges are not specified then the default ranges for `hbv` and `hbvrouting` are used. These can be viewed using `hbv.ranges()` and `hbvrouting.ranges()`.
+
+```{r mod, message=FALSE, warning=FALSE, eval=FALSE}
+mod <- hydromad(DATA = Corin,
+                sma = "hbv",
+                routing = "hbvrouting")
+# Calibrate the default parameter ranges
+fit <- fitByOptim(mod, method = "PORT")
+```
+
+A summary of the model fit and plot of the simulated and modelled streamflow series can be obtained as follows.
+
+```{r modplot, fig.width=6, fig.height=4, fig.align="center"}
+summary(fit)
+xyplot(fit)
+```
+
+If daily estimates of potential evapotranspiration are not available for your catchment, then they can be calculated using the HBV method (see equation 7 Seibert and Vis, 2012).
+
+A list with named objects `"PET"` and `"Tmean"` need to be supplied to the `PET` argument when setting up the model. In addition, the `cet` parameter needs to be provided. Either a single value or a range can be provided if `cet` is to be calibrated.
+
+```{r, eval=FALSE}
+mod <- hydromad(DATA = Corin,
+                sma = "hbv",
+                routing = "hbvrouting",
+                PET = list("PET" = corin_pet,
+                           "Tmean" = corin_tmean),
+                cet = C(0.01, 1))
+```
+
+# Comparison to HBV-light
+
+Here are some comparisons to output of the HBV-light model to ensure that correct model structures have been implemented. Comparisons are made using the Corin catchment dataset and the HBV-land dataset that comes with the HBV-light model. No warmup periods are used here to show the models produce the same results, but typically warm up periods range from 100 days (`hydromad` default) to a year.
+
+## Corin catchment
+
+```{r}
+mod <- hydromad(DATA = Corin,
+                sma = "hbv",
+                routing = "hbvrouting",
+                tt = 0, # Snow
+                cfmax = 6.36,
+                sfcf = 1, 
+                cfr = 0.05,
+                cwh = 0.19,
+                fc = 317, # Soil
+                lp = 0.89, 
+                beta = 2.68,
+                perc = 0.89, # Routing
+                uzl = 71.34,
+                k0 = 0.11,
+                k1 = 0.15,
+                k2 = 0.04, 
+                maxbas = 1.5,
+                return_state = TRUE,
+                return_components = TRUE,
+                initialise_sm = TRUE,
+                initial_slz = Corin$Q[1] / 0.04, # first Q timestep / k2
+                warmup = 0)
+```
+
+```{r, echo=FALSE}
+hbvl <- hbvl_corin_results
+hbvl <- hbvl[,c("Date", "AET", "PET", "Snow", "SM", "Recharge", "SUZ", "SLZ", "Q0", "Q1", "Q2", "Qsim")]
+hbvl <- gather(hbvl)
+hbvl$Model <- "HBV-light"
+hbvl$name <- factor(hbvl$name, c("Snow", "SM", "PET", "AET", "Recharge", "SUZ", "SLZ", "Q0", "Q1", "Q2", "Qsim"))
+hbvl <- hbvl[order(hbvl$Date),]
+hbvl <- hbvl[order(hbvl$name),]
+
+# Convert mod results to dataframe
+mod_df <- cbind(index(mod$U), data.frame(mod$U), data.frame(mod$fitted.values))
+colnames(mod_df) <- c("Date", "Recharge", "Snow", "SM", "PET", "AET", "Qsim", "SUZ", "SLZ", "Q0", "Q1", "Q2")
+mod_df <- gather(mod_df)
+mod_df$Model <- "hydromad"
+mod_df$name <- factor(mod_df$name, c("Snow", "SM", "PET", "AET", "Recharge", "SUZ", "SLZ", "Q0", "Q1", "Q2", "Qsim"))
+mod_df <- mod_df[order(mod_df$Date),]
+mod_df <- mod_df[order(mod_df$name),]
+
+
+df <- rbind(hbvl, mod_df)
+df2 <- hbvl[,c("Date", "name", "value")]
+colnames(df2) <- c("Date", "name", "HBV-light")
+df2$hydromad <- mod_df$value
+df2$diff <- df2$`HBV-light`-df2$hydromad
+```
+
+The models produce the same results:
+
+```{r comparison, fig.width=7, fig.height=6, fig.align="centre"}
+ggplot(df, aes(Date, value, col=Model)) +
+  geom_line(alpha=0.5) +
+  ylab("Value (mm)") +
+  facet_wrap(~name, scales="free_y", ncol = 3)
+```
+
+Only small rounding differences exist.
+
+```{r differences, fig.width=7, fig.height=6, fig.align="centre"}
+ggplot(df2, aes(Date, diff,1)) +
+  geom_line() +
+  ylab("Value (mm)") +
+  facet_wrap(~name, ncol = 3)
+```
+
+## HBV-land
+
+```{r}
+mod <- hydromad(DATA = hbv_land,
+                sma = "hbv",
+                routing = "hbvrouting",
+                tt = -1.76, # Snow
+                cfmax = 2.98,
+                sfcf = 0.73, 
+                cfr = 0.05,
+                cwh = 0.1,
+                fc = 285, # Soil
+                lp = 0.75, 
+                beta = 3.43,
+                cet = 0.1,
+                perc = 1.02, # Routing
+                uzl = 17.6,
+                k0 = 0.25,
+                k1 = 0.09,
+                k2 = 0.06, 
+                maxbas = 2.4,
+                return_state = TRUE,
+                return_components = TRUE,
+                initialise_sm = TRUE,
+                initial_slz = hbv_land$Q[1] / 0.06, # first Q timestep / k2
+                warmup = 0,
+                PET = list("PET"=hbv_land_pet, "Tmean" = hbv_land_tmean))
+```
+
+
+```{r, echo=FALSE}
+# Read in HBV-light results
+hbvl <- hbvl_hbvland_results
+hbvl <- hbvl[,c("Date", "AET", "PET", "Snow", "SM", "Recharge", "SUZ", "SLZ", "Q0", "Q1", "Q2", "Qsim")]
+hbvl <- gather(hbvl)
+hbvl$Model <- "HBV-light"
+hbvl$name <- factor(hbvl$name, c("Snow", "SM", "PET", "AET", "Recharge", "SUZ", "SLZ", "Q0", "Q1", "Q2", "Qsim"))
+hbvl <- hbvl[order(hbvl$Date),]
+hbvl <- hbvl[order(hbvl$name),]
+
+# Convert mod results to dataframe
+mod_df <- cbind(index(mod$U), data.frame(mod$U), data.frame(mod$fitted.values))
+colnames(mod_df) <- c("Date", "Recharge", "Snow", "SM", "PET", "AET", "Qsim", "SUZ", "SLZ", "Q0", "Q1", "Q2")
+mod_df <- gather(mod_df)
+mod_df$Model <- "hydromad"
+mod_df$name <- factor(mod_df$name, c("Snow", "SM", "PET", "AET", "Recharge", "SUZ", "SLZ", "Q0", "Q1", "Q2", "Qsim"))
+mod_df <- mod_df[order(mod_df$Date),]
+mod_df <- mod_df[order(mod_df$name),]
+
+
+df <- rbind(hbvl, mod_df)
+df2 <- hbvl[,c("Date", "name", "value")]
+colnames(df2) <- c("Date", "name", "HBV-light")
+df2$hydromad <- mod_df$value
+df2$diff <- df2$`HBV-light`-df2$hydromad
+```
+
+
+```{r comparison2, fig.width=7, fig.height=6, fig.align="centre"}
+ggplot(df, aes(Date, value, col=Model)) +
+  geom_line(alpha=0.5) +
+  ylab("Value (mm)") +
+  facet_wrap(~name, scales="free_y", ncol = 3)
+```
+
+Again there are only small rounding differences.
+
+```{r differences2, fig.width=7, fig.height=6, fig.align="centre"}
+ggplot(df2, aes(Date, diff,1)) +
+  geom_line() +
+  ylab("Value (mm)") +
+  facet_wrap(~name, ncol = 3)
+```
+
+# References
+
+If you use the `hydromad` HBV model, you should cite the paper by Seibert and Vis, 2012 as well as the `hydromad` package.
+
+- Seibert, J. and Vis, M. (2012). Teaching hydrological modeling with a user-friendly catchment-runoff-model software package. Hydrology and Earth System Sciences, 16, 3315–3325, 2012.
+
+For additional HBV references, see:
+
+- Bergström, S. and Forsman, A.: Development of a Conceptual Deterministic Rainfall-Runoff Model, Nordic Hydrology, 4(3), 147–170, 1973.
+- Bergström, S.: The HBV Model: Its Structure and Applications,Swedish Meteorological and Hydrological Institute (SMHI), Hydrology, Norrköping, 35 pp., 1992.
+- Seibert, J. (1997). Estimation of Parameter Uncertainty in the HBV Model. Hydrology Research, 28(4–5), 247–262.

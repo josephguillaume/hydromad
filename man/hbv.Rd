@@ -27,11 +27,11 @@ hbv.sim(
 
 hbvrouting.sim(
   U,
+  perc,
+  uzl,
   k0,
   k1,
   k2,
-  uzl,
-  perc,
   maxbas,
   initial_slz = I(0),
   epsilon = hydromad.getOption("sim.epsilon"),
@@ -81,15 +81,15 @@ parameterised.}
 
 \item{U}{Effective rainfall series/recharge series.}
 
+\item{perc}{Maximum percolation from upper to lower groundwater storage.}
+
+\item{uzl}{Threshold for quick runoff for k0 outflow (mm).}
+
 \item{k0}{Recession coefficient (quick runoff).}
 
 \item{k1}{Recession coefficient (upper groundwater storage).}
 
 \item{k2}{Recession coefficient (lower groundwater storage).}
-
-\item{uzl}{Threshold for quick runoff for k0 outflow (mm).}
-
-\item{perc}{Maximum percolation from upper to lower groundwater storage.}
 
 \item{maxbas}{Routing, length of triangular weighting function (days).}
 

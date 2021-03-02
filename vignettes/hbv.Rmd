@@ -33,19 +33,20 @@ The HBV model included in `hydromad` implements the basic structure of the HBV-l
 
 ## Data requirements
 
-The required data in order to use the model are:
+Most of the required data for the model are similar to standard hydromad:
 
 - P: timeseries of precipitation (mm)
-- T: timeseries of average temperature (ºC)
 - Q: timeseries of observed discharge (mm)
+- E: timeseries of potential evapotranspiration (PET)
+Specifically for HBV, a further column needs to be added with:
+- T: timeseries of average temperature (ºC)
 
-In addition potential evapotranspiration (PET) needs to be provided. There are three options:
+If daily estimates of potential evapotranspiration are not available for your catchment, then they can be calculated using the HBV method (see equation 7 Seibert and Vis, 2012). 
 
-- A timeseries of the same length as the main data
 - A vector of length 365 with daily average PET for each day of the year
 - A vector of length 12 with average daily PET for each month of the year
 
-A vector of length 12 or 365 of mean temperature can also be provided for use in calculating PET. If it is not provided then mean monthly temperature is calculated from the timeseries of temperature.
+A vector of length 12 or 365 of mean temperature can also be provided for use in calculating PET. If it is not provided then mean monthly temperature is calculated from the timeseries of temperature. A demonstration of using the HBV PET method is provided later.
 
 ## Model parameters
 
@@ -124,9 +125,7 @@ summary(fit)
 xyplot(fit)
 ```
 
-If daily estimates of potential evapotranspiration are not available for your catchment, then they can be calculated using the HBV method (see equation 7 Seibert and Vis, 2012).
-
-A list with named objects `"PET"` and `"Tmean"` need to be supplied to the `PET` argument when setting up the model. In addition, the `cet` parameter needs to be provided. Either a single value or a range can be provided if `cet` is to be calibrated.
+To calculate PET using the method (Seibert and Vis, 2012; equation 7), a list with named objects `"PET"` and `"Tmean"` need to be supplied to the `PET` argument when setting up the model. In addition, the `cet` parameter needs to be provided. Either a single value or a range can be provided if `cet` is to be calibrated.
 
 ```{r, eval=FALSE}
 mod <- hydromad(DATA = Corin,

@@ -42,7 +42,8 @@ Suggests:
     knitr,
     coda,
     iterators,
-    patrick (>= 0.0.1)
+    patrick (>= 0.0.1),
+    bookdown
 LinkingTo: Rcpp
 License: GPL (>= 2)
 URL: http://hydromad.catchment.org/, https://github.com/josephguillaume/hydromad

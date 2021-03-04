@@ -22,3 +22,4 @@ jobs:
         source: '.'
         extensions: 'c,h,cpp'
         clangFormatVersion: 9
+        exclude: 'src/RcppExports.cpp'

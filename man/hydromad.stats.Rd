@@ -113,7 +113,7 @@ hmadstat("rel.bias")(Q = 1:10, X = 2:11)
 ## add a new objective function.
 ## A weighted combination of NSE and bias
 ## as proposed by Neil Viney
-## OF = NSE â€“ 5*|ln(1+Bias)|^2.5
+## OF = NSE – 5*|ln(1+Bias)|^2.5
 
 hydromad.stats("viney" = function(Q, X, ...) {
   hmadstat("r.squared")(Q, X, ...) -

@@ -34,6 +34,15 @@ test_that("rfit methods work on (2,1) model with exact inputs", {
   expect_gt(summary(fits$inv)$r.squared, 0.9999)
 })
 
+test_that("routingFit works on short time series with shorter warmup", {
+  xspec_short <- update(xspec,
+    newdata = xspec$data[10:40, ],
+    warmup = 0,
+    rfit = list("ls", order = c(n = 2, m = 1))
+  )
+  expect_gt(summary(xspec_short)$r.squared, 0.98)
+})
+
 U <- fitted(xspec, U = TRUE, all = TRUE)
 
 Q_n0m0 <- expuh.sim(U, pars = n0m0)

@@ -125,7 +125,7 @@ hydromad <-
     }
     try({
       datetime <- as.POSIXct(index(DATA))
-      if(as.numeric(diff(range(datetime)),units="days") < 60){
+      if(as.numeric(diff(range(datetime)), units = "days") < 60){
         warning('DATA appears to cover less than 60 days\nconsider changing default hydromad.options("objective")')
       }
     })

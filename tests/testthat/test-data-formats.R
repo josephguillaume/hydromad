@@ -5,21 +5,34 @@ library(patrick)
 with_parameters_test_that(
   "zoo and hydromad handle date format: ",
   {
-    if (!is.null(will_warn) && will_warn) {
-      wrapper <- suppressWarnings
-    } else {
-      wrapper <- identity
-    }
-    
     DATA <- data.frame(
       P = c(100, rep(0, 9)),
       E = 20
     )
 
     DATA <- zoo(DATA, order.by = date)
-    wrapper(expect_equal(nrow(as.ts(DATA)), 10))
+    # TODO: check for unexpected warnings?
+    # In some cases, expect ‘x’ does not have an underlying regularity
+    suppressWarnings(expect_equal(nrow(as.ts(DATA)), 10))
 
-    mod <- wrapper(hydromad(
+    for (w in hydromad_warning) {
+      expect_warning(
+        {
+          mod <- hydromad(
+            DATA,
+            sma = "cwi",
+            tw = 32, f = 2, scale = 0.01,
+            routing = "expuh",
+            tau_s = 1,
+            warmup = 0
+          )
+        },
+        w
+      )
+    }
+
+    # TODO: check for unexpected warnings?
+    suppressWarnings(mod <- hydromad(
       DATA,
       sma = "cwi",
       tw = 32, f = 2, scale = 0.01,
@@ -35,17 +48,40 @@ with_parameters_test_that(
     expect_equal(coredata(fitted(mod)), Q)
   },
   cases(
-    `ymd` = list(date = sprintf("2020-01-%d", 1:10), will_warn = TRUE),
-    `Date` = list(date = as.Date(sprintf("2020-01-%d", 1:10))),
+    `ymd` = list(
+      date = sprintf("2020-01-%d", 1:10),
+      as.ts_warning = c("‘x’ does not have an underlying regularity"),
+      hydromad_warning = c(
+        "DATA appears to cover less than 60 days.*"
+      )
+    ),
+    `Date` = list(date = as.Date(sprintf("2020-01-%d", 1:10)), hydromad_warning = c(
+      "DATA appears to cover less than 60 days.*"
+    )),
     `POSIXct` = list(
       date = as.POSIXct(sprintf("2020-01-%d 3:00", 1:10), tz = "GMT"),
-      will_warn = TRUE
+      hydromad_warning = c(
+        "DATA appears to cover less than 60 days.*"
+      )
     ),
     `POSIXct hourly` = list(
-      date = as.POSIXct(sprintf("2020-01-01 %0d:00", 1:10), tz = "GMT"),
-      will_warn = TRUE
+      date = as.POSIXct(sprintf("2020-01-01 %0d:00", 1:10), tz = "GMT"), hydromad_warning = c(
+        "DATA appears to cover less than 60 days.*"
+      )
     ),
-    `POSIXlt` = list(date = as.POSIXlt(sprintf("2020-01-%d 3:00", 1:10), tz = "GMT"),will_warn = TRUE),
-    `chron` = list(date = chron::as.chron(sprintf("2020-01-%d 3:00", 1:10)))
+    `POSIXlt` = list(
+      date = as.POSIXlt(sprintf("2020-01-%d 3:00", 1:10), tz = "GMT"),
+      hydromad_warning = c(
+        "POSIXlt index converted with as.chron",
+        "DATA appears to cover less than 60 days.*"
+      )
+    ),
+    `chron` = list(
+      date = chron::as.chron(sprintf("2020-01-%d 3:00", 1:10)),
+      hydromad_warning = c(
+        "DATA appears to cover less than 60 days.*"
+      )
+    ),
+    `yearmon` = list(date = as.yearmon(2000 + seq(0, 9) / 12))
   )
 )

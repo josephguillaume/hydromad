@@ -124,10 +124,9 @@ hydromad <-
       stop("warmup is longer than DATA")
     }
     try({
-      datetime <- as.POSIXct(date)
+      datetime <- as.POSIXct(index(DATA))
       if(as.numeric(diff(range(datetime)),units="days") < 60){
-        warning('DATA appears to cover less than 60 days
-                consider changing default hydromad.options("objective")')
+        warning('DATA appears to cover less than 60 days\nconsider changing default hydromad.options("objective")')
       }
     })
     

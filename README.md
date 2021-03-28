@@ -36,24 +36,24 @@ install.packages("hydromad")
 ```
 --->
 
--   Install required packages from within R:
+-   Add the `hydromad` repository:
 
 <!-- -->
 
-    install.packages(c("zoo", "latticeExtra", "polynom", "car", "Hmisc","reshape"))
+    options(repos=c("http://hydromad.catchment.org",getOption("repos")))
 
 -   Install hydromad:
 
 <!-- -->
 
-    install.packages("hydromad", repos="http://hydromad.catchment.org")
+    install.packages("hydromad")
 
 -   Optionally install other packages required for certain functions:
 
 <!-- -->
 
     install.packages("DEoptim")
-    install.packages("dream", repos="http://hydromad.catchment.org")
+    install.packages("dream")
 
 Once it is installed, get started with
 

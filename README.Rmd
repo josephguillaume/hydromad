@@ -35,20 +35,19 @@ The website describes the different functions and gives examples of the code app
 install.packages("hydromad")
 ```
 --->
-* Install required packages from within R:
-``` r
-install.packages(c("zoo", "latticeExtra", "polynom", "car", "Hmisc","reshape"))
-``` 
-
+* Add the `hydromad` repository:
+```r
+options(repos=c("http://hydromad.catchment.org",getOption("repos")))
+```
 * Install hydromad:
 ``` r
-install.packages("hydromad", repos="http://hydromad.catchment.org")
+install.packages("hydromad")
 ``` 
 
 * Optionally install other packages required for certain functions:
 ``` r
 install.packages("DEoptim")
-install.packages("dream", repos="http://hydromad.catchment.org")
+install.packages("dream")
 ``` 
 
 Once it is installed, get started with

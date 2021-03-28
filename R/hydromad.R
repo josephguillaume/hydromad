@@ -120,6 +120,16 @@ hydromad <-
       index(DATA) <- chron::as.chron(index(DATA))
       warning("POSIXlt index converted with as.chron")
     }
+    if(warmup >= NROW(DATA)){
+      stop("warmup is longer than DATA")
+    }
+    try({
+      datetime <- as.POSIXct(date)
+      if(as.numeric(diff(range(datetime)),units="days") < 60){
+        warning('DATA appears to cover less than 60 days
+                consider changing default hydromad.options("objective")')
+      }
+    })
     
     ## dots `...` may contain arguments for sma and/or routing.
     ## update() takes default parameter ranges/values from hydromad.options().

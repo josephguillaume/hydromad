@@ -117,7 +117,7 @@ hydromad <-
     
     # DATA validation
     if(is.zoo(DATA) && "POSIXlt" %in% class(index(DATA))){
-      index(DATA)<-chron::as.chron(index(DATA))
+      index(DATA) <- chron::as.chron(index(DATA))
       warning("POSIXlt index converted with as.chron")
     }
     

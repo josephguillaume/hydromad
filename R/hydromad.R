@@ -114,6 +114,13 @@ hydromad <-
     ## create the model object
     obj <- list(call = match.call())
     class(obj) <- "hydromad"
+    
+    # DATA validation
+    if(is.zoo(DATA) && "POSIXlt" %in% class(index(DATA))){
+      index(DATA)<-chron::as.chron(index(DATA))
+      warning("POSIXlt index converted with as.chron")
+    }
+    
     ## dots `...` may contain arguments for sma and/or routing.
     ## update() takes default parameter ranges/values from hydromad.options().
     obj$parlist <- list()

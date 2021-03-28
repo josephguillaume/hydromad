@@ -19,6 +19,9 @@ doRoutingFit <-
     if (!is.list(rfit)) {
       rfit <- list(rfit)
     }
+    if(!is.null(object$warmup)){
+      rfit$warmup <- object$warmup
+    }
     ## ok, 'rfit' given, fit the routing model.
     ## we should remove any existing routing parameters
     object$parlist <- as.list(coef(object, which = "sma", warn = FALSE, etc = TRUE))

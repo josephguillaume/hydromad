@@ -42,6 +42,7 @@ Suggests:
     coda,
     iterators,
     patrick (>= 0.0.1),
+    rmarkdown,
     bookdown
 LinkingTo: Rcpp
 License: GPL (>= 2)

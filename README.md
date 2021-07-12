@@ -36,7 +36,7 @@ install.packages("hydromad")
 ```
 --->
 
--   Add the `hydromad` repository:
+-   Add the `hydromad` repository for this R session:
 
 <!-- -->
 

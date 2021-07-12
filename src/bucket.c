@@ -25,13 +25,13 @@ void sma_bucket(double *P, double *E, int *n, double *Sb, double *fc,
     Ebare = (1 - *M) * (S[t] / *Sb) * E[t];
     ET[t] = Eintc + min(S[t], Etrans + Ebare);
     // mass balance
-    S[t] = max(0, S_prev + P[t] - ET[t]);
+    S[t] = S_prev + P[t] - ET[t];
     // drainage (saturation excess)
     Use = max(0, S[t] - *Sb);
-    S[t] = max(0, S[t] - Use);
+    S[t] = S[t] - Use;
     // drainage (sub-surface)
     Uss = max(0, *a_ss * (S[t] - *Sfc));
-    S[t] = max(0, S[t] - Uss);
+    S[t] = S[t] - Uss;
     U[t] = Use + Uss;
     S_prev = S[t];
   }

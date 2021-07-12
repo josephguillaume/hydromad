@@ -35,7 +35,7 @@ The website describes the different functions and gives examples of the code app
 install.packages("hydromad")
 ```
 --->
-* Add the `hydromad` repository:
+* Add the `hydromad` repository for this R session:
 ```r
 options(repos=c("http://hydromad.catchment.org",getOption("repos")))
 ```

@@ -69,6 +69,7 @@
 #'     )
 #'   )
 #' datz <- zoo(dat, as.Date("2000-01-01") + 1:nrow(dat))
+#' hydromad.options(warmup = 0)
 #' modz <- hydromad(datz,
 #'   sma = "gr4j", routing = "gr4jrouting",
 #'   x1 = 665, x2 = 1.18, x3 = 90, x4 = 3.8, S_0 = 0.6, R_0 = 0.7
